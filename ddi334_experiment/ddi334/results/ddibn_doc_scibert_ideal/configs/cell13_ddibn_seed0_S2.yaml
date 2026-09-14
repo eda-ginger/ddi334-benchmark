@@ -1,0 +1,16 @@
+cell: '13'
+dataset: ddibn
+split: S2
+seed: 0
+checkpoint_metric: accuracy
+best_epoch: 19
+n_params: 158289
+n_types: 209
+hp_lr: 0.0003
+hp_weight_decay: 1e-05
+hp_batch_size: 128
+hp_dropout: 0.2
+hp_hidden_dim: 128
+hp_epochs: 200
+hp_patience: 10
+hp_optimizer: AdamW

@@ -1,0 +1,14 @@
+===== 대형모델 real/ideal FT 재실행 디스패처 시작 15:59 =====
+  claim qwen14b_real -> GPU1 (free 79GB, util 0%)
+### 16:00 BIGRE-DISPATCH qwen14b/real -> GPU1 ###
+  claim qwen14b_ideal -> GPU4 (free 79GB, util 0%)
+### 16:00 BIGRE-DISPATCH qwen14b/ideal -> GPU4 ###
+  claim gemma27b_real -> GPU5 (free 79GB, util 0%)
+### 16:00 BIGRE-DISPATCH gemma27b/real -> GPU5 ###
+  claim gemma27b_ideal -> GPU0 (free 79GB, util 0%)
+### 16:01 BIGRE-DISPATCH gemma27b/ideal -> GPU0 ###
+### 21:31 BIGRE-DONE gemma27b/real (GPU5 해방) ###
+### 02:37 BIGRE-DONE qwen14b/real (GPU1 해방) ###
+### 09:46 BIGRE-DONE qwen14b/ideal (GPU4 해방) ###
+### 20:44 BIGRE-DONE gemma27b/ideal (GPU0 해방) ###
+===== 대형 4런 완료 20:44 =====

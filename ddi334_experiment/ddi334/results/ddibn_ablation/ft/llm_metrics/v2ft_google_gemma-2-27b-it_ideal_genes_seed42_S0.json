@@ -1,0 +1,13 @@
+{
+ "AUC-ROC": 0.9771866935541128,
+ "PR-AUC": 0.9780703255871234,
+ "accuracy": 0.9273104380577555,
+ "macro-F1": 0.9273930777284548,
+ "P@50": 0.9831578947368422,
+ "P@N2": 0.9280890816795568,
+ "n_types": 209,
+ "cell": "v2ft_google_gemma-2-27b-it_ideal_genes_seed42",
+ "dataset": "ddibn",
+ "split": "S0",
+ "wall_sec": 0
+}

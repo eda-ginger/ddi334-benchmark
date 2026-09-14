@@ -1,0 +1,5863 @@
+{
+"1": {
+"genes": [],
+"indications": [],
+"pharm_class": [
+"Photoabsorption",
+"Photosensitizing Activity"
+]
+},
+"2": {
+"genes": [
+"ALAD",
+"SLC15A1",
+"SLC15A2"
+],
+"indications": [],
+"pharm_class": [
+"Porphyrinogens"
+]
+},
+"3": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"5": {
+"genes": [
+"CHRM2",
+"HTR2A",
+"HTR2C"
+],
+"indications": [],
+"pharm_class": []
+},
+"10": {
+"genes": [
+"BLVRB",
+"MAOA",
+"MTHFR",
+"RFK",
+"SLC22A6"
+],
+"indications": [],
+"pharm_class": []
+},
+"13": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"14": {
+"genes": [
+"CHRM1",
+"CHRM2",
+"CHRM3",
+"CHRM4"
+],
+"indications": [
+"Crohn's disease",
+"Parkinson's disease",
+"pancreatitis"
+],
+"pharm_class": []
+},
+"16": {
+"genes": [
+"ADRA2A",
+"ADRA2B",
+"ADRA2C",
+"CYP1A2",
+"CYP2B6",
+"CYP2D6",
+"CYP3A4",
+"DRD2",
+"DRD3",
+"HRH1",
+"HRH2",
+"HRH4",
+"HTR1A",
+"HTR1D",
+"HTR1F",
+"HTR2A",
+"HTR2B",
+"HTR2C",
+"HTR6",
+"HTR7",
+"OPRK1",
+"SLC6A2",
+"SLC6A3",
+"SLC6A4"
+],
+"indications": [],
+"pharm_class": []
+},
+"17": {
+"genes": [
+"BCHE",
+"CHRNA10",
+"CHRNA3",
+"CHRNB4"
+],
+"indications": [],
+"pharm_class": []
+},
+"18": {
+"genes": [
+"BCHE",
+"CA12",
+"CA2",
+"CA6",
+"CA9",
+"DRD2",
+"DRD3"
+],
+"indications": [],
+"pharm_class": []
+},
+"19": {
+"genes": [
+"CHRM1",
+"CHRM2",
+"CHRM3"
+],
+"indications": [],
+"pharm_class": []
+},
+"20": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"21": {
+"genes": [
+"CHRNA10",
+"CHRNA3",
+"CHRNB4"
+],
+"indications": [],
+"pharm_class": []
+},
+"25": {
+"genes": [
+"CHRNA1",
+"CHRNA2",
+"CHRNB1",
+"CHRND"
+],
+"indications": [],
+"pharm_class": [
+"Neuromuscular Nondepolarizing Blockade"
+]
+},
+"27": {
+"genes": [
+"ABCB1",
+"CHRM1",
+"CHRM2",
+"CHRNA2",
+"CYP2D6"
+],
+"indications": [
+"Parkinson's disease"
+],
+"pharm_class": []
+},
+"28": {
+"genes": [
+"CHRM1",
+"CHRM2",
+"CHRM3",
+"CHRM4",
+"CHRM5"
+],
+"indications": [],
+"pharm_class": []
+},
+"30": {
+"genes": [
+"CHRM1",
+"CHRM2",
+"CHRM3",
+"DRD2",
+"HRH1",
+"HTR1A",
+"HTR2A",
+"HTR2B",
+"HTR2C",
+"HTR6",
+"SLC6A2",
+"UGT1A3"
+],
+"indications": [
+"allergic rhinitis",
+"migraine",
+"schizophrenia"
+],
+"pharm_class": []
+},
+"31": {
+"genes": [
+"ACHE",
+"CHRM1",
+"CYP2D6",
+"DRD1",
+"DRD2",
+"HTR2A",
+"HTR2B",
+"HTR2C",
+"MAOA",
+"SLC6A4"
+],
+"indications": [],
+"pharm_class": []
+},
+"33": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"34": {
+"genes": [
+"CARTPT",
+"CYP2A6",
+"CYP2D6",
+"DRD2",
+"MAOB",
+"SLC18A2",
+"SLC22A3",
+"SLC22A5",
+"SLC6A2",
+"SLC6A3",
+"SLC6A4",
+"TAAR1"
+],
+"indications": [
+"attention deficit hyperactivity disorder",
+"narcolepsy"
+],
+"pharm_class": [
+"Central Nervous System Stimulation"
+]
+},
+"36": {
+"genes": [
+"ABCB1",
+"CYP1A2",
+"CYP2C19",
+"CYP2C9",
+"CYP2D6",
+"HRH1"
+],
+"indications": [
+"allergic rhinitis"
+],
+"pharm_class": [
+"Histamine H1 Receptor Antagonists"
+]
+},
+"39": {
+"genes": [
+"ABCB1",
+"CYP1A2",
+"CYP2A6",
+"CYP2B6",
+"CYP2C19",
+"CYP2C8",
+"CYP2C9",
+"CYP2D6",
+"CYP2E1",
+"CYP3A4",
+"MAOA",
+"MAOB"
+],
+"indications": [
+"Alzheimer's disease",
+"Parkinson's disease",
+"endogenous depression"
+],
+"pharm_class": [
+"Monoamine Oxidase-B Inhibitors"
+]
+},
+"40": {
+"genes": [
+"ABCB1",
+"CHRNA1",
+"CHRNA2",
+"CHRNB1",
+"CHRND",
+"SLC22A1"
+],
+"indications": [],
+"pharm_class": [
+"Neuromuscular Nondepolarizing Blockade"
+]
+},
+"42": {
+"genes": [
+"MAOA",
+"MAOB"
+],
+"indications": [
+"panic disorder"
+],
+"pharm_class": []
+},
+"45": {
+"genes": [
+"CHRNA2",
+"CHRNA3",
+"CHRNB4"
+],
+"indications": [
+"Gilles de la Tourette syndrome",
+"hypertension"
+],
+"pharm_class": [
+"Decreased Autonomic Ganglionic Activity"
+]
+},
+"52": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"54": {
+"genes": [
+"ACHE",
+"CHRM2",
+"CHRNA1",
+"CHRNA2",
+"CHRNB1",
+"CHRND",
+"HTR3A",
+"SLC22A1",
+"SLC22A2"
+],
+"indications": [],
+"pharm_class": []
+},
+"56": {
+"genes": [
+"BCL2",
+"CYP1A2",
+"MAOB"
+],
+"indications": [
+"Parkinson's disease"
+],
+"pharm_class": []
+},
+"59": {
+"genes": [
+"ABCB1",
+"ABCB11",
+"ABCC2",
+"CHRM2",
+"CYP1A1",
+"CYP1A2",
+"CYP2B6",
+"CYP2C8",
+"CYP2C9",
+"CYP2D6",
+"CYP2E1",
+"CYP3A4",
+"CYP3A7",
+"CYP3A7-CYP3A51P",
+"KCNH2",
+"KCNK1",
+"KCNK6",
+"ORM1",
+"SCN1A",
+"SCN2A",
+"SCN3A",
+"SCN5A",
+"SLC22A1",
+"SLC22A2",
+"SLC22A4",
+"SLC22A5",
+"SLC22A8",
+"SLCO1A2",
+"SLCO1B1"
+],
+"indications": [
+"malaria"
+],
+"pharm_class": [
+"Cytochrome P450 2D6 Inhibitors"
+]
+},
+"62": {
+"genes": [
+"CHRM1",
+"CHRM2",
+"CHRM3",
+"CHRM4",
+"CHRM5"
+],
+"indications": [
+"Parkinson's disease"
+],
+"pharm_class": []
+},
+"68": {
+"genes": [
+"BCHE",
+"CHRM2",
+"CHRM3",
+"CHRNA1",
+"CHRNA2",
+"CHRNB1",
+"CHRND"
+],
+"indications": [],
+"pharm_class": []
+},
+"69": {
+"genes": [
+"BCHE",
+"CHRM1",
+"CHRM2",
+"GRIN3A"
+],
+"indications": [],
+"pharm_class": []
+},
+"72": {
+"genes": [
+"CHRM2",
+"CYP2B6",
+"CYP2E1",
+"CYP3A4",
+"GRIN1",
+"GRIN2D",
+"GRIN3A",
+"GRIN3B",
+"HRH1",
+"KCNH2",
+"SCN10A",
+"SCN1A",
+"SCN4A",
+"SCN5A",
+"SCN9A",
+"SLC6A2"
+],
+"indications": [
+"migraine"
+],
+"pharm_class": [
+"Centrally-mediated Muscle Relaxation"
+]
+},
+"73": {
+"genes": [
+"BCHE",
+"CHRM2",
+"CHRM3",
+"CHRNA1",
+"CHRNA2",
+"CHRNB1",
+"CHRND",
+"SLC22A1",
+"SLC22A2"
+],
+"indications": [],
+"pharm_class": [
+"Neuromuscular Nondepolarizing Blockade"
+]
+},
+"77": {
+"genes": [
+"CHRM1",
+"CHRM2",
+"CHRM3",
+"CYP1A1"
+],
+"indications": [],
+"pharm_class": []
+},
+"79": {
+"genes": [
+"ALB",
+"CYP1A2",
+"CYP2C9",
+"CYP3A4",
+"ESR1",
+"ESR2",
+"SHBG",
+"SLC22A1"
+],
+"indications": [
+"osteoporosis"
+],
+"pharm_class": []
+},
+"80": {
+"genes": [
+"ABCB1",
+"ALB",
+"CYP2C19",
+"CYP3A4",
+"HSD11B1",
+"NR3C1",
+"SLCO1A2"
+],
+"indications": [
+"Crohn's disease",
+"ankylosing spondylitis",
+"asthma",
+"atopic dermatitis",
+"chronic obstructive pulmonary disease",
+"gout",
+"hematologic cancer",
+"migraine",
+"multiple sclerosis",
+"osteoarthritis",
+"prostate cancer",
+"psoriasis",
+"psoriatic arthritis",
+"rheumatoid arthritis",
+"systemic lupus erythematosus",
+"systemic scleroderma",
+"ulcerative colitis"
+],
+"pharm_class": [
+"Corticosteroid Hormone Receptor Agonists"
+]
+},
+"82": {
+"genes": [
+"ABCB1",
+"CYP2A6",
+"CYP3A4",
+"NR3C1",
+"NR3C2",
+"SERPINA6",
+"SLCO1A2"
+],
+"indications": [
+"allergic rhinitis",
+"ankylosing spondylitis",
+"asthma",
+"atopic dermatitis",
+"chronic obstructive pulmonary disease",
+"gout",
+"hematologic cancer",
+"idiopathic pulmonary fibrosis",
+"multiple sclerosis",
+"psoriasis",
+"psoriatic arthritis",
+"rheumatoid arthritis",
+"systemic lupus erythematosus",
+"ulcerative colitis"
+],
+"pharm_class": [
+"Corticosteroid Hormone Receptor Agonists"
+]
+},
+"83": {
+"genes": [
+"ATP1A1",
+"TF"
+],
+"indications": [],
+"pharm_class": []
+},
+"84": {
+"genes": [
+"CYP3A4",
+"CYP3A5",
+"CYP3A7",
+"CYP3A7-CYP3A51P",
+"NR3C1",
+"NR3C2",
+"PGR",
+"PLA2G4A",
+"SERPINA6"
+],
+"indications": [
+"asthma"
+],
+"pharm_class": [
+"Corticosteroid Hormone Receptor Agonists"
+]
+},
+"85": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"87": {
+"genes": [
+"NR3C1"
+],
+"indications": [],
+"pharm_class": [
+"Corticosteroid Hormone Receptor Agonists"
+]
+},
+"88": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"89": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"91": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"93": {
+"genes": [
+"NR3C1",
+"SERPINA6",
+"SMO"
+],
+"indications": [
+"atopic dermatitis",
+"psoriasis"
+],
+"pharm_class": [
+"Corticosteroid Hormone Receptor Agonists"
+]
+},
+"94": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"97": {
+"genes": [
+"SLC4A10",
+"SLC4A4",
+"SLC4A5",
+"SLC4A7",
+"SLC4A8"
+],
+"indications": [],
+"pharm_class": []
+},
+"98": {
+"genes": [
+"CYP2C8",
+"NR3C1"
+],
+"indications": [
+"asthma",
+"atopic dermatitis",
+"systemic scleroderma"
+],
+"pharm_class": []
+},
+"99": {
+"genes": [
+"CYP3A5",
+"NR3C1",
+"SERPINA6"
+],
+"indications": [
+"asthma",
+"psoriasis"
+],
+"pharm_class": []
+},
+"100": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"101": {
+"genes": [
+"NR3C1",
+"SERPINA6"
+],
+"indications": [],
+"pharm_class": [
+"Corticosteroid Hormone Receptor Agonists"
+]
+},
+"103": {
+"genes": [
+"ABCB1",
+"CYP19A1",
+"CYP3A4",
+"NR3C1",
+"NR3C2",
+"PGR",
+"PLA2G1B",
+"PTGS2"
+],
+"indications": [
+"allergic rhinitis",
+"ankylosing spondylitis",
+"asthma",
+"atopic dermatitis",
+"brain cancer",
+"breast cancer",
+"colon cancer",
+"hematologic cancer",
+"kidney cancer",
+"multiple sclerosis",
+"prostate cancer",
+"psoriasis",
+"psoriatic arthritis",
+"rheumatoid arthritis",
+"systemic lupus erythematosus",
+"ulcerative colitis"
+],
+"pharm_class": [
+"Corticosteroid Hormone Receptor Agonists"
+]
+},
+"105": {
+"genes": [
+"NR3C1",
+"SERPINA6"
+],
+"indications": [],
+"pharm_class": []
+},
+"106": {
+"genes": [
+"NR3C1",
+"PLA2G4A",
+"SERPINA6"
+],
+"indications": [
+"atopic dermatitis",
+"psoriasis"
+],
+"pharm_class": [
+"Corticosteroid Hormone Receptor Agonists"
+]
+},
+"109": {
+"genes": [
+"CYP3A4",
+"NR3C1",
+"SERPINA6"
+],
+"indications": [],
+"pharm_class": [
+"Corticosteroid Hormone Receptor Agonists"
+]
+},
+"110": {
+"genes": [
+"NR3C1"
+],
+"indications": [],
+"pharm_class": [
+"Corticosteroid Hormone Receptor Agonists"
+]
+},
+"111": {
+"genes": [
+"ABCB1",
+"CYP3A4",
+"NR3C1"
+],
+"indications": [
+"asthma"
+],
+"pharm_class": []
+},
+"114": {
+"genes": [
+"ANXA1",
+"NR3C1"
+],
+"indications": [],
+"pharm_class": [
+"Corticosteroid Hormone Receptor Agonists"
+]
+},
+"115": {
+"genes": [
+"HSD17B1",
+"SHBG"
+],
+"indications": [],
+"pharm_class": []
+},
+"116": {
+"genes": [
+"CES1",
+"CYP2D6",
+"CYP3A4",
+"NR3C1",
+"SERPINA6"
+],
+"indications": [
+"asthma"
+],
+"pharm_class": []
+},
+"117": {
+"genes": [
+"NR3C1",
+"SERPINA6"
+],
+"indications": [],
+"pharm_class": [
+"Corticosteroid Hormone Receptor Agonists"
+]
+},
+"119": {
+"genes": [
+"ABCB1",
+"ABCB11",
+"ABCC2",
+"ABCG2",
+"ANXA1",
+"CYP11A1",
+"CYP17A1",
+"CYP19A1",
+"CYP1A1",
+"CYP1B1",
+"CYP2A6",
+"CYP2B6",
+"CYP2C19",
+"CYP2C8",
+"CYP2C9",
+"CYP2D6",
+"CYP2E1",
+"CYP3A4",
+"CYP3A43",
+"CYP3A5",
+"CYP3A7",
+"CYP3A7-CYP3A51P",
+"CYP4A11",
+"NOS2",
+"NR0B1",
+"NR3C1",
+"NR3C2",
+"PGR",
+"PLA2G1B",
+"PTGS2",
+"SLCO1A2"
+],
+"indications": [
+"allergic rhinitis",
+"ankylosing spondylitis",
+"asthma",
+"atopic dermatitis",
+"brain cancer",
+"breast cancer",
+"colon cancer",
+"hematologic cancer",
+"kidney cancer",
+"multiple sclerosis",
+"prostate cancer",
+"psoriasis",
+"psoriatic arthritis",
+"rheumatoid arthritis",
+"systemic lupus erythematosus",
+"ulcerative colitis"
+],
+"pharm_class": [
+"Corticosteroid Hormone Receptor Agonists"
+]
+},
+"121": {
+"genes": [
+"NR3C1"
+],
+"indications": [
+"atopic dermatitis"
+],
+"pharm_class": [
+"Corticosteroid Hormone Receptor Agonists"
+]
+},
+"125": {
+"genes": [
+"CYP3A4",
+"NR3C1",
+"SERPINA6"
+],
+"indications": [
+"allergic rhinitis",
+"asthma"
+],
+"pharm_class": []
+},
+"126": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"127": {
+"genes": [
+"CYP3A4",
+"NR3C1",
+"SERPINA6"
+],
+"indications": [],
+"pharm_class": []
+},
+"130": {
+"genes": [
+"CYP3A4",
+"NR3C1"
+],
+"indications": [
+"asthma",
+"ulcerative colitis"
+],
+"pharm_class": [
+"Corticosteroid Hormone Receptor Agonists"
+]
+},
+"131": {
+"genes": [
+"CYP3A4",
+"NR3C1",
+"SERPINA6"
+],
+"indications": [],
+"pharm_class": [
+"Corticosteroid Hormone Receptor Agonists"
+]
+},
+"135": {
+"genes": [
+"CYP1A1",
+"CYP1A2",
+"NR3C1"
+],
+"indications": [
+"psoriasis"
+],
+"pharm_class": []
+},
+"137": {
+"genes": [
+"ABCB1",
+"ADRB1",
+"CACNA1H",
+"CACNA2D2",
+"CYP1A1",
+"CYP1A2",
+"CYP2A6",
+"CYP2C19",
+"CYP2C8",
+"CYP2C9",
+"CYP2D6",
+"CYP3A4",
+"CYP3A5",
+"CYP3A7",
+"CYP3A7-CYP3A51P",
+"EBP",
+"KCNH2",
+"SIGMAR1",
+"THRA",
+"THRB"
+],
+"indications": [],
+"pharm_class": [
+"Cytochrome P450 1A2 Inhibitors",
+"Cytochrome P450 2C9 Inhibitors",
+"Cytochrome P450 2D6 Inhibitors",
+"Cytochrome P450 3A4 Inhibitors",
+"P-Glycoprotein Inhibitors"
+]
+},
+"138": {
+"genes": [
+"ALB",
+"SLC15A1",
+"SLC15A2",
+"SLC16A1",
+"SLC22A5"
+],
+"indications": [],
+"pharm_class": [
+"Penicillins"
+]
+},
+"143": {
+"genes": [
+"ABCB1",
+"ABCC1",
+"CYP1A2",
+"CYP2B6",
+"CYP3A4",
+"CYP3A5",
+"CYP3A7",
+"CYP3A7-CYP3A51P",
+"MLNR",
+"SLC22A7",
+"SLCO1A2"
+],
+"indications": [],
+"pharm_class": [
+"Decreased Sebaceous Gland Activity",
+"Macrolides"
+]
+},
+"144": {
+"genes": [
+"CA1",
+"CA12",
+"CA14",
+"CA2",
+"CA4",
+"CA5A",
+"CA5B",
+"CA6",
+"CA7",
+"CA9",
+"CYP2C9",
+"CYP3A4"
+],
+"indications": [
+"glaucoma"
+],
+"pharm_class": []
+},
+"145": {
+"genes": [
+"CYP2C9",
+"GABRA1",
+"GABRA2",
+"GABRA3",
+"GABRA4",
+"GABRA5",
+"GABRA6",
+"GABRB1",
+"GABRB2",
+"GABRB3",
+"GABRD",
+"GABRE",
+"GABRG1",
+"GABRG2",
+"GABRG3",
+"GABRP",
+"GABRQ",
+"KCNJ11",
+"KCNJ8"
+],
+"indications": [],
+"pharm_class": []
+},
+"146": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"151": {
+"genes": [
+"ALDH2",
+"CYP1A1",
+"CYP1A2",
+"CYP2B6",
+"CYP2C8",
+"CYP2D6",
+"CYP2E1",
+"CYP3A4"
+],
+"indications": [],
+"pharm_class": []
+},
+"152": {
+"genes": [
+"ABCB1",
+"ABCG2",
+"CYP2C8",
+"CYP3A4",
+"CYP3A5",
+"SLCO1B1",
+"SLCO1B3",
+"TUBA4A",
+"TUBB",
+"TUBB1",
+"TUBB2A",
+"TUBB2B",
+"TUBB3",
+"TUBB4A",
+"TUBB4B",
+"TUBB6",
+"TUBB8"
+],
+"indications": [
+"prostate cancer"
+],
+"pharm_class": [
+"Microtubule Inhibition"
+]
+},
+"153": {
+"genes": [
+"CYP27A1",
+"CYP3A4",
+"NR1H4",
+"UGT2B7"
+],
+"indications": [
+"primary biliary cirrhosis"
+],
+"pharm_class": []
+},
+"154": {
+"genes": [
+"CYP3A4",
+"CYP3A5",
+"PDE10A",
+"PDE11A",
+"PDE1B",
+"PDE5A",
+"PDE6G",
+"PDE6H"
+],
+"indications": [],
+"pharm_class": []
+},
+"156": {
+"genes": [
+"ABCB1",
+"ABCC2",
+"CYP1A2",
+"CYP2B6",
+"CYP2C19",
+"CYP2C8",
+"CYP2C9",
+"CYP3A4",
+"CYP3A5",
+"CYP3A7",
+"CYP3A7-CYP3A51P",
+"RALBP1",
+"SCN4A",
+"SCN5A",
+"SCN9A",
+"UGT2B7"
+],
+"indications": [
+"bipolar disorder",
+"epilepsy syndrome",
+"multiple sclerosis",
+"restless legs syndrome",
+"schizophrenia"
+],
+"pharm_class": [
+"Cytochrome P450 1A2 Inducers",
+"Cytochrome P450 2B6 Inducers",
+"Cytochrome P450 2C19 Inducers",
+"Cytochrome P450 2C9 Inducers",
+"Cytochrome P450 3A4 Inducers",
+"Decreased Central Nervous System Disorganized Electrical Activity"
+]
+},
+"157": {
+"genes": [
+"CYP1A2",
+"CYP3A4",
+"SLC22A6"
+],
+"indications": [],
+"pharm_class": [
+"Penicillins"
+]
+},
+"158": {
+"genes": [
+"ABCB1",
+"ADRA1A",
+"ADRA1B",
+"ADRA1D",
+"CACNA1C",
+"CACNA1D",
+"CACNA2D1",
+"CACNB2",
+"CALM1",
+"CALM2",
+"CALM3",
+"CHRM1",
+"CHRM2",
+"CHRM3",
+"CHRM4",
+"CHRM5",
+"CYP2B6",
+"CYP2C19",
+"CYP2C8",
+"CYP2C9",
+"CYP2D6",
+"CYP2E1",
+"CYP3A4",
+"CYP3A5",
+"PDE1A",
+"PDE1B"
+],
+"indications": [
+"hypertension"
+],
+"pharm_class": [
+"Calcium Channel Antagonists",
+"Dihydropyridines"
+]
+},
+"161": {
+"genes": [
+"CHRFAM7A",
+"CHRNA4",
+"CHRNA7",
+"CYP1A2",
+"CYP2B6",
+"CYP2C19",
+"CYP2C8",
+"CYP2C9",
+"CYP3A4",
+"GABRA1",
+"GABRA2",
+"GABRA3",
+"GABRA4",
+"GABRA5",
+"GABRA6",
+"GABRB2",
+"GABRG2",
+"GRIA2",
+"GRIK2"
+],
+"indications": [
+"epilepsy syndrome"
+],
+"pharm_class": [
+"Decreased Central Nervous System Disorganized Electrical Activity"
+]
+},
+"162": {
+"genes": [
+"ABCB1",
+"ABCC4",
+"ABCC5",
+"ABCG2",
+"ALB",
+"CYP2A6",
+"CYP2C19",
+"CYP2C8",
+"CYP2C9",
+"CYP3A4",
+"SLC22A11",
+"SLC22A2",
+"SLC22A6",
+"SLC22A7",
+"SLC22A8",
+"SLC28A1",
+"SLC29A2",
+"TERT",
+"TK1",
+"UGT2B7"
+],
+"indications": [
+"acquired immunodeficiency syndrome"
+],
+"pharm_class": [
+"Nucleoside Analog",
+"Nucleoside Reverse Transcriptase Inhibitors"
+]
+},
+"163": {
+"genes": [
+"CYP2D6",
+"CYP3A4",
+"CYP3A5",
+"CYP3A7",
+"CYP3A7-CYP3A51P",
+"OPRD1",
+"OPRK1",
+"OPRM1"
+],
+"indications": [],
+"pharm_class": [
+"Full Opioid Agonists"
+]
+},
+"167": {
+"genes": [
+"ABCB1",
+"CACNA1A",
+"CALM1",
+"CALM2",
+"CALM3",
+"CYP2B6",
+"CYP2C8",
+"CYP2D6",
+"CYP3A4",
+"OPRD1",
+"OPRK1",
+"OPRM1",
+"POMC"
+],
+"indications": [],
+"pharm_class": [
+"Opioid Agonists"
+]
+},
+"168": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"170": {
+"genes": [
+"AHR",
+"AR",
+"CYP1A1",
+"CYP1A2",
+"CYP1B1",
+"CYP2C19",
+"CYP3A4",
+"CYP3A5"
+],
+"indications": [
+"prostate cancer"
+],
+"pharm_class": [
+"Androgen Receptor Antagonists"
+]
+},
+"171": {
+"genes": [
+"CHRFAM7A",
+"CHRNA4",
+"CHRNA7",
+"CYP2A6",
+"CYP2C19",
+"CYP3A4",
+"GABRA1",
+"GABRA2",
+"GABRA3",
+"GABRA4",
+"GABRA5",
+"GABRA6",
+"GABRB2",
+"GABRB3",
+"GABRG2",
+"GRIA2",
+"GRIK2"
+],
+"indications": [],
+"pharm_class": []
+},
+"173": {
+"genes": [
+"CYP1A2",
+"CYP2A6",
+"CYP2B6",
+"CYP2C9",
+"CYP2D6",
+"CYP3A4",
+"CYP3A5"
+],
+"indications": [
+"acquired immunodeficiency syndrome"
+],
+"pharm_class": [
+"Cytochrome P450 2B6 Inducers",
+"Cytochrome P450 3A Inducers",
+"Non-Nucleoside Analog",
+"Non-Nucleoside Reverse Transcriptase Inhibitors"
+]
+},
+"174": {
+"genes": [
+"AGTR1",
+"AGTR2",
+"CYP3A4"
+],
+"indications": [],
+"pharm_class": []
+},
+"177": {
+"genes": [
+"CYP2C8",
+"CYP2C9",
+"CYP2D6",
+"CYP3A4",
+"CYP3A43",
+"CYP3A5",
+"CYP3A7",
+"CYP3A7-CYP3A51P"
+],
+"indications": [],
+"pharm_class": [
+"Rifamycins"
+]
+},
+"180": {
+"genes": [
+"CYP2C9",
+"PTGS1",
+"PTGS2"
+],
+"indications": [
+"osteoarthritis",
+"rheumatoid arthritis"
+],
+"pharm_class": [
+"Cyclooxygenase Inhibitors",
+"Nonsteroidal Anti-inflammatory Compounds"
+]
+},
+"181": {
+"genes": [
+"CHRM3",
+"CYP2B6",
+"CYP2D6",
+"CYP3A4",
+"GRIN3A",
+"HTR2C",
+"OPRD1",
+"OPRK1",
+"OPRM1",
+"SLC6A2",
+"SLC6A4"
+],
+"indications": [
+"restless legs syndrome"
+],
+"pharm_class": [
+"Full Opioid Agonists"
+]
+},
+"184": {
+"genes": [
+"CYP2D6",
+"CYP3A4",
+"OPRM1"
+],
+"indications": [],
+"pharm_class": [
+"Full Opioid Agonists"
+]
+},
+"185": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"190": {
+"genes": [
+"ABCB1",
+"ATP1A1",
+"CACNA1A",
+"CACNA1C",
+"CACNA1D",
+"CACNA1H",
+"CACNA2D2",
+"CALM1",
+"CALM2",
+"CALM3",
+"CYP2D6",
+"KCNH2",
+"KCNQ1",
+"PDE1A",
+"PDE1B",
+"TNNC1"
+],
+"indications": [
+"hypertension"
+],
+"pharm_class": []
+},
+"196": {
+"genes": [
+"ADRA1A",
+"ADRA2A",
+"ADRA2C",
+"CYP1A2",
+"CYP2D6",
+"CYP2E1",
+"CYP3A4",
+"CYP3A5",
+"CYP3A7",
+"CYP3A7-CYP3A51P",
+"DRD1",
+"DRD2",
+"DRD3",
+"DRD4",
+"HRH1",
+"HTR1A",
+"HTR1D",
+"HTR2A",
+"HTR2C",
+"HTR6",
+"HTR7",
+"SIGMAR1"
+],
+"indications": [],
+"pharm_class": []
+},
+"199": {
+"genes": [
+"CYP1A2",
+"CYP2C9",
+"CYP2D6",
+"CYP2E1",
+"CYP3A4",
+"CYP3A5",
+"CYP3A7",
+"CYP3A7-CYP3A51P",
+"HTR1A",
+"HTR1B",
+"HTR3A",
+"HTR4",
+"KCNH2",
+"OPRM1",
+"SLC47A1",
+"SLC47A2"
+],
+"indications": [
+"alcohol dependence"
+],
+"pharm_class": [
+"Serotonin 3 Receptor Antagonists"
+]
+},
+"201": {
+"genes": [
+"CYP3A4",
+"SLC6A1"
+],
+"indications": [
+"bipolar disorder"
+],
+"pharm_class": [
+"Decreased Central Nervous System Disorganized Electrical Activity"
+]
+},
+"204": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"205": {
+"genes": [
+"CHRFAM7A",
+"CHRNA4",
+"CHRNA7",
+"CYP1A2",
+"CYP2C8",
+"CYP2C9",
+"GABRA1",
+"GABRA2",
+"GABRA3",
+"GABRA4",
+"GABRA5",
+"GABRA6",
+"GABRB2",
+"GABRG2",
+"GRIA2",
+"GRIK2"
+],
+"indications": [],
+"pharm_class": []
+},
+"208": {
+"genes": [
+"ABCB1",
+"CRBN",
+"CYP1A2",
+"CYP3A4",
+"PTGS2",
+"TNF"
+],
+"indications": [],
+"pharm_class": []
+},
+"213": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"214": {
+"genes": [
+"CYP1A2",
+"CYP3A4",
+"SCN10A",
+"SCN4A"
+],
+"indications": [],
+"pharm_class": []
+},
+"215": {
+"genes": [
+"AOX1",
+"CYP19A1",
+"CYP2B6",
+"CYP2C8",
+"CYP3A4",
+"EBP",
+"ESR1",
+"ESR2",
+"HTR2B",
+"HTR6",
+"SIGMAR1"
+],
+"indications": [
+"breast cancer",
+"osteoporosis"
+],
+"pharm_class": []
+},
+"219": {
+"genes": [
+"ALB",
+"CYP1A1",
+"CYP1A2",
+"CYP2C18",
+"CYP2C19",
+"CYP2C8",
+"CYP2C9",
+"CYP3A4",
+"ORM1",
+"VKORC1"
+],
+"indications": [],
+"pharm_class": [
+"Vitamin K Inhibitors"
+]
+},
+"222": {
+"genes": [
+"CYP1A1",
+"PDXK"
+],
+"indications": [],
+"pharm_class": []
+},
+"223": {
+"genes": [
+"ALB",
+"CYP2D6",
+"CYP3A4",
+"SLC15A1",
+"SLC15A2",
+"SLC22A5",
+"SLC22A6",
+"SLC22A8",
+"SLC47A1"
+],
+"indications": [],
+"pharm_class": [
+"Cephalosporins"
+]
+},
+"224": {
+"genes": [
+"ADRA1A",
+"ADRA2A",
+"CHRM1",
+"CYP2D6",
+"DRD1",
+"DRD2",
+"DRD3",
+"DRD4",
+"GABRA1",
+"HRH1",
+"HRH4",
+"HTR1A",
+"HTR1B",
+"HTR2A",
+"HTR2B",
+"HTR2C",
+"HTR3A",
+"HTR6",
+"HTR7",
+"ORM1",
+"SLC6A2",
+"SLC6A3",
+"SLC6A4"
+],
+"indications": [],
+"pharm_class": []
+},
+"225": {
+"genes": [
+"ABCB11",
+"CYP2C9",
+"CYP3A4",
+"EDNRA",
+"EDNRB"
+],
+"indications": [],
+"pharm_class": []
+},
+"229": {
+"genes": [
+"CYP3A4",
+"CYP3A43",
+"CYP3A5",
+"CYP3A7",
+"CYP3A7-CYP3A51P",
+"GABRA1",
+"GABRA2",
+"GABRA3",
+"GABRA4",
+"GABRA5",
+"GABRA6",
+"GABRB1",
+"GABRB2",
+"GABRB3",
+"GABRD",
+"GABRE",
+"GABRG1",
+"GABRG2",
+"GABRG3",
+"GABRP",
+"GABRQ",
+"GABRR1",
+"GABRR2",
+"GABRR3",
+"UGT1A9",
+"UGT2B15",
+"UGT2B7"
+],
+"indications": [],
+"pharm_class": [
+"Benzodiazepines"
+]
+},
+"230": {
+"genes": [
+"ADRA1B",
+"ADRA1D",
+"ADRA2A",
+"ADRA2B",
+"ADRA2C",
+"CYP2D6",
+"CYP3A4",
+"DRD2",
+"DRD3",
+"HTR1A",
+"HTR1B",
+"HTR1D",
+"HTR1F",
+"HTR2A",
+"HTR2B",
+"HTR2C",
+"SLC6A4"
+],
+"indications": [],
+"pharm_class": []
+},
+"234": {
+"genes": [
+"CA1",
+"CA12",
+"CA14",
+"CA2",
+"CA4",
+"CA5A",
+"CA5B",
+"CA6",
+"CA7",
+"CA9",
+"CYP3A4"
+],
+"indications": [
+"glaucoma"
+],
+"pharm_class": []
+},
+"236": {
+"genes": [
+"ABCB1",
+"AKR1C1",
+"ALB",
+"CYP2C9",
+"PTGS1",
+"PTGS2",
+"SLC16A1",
+"SLC22A10",
+"SLC22A11",
+"SLC22A6",
+"SLC22A7",
+"SLC22A8",
+"SLCO2B1"
+],
+"indications": [
+"psoriasis"
+],
+"pharm_class": [
+"Decreased Prostaglandin Production",
+"Nonsteroidal Anti-inflammatory Compounds"
+]
+},
+"237": {
+"genes": [
+"ABCB1",
+"ADRB3",
+"ALB",
+"BCHE",
+"CYP2D6",
+"CYP3A4",
+"ORM1",
+"SLCO1A2"
+],
+"indications": [],
+"pharm_class": [
+"Adrenergic beta3-Agonists",
+"Cytochrome P450 2D6 Inhibitors"
+]
+},
+"241": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"245": {
+"genes": [
+"ABCB1",
+"CBR1",
+"CYP1A1",
+"CYP1A2",
+"CYP2C19",
+"CYP2C9",
+"CYP2D6",
+"CYP3A4",
+"CYP3A5",
+"CYP3A7",
+"CYP3A7-CYP3A51P",
+"DRD1",
+"DRD2",
+"DRD3",
+"DRD4",
+"EBP",
+"GRIN2B",
+"H1F0",
+"HRH1",
+"HTR1B",
+"HTR1D",
+"HTR2A",
+"HTR2B",
+"KCNH2",
+"SIGMAR1",
+"UGT1A9"
+],
+"indications": [
+"Alzheimer's disease",
+"Gilles de la Tourette syndrome",
+"conduct disorder",
+"schizophrenia"
+],
+"pharm_class": []
+},
+"247": {
+"genes": [
+"ABCB1",
+"ADRA1A",
+"ADRA1B",
+"ADRA1D",
+"ADRA2A",
+"ADRA2B",
+"ADRA2C",
+"ADRB1",
+"CYP1A2",
+"CYP3A4",
+"DRD1",
+"DRD2",
+"DRD3",
+"DRD4",
+"DRD5",
+"HTR1A",
+"HTR1B",
+"HTR1D",
+"HTR2A",
+"HTR2B",
+"HTR2C",
+"HTR6",
+"HTR7"
+],
+"indications": [
+"Parkinson's disease",
+"type 2 diabetes mellitus"
+],
+"pharm_class": [
+"Ergolines"
+]
+},
+"250": {
+"genes": [
+"CYP1A2",
+"CYP2C19",
+"CYP3A4",
+"MTNR1A",
+"MTNR1B"
+],
+"indications": [
+"Parkinson's disease"
+],
+"pharm_class": [
+"Melatonin Receptor Agonists"
+]
+},
+"251": {
+"genes": [
+"CYP1A2",
+"CYP2C19",
+"CYP2C9",
+"CYP2D6",
+"CYP2E1",
+"CYP3A4",
+"DHFR"
+],
+"indications": [
+"malaria"
+],
+"pharm_class": [
+"Dihydrofolate Reductase Inhibitors"
+]
+},
+"252": {
+"genes": [
+"CYP2C19",
+"CYP2C8",
+"CYP2C9",
+"CYP2D6",
+"CYP3A4",
+"PPARG",
+"PTGS1",
+"SLCO1B1",
+"SLCO1B3"
+],
+"indications": [
+"type 2 diabetes mellitus"
+],
+"pharm_class": [
+"PPAR alpha",
+"PPAR gamma",
+"Peroxisome Proliferator-activated Receptor Activity",
+"Thiazolidinediones"
+]
+},
+"253": {
+"genes": [
+"ADRB1",
+"ADRB2",
+"CYP2A6",
+"CYP2C19",
+"CYP2C9",
+"CYP2D6"
+],
+"indications": [
+"asthma",
+"chronic obstructive pulmonary disease"
+],
+"pharm_class": [
+"Adrenergic beta2-Agonists"
+]
+},
+"254": {
+"genes": [
+"ABCB1",
+"CYP2D6",
+"CYP3A4",
+"CYP3A5",
+"CYP3A7",
+"CYP3A7-CYP3A51P",
+"DRD2",
+"DRD3",
+"HTR1A",
+"HTR2A",
+"HTR2B"
+],
+"indications": [
+"panic disorder"
+],
+"pharm_class": []
+},
+"255": {
+"genes": [
+"ABCB1",
+"ABCC1",
+"ABCC2",
+"ABCC3",
+"ABCC4",
+"ABCC5",
+"ABCC6",
+"CYP2B6",
+"CYP2C8",
+"CYP2C9",
+"CYP3A4",
+"FABP2",
+"SLC22A12"
+],
+"indications": [],
+"pharm_class": []
+},
+"256": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"258": {
+"genes": [
+"ABCB1",
+"ABCC1",
+"ABCC11",
+"ABCC2",
+"ABCC3",
+"ABCC4",
+"ABCC6",
+"AKR1C3",
+"ALB",
+"CES1",
+"CXCL8",
+"CYP2C19",
+"CYP2C9",
+"GLO1",
+"PLA2G2A",
+"PPARA",
+"PPARG",
+"PTGDR2",
+"PTGR2",
+"PTGS1",
+"PTGS2",
+"SLC10A1",
+"SLC22A11",
+"SLC22A6",
+"SLC22A7",
+"SLC22A8",
+"SLCO1A2",
+"SLCO1B1",
+"UGT1A1",
+"UGT1A9",
+"UGT2B7"
+],
+"indications": [
+"ankylosing spondylitis",
+"gout",
+"migraine",
+"osteoarthritis",
+"rheumatoid arthritis"
+],
+"pharm_class": [
+"Nonsteroidal Anti-inflammatory Compounds"
+]
+},
+"259": {
+"genes": [
+"CYP1A2",
+"CYP2A6",
+"CYP2B6",
+"CYP2C19",
+"CYP2C9",
+"CYP2E1",
+"CYP3A4",
+"GABRA1",
+"GABRA2",
+"GABRA3",
+"GABRA4",
+"GABRA5",
+"GABRA6",
+"TSPO",
+"UGT1A1",
+"UGT1A3",
+"UGT2B7"
+],
+"indications": [],
+"pharm_class": []
+},
+"260": {
+"genes": [
+"CYP2C9",
+"CYP2D6",
+"CYP3A4",
+"OPRD1",
+"OPRK1",
+"OPRM1",
+"PTGS1",
+"UGT1A9"
+],
+"indications": [],
+"pharm_class": [
+"Full Opioid Agonists"
+]
+},
+"261": {
+"genes": [
+"ABCB1",
+"ALB",
+"CREB1",
+"CYP2C8",
+"CYP3A4",
+"ESR1",
+"OPRD1",
+"OPRK1",
+"OPRM1",
+"SLCO1A2",
+"TLR4"
+],
+"indications": [],
+"pharm_class": [
+"Opioid Antagonists"
+]
+},
+"262": {
+"genes": [
+"ABCB1",
+"ADRA1A",
+"ADRA1B",
+"ADRA1D",
+"ADRA2A",
+"ALB",
+"CHRM1",
+"CHRM2",
+"CHRM3",
+"CHRM4",
+"CHRM5",
+"CYP1A2",
+"CYP2B6",
+"CYP2C19",
+"CYP2C8",
+"CYP2C9",
+"CYP2D6",
+"CYP2E1",
+"CYP3A4",
+"CYP3A5",
+"DRD2",
+"DRD3",
+"HRH1",
+"HRH2",
+"HRH4",
+"HTR1A",
+"HTR1B",
+"HTR1D",
+"HTR2A",
+"HTR2C",
+"HTR6",
+"HTR7",
+"KCNA1",
+"KCND2",
+"KCND3",
+"KCNQ2",
+"KCNQ3",
+"NTRK1",
+"NTRK2",
+"OPRD1",
+"OPRK1",
+"OPRM1",
+"ORM1",
+"SIGMAR1",
+"SLC6A2",
+"SLC6A4"
+],
+"indications": [
+"endogenous depression",
+"migraine",
+"multiple sclerosis",
+"rheumatoid arthritis",
+"systemic lupus erythematosus"
+],
+"pharm_class": []
+},
+"263": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"264": {
+"genes": [
+"ACHE",
+"BCHE",
+"CHRFAM7A",
+"CHRNA1",
+"CHRNA10",
+"CHRNA2",
+"CHRNA3",
+"CHRNA4",
+"CHRNA5",
+"CHRNA6",
+"CHRNA7",
+"CHRNA9",
+"CHRNB1",
+"CHRNB2",
+"CHRNB3",
+"CHRNB4",
+"CHRND",
+"CHRNE",
+"CHRNG",
+"CYP2D6",
+"CYP3A4"
+],
+"indications": [
+"Alzheimer's disease"
+],
+"pharm_class": []
+},
+"265": {
+"genes": [
+"CYP3A4",
+"ESR1",
+"PGR"
+],
+"indications": [],
+"pharm_class": []
+},
+"270": {
+"genes": [
+"CHRM2",
+"CYP2D6",
+"CYP3A4",
+"DRD2",
+"DRD3",
+"HRH1",
+"HTR2C"
+],
+"indications": [
+"breast cancer"
+],
+"pharm_class": [
+"Phenothiazines"
+]
+},
+"271": {
+"genes": [
+"CYP2C8",
+"CYP2C9",
+"CYP3A4"
+],
+"indications": [],
+"pharm_class": [
+"Nitroimidazoles"
+]
+},
+"272": {
+"genes": [
+"CYP2C8",
+"CYP2D6",
+"CYP3A4",
+"CYP3A5",
+"KCNH2"
+],
+"indications": [],
+"pharm_class": []
+},
+"274": {
+"genes": [
+"ASMT",
+"CALM1",
+"CALM2",
+"CALM3",
+"CALR",
+"CYP19A1",
+"CYP1A1",
+"CYP1A2",
+"CYP1B1",
+"CYP2C19",
+"CYP2C9",
+"EPX",
+"ESR1",
+"IDO1",
+"MPO",
+"MT3",
+"MTNR1A",
+"MTNR1B",
+"NQO2",
+"SLC22A8"
+],
+"indications": [],
+"pharm_class": []
+},
+"277": {
+"genes": [
+"CACNA1G",
+"CYP2C19",
+"CYP2C8",
+"CYP2C9",
+"CYP2E1",
+"CYP3A4"
+],
+"indications": [
+"epilepsy syndrome"
+],
+"pharm_class": [
+"Decreased Central Nervous System Disorganized Electrical Activity"
+]
+},
+"278": {
+"genes": [
+"ADRA1A",
+"ADRA1B",
+"ADRA1D",
+"CYP3A4",
+"KCNH2"
+],
+"indications": [],
+"pharm_class": []
+},
+"279": {
+"genes": [
+"ABCB1",
+"CYP2D6",
+"SLC6A2",
+"SLC6A4"
+],
+"indications": [],
+"pharm_class": []
+},
+"281": {
+"genes": [
+"CYP2D6",
+"CYP3A4",
+"CYP3A5",
+"CYP3A7",
+"CYP3A7-CYP3A51P",
+"HRH1",
+"SLC22A1",
+"SLC22A2",
+"SLC6A2",
+"SLC6A3",
+"SLC6A4"
+],
+"indications": [],
+"pharm_class": [
+"Histamine H1 Receptor Antagonists"
+]
+},
+"283": {
+"genes": [
+"ABCB1",
+"CYP11B1",
+"CYP17A1",
+"CYP19A1",
+"CYP1A2",
+"CYP2A6",
+"CYP2B6",
+"CYP2C19",
+"CYP2C9",
+"CYP2D6",
+"CYP2E1",
+"CYP3A4",
+"CYP51A1",
+"KCNH2",
+"KCNH6",
+"KCNH7",
+"KCNMA1",
+"KCNMB1",
+"KCNMB2",
+"KCNMB3",
+"KCNMB4",
+"KCNN1",
+"KCNN2",
+"KCNN3",
+"KCNN4",
+"NOS2",
+"NOS3"
+],
+"indications": [],
+"pharm_class": [
+"Azoles"
+]
+},
+"284": {
+"genes": [
+"CYP2C8",
+"CYP2C9",
+"CYP2E1",
+"CYP3A4"
+],
+"indications": [
+"malaria"
+],
+"pharm_class": [
+"Sulfonamides"
+]
+},
+"285": {
+"genes": [
+"ABCB1",
+"ACHE",
+"ADORA1",
+"ADORA2A",
+"BCHE",
+"CYP19A1",
+"CYP2D6",
+"CYP3A4",
+"HBA1",
+"HBA2"
+],
+"indications": [],
+"pharm_class": []
+},
+"286": {
+"genes": [
+"CYP2C9",
+"PTGS1",
+"PTGS2"
+],
+"indications": [],
+"pharm_class": []
+},
+"287": {
+"genes": [
+"CYP1A2",
+"CYP2C19",
+"CYP2C9",
+"CYP2D6",
+"CYP3A4",
+"CYP3A5",
+"CYP3A7",
+"CYP3A7-CYP3A51P",
+"GABRA1",
+"GABRA2",
+"GABRA3",
+"GABRB2",
+"GABRB3",
+"GABRG2",
+"PTGS1"
+],
+"indications": [
+"multiple sclerosis"
+],
+"pharm_class": [
+"Central Nervous System Depression",
+"GABA A Agonists",
+"Pyridines"
+]
+},
+"288": {
+"genes": [
+"ADRA1A",
+"ADRA1B",
+"ADRA1D",
+"ADRA2A",
+"CHRM1",
+"CHRM2",
+"CHRM3",
+"CHRM4",
+"CHRM5",
+"CYP1A2",
+"CYP2C19",
+"CYP2C9",
+"CYP3A4",
+"DRD1",
+"DRD2",
+"DRD4",
+"HRH1",
+"HTR2A",
+"HTR2C"
+],
+"indications": [],
+"pharm_class": []
+},
+"291": {
+"genes": [
+"ESR1"
+],
+"indications": [],
+"pharm_class": []
+},
+"292": {
+"genes": [
+"ABCB1",
+"ABCB11",
+"ABCC1",
+"ABCC10",
+"ABCC2",
+"ABCG2",
+"BCL2",
+"CYP19A1",
+"CYP1B1",
+"CYP2C8",
+"CYP2C9",
+"CYP3A4",
+"CYP3A5",
+"CYP3A7",
+"CYP3A7-CYP3A51P",
+"MAP2",
+"MAP4",
+"MAPT",
+"NR1I2",
+"SLCO1B3",
+"TUBB",
+"TUBB1",
+"TUBB2A",
+"TUBB2B",
+"TUBB3",
+"TUBB4A",
+"TUBB4B",
+"TUBB6",
+"TUBB8"
+],
+"indications": [
+"breast cancer",
+"kidney cancer",
+"lung cancer",
+"ovarian cancer"
+],
+"pharm_class": [
+"Microtubule Inhibition"
+]
+},
+"294": {
+"genes": [
+"CHRM2",
+"CYP1A2",
+"CYP2B6",
+"CYP2C18",
+"CYP2C19",
+"CYP2C9",
+"CYP2D6",
+"HRH1",
+"PTGS1",
+"SLC22A1",
+"SLC22A2",
+"SLC22A5"
+],
+"indications": [
+"Parkinson's disease",
+"allergic rhinitis",
+"atopic dermatitis",
+"schizophrenia"
+],
+"pharm_class": [
+"Histamine H1 Receptor Antagonists"
+]
+},
+"296": {
+"genes": [
+"CYP2C9",
+"CYP2D6",
+"CYP3A4",
+"HTR3A"
+],
+"indications": [],
+"pharm_class": [
+"Serotonin 3 Receptor Antagonists"
+]
+},
+"299": {
+"genes": [
+"ABCB1",
+"ABCB11",
+"ABCC2",
+"AOX1",
+"CYP2B6",
+"CYP2C8",
+"CYP3A4",
+"ESR1",
+"ESR2",
+"NR1I2",
+"SHBG",
+"SLC10A1"
+],
+"indications": [
+"breast cancer",
+"osteoporosis",
+"polycystic ovary syndrome",
+"prostate cancer"
+],
+"pharm_class": [
+"Estrogen Receptor Agonists"
+]
+},
+"303": {
+"genes": [
+"CYP2C8",
+"RARA",
+"RARB",
+"RARG",
+"RXRB"
+],
+"indications": [
+"psoriasis"
+],
+"pharm_class": [
+"Retinoids"
+]
+},
+"304": {
+"genes": [
+"ABCB1",
+"AGTR1",
+"CYP2C8",
+"CYP2C9",
+"PTGS1",
+"UGT1A3"
+],
+"indications": [
+"hypertension"
+],
+"pharm_class": []
+},
+"305": {
+"genes": [
+"ABCB1",
+"CYP2D6",
+"CYP3A4",
+"TUBB",
+"TUBB1",
+"TUBB2A",
+"TUBB2B",
+"TUBB3",
+"TUBB4A",
+"TUBB4B",
+"TUBB6",
+"TUBB8"
+],
+"indications": [
+"breast cancer",
+"hematologic cancer",
+"lung cancer",
+"ovarian cancer"
+],
+"pharm_class": [
+"Vinca Alkaloids"
+]
+},
+"306": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"307": {
+"genes": [
+"CYP1A1",
+"CYP1A2",
+"CYP2B6",
+"CYP2C19",
+"CYP2C8",
+"CYP2C9",
+"CYP2D6",
+"CYP3A4",
+"CYP3A5",
+"HMGCR",
+"SLC15A1",
+"SLCO1B1",
+"SLCO1B3",
+"SLCO2B1",
+"UGT1A1",
+"UGT1A3",
+"UGT2B7"
+],
+"indications": [],
+"pharm_class": []
+},
+"308": {
+"genes": [
+"ADRA1B",
+"ADRA1D",
+"ADRA2A",
+"ADRA2B",
+"ADRA2C",
+"ADRB1",
+"CYP2D6",
+"CYP3A4",
+"DRD1",
+"DRD2",
+"DRD3",
+"DRD4",
+"DRD5",
+"HTR1A",
+"HTR1B",
+"HTR1D",
+"HTR2A",
+"HTR2B",
+"HTR2C"
+],
+"indications": [],
+"pharm_class": []
+},
+"309": {
+"genes": [
+"ABCB1",
+"CYP2D6",
+"CYP3A4",
+"HTR2C",
+"SLC6A2",
+"SLC6A4"
+],
+"indications": [],
+"pharm_class": []
+},
+"310": {
+"genes": [
+"ABCB1",
+"ADRA1A",
+"ADRA1B",
+"ADRA2A",
+"ADRA2B",
+"CYP2C19",
+"CYP2C9",
+"CYP2D6",
+"CYP3A4",
+"DRD2",
+"HRH1",
+"HTR1A",
+"HTR1D",
+"HTR2A",
+"HTR2C",
+"HTR3A",
+"SLC6A2",
+"SLC6A3",
+"SLC6A4"
+],
+"indications": [],
+"pharm_class": []
+},
+"311": {
+"genes": [
+"CYP1A2",
+"CYP2C19",
+"CYP2C8",
+"CYP2D6",
+"CYP2E1",
+"CYP3A4",
+"FMO3",
+"HTR1B",
+"HTR1D",
+"MAOA"
+],
+"indications": [
+"migraine"
+],
+"pharm_class": [
+"Serotonin 1b Receptor Agonists",
+"Serotonin 1d Receptor Agonists"
+]
+},
+"312": {
+"genes": [
+"CYP2B6",
+"CYP2C19",
+"CYP2C8",
+"CYP2C9",
+"CYP3A4",
+"GABRA1",
+"GABRA2",
+"GABRA3",
+"GABRA4",
+"GABRA5",
+"GABRA6",
+"GABRB1",
+"GABRB2",
+"GABRB3",
+"GABRD",
+"GABRE",
+"GABRG1",
+"GABRG2",
+"GABRG3",
+"GABRP",
+"GABRQ",
+"GABRR1",
+"GABRR2",
+"GABRR3",
+"TSPO"
+],
+"indications": [],
+"pharm_class": [
+"Benzodiazepines"
+]
+},
+"313": {
+"genes": [
+"CYP1A2",
+"CYP2C9",
+"STAT3"
+],
+"indications": [],
+"pharm_class": []
+},
+"315": {
+"genes": [
+"ABCB1",
+"ACE",
+"CYP3A4",
+"SLC15A1",
+"SLC22A6",
+"SLC22A7",
+"SLC22A8",
+"SLCO1A2"
+],
+"indications": [
+"coronary artery disease",
+"hypertension"
+],
+"pharm_class": [
+"Decreased Blood Pressure"
+]
+},
+"316": {
+"genes": [
+"ADRA1A",
+"ADRA1B",
+"ADRA2A",
+"ADRA2B",
+"ADRA2C",
+"CHRM1",
+"CHRM2",
+"CHRM3",
+"CHRM4",
+"CHRM5",
+"CYP1A2",
+"CYP2D6",
+"CYP3A4",
+"CYP3A5",
+"CYP3A7",
+"CYP3A7-CYP3A51P",
+"DRD1",
+"DRD2",
+"DRD3",
+"DRD4",
+"DRD5",
+"H1F0",
+"HRH1",
+"HTR1A",
+"HTR1B",
+"HTR1D",
+"HTR1E",
+"HTR2A",
+"HTR2C",
+"HTR3A",
+"HTR6",
+"HTR7",
+"KCNH2",
+"SLC6A4"
+],
+"indications": [
+"Gilles de la Tourette syndrome",
+"bipolar disorder",
+"schizophrenia"
+],
+"pharm_class": []
+},
+"317": {
+"genes": [
+"ABCB1",
+"ADRA1A",
+"CALM1",
+"CALM2",
+"CALM3",
+"CHRM1",
+"CHRM2",
+"CHRM3",
+"CHRM4",
+"CHRM5",
+"CYP2B6",
+"CYP2C9",
+"CYP2D6",
+"DRD2",
+"HRH1",
+"HRH4",
+"HTR2A"
+],
+"indications": [],
+"pharm_class": [
+"Phenothiazines"
+]
+},
+"318": {
+"genes": [
+"ABCG2",
+"ATP4A",
+"ATP4B",
+"CYP1A1",
+"CYP1A2",
+"CYP2C19",
+"CYP2C9",
+"CYP2D6",
+"CYP3A4"
+],
+"indications": [],
+"pharm_class": []
+},
+"324": {
+"genes": [
+"ADRA1A",
+"CHRM1",
+"CYP2C19",
+"CYP2D6",
+"CYP3A4",
+"HRH1",
+"HTR2C",
+"SLC6A2",
+"SLC6A3",
+"SLC6A4"
+],
+"indications": [
+"bipolar disorder",
+"endogenous depression"
+],
+"pharm_class": [
+"Serotonin Uptake Inhibitors"
+]
+},
+"325": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"327": {
+"genes": [
+"CYP2D6",
+"CYP3A4",
+"OPRD1",
+"OPRK1",
+"OPRM1"
+],
+"indications": [],
+"pharm_class": [
+"Full Opioid Agonists"
+]
+},
+"328": {
+"genes": [
+"AR",
+"CYP2C19",
+"CYP2C8",
+"CYP2C9",
+"POR"
+],
+"indications": [
+"prostate cancer"
+],
+"pharm_class": [
+"Androgen Receptor Antagonists"
+]
+},
+"331": {
+"genes": [
+"CYP3A4",
+"FKBP1A",
+"MTOR"
+],
+"indications": [
+"atopic dermatitis"
+],
+"pharm_class": []
+},
+"332": {
+"genes": [
+"ABCB1",
+"ABCG2",
+"ALB",
+"AR",
+"CYP11A1",
+"CYP19A1",
+"CYP1A1",
+"CYP1B1",
+"CYP2A13",
+"CYP2B6",
+"CYP2C19",
+"CYP2C8",
+"CYP2C9",
+"CYP3A4",
+"CYP3A43",
+"CYP3A5",
+"CYP3A7",
+"CYP3A7-CYP3A51P",
+"MAOA",
+"SHBG",
+"SLC10A1",
+"SLC22A1",
+"SLC22A3",
+"SLC22A4",
+"SLC22A7",
+"SLC22A8",
+"SLCO1A2"
+],
+"indications": [
+"breast cancer"
+],
+"pharm_class": [
+"Androgen Receptor Agonists",
+"Androstanes"
+]
+},
+"335": {
+"genes": [
+"CYP3A4",
+"GABRA1",
+"GABRA2",
+"GABRA3",
+"GABRA5",
+"GABRB2",
+"GABRB3",
+"GABRG2",
+"TSPO"
+],
+"indications": [],
+"pharm_class": [
+"Benzodiazepines"
+]
+},
+"336": {
+"genes": [
+"CYP3A4",
+"GABRA1",
+"GABRA2",
+"GABRA3",
+"GABRA5",
+"GABRB1",
+"GABRB2",
+"GABRB3",
+"GABRD",
+"GABRE",
+"GABRG1",
+"GABRG2",
+"GABRG3",
+"GABRP",
+"GABRR1",
+"GABRR2",
+"GABRR3"
+],
+"indications": [],
+"pharm_class": []
+},
+"337": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"339": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"340": {
+"genes": [
+"CYP2D6",
+"CYP2E1",
+"CYP3A4",
+"CYP4F12",
+"CYP4F2",
+"S1PR1",
+"S1PR3",
+"S1PR4",
+"S1PR5",
+"SPHK1"
+],
+"indications": [
+"multiple sclerosis"
+],
+"pharm_class": [
+"Sphingosine 1-Phosphate Receptor Modulators"
+]
+},
+"341": {
+"genes": [
+"CACNA1G",
+"CACNA1H",
+"CACNA1I",
+"CYP2C8",
+"CYP2C9",
+"CYP2E1",
+"CYP3A4"
+],
+"indications": [],
+"pharm_class": []
+},
+"342": {
+"genes": [
+"ALB",
+"CYP1A2",
+"CYP2C19",
+"CYP2C9",
+"CYP3A4",
+"ORM1",
+"VKORC1"
+],
+"indications": [],
+"pharm_class": []
+},
+"343": {
+"genes": [
+"ADRB1",
+"ADRB2",
+"CYP2D6",
+"CYP3A4"
+],
+"indications": [],
+"pharm_class": []
+},
+"344": {
+"genes": [
+"CYP3A4",
+"CYP3A5",
+"PDE5A"
+],
+"indications": [],
+"pharm_class": []
+},
+"345": {
+"genes": [
+"ABCB1",
+"CYP2D6",
+"CYP2J2",
+"CYP3A4",
+"CYP3A5",
+"CYP3A7",
+"CYP3A7-CYP3A51P",
+"HRH1",
+"KCNH2"
+],
+"indications": [],
+"pharm_class": []
+},
+"347": {
+"genes": [
+"ALB",
+"ATP2C1",
+"ATP5D",
+"CALM1",
+"CALM2",
+"CALM3",
+"CYP2B6",
+"CYP2E1",
+"GABRA1",
+"GABRA2",
+"GABRA3",
+"GABRA4",
+"GABRA5",
+"GABRA6",
+"GABRB1",
+"GABRB2",
+"GABRB3",
+"GABRD",
+"GABRE",
+"GABRG1",
+"GABRG2",
+"GABRG3",
+"GABRP",
+"GABRQ",
+"GLRA1",
+"GLRB",
+"GRIA1",
+"KCNA1",
+"KCNK10",
+"KCNK18",
+"KCNK2",
+"KCNK3",
+"KCNK9",
+"ND1"
+],
+"indications": [],
+"pharm_class": [
+"General Anesthesia"
+]
+},
+"348": {
+"genes": [
+"CYP3A4"
+],
+"indications": [],
+"pharm_class": []
+},
+"349": {
+"genes": [
+"CYP1A2",
+"CYP2C19",
+"CYP2C9",
+"PTGS1",
+"PTGS2",
+"UGT1A9"
+],
+"indications": [],
+"pharm_class": []
+},
+"350": {
+"genes": [
+"ABCB1",
+"ABCB11",
+"ABCC2",
+"ABCG2",
+"CYP2C8",
+"CYP2C9",
+"CYP2D6",
+"CYP3A4",
+"CYP3A5",
+"HMGCR",
+"SLC16A1",
+"SLC22A11",
+"SLC22A6",
+"SLC22A7",
+"SLC22A8",
+"SLCO1A2",
+"SLCO1B1",
+"SLCO1B3",
+"SLCO2B1"
+],
+"indications": [
+"atherosclerosis",
+"coronary artery disease"
+],
+"pharm_class": []
+},
+"353": {
+"genes": [
+"ABCB1",
+"ADRA1A",
+"ADRA2A",
+"CYP2B6",
+"CYP2D6",
+"CYP3A4",
+"HRH1",
+"HRH2",
+"HTR2A",
+"HTR7"
+],
+"indications": [],
+"pharm_class": [
+"Adrenergic Agonists",
+"Decreased Histamine Release",
+"Histamine H1 Receptor Antagonists"
+]
+},
+"354": {
+"genes": [
+"ALB",
+"ATP2C1",
+"ATP5D",
+"CYP2A6",
+"CYP2B6",
+"CYP2E1",
+"CYP3A4",
+"GABRA1",
+"GABRA2",
+"GABRA3",
+"GABRA4",
+"GABRA5",
+"GABRA6",
+"GABRB1",
+"GABRB2",
+"GABRB3",
+"GABRD",
+"GABRE",
+"GABRG1",
+"GABRG2",
+"GABRG3",
+"GABRP",
+"GABRQ",
+"GLRA1",
+"GRIA1",
+"KCNA1",
+"KCNK10",
+"KCNK18",
+"KCNK2",
+"KCNK3",
+"KCNK9",
+"ND1"
+],
+"indications": [],
+"pharm_class": [
+"General Anesthesia"
+]
+},
+"355": {
+"genes": [
+"ADRA1A",
+"ADRA1B",
+"ADRA1D",
+"ADRA2A",
+"ADRA2B",
+"ADRA2C",
+"ADRB2",
+"CALM1",
+"CALM2",
+"CALM3",
+"CYP3A4",
+"SLC22A1",
+"SLC22A2",
+"SLC22A3"
+],
+"indications": [],
+"pharm_class": []
+},
+"356": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"363": {
+"genes": [
+"CYP2C9",
+"F2"
+],
+"indications": [],
+"pharm_class": []
+},
+"365": {
+"genes": [
+"CYP1A1",
+"CYP1B1",
+"CYP2C8",
+"CYP2C9",
+"CYP2D6",
+"HNMT"
+],
+"indications": [],
+"pharm_class": []
+},
+"367": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"371": {
+"genes": [
+"CYP2C19",
+"CYP2C9",
+"CYP3A4",
+"GABRA1",
+"GABRA2",
+"GABRA3",
+"GABRA5",
+"GABRB1",
+"GABRB3",
+"GABRD",
+"GABRE",
+"GABRG1",
+"GABRG2",
+"GABRG3",
+"GABRP",
+"GABRR1",
+"GABRR2",
+"GABRR3"
+],
+"indications": [
+"multiple sclerosis"
+],
+"pharm_class": [
+"Benzodiazepines"
+]
+},
+"372": {
+"genes": [
+"AKR1D1",
+"CYP3A4",
+"CYP3A5",
+"CYP3A7",
+"CYP3A7-CYP3A51P",
+"SRD5A1",
+"SRD5A2"
+],
+"indications": [],
+"pharm_class": []
+},
+"378": {
+"genes": [
+"CYP3A4",
+"ESR1",
+"PGR",
+"SHBG"
+],
+"indications": [],
+"pharm_class": [
+"Progesterone Congeners"
+]
+},
+"380": {
+"genes": [
+"CYP11A1",
+"CYP2D6",
+"GABRA1",
+"GABRB3",
+"GABRG2"
+],
+"indications": [],
+"pharm_class": []
+},
+"381": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"383": {
+"genes": [
+"CYP1A1",
+"CYP2D6",
+"CYP3A4",
+"CYP3A5",
+"HTR3A"
+],
+"indications": [],
+"pharm_class": [
+"Serotonin 3 Receptor Antagonists"
+]
+},
+"385": {
+"genes": [
+"ABCB1",
+"CA1",
+"CACNA1B",
+"CACNA1C",
+"CACNA1D",
+"CACNA1S",
+"CACNA2D1",
+"CACNA2D3",
+"CACNB2",
+"CYP1A1",
+"CYP1A2",
+"CYP2A6",
+"CYP2B6",
+"CYP2C8",
+"CYP2C9",
+"CYP2D6",
+"CYP3A4",
+"CYP3A5",
+"CYP3A7",
+"CYP3A7-CYP3A51P",
+"SMPD1"
+],
+"indications": [
+"coronary artery disease",
+"hypertension"
+],
+"pharm_class": [
+"Calcium Channel Antagonists",
+"Dihydropyridines"
+]
+},
+"386": {
+"genes": [
+"ABCB1",
+"ALB",
+"CYP2C19",
+"CYP3A4",
+"CYP3A5",
+"CYP3A7",
+"CYP3A7-CYP3A51P",
+"PGR",
+"SHBG"
+],
+"indications": [
+"polycystic ovary syndrome"
+],
+"pharm_class": [
+"Progesterone Congeners"
+]
+},
+"388": {
+"genes": [
+"ABCC4",
+"ALB",
+"CYP2C9",
+"PTGS1",
+"PTGS2",
+"SLC22A6",
+"UGT1A1",
+"UGT1A3",
+"UGT1A9",
+"UGT2B4",
+"UGT2B7"
+],
+"indications": [
+"osteoarthritis"
+],
+"pharm_class": [
+"Nonsteroidal Anti-inflammatory Compounds"
+]
+},
+"389": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"391": {
+"genes": [
+"CYP2B6",
+"CYP3A4"
+],
+"indications": [
+"breast cancer",
+"hematologic cancer",
+"sarcoma",
+"urinary bladder cancer"
+],
+"pharm_class": [
+"Alkylating Activity"
+]
+},
+"392": {
+"genes": [
+"ABCB1",
+"ABCB11",
+"ADRA1A",
+"ADRA1B",
+"ADRA2A",
+"ALB",
+"BCHE",
+"CALM1",
+"CALM2",
+"CALM3",
+"CHRM1",
+"CHRM2",
+"CHRM3",
+"CYP1A2",
+"CYP2D6",
+"CYP2E1",
+"CYP3A4",
+"DRD1",
+"DRD2",
+"DRD3",
+"DRD4",
+"DRD5",
+"HRH1",
+"HRH4",
+"HTR1A",
+"HTR2A",
+"HTR2B",
+"HTR2C",
+"HTR6",
+"HTR7",
+"KCNH2",
+"SLC22A1",
+"SMPD1"
+],
+"indications": [
+"bipolar disorder",
+"conduct disorder",
+"schizophrenia"
+],
+"pharm_class": [
+"Phenothiazines"
+]
+},
+"393": {
+"genes": [
+"CYP2D6",
+"CYP3A4",
+"GABRA1",
+"GABRA2",
+"GABRA3",
+"GABRA5",
+"GABRB2",
+"GABRB3",
+"GABRG2"
+],
+"indications": [
+"alcohol dependence"
+],
+"pharm_class": [
+"Benzodiazepines"
+]
+},
+"394": {
+"genes": [
+"ABCB1",
+"ALB",
+"CYP1A2",
+"CYP2B6",
+"CYP2C19",
+"CYP2C9",
+"CYP2D6",
+"CYP3A4",
+"CYP3A5",
+"HTR2A",
+"HTR2C",
+"ORM1",
+"SIGMAR1",
+"SLC6A2",
+"SLC6A4"
+],
+"indications": [
+"panic disorder",
+"schizophrenia"
+],
+"pharm_class": []
+},
+"396": {
+"genes": [
+"CYP11A1",
+"CYP19A1",
+"CYP1A2",
+"CYP2C19",
+"CYP2C8",
+"CYP2C9",
+"CYP2D6",
+"CYP3A4",
+"PTGS1",
+"SQLE"
+],
+"indications": [],
+"pharm_class": [
+"Allylamine"
+]
+},
+"398": {
+"genes": [
+"ALB",
+"CYP2C8",
+"CYP2C9",
+"PTGS1",
+"PTGS2",
+"SLC22A11",
+"SLC22A6",
+"SLC22A8"
+],
+"indications": [
+"ankylosing spondylitis",
+"osteoarthritis",
+"rheumatoid arthritis"
+],
+"pharm_class": [
+"Nonsteroidal Anti-inflammatory Compounds"
+]
+},
+"399": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"401": {
+"genes": [
+"ABCB1",
+"CYP2C19",
+"CYP2C8",
+"CYP2C9",
+"CYP2D6",
+"CYP3A4",
+"HRH1",
+"KCNH2"
+],
+"indications": [
+"allergic rhinitis",
+"asthma",
+"atopic dermatitis"
+],
+"pharm_class": []
+},
+"402": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"403": {
+"genes": [
+"CACNA1C",
+"CACNA1D",
+"CACNA1F",
+"CACNA1G",
+"CACNA1H",
+"CACNA1I",
+"CACNA1S",
+"CYP1A1",
+"CYP1A2",
+"CYP2A6",
+"CYP2B6",
+"CYP2C9",
+"CYP2D6",
+"DRD2",
+"HRH1",
+"HRH4"
+],
+"indications": [],
+"pharm_class": []
+},
+"406": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"407": {
+"genes": [
+"ABCB1",
+"ALB",
+"CYP1A2",
+"CYP2B6",
+"CYP2C18",
+"CYP2C19",
+"CYP2C8",
+"CYP2C9",
+"CYP2E1",
+"CYP3A4",
+"CYP3A5",
+"CYP3A7",
+"CYP3A7-CYP3A51P",
+"GABRA1",
+"GABRA2",
+"GABRA3",
+"GABRA5",
+"GABRB1",
+"GABRB2",
+"GABRB3",
+"GABRD",
+"GABRE",
+"GABRG1",
+"GABRG2",
+"GABRG3",
+"GABRP",
+"GABRQ",
+"GABRR1",
+"GABRR2",
+"GABRR3",
+"PTGS1",
+"TSPO"
+],
+"indications": [
+"epilepsy syndrome",
+"multiple sclerosis",
+"panic disorder"
+],
+"pharm_class": [
+"Benzodiazepines"
+]
+},
+"408": {
+"genes": [
+"ABCB1",
+"ALB",
+"CYP2C8",
+"CYP3A4",
+"SERPINA7",
+"SLC16A2",
+"SLC7A5",
+"SLCO1A2",
+"SLCO1B1",
+"SLCO1B3",
+"SLCO1C1",
+"SLCO4A1",
+"SLCO4C1",
+"THRA",
+"THRB",
+"TTR"
+],
+"indications": [
+"hypothyroidism"
+],
+"pharm_class": [
+"Thyroxine"
+]
+},
+"409": {
+"genes": [
+"ADORA1",
+"ADORA2A",
+"PDE3A",
+"PDE4A",
+"PDE4B",
+"PDE4C",
+"PDE4D",
+"PDE7A",
+"PDE7B"
+],
+"indications": [
+"asthma"
+],
+"pharm_class": []
+},
+"410": {
+"genes": [
+"CYP3A4",
+"SLC6A2",
+"SLC6A3",
+"SLC6A4"
+],
+"indications": [
+"obesity"
+],
+"pharm_class": [
+"Appetite Suppression",
+"Dopamine Uptake Inhibitors",
+"Norepinephrine Uptake Inhibitors",
+"Serotonin Uptake Inhibitors"
+]
+},
+"411": {
+"genes": [
+"ABCB1",
+"CYP1A2",
+"CYP2B6",
+"CYP2C19",
+"CYP2C9",
+"CYP2D6",
+"CYP3A4",
+"MAOA",
+"MAOB",
+"SIGMAR1",
+"SLC6A2",
+"SLC6A3",
+"SLC6A4"
+],
+"indications": [
+"autistic disorder",
+"endogenous depression",
+"panic disorder",
+"schizophrenia"
+],
+"pharm_class": []
+},
+"412": {
+"genes": [
+"ALDH2",
+"CYP2C9",
+"CYP2E1",
+"CYP3A4",
+"CYP3A5",
+"DBH"
+],
+"indications": [
+"alcohol dependence"
+],
+"pharm_class": [
+"Acetyl Aldehyde Dehydrogenase Inhibitors"
+]
+},
+"414": {
+"genes": [
+"CDC25A",
+"CYP11A1",
+"CYP1A1",
+"CYP27A1",
+"CYP2B6",
+"CYP2C19",
+"CYP2C8",
+"CYP2C9",
+"CYP2D6",
+"CYP2J2",
+"CYP2R1",
+"CYP3A4",
+"GC",
+"VDR"
+],
+"indications": [
+"chronic kidney failure",
+"osteoporosis",
+"psoriasis",
+"ulcerative colitis"
+],
+"pharm_class": [
+"Vitamin D"
+]
+},
+"415": {
+"genes": [
+"ADRB1",
+"COMT",
+"CYP1A2",
+"CYP2C19",
+"CYP2C9",
+"CYP2D6",
+"DBH",
+"DRD1",
+"DRD2",
+"DRD3",
+"DRD4",
+"DRD5",
+"HTR1A",
+"HTR7",
+"MAOA",
+"MAOB",
+"POU5F1",
+"SLC22A1",
+"SLC22A2",
+"SLC22A3",
+"SLC22A5",
+"SLC6A2",
+"SLC6A3",
+"SLC6A4"
+],
+"indications": [],
+"pharm_class": [
+"Catecholamines",
+"DOPA Decarboxylase Inhibitors"
+]
+},
+"416": {
+"genes": [
+"CYP1A2",
+"CYP2B6",
+"CYP2C19",
+"CYP2C9",
+"CYP2D6",
+"CYP3A4"
+],
+"indications": [
+"acquired immunodeficiency syndrome"
+],
+"pharm_class": [
+"Cytochrome P450 2B6 Inducers",
+"Cytochrome P450 2C19 Inhibitors",
+"Cytochrome P450 2C9 Inhibitors",
+"Cytochrome P450 3A Inducers",
+"Cytochrome P450 3A4 Inhibitors",
+"Non-Nucleoside Analog",
+"Non-Nucleoside Reverse Transcriptase Inhibitors"
+]
+},
+"418": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"421": {
+"genes": [
+"FDPS",
+"PTGS2"
+],
+"indications": [
+"Paget's disease of bone",
+"osteoporosis"
+],
+"pharm_class": [
+"Diphosphonates"
+]
+},
+"424": {
+"genes": [
+"CYP24A1",
+"CYP3A4",
+"UGT1A4",
+"VDR"
+],
+"indications": [
+"chronic kidney failure"
+],
+"pharm_class": [
+"Cholecalciferol"
+]
+},
+"425": {
+"genes": [
+"CYP3A4"
+],
+"indications": [],
+"pharm_class": [
+"Nitroimidazoles"
+]
+},
+"427": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"428": {
+"genes": [
+"CYP1A2",
+"CYP2C9",
+"CYP2E1",
+"CYP3A4",
+"HTR3A"
+],
+"indications": [],
+"pharm_class": [
+"Serotonin 3 Receptor Antagonists"
+]
+},
+"429": {
+"genes": [
+"ABCB1",
+"CYP1A2",
+"CYP2B6",
+"CYP2C19",
+"CYP2C9",
+"CYP2D6",
+"CYP3A4"
+],
+"indications": [
+"acquired immunodeficiency syndrome"
+],
+"pharm_class": [
+"Cytochrome P450 3A Inhibitors",
+"P-Glycoprotein Inhibitors"
+]
+},
+"431": {
+"genes": [
+"ABCB1",
+"ABCC1",
+"CYP2B6",
+"CYP2C19",
+"CYP2C8",
+"CYP2C9",
+"CYP2D6",
+"CYP3A4",
+"CYP3A5"
+],
+"indications": [
+"acquired immunodeficiency syndrome"
+],
+"pharm_class": [
+"Cytochrome P450 3A4 Inducers",
+"Cytochrome P450 3A4 Inhibitors",
+"P-Glycoprotein Inducers"
+]
+},
+"442": {
+"genes": [
+"ABCB1",
+"CYP2E1",
+"CYP3A4",
+"GABRA1",
+"GABRA2",
+"GABRA3",
+"GABRA4",
+"GABRA5",
+"GABRA6",
+"GABRB1",
+"GABRB2",
+"GABRB3",
+"GABRD",
+"GABRE",
+"GABRG1",
+"GABRG2",
+"GABRG3",
+"GABRP",
+"GABRQ",
+"GABRR1",
+"GABRR2",
+"GABRR3",
+"SCN1A"
+],
+"indications": [],
+"pharm_class": []
+},
+"446": {
+"genes": [
+"CYP2C19",
+"SLC15A1",
+"SLC15A2",
+"SLC22A6"
+],
+"indications": [],
+"pharm_class": [
+"Penicillins"
+]
+},
+"452": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"454": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"455": {
+"genes": [
+"ABCB1",
+"CHRNA10",
+"CYP19A1",
+"CYP1A2",
+"CYP2B6",
+"CYP2C18",
+"CYP2C19",
+"CYP2C8",
+"CYP2C9",
+"CYP2D6",
+"CYP3A4",
+"CYP3A5",
+"CYP3A7",
+"CYP3A7-CYP3A51P",
+"GRIN3A",
+"HTR3A",
+"OPRD1",
+"OPRK1",
+"OPRM1"
+],
+"indications": [],
+"pharm_class": [
+"Full Opioid Agonists"
+]
+},
+"457": {
+"genes": [
+"ABCB1",
+"ABCB11",
+"ATP1A1",
+"ATP1A2",
+"ATP1A3",
+"ATP1A4",
+"ATP1B1",
+"ATP1B2",
+"ATP1B3",
+"CYP11A1",
+"CYP3A4",
+"FXYD2",
+"SLC22A8",
+"SLC51A",
+"SLC51B",
+"SLCO1A2",
+"SLCO1B1",
+"SLCO1B3",
+"SLCO1C1",
+"SLCO2B1",
+"SLCO4A1",
+"SLCO4C1"
+],
+"indications": [
+"coronary artery disease",
+"dilated cardiomyopathy"
+],
+"pharm_class": [
+"Cardiac Glycosides"
+]
+},
+"458": {
+"genes": [
+"ABCB1",
+"ABCB11",
+"ABCC1",
+"AR",
+"CYP17A1",
+"CYP1A1",
+"CYP1A2",
+"CYP1B1",
+"CYP2A6",
+"CYP2C19",
+"CYP2C8",
+"CYP2C9",
+"CYP2D6",
+"CYP3A4",
+"CYP3A5",
+"CYP3A7",
+"CYP3A7-CYP3A51P",
+"ESR1",
+"NR3C1",
+"NR3C2",
+"OPRK1",
+"PGR",
+"SHBG",
+"SIGMAR1",
+"SLC10A1",
+"SLC22A1",
+"SLC22A2",
+"SLC22A3"
+],
+"indications": [
+"uterine cancer"
+],
+"pharm_class": [
+"Progesterone"
+]
+},
+"459": {
+"genes": [
+"CYP24A1",
+"CYP3A4",
+"GC",
+"VDR"
+],
+"indications": [
+"chronic kidney failure",
+"osteoporosis",
+"psoriasis"
+],
+"pharm_class": [
+"Cholecalciferol"
+]
+},
+"460": {
+"genes": [
+"ALB",
+"CYP2C9",
+"PTGS1",
+"PTGS2",
+"RXRA",
+"SLC22A6",
+"UGT1A10",
+"UGT1A3",
+"UGT1A9",
+"UGT2B7"
+],
+"indications": [
+"osteoarthritis"
+],
+"pharm_class": [
+"Nonsteroidal Anti-inflammatory Compounds"
+]
+},
+"461": {
+"genes": [
+"ABCB1",
+"CACNA1C",
+"CACNA1S",
+"CACNG1",
+"CYP2C19",
+"CYP2C8",
+"CYP2C9",
+"CYP2D6",
+"CYP3A4",
+"CYP3A5",
+"CYP3A7",
+"CYP3A7-CYP3A51P"
+],
+"indications": [
+"coronary artery disease",
+"hypertension"
+],
+"pharm_class": [
+"Calcium Channel Antagonists"
+]
+},
+"463": {
+"genes": [
+"ALB",
+"AR",
+"CYP19A1",
+"CYP2B6",
+"CYP3A4",
+"SHBG",
+"SLC22A8",
+"SLCO1A2"
+],
+"indications": [
+"breast cancer"
+],
+"pharm_class": [
+"Androgen Receptor Agonists",
+"Androstanes"
+]
+},
+"466": {
+"genes": [
+"ALB",
+"CYP2E1",
+"CYP3A4",
+"GABRA1",
+"GABRA3",
+"GABRB2",
+"GABRG2",
+"NAT2",
+"TSPO"
+],
+"indications": [
+"Parkinson's disease",
+"autistic disorder",
+"bipolar disorder",
+"epilepsy syndrome",
+"multiple sclerosis",
+"panic disorder",
+"restless legs syndrome",
+"schizophrenia"
+],
+"pharm_class": [
+"Benzodiazepines"
+]
+},
+"467": {
+"genes": [
+"CYP1A2",
+"CYP2D6",
+"CYP3A4",
+"HTR3A"
+],
+"indications": [],
+"pharm_class": [
+"Serotonin 3 Receptor Antagonists"
+]
+},
+"471": {
+"genes": [
+"ADRA2B",
+"CYP1A2",
+"CYP2D6",
+"CYP3A4",
+"DRD1",
+"DRD2",
+"DRD3",
+"DRD4",
+"DRD5",
+"HTR1A"
+],
+"indications": [
+"Parkinson's disease"
+],
+"pharm_class": []
+},
+"474": {
+"genes": [
+"ABCC8",
+"ALB",
+"CYP2C19",
+"CYP2C9",
+"KCNJ11",
+"VEGFA"
+],
+"indications": [
+"type 2 diabetes mellitus"
+],
+"pharm_class": []
+},
+"475": {
+"genes": [
+"CYP3A4",
+"CYP3A5",
+"F2"
+],
+"indications": [],
+"pharm_class": [
+"Thrombin Inhibitors"
+]
+},
+"479": {
+"genes": [
+"ABCB1",
+"CYP3A4"
+],
+"indications": [],
+"pharm_class": [
+"Azoles"
+]
+},
+"480": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"481": {
+"genes": [
+"ABCB1",
+"CYP2C8",
+"CYP3A4",
+"DPP4"
+],
+"indications": [
+"type 2 diabetes mellitus"
+],
+"pharm_class": [
+"Dipeptidyl Peptidase 4 Inhibitors"
+]
+},
+"483": {
+"genes": [
+"CYP2C19",
+"CYP2C9",
+"CYP3A4",
+"EDNRA",
+"EDNRB"
+],
+"indications": [],
+"pharm_class": []
+},
+"484": {
+"genes": [
+"CYP3A4"
+],
+"indications": [
+"malaria"
+],
+"pharm_class": [
+"Decreased Sebaceous Gland Activity",
+"Lincosamides"
+]
+},
+"485": {
+"genes": [
+"CYP2B6",
+"CYP2C19",
+"CYP2C8",
+"CYP2C9",
+"CYP2D6",
+"CYP2E1",
+"CYP3A4",
+"HRH1"
+],
+"indications": [],
+"pharm_class": [
+"Histamine H1 Receptor Antagonists"
+]
+},
+"489": {
+"genes": [
+"CYP2C9"
+],
+"indications": [],
+"pharm_class": []
+},
+"490": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"491": {
+"genes": [
+"ABCB1",
+"ABCG2",
+"CYP1A2",
+"CYP2A6",
+"CYP2C18",
+"CYP2C19",
+"CYP2C8",
+"CYP2C9",
+"CYP2D6",
+"CYP3A4",
+"CYP3A5",
+"CYP3A7",
+"CYP3A7-CYP3A51P",
+"OPRD1",
+"OPRK1",
+"OPRL1",
+"OPRM1",
+"UGT1A9"
+],
+"indications": [],
+"pharm_class": [
+"Partial Opioid Agonists"
+]
+},
+"492": {
+"genes": [
+"CYP2C19",
+"HRH2",
+"SLC22A2",
+"SLC22A8",
+"SLC47A1"
+],
+"indications": [],
+"pharm_class": [
+"Histamine H2 Receptor Antagonists"
+]
+},
+"493": {
+"genes": [
+"CYP2B6",
+"CYP2D6",
+"CYP3A4",
+"CYP3A7",
+"CYP3A7-CYP3A51P",
+"OPRM1",
+"POR"
+],
+"indications": [],
+"pharm_class": []
+},
+"495": {
+"genes": [
+"ABCC1",
+"ABCG2",
+"ALB",
+"BRAF",
+"CYP1A2",
+"CYP2D6",
+"CYP3A4",
+"ORM1",
+"RAF1"
+],
+"indications": [
+"melanoma",
+"skin cancer"
+],
+"pharm_class": [
+"Cytochrome P450 1A2 Inhibitors",
+"P-Glycoprotein Inhibitors",
+"Protein Kinase Inhibitors"
+]
+},
+"496": {
+"genes": [
+"ABCB1",
+"ABCB11",
+"AR",
+"CYP11A1",
+"CYP11B1",
+"CYP11B2",
+"CYP17A1",
+"CYP19A1",
+"CYP1A1",
+"CYP1A2",
+"CYP1B1",
+"CYP21A2",
+"CYP24A1",
+"CYP26A1",
+"CYP27B1",
+"CYP2A6",
+"CYP2B6",
+"CYP2C19",
+"CYP2C8",
+"CYP2C9",
+"CYP2D6",
+"CYP3A4",
+"CYP3A5",
+"CYP3A7",
+"CYP3A7-CYP3A51P",
+"CYP51A1",
+"SLCO1A2"
+],
+"indications": [],
+"pharm_class": [
+"Azoles",
+"Cytochrome P450 3A4 Inhibitors",
+"Cytochrome P450 3A5 Inhibitors",
+"P-Glycoprotein Inhibitors"
+]
+},
+"499": {
+"genes": [
+"ABCB1",
+"ADRA2A",
+"ALB",
+"CYP1A2",
+"CYP2C19",
+"CYP2D6",
+"CYP3A4",
+"GSTP1",
+"HRH2",
+"HTR2A",
+"HTR2B",
+"HTR2C",
+"HTR6",
+"SLC6A2",
+"SLC6A4"
+],
+"indications": [
+"panic disorder"
+],
+"pharm_class": []
+},
+"501": {
+"genes": [
+"ABCB1",
+"ABCC1",
+"ABCC2",
+"ABCG2",
+"ALB",
+"CYP11A1",
+"CYP2C19",
+"CYP2C8",
+"CYP2C9",
+"CYP2D6",
+"CYP3A4",
+"CYP3A5",
+"CYP3A7",
+"CYP3A7-CYP3A51P",
+"ORM1",
+"SLC22A1",
+"SLCO1A2",
+"SLCO1B1"
+],
+"indications": [
+"acquired immunodeficiency syndrome"
+],
+"pharm_class": [
+"Cytochrome P450 3A Inhibitors"
+]
+},
+"502": {
+"genes": [
+"ABCC4",
+"CYP2C8",
+"CYP2C9",
+"CYP3A4",
+"PGD",
+"PTGS1",
+"PTGS2"
+],
+"indications": [
+"ankylosing spondylitis",
+"osteoarthritis",
+"rheumatoid arthritis",
+"systemic lupus erythematosus",
+"systemic scleroderma"
+],
+"pharm_class": [
+"Nonsteroidal Anti-inflammatory Compounds"
+]
+},
+"504": {
+"genes": [
+"ABCB1",
+"ADRB1",
+"ADRB2",
+"ADRB3",
+"CYP1A1",
+"CYP1A2",
+"CYP2C19",
+"CYP2D6",
+"CYP3A4",
+"CYP3A5",
+"CYP3A7",
+"CYP3A7-CYP3A51P",
+"HTR1A",
+"HTR1B",
+"ORM1",
+"SLC22A2"
+],
+"indications": [
+"hypertension",
+"migraine"
+],
+"pharm_class": []
+},
+"505": {
+"genes": [
+"ABCB1",
+"ABCB11",
+"ABCC1",
+"ABCC2",
+"ABCC6",
+"CYP2D6",
+"CYP3A4",
+"JUN",
+"NR5A1",
+"SLC22A2",
+"TUBA1A",
+"TUBB",
+"TUBB1",
+"TUBB2A",
+"TUBB2B",
+"TUBB3",
+"TUBB4A",
+"TUBB4B",
+"TUBB6",
+"TUBB8",
+"TUBD1",
+"TUBE1",
+"TUBG1"
+],
+"indications": [
+"breast cancer",
+"germ cell cancer",
+"head and neck cancer",
+"hematologic cancer",
+"kidney cancer",
+"lung cancer",
+"testicular cancer"
+],
+"pharm_class": [
+"Vinca Alkaloids"
+]
+},
+"508": {
+"genes": [
+"CYP1A2",
+"CYP2C19",
+"CYP2C8",
+"CYP2C9",
+"CYP2D6",
+"CYP3A4",
+"CYP3A5",
+"CYP3A7",
+"CYP3A7-CYP3A51P"
+],
+"indications": [
+"acquired immunodeficiency syndrome"
+],
+"pharm_class": [
+"Non-Nucleoside Analog",
+"Non-Nucleoside Reverse Transcriptase Inhibitors"
+]
+},
+"512": {
+"genes": [
+"ABCB1",
+"CACNA1C",
+"CACNA1D",
+"CACNA1S",
+"CACNA2D1",
+"CACNB2",
+"CYP1A2",
+"CYP3A4",
+"CYP3A5",
+"CYP3A7",
+"CYP3A7-CYP3A51P"
+],
+"indications": [
+"hypertension"
+],
+"pharm_class": [
+"Calcium Channel Antagonists",
+"Decreased Blood Pressure",
+"Dihydropyridines"
+]
+},
+"514": {
+"genes": [
+"ACSL4",
+"ALB",
+"CYP1A2",
+"CYP2A6",
+"CYP2C19",
+"CYP2C8",
+"CYP2C9",
+"CYP2D6",
+"PPARG",
+"PTGS1",
+"SLCO1B1"
+],
+"indications": [
+"type 2 diabetes mellitus"
+],
+"pharm_class": [
+"PPAR gamma",
+"Peroxisome Proliferator-activated Receptor Activity",
+"Thiazolidinediones"
+]
+},
+"515": {
+"genes": [
+"CYP2C9",
+"CYP3A4",
+"CYP3A5",
+"CYP3A7",
+"CYP3A7-CYP3A51P",
+"GABRA1",
+"GABRA2",
+"GABRA3",
+"GABRA5",
+"GABRB2",
+"GABRB3",
+"GABRG2"
+],
+"indications": [
+"panic disorder",
+"systemic scleroderma"
+],
+"pharm_class": [
+"Benzodiazepines"
+]
+},
+"517": {
+"genes": [
+"ABCB1",
+"CYP3A4",
+"MTTP"
+],
+"indications": [],
+"pharm_class": [
+"Cytochrome P450 3A4 Inhibitors",
+"Microsomal Triglyceride Transfer Protein Inhibitors",
+"P-Glycoprotein Inhibitors"
+]
+},
+"518": {
+"genes": [
+"CYP2E1",
+"CYP3A4",
+"GUCY1A2",
+"GUCY1A3",
+"GUCY1B3",
+"NPR1"
+],
+"indications": [
+"coronary artery disease"
+],
+"pharm_class": [
+"Nitrates",
+"Vasodilation"
+]
+},
+"523": {
+"genes": [
+"ALB",
+"CYP2C8",
+"CYP2C9",
+"CYP3A4",
+"NAT1",
+"NAT2",
+"PTGS1",
+"UGT1A9"
+],
+"indications": [],
+"pharm_class": [
+"Cytochrome P450 2C9 Inhibitors",
+"Sulfonamides"
+]
+},
+"524": {
+"genes": [
+"ABCB1",
+"ABCC2",
+"ABCC3",
+"CACNA1C",
+"CACNA1D",
+"CACNA1H",
+"CACNA1S",
+"CACNA2D1",
+"CACNB2",
+"CALM1",
+"CALM2",
+"CALM3",
+"CYP1A1",
+"CYP1A2",
+"CYP2A6",
+"CYP2B6",
+"CYP2C8",
+"CYP2C9",
+"CYP2D6",
+"CYP2E1",
+"CYP3A4",
+"CYP3A5",
+"CYP3A7",
+"CYP3A7-CYP3A51P",
+"KCNA1"
+],
+"indications": [
+"coronary artery disease",
+"hypertension",
+"systemic scleroderma"
+],
+"pharm_class": [
+"Calcium Channel Antagonists",
+"Dihydropyridines"
+]
+},
+"527": {
+"genes": [
+"CHRNA3",
+"CYP1A2",
+"CYP2A6",
+"CYP2B6",
+"CYP2C8",
+"CYP2C9",
+"CYP2D6",
+"CYP2E1",
+"CYP3A4",
+"ORM1",
+"SLC6A2",
+"SLC6A3"
+],
+"indications": [
+"attention deficit hyperactivity disorder",
+"obesity",
+"panic disorder"
+],
+"pharm_class": [
+"Increased Dopamine Activity",
+"Increased Norepinephrine Activity",
+"Norepinephrine Uptake Inhibitors"
+]
+},
+"528": {
+"genes": [
+"CYP1A2",
+"CYP2D6",
+"CYP3A4",
+"CYP3A5",
+"CYP3A7",
+"CYP3A7-CYP3A51P"
+],
+"indications": [],
+"pharm_class": [
+"Ketolides"
+]
+},
+"529": {
+"genes": [
+"ABCB1",
+"ADRA1B",
+"CYP1A1",
+"CYP1A2",
+"CYP2A6",
+"CYP2B6",
+"CYP2C19",
+"CYP2C8",
+"CYP2C9",
+"CYP2D6",
+"CYP2E1",
+"CYP3A4",
+"CYP3A5",
+"HRH1",
+"HRH3",
+"KCNH2"
+],
+"indications": [],
+"pharm_class": [
+"Histamine H1 Receptor Antagonists"
+]
+},
+"530": {
+"genes": [
+"ABCB1",
+"ADRA2A",
+"CYP3A4",
+"HTR1A",
+"HTR1B",
+"HTR1D",
+"HTR2B",
+"HTR6"
+],
+"indications": [
+"migraine"
+],
+"pharm_class": [
+"Ergotamines"
+]
+},
+"533": {
+"genes": [
+"ABCC4",
+"ABCC8",
+"ALB",
+"CYP2C9",
+"CYP2D6",
+"CYP3A4",
+"CYP3A5",
+"CYP3A7",
+"CYP3A7-CYP3A51P",
+"KCNJ11",
+"ORM1",
+"PPARG",
+"PTGS1",
+"SLC15A1",
+"SLC15A2",
+"SLC16A1",
+"SLC22A6",
+"UGT1A9"
+],
+"indications": [
+"type 2 diabetes mellitus"
+],
+"pharm_class": [
+"Potassium Channel Antagonists"
+]
+},
+"535": {
+"genes": [
+"AGTR1",
+"CYP1A2",
+"CYP2C8",
+"CYP2C9",
+"CYP2D6",
+"CYP3A4",
+"EDNRA",
+"JUN",
+"PTGS1",
+"UGT1A3"
+],
+"indications": [
+"hypertension",
+"type 2 diabetes mellitus"
+],
+"pharm_class": [
+"Angiotensin 2 Receptor Antagonists"
+]
+},
+"536": {
+"genes": [
+"AOX1",
+"CA1",
+"CA10",
+"CA11",
+"CA12",
+"CA13",
+"CA14",
+"CA2",
+"CA3",
+"CA4",
+"CA5A",
+"CA5B",
+"CA6",
+"CA7",
+"CA8",
+"CA9",
+"CACNA1G",
+"CACNA1H",
+"CACNA1I",
+"CYP2C19",
+"CYP3A4",
+"MAOA",
+"MAOB",
+"SCN11A",
+"SCN1A",
+"SCN1B",
+"SCN2A",
+"SCN2B",
+"SCN3A",
+"SCN3B",
+"SCN4A",
+"SCN4B",
+"SCN5A",
+"SCN9A"
+],
+"indications": [
+"epilepsy syndrome"
+],
+"pharm_class": [
+"Carbonic Anhydrase Inhibitors",
+"Decreased Central Nervous System Disorganized Electrical Activity",
+"P-Glycoprotein Inhibitors",
+"Sulfonamides"
+]
+},
+"537": {
+"genes": [
+"ABCC4",
+"ALB",
+"CA12",
+"CA14",
+"CA2",
+"CA4",
+"CA5A",
+"CA5B",
+"CA6",
+"CA9",
+"CYP2C9",
+"CYP2D6",
+"CYP3A4",
+"MAPK14",
+"ORM1",
+"PDPK1",
+"PTGS2"
+],
+"indications": [
+"ankylosing spondylitis",
+"colon cancer",
+"hematologic cancer",
+"kidney cancer",
+"osteoarthritis",
+"prostate cancer",
+"rheumatoid arthritis",
+"systemic lupus erythematosus",
+"systemic scleroderma"
+],
+"pharm_class": [
+"Nonsteroidal Anti-inflammatory Compounds"
+]
+},
+"538": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"539": {
+"genes": [
+"CYP2B6",
+"CYP2C19",
+"CYP2C9",
+"CYP2D6",
+"CYP3A4",
+"CYP3A5"
+],
+"indications": [
+"malaria"
+],
+"pharm_class": []
+},
+"540": {
+"genes": [
+"ABCB1",
+"CYP2C8",
+"CYP2D6",
+"CYP3A4",
+"OPRD1",
+"OPRK1",
+"OPRL1",
+"OPRM1",
+"UGT1A1",
+"UGT1A3",
+"UGT1A8",
+"UGT2B15",
+"UGT2B4",
+"UGT2B7"
+],
+"indications": [
+"coronary artery disease"
+],
+"pharm_class": [
+"Full Opioid Agonists"
+]
+},
+"541": {
+"genes": [
+"CYP1A2",
+"CYP2B6",
+"CYP2D6",
+"CYP3A4",
+"SCN10A",
+"SCN1A",
+"SCN2A",
+"SCN3A",
+"SCN4A",
+"SCN5A",
+"SCN8A",
+"SCN9A"
+],
+"indications": [],
+"pharm_class": [
+"Amides",
+"Local Anesthesia"
+]
+},
+"542": {
+"genes": [
+"CYP2C8",
+"CYP2C9",
+"CYP2E1",
+"CYP3A4",
+"GABRA1",
+"GABRA2",
+"GABRA3",
+"GABRA5",
+"GABRB2",
+"GABRB3",
+"GABRG2",
+"GABRG3",
+"PTGS1",
+"TSPO"
+],
+"indications": [
+"multiple sclerosis",
+"schizophrenia"
+],
+"pharm_class": []
+},
+"544": {
+"genes": [
+"AHR",
+"CYP1A2",
+"CYP2B6",
+"CYP2D6",
+"CYP2E1",
+"CYP3A4",
+"SCN10A",
+"SCN2A",
+"SCN4A",
+"SCN5A",
+"SCN9A"
+],
+"indications": [],
+"pharm_class": []
+},
+"545": {
+"genes": [
+"CYP3A4",
+"SLC6A2",
+"SLC6A4"
+],
+"indications": [],
+"pharm_class": [
+"Cytochrome P450 2D6 Inhibitors",
+"Norepinephrine Uptake Inhibitors",
+"Serotonin Uptake Inhibitors"
+]
+},
+"546": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"547": {
+"genes": [
+"CASR",
+"CYP1A2",
+"CYP2D6",
+"CYP3A4"
+],
+"indications": [
+"chronic kidney failure"
+],
+"pharm_class": [
+"Increased Calcium-sensing Receptor Sensitivity"
+]
+},
+"548": {
+"genes": [
+"ABCC6",
+"ABCG2",
+"CYP2C19",
+"CYP2C9",
+"CYP3A4",
+"CYP3A5",
+"NCOA1",
+"NCOA3",
+"TOP2A"
+],
+"indications": [
+"hematologic cancer",
+"lung cancer",
+"lymphatic system cancer"
+],
+"pharm_class": [
+"Topoisomerase Inhibitors"
+]
+},
+"549": {
+"genes": [
+"ACE",
+"SLC15A1",
+"SLC15A2"
+],
+"indications": [],
+"pharm_class": []
+},
+"550": {
+"genes": [
+"ABCB1",
+"ACE",
+"SLC15A1",
+"SLC15A2"
+],
+"indications": [],
+"pharm_class": []
+},
+"551": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"553": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"557": {
+"genes": [
+"CYP2C19",
+"CYP2C8",
+"CYP2C9",
+"PTGS1",
+"SLC12A1"
+],
+"indications": [
+"chronic kidney failure",
+"hypertension"
+],
+"pharm_class": [
+"Increased Diuresis at Loop of Henle"
+]
+},
+"558": {
+"genes": [
+"ABCB1",
+"CYP2A6",
+"CYP2C19",
+"CYP2C9",
+"CYP2D6",
+"CYP3A4",
+"HTR1A",
+"HTR1B",
+"HTR1D",
+"HTR1E",
+"HTR1F",
+"HTR2B",
+"HTR7",
+"PTGS1"
+],
+"indications": [
+"migraine"
+],
+"pharm_class": [
+"Serotonin 1b Receptor Agonists",
+"Serotonin 1d Receptor Agonists"
+]
+},
+"560": {
+"genes": [
+"ABCB1",
+"CYP2J2",
+"CYP3A4",
+"CYP3A5",
+"F10"
+],
+"indications": [],
+"pharm_class": []
+},
+"561": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"563": {
+"genes": [
+"ABCB1",
+"ADRA1A",
+"ADRA1B",
+"ADRA1D",
+"ADRA2A",
+"ADRA2B",
+"CYP1A2",
+"CYP3A4",
+"DRD2",
+"HTR1A",
+"HTR1B",
+"HTR1D",
+"HTR1E",
+"HTR1F",
+"HTR2A",
+"HTR2B",
+"HTR2C",
+"SLC6A2"
+],
+"indications": [
+"migraine"
+],
+"pharm_class": [
+"Ergotamines"
+]
+},
+"566": {
+"genes": [
+"CYP1A2",
+"CYP2C19",
+"CYP2C8",
+"CYP2C9",
+"CYP3A4",
+"PPARA",
+"SLCO1B1"
+],
+"indications": [
+"coronary artery disease"
+],
+"pharm_class": [
+"PPAR alpha",
+"Peroxisome Proliferator-activated Receptor alpha Agonists"
+]
+},
+"568": {
+"genes": [
+"ABCB1",
+"ABCB11",
+"ABCC2",
+"ABCG2",
+"CES1",
+"CYP19A1",
+"CYP1A1",
+"CYP1A2",
+"CYP1B1",
+"CYP2A6",
+"CYP2B6",
+"CYP2C19",
+"CYP2C8",
+"CYP2C9",
+"CYP2D6",
+"CYP2E1",
+"CYP3A4",
+"CYP3A5",
+"CYP3A7",
+"CYP3A7-CYP3A51P",
+"DHCR7",
+"EBP",
+"EBPL",
+"ESR1",
+"ESR2",
+"ESRRA",
+"FMO1",
+"FMO3",
+"SIGMAR1",
+"SULT1A1",
+"UGT1A4"
+],
+"indications": [
+"breast cancer",
+"pancreatic cancer"
+],
+"pharm_class": []
+},
+"570": {
+"genes": [
+"CYP3A4"
+],
+"indications": [],
+"pharm_class": [
+"Cytochrome P450 3A Inhibitors"
+]
+},
+"571": {
+"genes": [
+"ATP4A",
+"ATP4B",
+"CYP2C19",
+"CYP3A4"
+],
+"indications": [
+"Barrett's esophagus",
+"esophageal cancer",
+"kidney cancer",
+"prostate cancer",
+"systemic scleroderma"
+],
+"pharm_class": [
+"Cytochrome P450 2C19 Inhibitors"
+]
+},
+"572": {
+"genes": [
+"CACNA1G",
+"CYP2E1",
+"CYP3A4",
+"CYP3A43",
+"CYP3A5",
+"CYP3A7",
+"CYP3A7-CYP3A51P"
+],
+"indications": [],
+"pharm_class": [
+"Decreased Central Nervous System Disorganized Electrical Activity"
+]
+},
+"574": {
+"genes": [
+"ABCB1",
+"ABCG2",
+"AOX1",
+"COMT",
+"CYP19A1",
+"CYP2A6",
+"CYP2C8",
+"CYP2C9",
+"CYP2E1",
+"CYP3A4",
+"ESR1",
+"ESR2",
+"ESRRG",
+"TTR"
+],
+"indications": [],
+"pharm_class": []
+},
+"577": {
+"genes": [
+"CYP2C19",
+"CYP2E1",
+"IFNG",
+"MMP9",
+"NFKB2",
+"TNF"
+],
+"indications": [
+"osteoarthritis"
+],
+"pharm_class": []
+},
+"584": {
+"genes": [
+"CYP2C9",
+"PTGS1",
+"PTGS2",
+"SLC22A8"
+],
+"indications": [],
+"pharm_class": []
+},
+"597": {
+"genes": [
+"ABCB1",
+"CES1",
+"CYP1A2",
+"CYP2B6",
+"CYP2C19",
+"CYP2C8",
+"CYP2C9",
+"CYP3A4",
+"CYP3A5",
+"P2RY12"
+],
+"indications": [
+"coronary artery disease"
+],
+"pharm_class": [
+"Decreased Platelet Aggregation",
+"P2Y12 Receptor Antagonists"
+]
+},
+"599": {
+"genes": [
+"ABCB1",
+"CYP1A2",
+"CYP2C19",
+"CYP2D6",
+"CYP3A4",
+"CYP3A5",
+"HRH2",
+"SLC22A1",
+"SLC22A8"
+],
+"indications": [],
+"pharm_class": [
+"Histamine H2 Receptor Antagonists"
+]
+},
+"602": {
+"genes": [
+"CYP2C19",
+"CYP2E1",
+"CYP3A4",
+"GRIN2A",
+"GRIN2B",
+"GRIN3A"
+],
+"indications": [
+"epilepsy syndrome"
+],
+"pharm_class": [
+"Decreased Central Nervous System Disorganized Electrical Activity"
+]
+},
+"603": {
+"genes": [
+"CYP2C19",
+"CYP3A4",
+"GABRA1",
+"GABRA2",
+"GABRA3",
+"GABRA4",
+"GABRA5",
+"GABRA6",
+"GABRB1",
+"GABRB2",
+"GABRB3",
+"GABRD",
+"GABRE",
+"GABRG1",
+"GABRG2",
+"GABRG3",
+"GABRP",
+"GABRR1",
+"GABRR2",
+"GABRR3"
+],
+"indications": [],
+"pharm_class": []
+},
+"605": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"606": {
+"genes": [
+"AR",
+"CYP19A1",
+"CYP3A4",
+"ESR1",
+"PGR",
+"SHBG",
+"SRD5A1"
+],
+"indications": [
+"polycystic ovary syndrome"
+],
+"pharm_class": [
+"Inhibit Ovum Fertilization",
+"Progesterone Congeners"
+]
+},
+"610": {
+"genes": [
+"CYP2C19",
+"CYP2D6",
+"CYP3A4",
+"HTR1B",
+"HTR1D",
+"HTR2A",
+"HTR2C",
+"HTR6",
+"NPY1R",
+"SLC6A2",
+"SLC6A3",
+"SLC6A4"
+],
+"indications": [
+"attention deficit hyperactivity disorder",
+"autistic disorder"
+],
+"pharm_class": [
+"Norepinephrine Uptake Inhibitors"
+]
+},
+"614": {
+"genes": [
+"CYP3A4",
+"KCNH2",
+"KCNJ12",
+"KCNK2"
+],
+"indications": [],
+"pharm_class": []
+},
+"615": {
+"genes": [
+"ABCC10",
+"ABCC4",
+"ABCC5",
+"ADORA2A",
+"CYP1A1",
+"CYP2C19",
+"CYP2C9",
+"CYP2D6",
+"CYP2E1",
+"CYP3A4",
+"CYP3A5",
+"CYP3A7",
+"CYP3A7-CYP3A51P",
+"PDE5A",
+"PDE6C",
+"PDE6G",
+"PDE6H"
+],
+"indications": [
+"multiple sclerosis",
+"systemic scleroderma",
+"type 1 diabetes mellitus"
+],
+"pharm_class": []
+},
+"616": {
+"genes": [
+"ABCB1",
+"ADORA1",
+"ADORA2A",
+"ADORA2B",
+"ATM",
+"CYP1A1",
+"CYP1A2",
+"CYP1B1",
+"CYP2C8",
+"CYP2C9",
+"CYP2D6",
+"CYP2E1",
+"CYP3A4",
+"CYP3A5",
+"CYP3A7",
+"CYP3A7-CYP3A51P",
+"PDE4B",
+"PIK3CA",
+"PIK3CB",
+"PIK3CD",
+"PRKDC",
+"RYR1"
+],
+"indications": [
+"migraine"
+],
+"pharm_class": [
+"Central Nervous System Stimulation",
+"Xanthines"
+]
+},
+"617": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"620": {
+"genes": [
+"ABCB1",
+"ABCC2",
+"ABCG2",
+"ALB",
+"CES1",
+"CES2",
+"CYP2C8",
+"CYP3A4",
+"CYP3A5",
+"IMPDH1",
+"IMPDH2",
+"SLCO1B1",
+"SLCO1B3",
+"UGT1A1",
+"UGT1A10",
+"UGT1A6",
+"UGT1A7",
+"UGT1A8",
+"UGT1A9",
+"UGT2B7"
+],
+"indications": [
+"psoriasis",
+"systemic lupus erythematosus",
+"systemic scleroderma"
+],
+"pharm_class": []
+},
+"621": {
+"genes": [
+"AKR1C3",
+"ALB",
+"CYP1A2",
+"CYP2C8",
+"CYP2C9",
+"PTGS1",
+"PTGS2",
+"SLC22A6",
+"SLCO1A2",
+"UGT1A1",
+"UGT2B7"
+],
+"indications": [
+"ankylosing spondylitis",
+"gout",
+"migraine",
+"osteoarthritis",
+"rheumatoid arthritis",
+"systemic lupus erythematosus"
+],
+"pharm_class": [
+"Nonsteroidal Anti-inflammatory Compounds"
+]
+},
+"624": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"627": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"629": {
+"genes": [
+"ABCB1",
+"CYP3A4",
+"ESR1",
+"ESR2",
+"MAP1A",
+"MAP2"
+],
+"indications": [
+"prostate cancer"
+],
+"pharm_class": [
+"Alkylating Activity",
+"Estradiol",
+"Nitrogen Mustard Compounds"
+]
+},
+"631": {
+"genes": [
+"ABCB1",
+"ALB",
+"CTSS",
+"CYP1A2",
+"CYP3A4",
+"SLCO1B1"
+],
+"indications": [],
+"pharm_class": [
+"Cytochrome P450 3A4 Inhibitors",
+"HCV NS3/4A Protease Inhibitors",
+"Organic Anion Transporting Polypeptide 1B1 Inhibitors",
+"Organic Anion Transporting Polypeptide 1B3 Inhibitors",
+"P-Glycoprotein Inhibitors"
+]
+},
+"636": {
+"genes": [],
+"indications": [],
+"pharm_class": []
+},
+"637": {
+"genes": [
+"ABCA3",
+"ABCB1",
+"ABCG2",
+"ABL1",
+"ABL2",
+"ALB",
+"CA1",
+"CA12",
+"CA14",
+"CA2",
+"CA3",
+"CA6",
+"CA7",
+"CA9",
+"CSF1R",
+"CYP1A2",
+"CYP2C19",
+"CYP2C9",
+"CYP2D6",
+"CYP3A4",
+"CYP3A5",
+"CYP3A7",
+"CYP3A7-CYP3A51P",
+"DDR1",
+"HIPK4",
+"KIT",
+"LCK",
+"NQO2",
+"NTRK1",
+"ORM1",
+"PDGFRA",
+"PDGFRB",
+"PIP4K2C",
+"PTGS1",
+"SLC22A1",
+"SLC22A2",
+"SLC47A1"
+],
+"indications": [
+"hematologic cancer"
+],
+"pharm_class": []
+},
+"639": {
+"genes": [
+"ABAT",
+"ACADSB",
+"ALDH5A1",
+"CYP1A2",
+"CYP2A6",
+"CYP2B6",
+"CYP2C18",
+"CYP2C19",
+"CYP2C8",
+"CYP2C9",
+"CYP3A4",
+"CYP3A5",
+"HDAC2",
+"HDAC9",
+"OGDH",
+"PTGS1",
+"SLC16A1",
+"SLC22A5",
+"SLC22A6",
+"SLC22A7",
+"SLC22A8",
+"UGT1A10",
+"UGT1A3",
+"UGT1A4",
+"UGT1A6",
+"UGT1A8",
+"UGT1A9",
+"UGT2B15",
+"UGT2B7"
+],
+"indications": [
+"bipolar disorder",
+"endogenous depression",
+"epilepsy syndrome",
+"migraine",
+"schizophrenia"
+],
+"pharm_class": [
+"Decreased Central Nervous System Disorganized Electrical Activity"
+]
+},
+"642": {
+"genes": [
+"ACE",
+"MTHFR",
+"SLC15A1",
+"SLC15A2"
+],
+"indications": [
+"hypertension"
+],
+"pharm_class": [
+"Decreased Blood Pressure"
+]
+},
+"643": {
+"genes": [
+"ADRA2A",
+"ADRA2B",
+"CYP2C19",
+"CYP2C9",
+"CYP3A4",
+"NISCH"
+],
+"indications": [
+"attention deficit hyperactivity disorder",
+"hypertension"
+],
+"pharm_class": [
+"Adrenergic alpha2-Agonists"
+]
+},
+"644": {
+"genes": [
+"ABCB1",
+"ADRB1",
+"ADRB2",
+"CYP3A4",
+"UGT1A1"
+],
+"indications": [
+"asthma"
+],
+"pharm_class": [
+"Adrenergic beta2-Agonists"
+]
+}
+}

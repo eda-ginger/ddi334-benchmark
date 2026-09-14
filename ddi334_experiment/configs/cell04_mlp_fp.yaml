@@ -1,0 +1,27 @@
+# Cell 04: MLP on Morgan Fingerprint (ECFP4)
+# Ref: MRLF-DDI (Zhong et al., 2025)
+cell: "04"
+encoder: "MorganFPEncoder"
+source: "mol"
+
+# Encoder hyperparameters
+hidden_dim: 128
+fp_dim: 1024             # ECFP4 (radius=2, 1024-bit)
+dropout: 0.2
+
+# Training hyperparameters
+lr: 0.001
+weight_decay: 0.0005
+epochs: 100
+batch_size: 512
+scheduler: cosine
+
+# Data
+num_classes: 86
+dataset: drugbank_cluster
+splits: [S0, S1, S2]
+
+# Feature notes:
+#   FP computed via RDKit AllChem.GetMorganFingerprintAsBitVect(mol, radius=2, nBits=1024)
+#   Pre-build via encoder.set_features(fingerprints_dict)
+#   fingerprints_dict: {drug_id: np.ndarray [1024]}

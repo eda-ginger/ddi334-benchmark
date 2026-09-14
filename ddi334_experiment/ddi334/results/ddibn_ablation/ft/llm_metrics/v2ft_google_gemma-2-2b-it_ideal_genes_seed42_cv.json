@@ -1,0 +1,80 @@
+{
+ "tag": "google_gemma-2-2b-it_ideal_genes_seed42",
+ "mode": "ideal_genes",
+ "selected": {
+  "S0": {
+   "epoch": 2,
+   "val_AUROC": 0.976533
+  },
+  "S1": {
+   "epoch": 2,
+   "val_AUROC": 0.869312
+  },
+  "S2": {
+   "epoch": 2,
+   "val_AUROC": 0.488922
+  }
+ },
+ "val_curve": {
+  "S0": {
+   "1": {
+    "AUC-ROC": 0.976506,
+    "PR-AUC": 0.980929,
+    "accuracy": 0.908298,
+    "macro-F1": 0.912583
+   },
+   "2": {
+    "AUC-ROC": 0.976533,
+    "PR-AUC": 0.980539,
+    "accuracy": 0.906925,
+    "macro-F1": 0.911999
+   },
+   "3": {
+    "AUC-ROC": 0.968509,
+    "PR-AUC": 0.97036,
+    "accuracy": 0.893135,
+    "macro-F1": 0.899898
+   }
+  },
+  "S1": {
+   "1": {
+    "AUC-ROC": 0.860233,
+    "PR-AUC": 0.856922,
+    "accuracy": 0.788646,
+    "macro-F1": 0.782937
+   },
+   "2": {
+    "AUC-ROC": 0.869312,
+    "PR-AUC": 0.868713,
+    "accuracy": 0.789552,
+    "macro-F1": 0.791846
+   },
+   "3": {
+    "AUC-ROC": 0.851135,
+    "PR-AUC": 0.842563,
+    "accuracy": 0.781353,
+    "macro-F1": 0.777582
+   }
+  },
+  "S2": {
+   "1": {
+    "AUC-ROC": 0.450338,
+    "PR-AUC": 0.489165,
+    "accuracy": 0.461695,
+    "macro-F1": 0.344499
+   },
+   "2": {
+    "AUC-ROC": 0.488922,
+    "PR-AUC": 0.539361,
+    "accuracy": 0.489428,
+    "macro-F1": 0.451217
+   },
+   "3": {
+    "AUC-ROC": 0.473571,
+    "PR-AUC": 0.510767,
+    "accuracy": 0.459415,
+    "macro-F1": 0.319512
+   }
+  }
+ }
+}

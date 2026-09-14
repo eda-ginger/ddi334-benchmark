@@ -1,0 +1,39 @@
+# Cell 09: R-GCN on HetioNet subgraph + TransE frozen init
+# Ref: SumGNN (Yu et al., 2021, Bioinformatics)
+cell: "09"
+encoder: "RGCNSubgraphEncoder"
+source: "rel"
+rel_is_pairwise: true    # uses forward_pair() not forward()
+
+# Encoder hyperparameters
+hidden_dim: 128
+num_entities: 34124      # HetioNet total entities
+num_relations: 23        # HetioNet non-DDI relations (KG.txt rel 86-108, offset -86)
+                         # Internally doubled to 46 for inverse relations
+num_bases: 4             # R-GCN basis decomposition (SumGNN original)
+num_layers: 2
+edge_dropout: 0.4
+use_transe_init: true    # TransE frozen node features
+dropout: 0.2
+
+# Subgraph extraction
+hop: 2
+max_nodes_per_hop: 200
+
+# Training hyperparameters
+lr: 0.001
+weight_decay: 0.0005
+epochs: 100
+batch_size: 512
+scheduler: cosine
+
+# Data
+num_classes: 86
+dataset: drugbank_cluster
+splits: [S0, S1, S2]
+
+# KG details:
+#   drug_id == entity_id (identity, no separate mapping)
+#   KG.txt: non-DDI HetioNet relations, rel 86-108 -> offset to 0-22
+#   TransE embeddings: kge_hetionet/results/baseline/transe_hetionet/hetionet_transe_ent_128d.npy
+#   Subgraph cache: experiment/data/subgraph_cache/adj_list_*.pkl

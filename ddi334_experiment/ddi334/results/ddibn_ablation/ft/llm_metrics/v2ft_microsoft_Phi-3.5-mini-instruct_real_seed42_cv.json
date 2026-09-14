@@ -1,0 +1,80 @@
+{
+ "tag": "microsoft_Phi-3.5-mini-instruct_real_seed42",
+ "mode": "real",
+ "selected": {
+  "S0": {
+   "epoch": 3,
+   "val_AUROC": 0.970092
+  },
+  "S1": {
+   "epoch": 3,
+   "val_AUROC": 0.87784
+  },
+  "S2": {
+   "epoch": 1,
+   "val_AUROC": 0.512447
+  }
+ },
+ "val_curve": {
+  "S0": {
+   "1": {
+    "AUC-ROC": 0.967782,
+    "PR-AUC": 0.971952,
+    "accuracy": 0.844359,
+    "macro-F1": 0.862215
+   },
+   "2": {
+    "AUC-ROC": 0.968049,
+    "PR-AUC": 0.973553,
+    "accuracy": 0.896839,
+    "macro-F1": 0.900148
+   },
+   "3": {
+    "AUC-ROC": 0.970092,
+    "PR-AUC": 0.973824,
+    "accuracy": 0.867255,
+    "macro-F1": 0.880077
+   }
+  },
+  "S1": {
+   "1": {
+    "AUC-ROC": 0.870218,
+    "PR-AUC": 0.864775,
+    "accuracy": 0.733437,
+    "macro-F1": 0.778637
+   },
+   "2": {
+    "AUC-ROC": 0.855713,
+    "PR-AUC": 0.845239,
+    "accuracy": 0.784529,
+    "macro-F1": 0.786065
+   },
+   "3": {
+    "AUC-ROC": 0.87784,
+    "PR-AUC": 0.866383,
+    "accuracy": 0.764515,
+    "macro-F1": 0.798362
+   }
+  },
+  "S2": {
+   "1": {
+    "AUC-ROC": 0.512447,
+    "PR-AUC": 0.540514,
+    "accuracy": 0.486754,
+    "macro-F1": 0.608428
+   },
+   "2": {
+    "AUC-ROC": 0.458048,
+    "PR-AUC": 0.503893,
+    "accuracy": 0.464641,
+    "macro-F1": 0.405799
+   },
+   "3": {
+    "AUC-ROC": 0.493785,
+    "PR-AUC": 0.528774,
+    "accuracy": 0.518781,
+    "macro-F1": 0.632002
+   }
+  }
+ }
+}

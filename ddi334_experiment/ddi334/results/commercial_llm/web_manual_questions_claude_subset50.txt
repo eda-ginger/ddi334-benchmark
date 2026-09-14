@@ -1,0 +1,1901 @@
+Model: Claude Sonnet 5
+===== [01-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: NCC(=O)CCC(O)=O
+
+Drug 2
+  SMILES: [H][C@@]12CC[C@](C)(O)[C@@]1(C)CC[C@@]1([H])[C@@]2([H])CCC2=CC(=O)CC[C@]12C
+
+Question: Does co-administration of Drug 1 and Drug 2 cause pain in throat?
+
+##Answer: No
+===== [02-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: [H][C@@]12CC[C@H](C(C)=O)[C@@]1(C)CC[C@@]1([H])[C@@]2([H])CCC2=CC(=O)CC[C@]12C
+
+Drug 2
+  SMILES: [H][C@@]12CC[C@@](O)(C#C)[C@@]1(CC)CC[C@]1([H])[C@@]3([H])CCC(=O)C=C3CC[C@@]21[H]
+
+Question: Does co-administration of Drug 1 and Drug 2 cause pancreatitis relapsing?
+
+##Answer: No
+===== [04-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: [H][C@@]12C[C@H](C)[C@](OC(=O)CC)(C(=O)CCl)[C@@]1(C)C[C@H](O)[C@@]1(F)[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+
+Drug 2
+  SMILES: N[C@H]1C(O)O[C@H](CO)[C@@H](O)[C@@H]1O
+
+Question: Does co-administration of Drug 1 and Drug 2 cause intervertebral disc disorder?
+
+##Answer: No
+===== [05-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: NCC(=O)CCC(O)=O
+
+Drug 2
+  SMILES: [H][C@@]12CC[C@](O)(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1([H])[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+
+Question: Does co-administration of Drug 1 and Drug 2 cause pharyngeal inflammation?
+
+##Answer: Yes
+===== [06-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: [H][C@@]12CC[C@](O)(C(=O)CO)[C@@]1(C)CC(=O)[C@@]1([H])[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+
+Drug 2
+  SMILES: [H][C@@]12CC(=C)[C@](O)(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1(F)[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+
+Question: Does co-administration of Drug 1 and Drug 2 cause adrenal insufficiency?
+
+##Answer: Yes
+===== [07-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: NCC(=O)CCC(O)=O
+
+Drug 2
+  SMILES: [H][C@@]12C[C@@H](C)[C@](O)(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1([H])[C@@]2([H])[C@H](Cl)CC2=CC(=O)C=C[C@]12C
+
+Question: Does co-administration of Drug 1 and Drug 2 cause abnormal ECG?
+
+##Answer: Yes
+===== [08-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: COC1=C2O[C@H]3C(=O)CC[C@@]4(O)[C@H]5CC(C=C1)=C2[C@@]34CCN5C
+
+Drug 2
+  SMILES: N[C@@H](CC(=O)N1CCN2C(C1)=NN=C2C(F)(F)F)CC1=CC(F)=C(F)C=C1F
+
+Question: Does co-administration of Drug 1 and Drug 2 cause acute bronchitis?
+
+##Answer: No
+===== [09-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: [H][C@@]12C[C@@]3([H])[C@]4([H])C[C@H](F)C5=CC(=O)C=C[C@]5(C)[C@@]4(F)[C@@H](O)C[C@]3(C)[C@@]1(OC(C)(C)O2)C(=O)CO
+
+Drug 2
+  SMILES: [H][C@@]12C[C@H]3OC(CCC)O[C@@]3(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1([H])[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+
+Question: Does co-administration of Drug 1 and Drug 2 cause psychoses?
+
+##Answer: Yes
+===== [10-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: [H][C@@]12C[C@H](C)[C@](O)(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1(F)[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+
+Drug 2
+  SMILES: [H][C@@]12OC3=C(O)C=CC4=C3[C@@]11CCN(C)[C@]([H])(C4)[C@]1(O)CCC2=O
+
+Question: Does co-administration of Drug 1 and Drug 2 cause Lyell?
+
+##Answer: No
+===== [11-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: [H][C@@]12CC[C@](O)(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1([H])[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+
+Drug 2
+  SMILES: [H][C@@]12OC3=C(OCC)C=CC4=C3[C@@]11CCN(C)[C@]([H])(C4)[C@]1([H])C=C[C@@H]2O
+
+Question: Does co-administration of Drug 1 and Drug 2 cause tooth disease?
+
+##Answer: No
+===== [13-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: COC(=O)CCC1=C2NC(\C=C3/N=C(/C=C4\N\C(=C/C5=N/C(=C\2)/C(CCC(O)=O)=C5C)C(C=C)=C4C)C2=CC=C([C@@H](C(=O)OC)[C@@]32C)C(=O)OC)=C1C
+
+Drug 2
+  SMILES: [H][C@@]12OC3=C4C(C[C@H]5N(C)CC[C@@]14[C@@]5([H])CC[C@@H]2O)=CC=C3OC
+
+Question: Does co-administration of Drug 1 and Drug 2 cause Ataxia?
+
+##Answer: Yes
+===== [14-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: [H][C@@]12C[C@@H](C)[C@](O)(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1(F)[C@@]2([H])C[C@H](F)C2=CC(=O)C=C[C@]12C
+
+Drug 2
+  SMILES: [H][C@@]12C[C@@]3([H])[C@]4([H])CCC5=CC(=O)C=C[C@]5(C)[C@@]4([H])[C@@H](O)C[C@]3(C)[C@@]1(O[C@@H](O2)C1CCCCC1)C(=O)COC(=O)C(C)C
+
+Question: Does co-administration of Drug 1 and Drug 2 cause adrenal insufficiency?
+
+##Answer: Yes
+===== [15-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: [H][C@]12C[C@@H](O)C=C[C@]11CCN(C)CC3=C1C(O2)=C(OC)C=C3
+
+Drug 2
+  SMILES: CCC12CCC3C(CCC4=CC(=O)CCC34)C1CCC2(O)C#C
+
+Question: Does co-administration of Drug 1 and Drug 2 cause angioedema?
+
+##Answer: No
+===== [16-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: [H][C@@]12CCC(=O)[C@@]1(C)CC[C@@]1([H])[C@@]2([H])CC=C2C[C@@]([H])(O)CC[C@]12C
+
+Drug 2
+  SMILES: [H][C@@]12OC3=C4C(C[C@H]5N(C)CC[C@@]14[C@@]5([H])CC[C@@H]2O)=CC=C3OC
+
+Question: Does co-administration of Drug 1 and Drug 2 cause hyperuricaemia?
+
+##Answer: No
+===== [17-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: [H][C@@]12C[C@@H](C)[C@](OC(=O)C3=CC=CO3)(C(=O)SCF)[C@@]1(C)C[C@H](O)[C@@]1(F)[C@@]2([H])C[C@H](F)C2=CC(=O)C=C[C@]12C
+
+Drug 2
+  SMILES: [H][C@@]12CC[C@](O)(C(C)=O)[C@@]1(C)C[C@H](O)[C@@]1(F)[C@@]2([H])C[C@H](C)C2=CC(=O)C=C[C@]12C
+
+Question: Does co-administration of Drug 1 and Drug 2 cause endocrine disorder?
+
+##Answer: Yes
+===== [18-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: [H][C@@]12OC3=C(O)C=CC4=C3[C@@]11CCN(C)[C@]([H])(C4)[C@]1([H])CCC2=O
+
+Drug 2
+  SMILES: CCCN(CCC1=CC=CS1)[C@H]1CCC2=C(O)C=CC=C2C1
+
+Question: Does co-administration of Drug 1 and Drug 2 cause movement disorder?
+
+##Answer: Yes
+===== [19-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: OC1=CC=C2C[C@H]3N(CC=C)CC[C@@]45[C@@H](OC1=C24)C(=O)CC[C@@]35O
+
+Drug 2
+  SMILES: CCC12CCC3C(CCC4=CC(=O)CCC34)C1CCC2(O)C#C
+
+Question: Does co-administration of Drug 1 and Drug 2 cause micturition urgency?
+
+##Answer: No
+===== [21-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: [H][C@@]12C[C@@H](C)[C@H](C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1(F)[C@@]2([H])C[C@H](F)C2=CC(=O)C=C[C@]12C
+
+Drug 2
+  SMILES: CCCS(=O)(=O)NC1=C(F)C(C(=O)C2=CNC3=NC=C(C=C23)C2=CC=C(Cl)C=C2)=C(F)C=C1
+
+Question: Does co-administration of Drug 1 and Drug 2 cause multiple sclerosis?
+
+##Answer: No
+===== [22-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: [H][C@@](CO)(C(C)C)N1C=C(C(O)=O)C(=O)C2=C1C=C(OC)C(CC1=C(F)C(Cl)=CC=C1)=C2
+
+Drug 2
+  SMILES: [H][C@@]12OC3=C(O)C=CC4=C3[C@@]11CCN(C)[C@]([H])(C4)[C@]1([H])C=C[C@@H]2O
+
+Question: Does co-administration of Drug 1 and Drug 2 cause eye swelling?
+
+##Answer: No
+===== [23-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: [H][C@@]12CC[C@](OC(=O)OCC)(C(=O)COC(=O)CC)[C@@]1(C)C[C@H](O)[C@@]1([H])[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+
+Drug 2
+  SMILES: [H][C@@]12C[C@@]3([H])[C@]4([H])C[C@H](F)C5=CC(=O)C=C[C@]5(C)[C@@]4(F)[C@@H](O)C[C@]3(C)[C@@]1(OC(C)(C)O2)C(=O)CO
+
+Question: Does co-administration of Drug 1 and Drug 2 cause endocrine disorder?
+
+##Answer: Yes
+===== [24-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: [H][C@@]12CC[C@](OC(=O)OCC)(C(=O)COC(=O)CC)[C@@]1(C)C[C@H](O)[C@@]1([H])[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+
+Drug 2
+  SMILES: [H][C@@]12C[C@H](C)[C@](OC(=O)CC)(C(=O)COC(=O)CC)[C@@]1(C)C[C@H](O)[C@@]1(Cl)[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+
+Question: Does co-administration of Drug 1 and Drug 2 cause ADVERSE DRUG EFFECT?
+
+##Answer: Yes
+===== [25-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: [H][C@@]12C[C@@H](C)[C@](O)(C(=O)CCl)[C@@]1(C)C[C@H](O)[C@@]1(Cl)[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+
+Drug 2
+  SMILES: [H][C@@]12OC3=C4C(C[C@H]5N(C)CC[C@@]14[C@@]5([H])CC[C@@H]2O)=CC=C3OC
+
+Question: Does co-administration of Drug 1 and Drug 2 cause pain in throat?
+
+##Answer: No
+===== [26-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: [H][C@@]12CC[C@](O)(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1([H])[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+
+Drug 2
+  SMILES: N[C@H]1C(O)O[C@H](CO)[C@@H](O)[C@@H]1O
+
+Question: Does co-administration of Drug 1 and Drug 2 cause Carcinoma of Prostate?
+
+##Answer: No
+===== [27-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: [H][C@@]12C[C@H](C)[C@](OC(=O)CC)(C(=O)CCl)[C@@]1(C)C[C@H](O)[C@@]1(F)[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+
+Drug 2
+  SMILES: [H][C@@]12OC3=C4C(C[C@H]5N(C)CC[C@@]14[C@@]5([H])CC[C@@H]2O)=CC=C3OC
+
+Question: Does co-administration of Drug 1 and Drug 2 cause ADVERSE DRUG EFFECT?
+
+##Answer: Yes
+===== [28-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: [H][C@@]12CC[C@@](O)(CC=C)[C@@]1(C)CC[C@]1([H])[C@@]3([H])CCCC=C3CC[C@@]21[H]
+
+Drug 2
+  SMILES: [H][C@@]12OC3=C(O)C=CC4=C3[C@@]11CCN(C)[C@]([H])(C4)[C@]1([H])C=C[C@@H]2O
+
+Question: Does co-administration of Drug 1 and Drug 2 cause pain in throat?
+
+##Answer: No
+===== [29-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: [H][C@@]12CC[C@](O)(C(=O)CO)[C@@]1(C)CC(=O)[C@@]1([H])[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+
+Drug 2
+  SMILES: [H][C@@]12C[C@@]3([H])[C@]4([H])C[C@H](F)C5=CC(=O)C=C[C@]5(C)[C@@]4(F)[C@@H](O)C[C@]3(C)[C@@]1(OC(C)(C)O2)C(=O)CO
+
+Question: Does co-administration of Drug 1 and Drug 2 cause paranoia?
+
+##Answer: No
+===== [31-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: CNCCCC1C2=CC=CC=C2C=CC2=CC=CC=C12
+
+Drug 2
+  SMILES: CCCCC1=NC2(CCCC2)C(=O)N1CC1=CC=C(C=C1)C1=CC=CC=C1C1=NNN=N1
+
+Question: Does co-administration of Drug 1 and Drug 2 cause multiple sclerosis?
+
+##Answer: No
+===== [34-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: [H][C@@]12OC3=C(O)C=CC4=C3[C@@]11CCN(C)[C@]([H])(C4)[C@]1([H])CCC2=O
+
+Drug 2
+  SMILES: [H][C@]12C[C@@H](O)C=C[C@]11CCN(C)CC3=C1C(O2)=C(OC)C=C3
+
+Question: Does co-administration of Drug 1 and Drug 2 cause Apnea?
+
+##Answer: Yes
+===== [35-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: [H][C@@]12C[C@@H](C)[C@](OC(=O)CC)(C(=O)SCF)[C@@]1(C)C[C@H](O)[C@@]1(F)[C@@]2([H])C[C@H](F)C2=CC(=O)C=C[C@]12C
+
+Drug 2
+  SMILES: [H][C@@]12CCC(=O)[C@@]1(C)CC[C@]1([H])C3=C(CC=C21)C=C(O)C=C3
+
+Question: Does co-administration of Drug 1 and Drug 2 cause CMV infection?
+
+##Answer: No
+===== [37-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: [H][C@@]12C[C@@H](C)[C@](O)(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1(F)[C@@]2([H])C[C@H](F)C2=CC(=O)C=C[C@]12C
+
+Drug 2
+  SMILES: N[C@H]1C(O)O[C@H](CO)[C@@H](O)[C@@H]1O
+
+Question: Does co-administration of Drug 1 and Drug 2 cause carotid artery stenosis?
+
+##Answer: No
+===== [38-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: [H][C@@]12CC[C@](C)(O)[C@@]1(C)CC[C@@]1([H])[C@@]2([H])CCC2=CC(=O)CC[C@]12C
+
+Drug 2
+  SMILES: [H][C@@]12CC[C@@H](C)[C@]3([H])CC[C@@]4(C)OO[C@@]13[C@]([H])(O[C@H](OC)[C@@H]2C)O4
+
+Question: Does co-administration of Drug 1 and Drug 2 cause Carcinoma of Prostate?
+
+##Answer: No
+===== [40-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: CCC[C@H]1CN([C@@H](CC)C(N)=O)C(=O)C1
+
+Drug 2
+  SMILES: [H][C@@]12CC[C@](C)(O)[C@@]1(C)CC[C@@]1([H])[C@@]2([H])CCC2=CC(=O)CC[C@]12C
+
+Question: Does co-administration of Drug 1 and Drug 2 cause cerebral ischaemia?
+
+##Answer: No
+===== [41-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: COC1=C2O[C@H]3C(=O)CC[C@@]4(O)[C@H]5CC(C=C1)=C2[C@@]34CCN5C
+
+Drug 2
+  SMILES: [H][C@]12C[C@@H](O)C=C[C@]11CCN(C)CC3=C1C(O2)=C(OC)C=C3
+
+Question: Does co-administration of Drug 1 and Drug 2 cause sensory disturbance?
+
+##Answer: Yes
+===== [42-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: [H][C@@]12C[C@@H](C)[C@](C)(C(=O)CC)[C@@]1(C)C[C@H](O)[C@@]1([H])[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+
+Drug 2
+  SMILES: [H][C@@]12CC[C@H](C(=O)NC(C)(C)C)[C@@]1(C)CC[C@@]1([H])[C@@]2([H])CC[C@@]2([H])NC(=O)C=C[C@]12C
+
+Question: Does co-administration of Drug 1 and Drug 2 cause muscle disorder?
+
+##Answer: No
+===== [43-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: COC(=O)CCC1=C2NC(\C=C3/N=C(/C=C4\N\C(=C/C5=N/C(=C\2)/C(CCC(O)=O)=C5C)C(C=C)=C4C)C2=CC=C([C@@H](C(=O)OC)[C@@]32C)C(=O)OC)=C1C
+
+Drug 2
+  SMILES: NCC(=O)CCC(O)=O
+
+Question: Does co-administration of Drug 1 and Drug 2 cause ADVERSE DRUG EFFECT?
+
+##Answer: Yes
+===== [45-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: [H][C@@]12C[C@H]3OC4(CCCC4)O[C@@]3(C(=O)COC(C)=O)[C@@]1(C)C[C@H](O)[C@@]1(F)[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+
+Drug 2
+  SMILES: CCC[C@H]1CN([C@@H](CC)C(N)=O)C(=O)C1
+
+Question: Does co-administration of Drug 1 and Drug 2 cause dental abscess?
+
+##Answer: No
+===== [46-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: [H][C@@]12C[C@H](C)[C@](O)(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1(F)[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+
+Drug 2
+  SMILES: [H][C@@]12OC3=C(OCC)C=CC4=C3[C@@]11CCN(C)[C@]([H])(C4)[C@]1([H])C=C[C@@H]2O
+
+Question: Does co-administration of Drug 1 and Drug 2 cause fibroids?
+
+##Answer: No
+===== [50-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: [H][C@@]12C[C@H](C)[C@](O)(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1(F)[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+
+Drug 2
+  SMILES: [H][C@@]12C[C@H](C)[C@](OC(=O)CC)(C(=O)CCl)[C@@]1(C)C[C@H](O)[C@@]1(F)[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+
+Question: Does co-administration of Drug 1 and Drug 2 cause ADVERSE DRUG EFFECT?
+
+##Answer: Yes
+===== [51-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: [H][C@@]12CCC(=O)[C@@]1(C)CC[C@]1([H])C3=C(CC[C@@]21[H])C=C(OS(O)(=O)=O)C=C3
+
+Drug 2
+  SMILES: CCCCC1=NC2(CCCC2)C(=O)N1CC1=CC=C(C=C1)C1=CC=CC=C1C1=NNN=N1
+
+Question: Does co-administration of Drug 1 and Drug 2 cause major depression?
+
+##Answer: No
+===== [52-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: [H][C@@]12OC3=C4C(C[C@H]5N(C)CC[C@@]14[C@@]5([H])CC[C@@H]2O)=CC=C3OC
+
+Drug 2
+  SMILES: [H][C@@]12OC3=C(O)C=CC4=C3[C@@]11CCN(C)[C@]([H])(C4)[C@]1([H])CCC2=O
+
+Question: Does co-administration of Drug 1 and Drug 2 cause excessive sleepiness?
+
+##Answer: Yes
+===== [53-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: [H][C@@]12C[C@@H](C)[C@](O)(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1([H])[C@@]2([H])[C@H](Cl)CC2=CC(=O)C=C[C@]12C
+
+Drug 2
+  SMILES: [H][C@@]12C[C@H]3OC(CCC)O[C@@]3(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1([H])[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+
+Question: Does co-administration of Drug 1 and Drug 2 cause adrenal insufficiency?
+
+##Answer: Yes
+===== [54-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: COC(=O)CCC1=C2NC(\C=C3/N=C(/C=C4\N\C(=C/C5=N/C(=C\2)/C(CCC(O)=O)=C5C)C(C=C)=C4C)C2=CC=C([C@@H](C(=O)OC)[C@@]32C)C(=O)OC)=C1C
+
+Drug 2
+  SMILES: [H][C@]12C[C@@H](O)C=C[C@]11CCN(C)CC3=C1C(O2)=C(OC)C=C3
+
+Question: Does co-administration of Drug 1 and Drug 2 cause sinus bradycardia?
+
+##Answer: Yes
+===== [55-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: [H][C@@]12C[C@@H](C)[C@](O)(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1([H])[C@@]2([H])[C@H](Cl)CC2=CC(=O)C=C[C@]12C
+
+Drug 2
+  SMILES: [H][C@@]12CCC(=O)[C@@]1(C)CC[C@@]1([H])[C@@]2([H])CC=C2C[C@@]([H])(O)CC[C@]12C
+
+Question: Does co-administration of Drug 1 and Drug 2 cause adrenal insufficiency?
+
+##Answer: No
+===== [56-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: NCC(=O)CCC(O)=O
+
+Drug 2
+  SMILES: [H][C@]12C[C@@H](O)C=C[C@]11CCN(C)CC3=C1C(O2)=C(OC)C=C3
+
+Question: Does co-administration of Drug 1 and Drug 2 cause adrenal insufficiency?
+
+##Answer: No
+===== [57-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: [H][C@@]12CC[C@](O)(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1([H])[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+
+Drug 2
+  SMILES: [H][C@@]12OC3=C4C(C[C@H]5N(C)CC[C@@]14[C@@]5([H])CC[C@@H]2O)=CC=C3OC
+
+Question: Does co-administration of Drug 1 and Drug 2 cause Colon Spastic?
+
+##Answer: No
+===== [58-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: [H][C@@]12C[C@H](C)[C@](O)(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1(F)[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+
+Drug 2
+  SMILES: [H][C@@]12C[C@H]3OC4(CCCC4)O[C@@]3(C(=O)COC(C)=O)[C@@]1(C)C[C@H](O)[C@@]1(F)[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+
+Question: Does co-administration of Drug 1 and Drug 2 cause Leukaemia?
+
+##Answer: No
+===== [59-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: CC1=C(C)C=C2N(C[C@H](O)[C@H](O)[C@H](O)CO)C3=NC(=O)NC(=O)C3=NC2=C1
+
+Drug 2
+  SMILES: [H][C@@]12C[C@@]3([H])[C@]4([H])CCC5=CC(=O)C=C[C@]5(C)[C@@]4([H])[C@@H](O)C[C@]3(C)[C@@]1(O[C@@H](O2)C1CCCCC1)C(=O)COC(=O)C(C)C
+
+Question: Does co-administration of Drug 1 and Drug 2 cause Spinal Compression Fracture?
+
+##Answer: Yes
+===== [60-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: [H][C@@]12C[C@@H](C)[C@](OC(=O)C3=CC=CO3)(C(=O)SCF)[C@@]1(C)C[C@H](O)[C@@]1(F)[C@@]2([H])C[C@H](F)C2=CC(=O)C=C[C@]12C
+
+Drug 2
+  SMILES: [H][C@@]12CC[C@@](O)(C#C)[C@@]1(C)CC[C@]1([H])[C@@]3([H])CCC(=O)C=C3CC[C@@]21[H]
+
+Question: Does co-administration of Drug 1 and Drug 2 cause muscle disorder?
+
+##Answer: No
+===== [61-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: [H][C@@]12CC[C@](OC(=O)OCC)(C(=O)COC(=O)CC)[C@@]1(C)C[C@H](O)[C@@]1([H])[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+
+Drug 2
+  SMILES: [H][C@@]12C[C@@]3([H])[C@]4([H])C[C@H](F)C5=CC(=O)C=C[C@]5(C)[C@@]4(F)[C@@H](O)C[C@]3(C)[C@@]1(OC(C)(C)O2)C(=O)CO
+
+Question: Does co-administration of Drug 1 and Drug 2 cause Light sensitivity?
+
+##Answer: No
+===== [62-REAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  SMILES: [H][C@@]12C[C@@]3([H])[C@]4([H])CCC5=CC(=O)C=C[C@]5(C)[C@@]4([H])[C@@H](O)C[C@]3(C)[C@@]1(O[C@@H](O2)C1CCCCC1)C(=O)COC(=O)C(C)C
+
+Drug 2
+  SMILES: [H][C@@]12CC[C@@](O)(C#C)[C@@]1(C)CC[C@]1([H])[C@@]3([H])CCC(=O)C=C3CC[C@@]21[H]
+
+Question: Does co-administration of Drug 1 and Drug 2 cause paranoia?
+
+##Answer: No
+===== [01-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Aminolevulinic acid
+  SMILES: NCC(=O)CCC(O)=O
+  Target genes: ALAD, SLC15A1, SLC15A2
+  Indications: (none)
+  Pharmacologic class: Porphyrinogens
+
+Drug 2
+  Name: Methyltestosterone
+  SMILES: [H][C@@]12CC[C@](C)(O)[C@@]1(C)CC[C@@]1([H])[C@@]2([H])CCC2=CC(=O)CC[C@]12C
+  Target genes: ALB, AR, CYP19A1, CYP2B6, CYP3A4, SHBG, SLC22A8, SLCO1A2
+  Indications: breast cancer
+  Pharmacologic class: Androgen Receptor Agonists, Androstanes
+
+Question: Does co-administration of Drug 1 and Drug 2 cause pain in throat?
+
+##Answer: No
+===== [02-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Progesterone
+  SMILES: [H][C@@]12CC[C@H](C(C)=O)[C@@]1(C)CC[C@@]1([H])[C@@]2([H])CCC2=CC(=O)CC[C@]12C
+  Target genes: ABCB1, ABCB11, ABCC1, AR, CYP17A1, CYP1A1, CYP1A2, CYP1B1, CYP2A6, CYP2C19, CYP2C8, CYP2C9, CYP2D6, CYP3A4, CYP3A5, CYP3A7, CYP3A7-CYP3A51P, ESR1, NR3C1, NR3C2, OPRK1, PGR, SHBG, SIGMAR1, SLC10A1, SLC22A1, SLC22A2, SLC22A3
+  Indications: uterine cancer
+  Pharmacologic class: Progesterone
+
+Drug 2
+  Name: Levonorgestrel
+  SMILES: [H][C@@]12CC[C@@](O)(C#C)[C@@]1(CC)CC[C@]1([H])[C@@]3([H])CCC(=O)C=C3CC[C@@]21[H]
+  Target genes: AR, CYP19A1, CYP3A4, ESR1, PGR, SHBG, SRD5A1
+  Indications: polycystic ovary syndrome
+  Pharmacologic class: Inhibit Ovum Fertilization, Progesterone Congeners
+
+Question: Does co-administration of Drug 1 and Drug 2 cause pancreatitis relapsing?
+
+##Answer: No
+===== [04-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Clobetasol propionate
+  SMILES: [H][C@@]12C[C@H](C)[C@](OC(=O)CC)(C(=O)CCl)[C@@]1(C)C[C@H](O)[C@@]1(F)[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+  Target genes: CYP1A1, CYP1A2, NR3C1
+  Indications: psoriasis
+  Pharmacologic class: (none)
+
+Drug 2
+  Name: Glucosamine
+  SMILES: N[C@H]1C(O)O[C@H](CO)[C@@H](O)[C@@H]1O
+  Target genes: CYP2C19, CYP2E1, IFNG, MMP9, NFKB2, TNF
+  Indications: osteoarthritis
+  Pharmacologic class: (none)
+
+Question: Does co-administration of Drug 1 and Drug 2 cause intervertebral disc disorder?
+
+##Answer: No
+===== [05-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Aminolevulinic acid
+  SMILES: NCC(=O)CCC(O)=O
+  Target genes: ALAD, SLC15A1, SLC15A2
+  Indications: (none)
+  Pharmacologic class: Porphyrinogens
+
+Drug 2
+  Name: Prednisolone
+  SMILES: [H][C@@]12CC[C@](O)(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1([H])[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+  Target genes: ABCB1, CYP2A6, CYP3A4, NR3C1, NR3C2, SERPINA6, SLCO1A2
+  Indications: allergic rhinitis, ankylosing spondylitis, asthma, atopic dermatitis, chronic obstructive pulmonary disease, gout, hematologic cancer, idiopathic pulmonary fibrosis, multiple sclerosis, psoriasis, psoriatic arthritis, rheumatoid arthritis, systemic lupus erythematosus, ulcerative colitis
+  Pharmacologic class: Corticosteroid Hormone Receptor Agonists
+
+Question: Does co-administration of Drug 1 and Drug 2 cause pharyngeal inflammation?
+
+##Answer: No
+===== [06-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Prednisone
+  SMILES: [H][C@@]12CC[C@](O)(C(=O)CO)[C@@]1(C)CC(=O)[C@@]1([H])[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+  Target genes: ABCB1, ALB, CYP2C19, CYP3A4, HSD11B1, NR3C1, SLCO1A2
+  Indications: Crohn's disease, ankylosing spondylitis, asthma, atopic dermatitis, chronic obstructive pulmonary disease, gout, hematologic cancer, migraine, multiple sclerosis, osteoarthritis, prostate cancer, psoriasis, psoriatic arthritis, rheumatoid arthritis, systemic lupus erythematosus, systemic scleroderma, ulcerative colitis
+  Pharmacologic class: Corticosteroid Hormone Receptor Agonists
+
+Drug 2
+  Name: Fluprednidene
+  SMILES: [H][C@@]12CC(=C)[C@](O)(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1(F)[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+  Target genes: (none)
+  Indications: (none)
+  Pharmacologic class: (none)
+
+Question: Does co-administration of Drug 1 and Drug 2 cause adrenal insufficiency?
+
+##Answer: Yes
+===== [07-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Aminolevulinic acid
+  SMILES: NCC(=O)CCC(O)=O
+  Target genes: ALAD, SLC15A1, SLC15A2
+  Indications: (none)
+  Pharmacologic class: Porphyrinogens
+
+Drug 2
+  Name: Alclometasone
+  SMILES: [H][C@@]12C[C@@H](C)[C@](O)(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1([H])[C@@]2([H])[C@H](Cl)CC2=CC(=O)C=C[C@]12C
+  Target genes: CYP3A4, NR3C1, SERPINA6
+  Indications: (none)
+  Pharmacologic class: Corticosteroid Hormone Receptor Agonists
+
+Question: Does co-administration of Drug 1 and Drug 2 cause abnormal ECG?
+
+##Answer: No
+===== [08-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Oxycodone
+  SMILES: COC1=C2O[C@H]3C(=O)CC[C@@]4(O)[C@H]5CC(C=C1)=C2[C@@]34CCN5C
+  Target genes: CYP2D6, CYP3A4, CYP3A5, CYP3A7, CYP3A7-CYP3A51P, OPRD1, OPRK1, OPRM1
+  Indications: (none)
+  Pharmacologic class: Full Opioid Agonists
+
+Drug 2
+  Name: Sitagliptin
+  SMILES: N[C@@H](CC(=O)N1CCN2C(C1)=NN=C2C(F)(F)F)CC1=CC(F)=C(F)C=C1F
+  Target genes: ABCB1, CYP2C8, CYP3A4, DPP4
+  Indications: type 2 diabetes mellitus
+  Pharmacologic class: Dipeptidyl Peptidase 4 Inhibitors
+
+Question: Does co-administration of Drug 1 and Drug 2 cause acute bronchitis?
+
+##Answer: No
+===== [09-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Fluocinolone acetonide
+  SMILES: [H][C@@]12C[C@@]3([H])[C@]4([H])C[C@H](F)C5=CC(=O)C=C[C@]5(C)[C@@]4(F)[C@@H](O)C[C@]3(C)[C@@]1(OC(C)(C)O2)C(=O)CO
+  Target genes: NR3C1, PLA2G4A, SERPINA6
+  Indications: atopic dermatitis, psoriasis
+  Pharmacologic class: Corticosteroid Hormone Receptor Agonists
+
+Drug 2
+  Name: Budesonide
+  SMILES: [H][C@@]12C[C@H]3OC(CCC)O[C@@]3(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1([H])[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+  Target genes: CYP3A4, NR3C1
+  Indications: asthma, ulcerative colitis
+  Pharmacologic class: Corticosteroid Hormone Receptor Agonists
+
+Question: Does co-administration of Drug 1 and Drug 2 cause psychoses?
+
+##Answer: Yes
+===== [10-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Betamethasone
+  SMILES: [H][C@@]12C[C@H](C)[C@](O)(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1(F)[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+  Target genes: ABCB1, CYP19A1, CYP3A4, NR3C1, NR3C2, PGR, PLA2G1B, PTGS2
+  Indications: allergic rhinitis, ankylosing spondylitis, asthma, atopic dermatitis, brain cancer, breast cancer, colon cancer, hematologic cancer, kidney cancer, multiple sclerosis, prostate cancer, psoriasis, psoriatic arthritis, rheumatoid arthritis, systemic lupus erythematosus, ulcerative colitis
+  Pharmacologic class: Corticosteroid Hormone Receptor Agonists
+
+Drug 2
+  Name: Oxymorphone
+  SMILES: [H][C@@]12OC3=C(O)C=CC4=C3[C@@]11CCN(C)[C@]([H])(C4)[C@]1(O)CCC2=O
+  Target genes: CYP2D6, CYP3A4, OPRD1, OPRK1, OPRM1
+  Indications: (none)
+  Pharmacologic class: Full Opioid Agonists
+
+Question: Does co-administration of Drug 1 and Drug 2 cause Lyell?
+
+##Answer: No
+===== [11-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Prednisolone
+  SMILES: [H][C@@]12CC[C@](O)(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1([H])[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+  Target genes: ABCB1, CYP2A6, CYP3A4, NR3C1, NR3C2, SERPINA6, SLCO1A2
+  Indications: allergic rhinitis, ankylosing spondylitis, asthma, atopic dermatitis, chronic obstructive pulmonary disease, gout, hematologic cancer, idiopathic pulmonary fibrosis, multiple sclerosis, psoriasis, psoriatic arthritis, rheumatoid arthritis, systemic lupus erythematosus, ulcerative colitis
+  Pharmacologic class: Corticosteroid Hormone Receptor Agonists
+
+Drug 2
+  Name: Ethylmorphine
+  SMILES: [H][C@@]12OC3=C(OCC)C=CC4=C3[C@@]11CCN(C)[C@]([H])(C4)[C@]1([H])C=C[C@@H]2O
+  Target genes: CYP2B6, CYP2D6, CYP3A4, CYP3A7, CYP3A7-CYP3A51P, OPRM1, POR
+  Indications: (none)
+  Pharmacologic class: (none)
+
+Question: Does co-administration of Drug 1 and Drug 2 cause tooth disease?
+
+##Answer: No
+===== [13-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Verteporfin
+  SMILES: COC(=O)CCC1=C2NC(\C=C3/N=C(/C=C4\N\C(=C/C5=N/C(=C\2)/C(CCC(O)=O)=C5C)C(C=C)=C4C)C2=CC=C([C@@H](C(=O)OC)[C@@]32C)C(=O)OC)=C1C
+  Target genes: (none)
+  Indications: (none)
+  Pharmacologic class: Photoabsorption, Photosensitizing Activity
+
+Drug 2
+  Name: Dihydrocodeine
+  SMILES: [H][C@@]12OC3=C4C(C[C@H]5N(C)CC[C@@]14[C@@]5([H])CC[C@@H]2O)=CC=C3OC
+  Target genes: CYP2D6, CYP3A4, OPRM1
+  Indications: (none)
+  Pharmacologic class: Full Opioid Agonists
+
+Question: Does co-administration of Drug 1 and Drug 2 cause Ataxia?
+
+##Answer: No
+===== [14-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Flumethasone
+  SMILES: [H][C@@]12C[C@@H](C)[C@](O)(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1(F)[C@@]2([H])C[C@H](F)C2=CC(=O)C=C[C@]12C
+  Target genes: NR3C1, SERPINA6
+  Indications: (none)
+  Pharmacologic class: (none)
+
+Drug 2
+  Name: Ciclesonide
+  SMILES: [H][C@@]12C[C@@]3([H])[C@]4([H])CCC5=CC(=O)C=C[C@]5(C)[C@@]4([H])[C@@H](O)C[C@]3(C)[C@@]1(O[C@@H](O2)C1CCCCC1)C(=O)COC(=O)C(C)C
+  Target genes: CES1, CYP2D6, CYP3A4, NR3C1, SERPINA6
+  Indications: asthma
+  Pharmacologic class: (none)
+
+Question: Does co-administration of Drug 1 and Drug 2 cause adrenal insufficiency?
+
+##Answer: Yes
+===== [15-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Galantamine
+  SMILES: [H][C@]12C[C@@H](O)C=C[C@]11CCN(C)CC3=C1C(O2)=C(OC)C=C3
+  Target genes: ACHE, BCHE, CHRFAM7A, CHRNA1, CHRNA10, CHRNA2, CHRNA3, CHRNA4, CHRNA5, CHRNA6, CHRNA7, CHRNA9, CHRNB1, CHRNB2, CHRNB3, CHRNB4, CHRND, CHRNE, CHRNG, CYP2D6, CYP3A4
+  Indications: Alzheimer's disease
+  Pharmacologic class: (none)
+
+Drug 2
+  Name: Norgestrel
+  SMILES: CCC12CCC3C(CCC4=CC(=O)CCC34)C1CCC2(O)C#C
+  Target genes: (none)
+  Indications: (none)
+  Pharmacologic class: (none)
+
+Question: Does co-administration of Drug 1 and Drug 2 cause angioedema?
+
+##Answer: No
+===== [16-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Prasterone
+  SMILES: [H][C@@]12CCC(=O)[C@@]1(C)CC[C@@]1([H])[C@@]2([H])CC=C2C[C@@]([H])(O)CC[C@]12C
+  Target genes: (none)
+  Indications: (none)
+  Pharmacologic class: (none)
+
+Drug 2
+  Name: Dihydrocodeine
+  SMILES: [H][C@@]12OC3=C4C(C[C@H]5N(C)CC[C@@]14[C@@]5([H])CC[C@@H]2O)=CC=C3OC
+  Target genes: CYP2D6, CYP3A4, OPRM1
+  Indications: (none)
+  Pharmacologic class: Full Opioid Agonists
+
+Question: Does co-administration of Drug 1 and Drug 2 cause hyperuricaemia?
+
+##Answer: No
+===== [17-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Fluticasone furoate
+  SMILES: [H][C@@]12C[C@@H](C)[C@](OC(=O)C3=CC=CO3)(C(=O)SCF)[C@@]1(C)C[C@H](O)[C@@]1(F)[C@@]2([H])C[C@H](F)C2=CC(=O)C=C[C@]12C
+  Target genes: ABCB1, CYP3A4, NR3C1
+  Indications: asthma
+  Pharmacologic class: (none)
+
+Drug 2
+  Name: Fluorometholone
+  SMILES: [H][C@@]12CC[C@](O)(C(C)=O)[C@@]1(C)C[C@H](O)[C@@]1(F)[C@@]2([H])C[C@H](C)C2=CC(=O)C=C[C@]12C
+  Target genes: CYP3A4, NR3C1, SERPINA6
+  Indications: (none)
+  Pharmacologic class: Corticosteroid Hormone Receptor Agonists
+
+Question: Does co-administration of Drug 1 and Drug 2 cause endocrine disorder?
+
+##Answer: Yes
+===== [18-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Hydromorphone
+  SMILES: [H][C@@]12OC3=C(O)C=CC4=C3[C@@]11CCN(C)[C@]([H])(C4)[C@]1([H])CCC2=O
+  Target genes: CYP2C9, CYP2D6, CYP3A4, OPRD1, OPRK1, OPRM1, PTGS1, UGT1A9
+  Indications: (none)
+  Pharmacologic class: Full Opioid Agonists
+
+Drug 2
+  Name: Rotigotine
+  SMILES: CCCN(CCC1=CC=CS1)[C@H]1CCC2=C(O)C=CC=C2C1
+  Target genes: ADRA2B, CYP1A2, CYP2D6, CYP3A4, DRD1, DRD2, DRD3, DRD4, DRD5, HTR1A
+  Indications: Parkinson's disease
+  Pharmacologic class: (none)
+
+Question: Does co-administration of Drug 1 and Drug 2 cause movement disorder?
+
+##Answer: Yes
+===== [19-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Naloxone
+  SMILES: OC1=CC=C2C[C@H]3N(CC=C)CC[C@@]45[C@@H](OC1=C24)C(=O)CC[C@@]35O
+  Target genes: ABCB1, ALB, CREB1, CYP2C8, CYP3A4, ESR1, OPRD1, OPRK1, OPRM1, SLCO1A2, TLR4
+  Indications: (none)
+  Pharmacologic class: Opioid Antagonists
+
+Drug 2
+  Name: Norgestrel
+  SMILES: CCC12CCC3C(CCC4=CC(=O)CCC34)C1CCC2(O)C#C
+  Target genes: (none)
+  Indications: (none)
+  Pharmacologic class: (none)
+
+Question: Does co-administration of Drug 1 and Drug 2 cause micturition urgency?
+
+##Answer: No
+===== [21-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Difluocortolone
+  SMILES: [H][C@@]12C[C@@H](C)[C@H](C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1(F)[C@@]2([H])C[C@H](F)C2=CC(=O)C=C[C@]12C
+  Target genes: (none)
+  Indications: (none)
+  Pharmacologic class: (none)
+
+Drug 2
+  Name: Vemurafenib
+  SMILES: CCCS(=O)(=O)NC1=C(F)C(C(=O)C2=CNC3=NC=C(C=C23)C2=CC=C(Cl)C=C2)=C(F)C=C1
+  Target genes: ABCC1, ABCG2, ALB, BRAF, CYP1A2, CYP2D6, CYP3A4, ORM1, RAF1
+  Indications: melanoma, skin cancer
+  Pharmacologic class: Cytochrome P450 1A2 Inhibitors, P-Glycoprotein Inhibitors, Protein Kinase Inhibitors
+
+Question: Does co-administration of Drug 1 and Drug 2 cause multiple sclerosis?
+
+##Answer: No
+===== [22-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Elvitegravir
+  SMILES: [H][C@@](CO)(C(C)C)N1C=C(C(O)=O)C(=O)C2=C1C=C(OC)C(CC1=C(F)C(Cl)=CC=C1)=C2
+  Target genes: (none)
+  Indications: (none)
+  Pharmacologic class: (none)
+
+Drug 2
+  Name: Morphine
+  SMILES: [H][C@@]12OC3=C(O)C=CC4=C3[C@@]11CCN(C)[C@]([H])(C4)[C@]1([H])C=C[C@@H]2O
+  Target genes: ABCB1, CYP2C8, CYP2D6, CYP3A4, OPRD1, OPRK1, OPRL1, OPRM1, UGT1A1, UGT1A3, UGT1A8, UGT2B15, UGT2B4, UGT2B7
+  Indications: coronary artery disease
+  Pharmacologic class: Full Opioid Agonists
+
+Question: Does co-administration of Drug 1 and Drug 2 cause eye swelling?
+
+##Answer: No
+===== [23-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Prednicarbate
+  SMILES: [H][C@@]12CC[C@](OC(=O)OCC)(C(=O)COC(=O)CC)[C@@]1(C)C[C@H](O)[C@@]1([H])[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+  Target genes: NR3C1
+  Indications: (none)
+  Pharmacologic class: Corticosteroid Hormone Receptor Agonists
+
+Drug 2
+  Name: Fluocinolone acetonide
+  SMILES: [H][C@@]12C[C@@]3([H])[C@]4([H])C[C@H](F)C5=CC(=O)C=C[C@]5(C)[C@@]4(F)[C@@H](O)C[C@]3(C)[C@@]1(OC(C)(C)O2)C(=O)CO
+  Target genes: NR3C1, PLA2G4A, SERPINA6
+  Indications: atopic dermatitis, psoriasis
+  Pharmacologic class: Corticosteroid Hormone Receptor Agonists
+
+Question: Does co-administration of Drug 1 and Drug 2 cause endocrine disorder?
+
+##Answer: Yes
+===== [24-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Prednicarbate
+  SMILES: [H][C@@]12CC[C@](OC(=O)OCC)(C(=O)COC(=O)CC)[C@@]1(C)C[C@H](O)[C@@]1([H])[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+  Target genes: NR3C1
+  Indications: (none)
+  Pharmacologic class: Corticosteroid Hormone Receptor Agonists
+
+Drug 2
+  Name: Beclomethasone dipropionate
+  SMILES: [H][C@@]12C[C@H](C)[C@](OC(=O)CC)(C(=O)COC(=O)CC)[C@@]1(C)C[C@H](O)[C@@]1(Cl)[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+  Target genes: CYP3A5, NR3C1, SERPINA6
+  Indications: asthma, psoriasis
+  Pharmacologic class: (none)
+
+Question: Does co-administration of Drug 1 and Drug 2 cause ADVERSE DRUG EFFECT?
+
+##Answer: Yes
+===== [25-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Mometasone
+  SMILES: [H][C@@]12C[C@@H](C)[C@](O)(C(=O)CCl)[C@@]1(C)C[C@H](O)[C@@]1(Cl)[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+  Target genes: CYP2C8, NR3C1
+  Indications: asthma, atopic dermatitis, systemic scleroderma
+  Pharmacologic class: (none)
+
+Drug 2
+  Name: Dihydrocodeine
+  SMILES: [H][C@@]12OC3=C4C(C[C@H]5N(C)CC[C@@]14[C@@]5([H])CC[C@@H]2O)=CC=C3OC
+  Target genes: CYP2D6, CYP3A4, OPRM1
+  Indications: (none)
+  Pharmacologic class: Full Opioid Agonists
+
+Question: Does co-administration of Drug 1 and Drug 2 cause pain in throat?
+
+##Answer: No
+===== [26-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Prednisolone
+  SMILES: [H][C@@]12CC[C@](O)(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1([H])[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+  Target genes: ABCB1, CYP2A6, CYP3A4, NR3C1, NR3C2, SERPINA6, SLCO1A2
+  Indications: allergic rhinitis, ankylosing spondylitis, asthma, atopic dermatitis, chronic obstructive pulmonary disease, gout, hematologic cancer, idiopathic pulmonary fibrosis, multiple sclerosis, psoriasis, psoriatic arthritis, rheumatoid arthritis, systemic lupus erythematosus, ulcerative colitis
+  Pharmacologic class: Corticosteroid Hormone Receptor Agonists
+
+Drug 2
+  Name: Glucosamine
+  SMILES: N[C@H]1C(O)O[C@H](CO)[C@@H](O)[C@@H]1O
+  Target genes: CYP2C19, CYP2E1, IFNG, MMP9, NFKB2, TNF
+  Indications: osteoarthritis
+  Pharmacologic class: (none)
+
+Question: Does co-administration of Drug 1 and Drug 2 cause Carcinoma of Prostate?
+
+##Answer: No
+===== [27-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Clobetasol propionate
+  SMILES: [H][C@@]12C[C@H](C)[C@](OC(=O)CC)(C(=O)CCl)[C@@]1(C)C[C@H](O)[C@@]1(F)[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+  Target genes: CYP1A1, CYP1A2, NR3C1
+  Indications: psoriasis
+  Pharmacologic class: (none)
+
+Drug 2
+  Name: Dihydrocodeine
+  SMILES: [H][C@@]12OC3=C4C(C[C@H]5N(C)CC[C@@]14[C@@]5([H])CC[C@@H]2O)=CC=C3OC
+  Target genes: CYP2D6, CYP3A4, OPRM1
+  Indications: (none)
+  Pharmacologic class: Full Opioid Agonists
+
+Question: Does co-administration of Drug 1 and Drug 2 cause ADVERSE DRUG EFFECT?
+
+##Answer: Yes
+===== [28-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Allylestrenol
+  SMILES: [H][C@@]12CC[C@@](O)(CC=C)[C@@]1(C)CC[C@]1([H])[C@@]3([H])CCCC=C3CC[C@@]21[H]
+  Target genes: CYP3A4, ESR1, PGR
+  Indications: (none)
+  Pharmacologic class: (none)
+
+Drug 2
+  Name: Morphine
+  SMILES: [H][C@@]12OC3=C(O)C=CC4=C3[C@@]11CCN(C)[C@]([H])(C4)[C@]1([H])C=C[C@@H]2O
+  Target genes: ABCB1, CYP2C8, CYP2D6, CYP3A4, OPRD1, OPRK1, OPRL1, OPRM1, UGT1A1, UGT1A3, UGT1A8, UGT2B15, UGT2B4, UGT2B7
+  Indications: coronary artery disease
+  Pharmacologic class: Full Opioid Agonists
+
+Question: Does co-administration of Drug 1 and Drug 2 cause pain in throat?
+
+##Answer: No
+===== [29-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Prednisone
+  SMILES: [H][C@@]12CC[C@](O)(C(=O)CO)[C@@]1(C)CC(=O)[C@@]1([H])[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+  Target genes: ABCB1, ALB, CYP2C19, CYP3A4, HSD11B1, NR3C1, SLCO1A2
+  Indications: Crohn's disease, ankylosing spondylitis, asthma, atopic dermatitis, chronic obstructive pulmonary disease, gout, hematologic cancer, migraine, multiple sclerosis, osteoarthritis, prostate cancer, psoriasis, psoriatic arthritis, rheumatoid arthritis, systemic lupus erythematosus, systemic scleroderma, ulcerative colitis
+  Pharmacologic class: Corticosteroid Hormone Receptor Agonists
+
+Drug 2
+  Name: Fluocinolone acetonide
+  SMILES: [H][C@@]12C[C@@]3([H])[C@]4([H])C[C@H](F)C5=CC(=O)C=C[C@]5(C)[C@@]4(F)[C@@H](O)C[C@]3(C)[C@@]1(OC(C)(C)O2)C(=O)CO
+  Target genes: NR3C1, PLA2G4A, SERPINA6
+  Indications: atopic dermatitis, psoriasis
+  Pharmacologic class: Corticosteroid Hormone Receptor Agonists
+
+Question: Does co-administration of Drug 1 and Drug 2 cause paranoia?
+
+##Answer: Yes
+===== [31-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Protriptyline
+  SMILES: CNCCCC1C2=CC=CC=C2C=CC2=CC=CC=C12
+  Target genes: ABCB1, CYP2D6, SLC6A2, SLC6A4
+  Indications: (none)
+  Pharmacologic class: (none)
+
+Drug 2
+  Name: Irbesartan
+  SMILES: CCCCC1=NC2(CCCC2)C(=O)N1CC1=CC=C(C=C1)C1=CC=CC=C1C1=NNN=N1
+  Target genes: AGTR1, CYP1A2, CYP2C8, CYP2C9, CYP2D6, CYP3A4, EDNRA, JUN, PTGS1, UGT1A3
+  Indications: hypertension, type 2 diabetes mellitus
+  Pharmacologic class: Angiotensin 2 Receptor Antagonists
+
+Question: Does co-administration of Drug 1 and Drug 2 cause multiple sclerosis?
+
+##Answer: No
+===== [34-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Hydromorphone
+  SMILES: [H][C@@]12OC3=C(O)C=CC4=C3[C@@]11CCN(C)[C@]([H])(C4)[C@]1([H])CCC2=O
+  Target genes: CYP2C9, CYP2D6, CYP3A4, OPRD1, OPRK1, OPRM1, PTGS1, UGT1A9
+  Indications: (none)
+  Pharmacologic class: Full Opioid Agonists
+
+Drug 2
+  Name: Galantamine
+  SMILES: [H][C@]12C[C@@H](O)C=C[C@]11CCN(C)CC3=C1C(O2)=C(OC)C=C3
+  Target genes: ACHE, BCHE, CHRFAM7A, CHRNA1, CHRNA10, CHRNA2, CHRNA3, CHRNA4, CHRNA5, CHRNA6, CHRNA7, CHRNA9, CHRNB1, CHRNB2, CHRNB3, CHRNB4, CHRND, CHRNE, CHRNG, CYP2D6, CYP3A4
+  Indications: Alzheimer's disease
+  Pharmacologic class: (none)
+
+Question: Does co-administration of Drug 1 and Drug 2 cause Apnea?
+
+##Answer: Yes
+===== [35-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Fluticasone propionate
+  SMILES: [H][C@@]12C[C@@H](C)[C@](OC(=O)CC)(C(=O)SCF)[C@@]1(C)C[C@H](O)[C@@]1(F)[C@@]2([H])C[C@H](F)C2=CC(=O)C=C[C@]12C
+  Target genes: CYP3A4, CYP3A5, CYP3A7, CYP3A7-CYP3A51P, NR3C1, NR3C2, PGR, PLA2G4A, SERPINA6
+  Indications: asthma
+  Pharmacologic class: Corticosteroid Hormone Receptor Agonists
+
+Drug 2
+  Name: Equilin
+  SMILES: [H][C@@]12CCC(=O)[C@@]1(C)CC[C@]1([H])C3=C(CC=C21)C=C(O)C=C3
+  Target genes: HSD17B1, SHBG
+  Indications: (none)
+  Pharmacologic class: (none)
+
+Question: Does co-administration of Drug 1 and Drug 2 cause CMV infection?
+
+##Answer: No
+===== [37-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Flumethasone
+  SMILES: [H][C@@]12C[C@@H](C)[C@](O)(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1(F)[C@@]2([H])C[C@H](F)C2=CC(=O)C=C[C@]12C
+  Target genes: NR3C1, SERPINA6
+  Indications: (none)
+  Pharmacologic class: (none)
+
+Drug 2
+  Name: Glucosamine
+  SMILES: N[C@H]1C(O)O[C@H](CO)[C@@H](O)[C@@H]1O
+  Target genes: CYP2C19, CYP2E1, IFNG, MMP9, NFKB2, TNF
+  Indications: osteoarthritis
+  Pharmacologic class: (none)
+
+Question: Does co-administration of Drug 1 and Drug 2 cause carotid artery stenosis?
+
+##Answer: No
+===== [38-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Methyltestosterone
+  SMILES: [H][C@@]12CC[C@](C)(O)[C@@]1(C)CC[C@@]1([H])[C@@]2([H])CCC2=CC(=O)CC[C@]12C
+  Target genes: ALB, AR, CYP19A1, CYP2B6, CYP3A4, SHBG, SLC22A8, SLCO1A2
+  Indications: breast cancer
+  Pharmacologic class: Androgen Receptor Agonists, Androstanes
+
+Drug 2
+  Name: Artemether
+  SMILES: [H][C@@]12CC[C@@H](C)[C@]3([H])CC[C@@]4(C)OO[C@@]13[C@]([H])(O[C@H](OC)[C@@H]2C)O4
+  Target genes: CYP2B6, CYP2C19, CYP2C9, CYP2D6, CYP3A4, CYP3A5
+  Indications: malaria
+  Pharmacologic class: (none)
+
+Question: Does co-administration of Drug 1 and Drug 2 cause Carcinoma of Prostate?
+
+##Answer: No
+===== [40-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Brivaracetam
+  SMILES: CCC[C@H]1CN([C@@H](CC)C(N)=O)C(=O)C1
+  Target genes: (none)
+  Indications: (none)
+  Pharmacologic class: (none)
+
+Drug 2
+  Name: Methyltestosterone
+  SMILES: [H][C@@]12CC[C@](C)(O)[C@@]1(C)CC[C@@]1([H])[C@@]2([H])CCC2=CC(=O)CC[C@]12C
+  Target genes: ALB, AR, CYP19A1, CYP2B6, CYP3A4, SHBG, SLC22A8, SLCO1A2
+  Indications: breast cancer
+  Pharmacologic class: Androgen Receptor Agonists, Androstanes
+
+Question: Does co-administration of Drug 1 and Drug 2 cause cerebral ischaemia?
+
+##Answer: No
+===== [41-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Oxycodone
+  SMILES: COC1=C2O[C@H]3C(=O)CC[C@@]4(O)[C@H]5CC(C=C1)=C2[C@@]34CCN5C
+  Target genes: CYP2D6, CYP3A4, CYP3A5, CYP3A7, CYP3A7-CYP3A51P, OPRD1, OPRK1, OPRM1
+  Indications: (none)
+  Pharmacologic class: Full Opioid Agonists
+
+Drug 2
+  Name: Galantamine
+  SMILES: [H][C@]12C[C@@H](O)C=C[C@]11CCN(C)CC3=C1C(O2)=C(OC)C=C3
+  Target genes: ACHE, BCHE, CHRFAM7A, CHRNA1, CHRNA10, CHRNA2, CHRNA3, CHRNA4, CHRNA5, CHRNA6, CHRNA7, CHRNA9, CHRNB1, CHRNB2, CHRNB3, CHRNB4, CHRND, CHRNE, CHRNG, CYP2D6, CYP3A4
+  Indications: Alzheimer's disease
+  Pharmacologic class: (none)
+
+Question: Does co-administration of Drug 1 and Drug 2 cause sensory disturbance?
+
+##Answer: Yes
+===== [42-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Rimexolone
+  SMILES: [H][C@@]12C[C@@H](C)[C@](C)(C(=O)CC)[C@@]1(C)C[C@H](O)[C@@]1([H])[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+  Target genes: NR3C1, SERPINA6
+  Indications: (none)
+  Pharmacologic class: Corticosteroid Hormone Receptor Agonists
+
+Drug 2
+  Name: Finasteride
+  SMILES: [H][C@@]12CC[C@H](C(=O)NC(C)(C)C)[C@@]1(C)CC[C@@]1([H])[C@@]2([H])CC[C@@]2([H])NC(=O)C=C[C@]12C
+  Target genes: AKR1D1, CYP3A4, CYP3A5, CYP3A7, CYP3A7-CYP3A51P, SRD5A1, SRD5A2
+  Indications: (none)
+  Pharmacologic class: (none)
+
+Question: Does co-administration of Drug 1 and Drug 2 cause muscle disorder?
+
+##Answer: No
+===== [43-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Verteporfin
+  SMILES: COC(=O)CCC1=C2NC(\C=C3/N=C(/C=C4\N\C(=C/C5=N/C(=C\2)/C(CCC(O)=O)=C5C)C(C=C)=C4C)C2=CC=C([C@@H](C(=O)OC)[C@@]32C)C(=O)OC)=C1C
+  Target genes: (none)
+  Indications: (none)
+  Pharmacologic class: Photoabsorption, Photosensitizing Activity
+
+Drug 2
+  Name: Aminolevulinic acid
+  SMILES: NCC(=O)CCC(O)=O
+  Target genes: ALAD, SLC15A1, SLC15A2
+  Indications: (none)
+  Pharmacologic class: Porphyrinogens
+
+Question: Does co-administration of Drug 1 and Drug 2 cause ADVERSE DRUG EFFECT?
+
+##Answer: Yes
+===== [45-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Amcinonide
+  SMILES: [H][C@@]12C[C@H]3OC4(CCCC4)O[C@@]3(C(=O)COC(C)=O)[C@@]1(C)C[C@H](O)[C@@]1(F)[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+  Target genes: ANXA1, NR3C1
+  Indications: (none)
+  Pharmacologic class: Corticosteroid Hormone Receptor Agonists
+
+Drug 2
+  Name: Brivaracetam
+  SMILES: CCC[C@H]1CN([C@@H](CC)C(N)=O)C(=O)C1
+  Target genes: (none)
+  Indications: (none)
+  Pharmacologic class: (none)
+
+Question: Does co-administration of Drug 1 and Drug 2 cause dental abscess?
+
+##Answer: No
+===== [46-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Betamethasone
+  SMILES: [H][C@@]12C[C@H](C)[C@](O)(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1(F)[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+  Target genes: ABCB1, CYP19A1, CYP3A4, NR3C1, NR3C2, PGR, PLA2G1B, PTGS2
+  Indications: allergic rhinitis, ankylosing spondylitis, asthma, atopic dermatitis, brain cancer, breast cancer, colon cancer, hematologic cancer, kidney cancer, multiple sclerosis, prostate cancer, psoriasis, psoriatic arthritis, rheumatoid arthritis, systemic lupus erythematosus, ulcerative colitis
+  Pharmacologic class: Corticosteroid Hormone Receptor Agonists
+
+Drug 2
+  Name: Ethylmorphine
+  SMILES: [H][C@@]12OC3=C(OCC)C=CC4=C3[C@@]11CCN(C)[C@]([H])(C4)[C@]1([H])C=C[C@@H]2O
+  Target genes: CYP2B6, CYP2D6, CYP3A4, CYP3A7, CYP3A7-CYP3A51P, OPRM1, POR
+  Indications: (none)
+  Pharmacologic class: (none)
+
+Question: Does co-administration of Drug 1 and Drug 2 cause fibroids?
+
+##Answer: No
+===== [50-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Betamethasone
+  SMILES: [H][C@@]12C[C@H](C)[C@](O)(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1(F)[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+  Target genes: ABCB1, CYP19A1, CYP3A4, NR3C1, NR3C2, PGR, PLA2G1B, PTGS2
+  Indications: allergic rhinitis, ankylosing spondylitis, asthma, atopic dermatitis, brain cancer, breast cancer, colon cancer, hematologic cancer, kidney cancer, multiple sclerosis, prostate cancer, psoriasis, psoriatic arthritis, rheumatoid arthritis, systemic lupus erythematosus, ulcerative colitis
+  Pharmacologic class: Corticosteroid Hormone Receptor Agonists
+
+Drug 2
+  Name: Clobetasol propionate
+  SMILES: [H][C@@]12C[C@H](C)[C@](OC(=O)CC)(C(=O)CCl)[C@@]1(C)C[C@H](O)[C@@]1(F)[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+  Target genes: CYP1A1, CYP1A2, NR3C1
+  Indications: psoriasis
+  Pharmacologic class: (none)
+
+Question: Does co-administration of Drug 1 and Drug 2 cause ADVERSE DRUG EFFECT?
+
+##Answer: Yes
+===== [51-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Estrone sulfate
+  SMILES: [H][C@@]12CCC(=O)[C@@]1(C)CC[C@]1([H])C3=C(CC[C@@]21[H])C=C(OS(O)(=O)=O)C=C3
+  Target genes: ALB, CYP1A2, CYP2C9, CYP3A4, ESR1, ESR2, SHBG, SLC22A1
+  Indications: osteoporosis
+  Pharmacologic class: (none)
+
+Drug 2
+  Name: Irbesartan
+  SMILES: CCCCC1=NC2(CCCC2)C(=O)N1CC1=CC=C(C=C1)C1=CC=CC=C1C1=NNN=N1
+  Target genes: AGTR1, CYP1A2, CYP2C8, CYP2C9, CYP2D6, CYP3A4, EDNRA, JUN, PTGS1, UGT1A3
+  Indications: hypertension, type 2 diabetes mellitus
+  Pharmacologic class: Angiotensin 2 Receptor Antagonists
+
+Question: Does co-administration of Drug 1 and Drug 2 cause major depression?
+
+##Answer: No
+===== [52-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Dihydrocodeine
+  SMILES: [H][C@@]12OC3=C4C(C[C@H]5N(C)CC[C@@]14[C@@]5([H])CC[C@@H]2O)=CC=C3OC
+  Target genes: CYP2D6, CYP3A4, OPRM1
+  Indications: (none)
+  Pharmacologic class: Full Opioid Agonists
+
+Drug 2
+  Name: Hydromorphone
+  SMILES: [H][C@@]12OC3=C(O)C=CC4=C3[C@@]11CCN(C)[C@]([H])(C4)[C@]1([H])CCC2=O
+  Target genes: CYP2C9, CYP2D6, CYP3A4, OPRD1, OPRK1, OPRM1, PTGS1, UGT1A9
+  Indications: (none)
+  Pharmacologic class: Full Opioid Agonists
+
+Question: Does co-administration of Drug 1 and Drug 2 cause excessive sleepiness?
+
+##Answer: Yes
+===== [53-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Alclometasone
+  SMILES: [H][C@@]12C[C@@H](C)[C@](O)(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1([H])[C@@]2([H])[C@H](Cl)CC2=CC(=O)C=C[C@]12C
+  Target genes: CYP3A4, NR3C1, SERPINA6
+  Indications: (none)
+  Pharmacologic class: Corticosteroid Hormone Receptor Agonists
+
+Drug 2
+  Name: Budesonide
+  SMILES: [H][C@@]12C[C@H]3OC(CCC)O[C@@]3(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1([H])[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+  Target genes: CYP3A4, NR3C1
+  Indications: asthma, ulcerative colitis
+  Pharmacologic class: Corticosteroid Hormone Receptor Agonists
+
+Question: Does co-administration of Drug 1 and Drug 2 cause adrenal insufficiency?
+
+##Answer: Yes
+===== [54-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Verteporfin
+  SMILES: COC(=O)CCC1=C2NC(\C=C3/N=C(/C=C4\N\C(=C/C5=N/C(=C\2)/C(CCC(O)=O)=C5C)C(C=C)=C4C)C2=CC=C([C@@H](C(=O)OC)[C@@]32C)C(=O)OC)=C1C
+  Target genes: (none)
+  Indications: (none)
+  Pharmacologic class: Photoabsorption, Photosensitizing Activity
+
+Drug 2
+  Name: Galantamine
+  SMILES: [H][C@]12C[C@@H](O)C=C[C@]11CCN(C)CC3=C1C(O2)=C(OC)C=C3
+  Target genes: ACHE, BCHE, CHRFAM7A, CHRNA1, CHRNA10, CHRNA2, CHRNA3, CHRNA4, CHRNA5, CHRNA6, CHRNA7, CHRNA9, CHRNB1, CHRNB2, CHRNB3, CHRNB4, CHRND, CHRNE, CHRNG, CYP2D6, CYP3A4
+  Indications: Alzheimer's disease
+  Pharmacologic class: (none)
+
+Question: Does co-administration of Drug 1 and Drug 2 cause sinus bradycardia?
+
+##Answer: Yes
+===== [55-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Alclometasone
+  SMILES: [H][C@@]12C[C@@H](C)[C@](O)(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1([H])[C@@]2([H])[C@H](Cl)CC2=CC(=O)C=C[C@]12C
+  Target genes: CYP3A4, NR3C1, SERPINA6
+  Indications: (none)
+  Pharmacologic class: Corticosteroid Hormone Receptor Agonists
+
+Drug 2
+  Name: Prasterone
+  SMILES: [H][C@@]12CCC(=O)[C@@]1(C)CC[C@@]1([H])[C@@]2([H])CC=C2C[C@@]([H])(O)CC[C@]12C
+  Target genes: (none)
+  Indications: (none)
+  Pharmacologic class: (none)
+
+Question: Does co-administration of Drug 1 and Drug 2 cause adrenal insufficiency?
+
+##Answer: No
+===== [56-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Aminolevulinic acid
+  SMILES: NCC(=O)CCC(O)=O
+  Target genes: ALAD, SLC15A1, SLC15A2
+  Indications: (none)
+  Pharmacologic class: Porphyrinogens
+
+Drug 2
+  Name: Galantamine
+  SMILES: [H][C@]12C[C@@H](O)C=C[C@]11CCN(C)CC3=C1C(O2)=C(OC)C=C3
+  Target genes: ACHE, BCHE, CHRFAM7A, CHRNA1, CHRNA10, CHRNA2, CHRNA3, CHRNA4, CHRNA5, CHRNA6, CHRNA7, CHRNA9, CHRNB1, CHRNB2, CHRNB3, CHRNB4, CHRND, CHRNE, CHRNG, CYP2D6, CYP3A4
+  Indications: Alzheimer's disease
+  Pharmacologic class: (none)
+
+Question: Does co-administration of Drug 1 and Drug 2 cause adrenal insufficiency?
+
+##Answer: No
+===== [57-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Prednisolone
+  SMILES: [H][C@@]12CC[C@](O)(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1([H])[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+  Target genes: ABCB1, CYP2A6, CYP3A4, NR3C1, NR3C2, SERPINA6, SLCO1A2
+  Indications: allergic rhinitis, ankylosing spondylitis, asthma, atopic dermatitis, chronic obstructive pulmonary disease, gout, hematologic cancer, idiopathic pulmonary fibrosis, multiple sclerosis, psoriasis, psoriatic arthritis, rheumatoid arthritis, systemic lupus erythematosus, ulcerative colitis
+  Pharmacologic class: Corticosteroid Hormone Receptor Agonists
+
+Drug 2
+  Name: Dihydrocodeine
+  SMILES: [H][C@@]12OC3=C4C(C[C@H]5N(C)CC[C@@]14[C@@]5([H])CC[C@@H]2O)=CC=C3OC
+  Target genes: CYP2D6, CYP3A4, OPRM1
+  Indications: (none)
+  Pharmacologic class: Full Opioid Agonists
+
+Question: Does co-administration of Drug 1 and Drug 2 cause Colon Spastic?
+
+##Answer: No
+===== [58-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Betamethasone
+  SMILES: [H][C@@]12C[C@H](C)[C@](O)(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1(F)[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+  Target genes: ABCB1, CYP19A1, CYP3A4, NR3C1, NR3C2, PGR, PLA2G1B, PTGS2
+  Indications: allergic rhinitis, ankylosing spondylitis, asthma, atopic dermatitis, brain cancer, breast cancer, colon cancer, hematologic cancer, kidney cancer, multiple sclerosis, prostate cancer, psoriasis, psoriatic arthritis, rheumatoid arthritis, systemic lupus erythematosus, ulcerative colitis
+  Pharmacologic class: Corticosteroid Hormone Receptor Agonists
+
+Drug 2
+  Name: Amcinonide
+  SMILES: [H][C@@]12C[C@H]3OC4(CCCC4)O[C@@]3(C(=O)COC(C)=O)[C@@]1(C)C[C@H](O)[C@@]1(F)[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+  Target genes: ANXA1, NR3C1
+  Indications: (none)
+  Pharmacologic class: Corticosteroid Hormone Receptor Agonists
+
+Question: Does co-administration of Drug 1 and Drug 2 cause Leukaemia?
+
+##Answer: No
+===== [59-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Riboflavin
+  SMILES: CC1=C(C)C=C2N(C[C@H](O)[C@H](O)[C@H](O)CO)C3=NC(=O)NC(=O)C3=NC2=C1
+  Target genes: BLVRB, MAOA, MTHFR, RFK, SLC22A6
+  Indications: (none)
+  Pharmacologic class: (none)
+
+Drug 2
+  Name: Ciclesonide
+  SMILES: [H][C@@]12C[C@@]3([H])[C@]4([H])CCC5=CC(=O)C=C[C@]5(C)[C@@]4([H])[C@@H](O)C[C@]3(C)[C@@]1(O[C@@H](O2)C1CCCCC1)C(=O)COC(=O)C(C)C
+  Target genes: CES1, CYP2D6, CYP3A4, NR3C1, SERPINA6
+  Indications: asthma
+  Pharmacologic class: (none)
+
+Question: Does co-administration of Drug 1 and Drug 2 cause Spinal Compression Fracture?
+
+##Answer: No
+===== [60-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Fluticasone furoate
+  SMILES: [H][C@@]12C[C@@H](C)[C@](OC(=O)C3=CC=CO3)(C(=O)SCF)[C@@]1(C)C[C@H](O)[C@@]1(F)[C@@]2([H])C[C@H](F)C2=CC(=O)C=C[C@]12C
+  Target genes: ABCB1, CYP3A4, NR3C1
+  Indications: asthma
+  Pharmacologic class: (none)
+
+Drug 2
+  Name: Norethisterone
+  SMILES: [H][C@@]12CC[C@@](O)(C#C)[C@@]1(C)CC[C@]1([H])[C@@]3([H])CCC(=O)C=C3CC[C@@]21[H]
+  Target genes: ABCB1, ALB, CYP2C19, CYP3A4, CYP3A5, CYP3A7, CYP3A7-CYP3A51P, PGR, SHBG
+  Indications: polycystic ovary syndrome
+  Pharmacologic class: Progesterone Congeners
+
+Question: Does co-administration of Drug 1 and Drug 2 cause muscle disorder?
+
+##Answer: No
+===== [61-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Prednicarbate
+  SMILES: [H][C@@]12CC[C@](OC(=O)OCC)(C(=O)COC(=O)CC)[C@@]1(C)C[C@H](O)[C@@]1([H])[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
+  Target genes: NR3C1
+  Indications: (none)
+  Pharmacologic class: Corticosteroid Hormone Receptor Agonists
+
+Drug 2
+  Name: Fluocinolone acetonide
+  SMILES: [H][C@@]12C[C@@]3([H])[C@]4([H])C[C@H](F)C5=CC(=O)C=C[C@]5(C)[C@@]4(F)[C@@H](O)C[C@]3(C)[C@@]1(OC(C)(C)O2)C(=O)CO
+  Target genes: NR3C1, PLA2G4A, SERPINA6
+  Indications: atopic dermatitis, psoriasis
+  Pharmacologic class: Corticosteroid Hormone Receptor Agonists
+
+Question: Does co-administration of Drug 1 and Drug 2 cause Light sensitivity?
+
+##Answer: No
+===== [62-IDEAL] =====
+
+You are a pharmacology expert. Given information on two drugs and a question
+about a side effect, answer with Yes or No.
+Output your answer after ##Answer: <Yes or No>
+
+Drug 1
+  Name: Ciclesonide
+  SMILES: [H][C@@]12C[C@@]3([H])[C@]4([H])CCC5=CC(=O)C=C[C@]5(C)[C@@]4([H])[C@@H](O)C[C@]3(C)[C@@]1(O[C@@H](O2)C1CCCCC1)C(=O)COC(=O)C(C)C
+  Target genes: CES1, CYP2D6, CYP3A4, NR3C1, SERPINA6
+  Indications: asthma
+  Pharmacologic class: (none)
+
+Drug 2
+  Name: Norethisterone
+  SMILES: [H][C@@]12CC[C@@](O)(C#C)[C@@]1(C)CC[C@]1([H])[C@@]3([H])CCC(=O)C=C3CC[C@@]21[H]
+  Target genes: ABCB1, ALB, CYP2C19, CYP3A4, CYP3A5, CYP3A7, CYP3A7-CYP3A51P, PGR, SHBG
+  Indications: polycystic ovary syndrome
+  Pharmacologic class: Progesterone Congeners
+
+Question: Does co-administration of Drug 1 and Drug 2 cause paranoia?
+
+##Answer: No

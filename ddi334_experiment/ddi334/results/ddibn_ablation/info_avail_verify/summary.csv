@@ -1,0 +1,7 @@
+best_epoch,cell,checkpoint_metric,dataset,n_params,seed,split,test_AUC-ROC,test_PR-AUC,test_accuracy,val_AUC-ROC,val_PR-AUC,val_accuracy,wall_time_sec
+,qwen3b_zs_real,AUC-ROC(LLM-zs),ddibn,,,S2,0.623798,0.641713,0.5,,,,1771.6
+,gemma2b_zs_ideal,AUC-ROC(LLM-zs),ddibn,,,S2,0.556322,0.573078,0.500422,,,,2957.4
+,gemma2b_zs_real,AUC-ROC(LLM-zs),ddibn,,,S2,0.590317,0.596755,0.5,,,,3093.0
+,qwen3b_zs_ideal,AUC-ROC(LLM-zs),ddibn,,,S2,0.556152,0.586494,0.5,,,,1636.3
+,qwen14b_zs_real,AUC-ROC(LLM-zs),ddibn,,,S2,0.562798,0.591284,0.5,,,,2009.1
+,qwen14b_zs_ideal,AUC-ROC(LLM-zs),ddibn,,,S2,0.581348,0.597532,0.500197,,,,2172.5

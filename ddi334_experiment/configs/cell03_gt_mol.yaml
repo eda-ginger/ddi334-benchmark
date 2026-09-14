@@ -1,0 +1,33 @@
+# Cell 03: Graph Transformer on molecular graph (TIGER-style)
+# Ref: TIGER (AAAI 2024), RISE-DDI (AAAI 2026)
+cell: "03"
+encoder: "GraphTransformerMolEncoder"
+source: "mol"
+
+# Encoder hyperparameters
+hidden_dim: 128
+num_layers: 2
+num_heads: 4
+max_distance: 8
+atom_feat_dim: 67        # TIGER 67-dim atom features
+max_degree: 10
+dropout: 0.2
+
+# Derived: num_rel = NUM_BOND_TYPES(22) + max_distance(8) + 1 = 31
+# rel 0..21 = direct bond types, 22..30 = indirect distances 0..8
+
+# Training hyperparameters
+lr: 0.001
+weight_decay: 0.0005
+epochs: 100
+batch_size: 512
+scheduler: cosine
+
+# Data
+num_classes: 86
+dataset: drugbank_cluster
+splits: [S0, S1, S2]
+
+# Feature notes:
+#   Input: mol_to_graph_tiger(smiles) -> {x:[N,67], edge_index, sp_edge_index, sp_value, sp_edge_rel}
+#   Pre-build via encoder.set_features(mol_graphs_tiger_dict)

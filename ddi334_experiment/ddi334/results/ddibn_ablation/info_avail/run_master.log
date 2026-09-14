@@ -1,0 +1,8 @@
+########## MODEL gemma2b (google/gemma-2-2b-it) merge=1 mem=0.3 00:46 ##########
+########## gemma2b 완료 (6/9) 08:46 ##########
+  zombie kill 923288 (gpu0)
+  zombie kill 907996 (gpu1)
+  zombie kill 936538 (gpu2)
+########## MODEL qwen3b (Qwen/Qwen2.5-3B-Instruct) merge=0 mem=0.3 08:47 ##########
+########## qwen3b 완료 (9/9) 15:23 ##########
+########## MODEL qwen14b (Qwen/Qwen2.5-14B-Instruct) merge=0 mem=0.45 15:23 ##########

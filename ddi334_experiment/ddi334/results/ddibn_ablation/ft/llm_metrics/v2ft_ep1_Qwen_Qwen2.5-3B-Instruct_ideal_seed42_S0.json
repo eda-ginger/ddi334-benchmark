@@ -1,0 +1,13 @@
+{
+ "AUC-ROC": 0.976767986604772,
+ "PR-AUC": 0.9796270619596704,
+ "accuracy": 0.8889206957808092,
+ "macro-F1": 0.8974456702658254,
+ "P@50": 0.9877511961722488,
+ "P@N2": 0.9188293643712896,
+ "n_types": 209,
+ "cell": "v2ft_ep1_Qwen_Qwen2.5-3B-Instruct_ideal_seed42",
+ "dataset": "ddibn",
+ "split": "S0",
+ "wall_sec": 0
+}

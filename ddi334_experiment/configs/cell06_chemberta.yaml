@@ -1,0 +1,29 @@
+# Cell 06: ChemBERTa frozen [CLS] -> linear projection
+# Ref: Im & Ko (LLME, 2025), HKG-DDIE (Asada 2023)
+cell: "06"
+encoder: "ChemBERTaEncoder"
+source: "mol"
+
+# Encoder hyperparameters
+hidden_dim: 128
+bert_dim: 384            # DeepChem/ChemBERTa-77M-MLM hidden dim
+dropout: 0.2
+
+# Training hyperparameters
+lr: 0.001
+weight_decay: 0.0005
+epochs: 100
+batch_size: 512
+scheduler: cosine
+
+# Data
+num_classes: 86
+dataset: drugbank_cluster
+splits: [S0, S1, S2]
+
+# Feature notes:
+#   ChemBERTa [CLS] embeddings precomputed and frozen.
+#   Model: DeepChem/ChemBERTa-77M-MLM (PubChem 77M SMILES pretraining)
+#   Stored at: experiment/data/chemberta_embeddings.pt
+#   Format: {drug_id: torch.Tensor [384]}
+#   Run precompute_chemberta_embeddings.py to generate.

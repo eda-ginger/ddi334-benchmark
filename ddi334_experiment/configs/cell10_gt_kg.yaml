@@ -1,0 +1,40 @@
+# Cell 10: Graph Transformer on HetioNet subgraph + TransE frozen init
+# Ref: TIGER (AAAI 2024) - same GT architecture as Cell 03, applied to KG subgraph
+cell: "10"
+encoder: "GraphTransformerKGEncoder"
+source: "rel"
+rel_is_pairwise: true    # uses forward_pair() not forward()
+
+# Encoder hyperparameters
+hidden_dim: 128
+num_entities: 34124      # HetioNet total entities
+num_relations: 23        # HetioNet non-DDI relations (offset-adjusted)
+                         # rel_total = 23 + max_distance(8) + 1 = 32
+num_layers: 2
+num_heads: 4
+max_distance: 8
+max_degree: 50
+use_transe_init: true    # TransE frozen entity init
+dropout: 0.2
+
+# Subgraph extraction (shared with Cell 09)
+hop: 2
+max_nodes_per_hop: 200
+
+# Training hyperparameters
+lr: 0.001
+weight_decay: 0.0005
+epochs: 100
+batch_size: 512
+scheduler: cosine
+
+# Data
+num_classes: 86
+dataset: drugbank_cluster
+splits: [S0, S1, S2]
+
+# KG details:
+#   drug_id == entity_id (identity)
+#   GT rel embedding: 0..22 = direct relation, 23..31 = indirect distance 0..8
+#   TransE embeddings: kge_hetionet/results/baseline/transe_hetionet/hetionet_transe_ent_128d.npy
+#   Subgraph cache: experiment/data/subgraph_cache/ (shared with Cell 09)
