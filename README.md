@@ -1,4 +1,4 @@
-# [TODO: 논문 제목 / 저장소 이름 확정 필요]
+# DDI-334 Benchmark
 
 Code and results for the DDI-334 experiments in:
 
