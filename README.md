@@ -74,8 +74,10 @@ fine-tuning (`ft_train_v1.py`, `ft_train_v2.py`, `run_ft_cv_v2.py`).
 
 ## Environment
 
-[TODO: conda/pip 환경 명세 정리 필요]
+Three environments were used (PyG/DGL/vLLM version conflicts made a
+single environment impractical). See `environment/README.md` for
+which environment each script needs and setup instructions.
 
 ## License
 
-[TODO: 라이선스 결정 필요]
+MIT — see [LICENSE](LICENSE).
