@@ -1,0 +1,32 @@
+===== FT 디스패처 시작 16:21 =====
+  claim gemma2b_real -> GPU4 (free 79GB, util 0%)
+### 16:21 DISPATCH gemma2b/real -> GPU4 ###
+  claim phi35_real -> GPU0 (free 57GB, util 0%)
+### 16:21 DISPATCH phi35/real -> GPU0 ###
+  claim phi35_ideal -> GPU2 (free 40GB, util 4%)
+### 20:26 DISPATCH phi35/ideal -> GPU2 ###
+  claim qwen3b_real -> GPU3 (free 40GB, util 16%)
+### 15:31 DISPATCH qwen3b/real -> GPU3 ###
+### 18:09 DONE phi35/real (GPU0 해방) ###
+  claim phi35_real -> GPU1 (free 79GB, util 0%)
+### 02:45 DISPATCH phi35/real -> GPU1 ###
+  claim phi4_real -> GPU5 (free 62GB, util 0%)
+### 02:45 DISPATCH phi4/real -> GPU5 ###
+### 15:48 DONE phi35/real (GPU1 해방) ###
+  claim qwen14b_real -> GPU1 (free 79GB, util 0%)
+### 15:49 DISPATCH qwen14b/real -> GPU1 ###
+### 13:40 DONE phi35/ideal (GPU2 해방) ###
+### 12:31 DONE qwen3b/real (GPU3 해방) ###
+  claim gemma2b_ideal -> GPU2 (free 47GB, util 0%)
+### 20:16 DISPATCH gemma2b/ideal -> GPU2 ###
+### 23:46 DONE gemma2b/real (GPU4 해방) ###
+### 07:19 DONE phi4/real (GPU5 해방) ###
+  claim gemma27b_real -> GPU5 (free 79GB, util 0%)
+### 07:19 DISPATCH gemma27b/real -> GPU5 ###
+  claim qwen3b_ideal -> GPU3 (free 79GB, util 0%)
+### 14:52 DISPATCH qwen3b/ideal -> GPU3 ###
+  claim phi4_ideal -> GPU4 (free 72GB, util 0%)
+### 14:53 DISPATCH phi4/ideal -> GPU4 ###
+### 08:40 DONE qwen14b/real (GPU1 해방) ###
+  claim qwen14b_ideal -> GPU1 (free 79GB, util 0%)
+### 08:41 DISPATCH qwen14b/ideal -> GPU1 ###

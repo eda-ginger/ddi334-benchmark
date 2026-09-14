@@ -1,0 +1,8 @@
+[V2-FT] model=microsoft/Phi-3.5-mini-instruct mode=real seed=42 merge=False ep=5 -> /home/rudwls2717/Latex/experiments/v5_ddi-bench/experiment/ddi334/results/ft_v2/microsoft_Phi-3.5-mini-instruct_real_seed42
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:17<00:17, 17.71s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:26<00:00, 12.20s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:26<00:00, 13.03s/it]
+trainable params: 3,145,728 || all params: 3,824,225,280 || trainable%: 0.0823
+  train examples=260466 (mode=real)
+  [resume] epoch 5 이후부터 (start=6)
+[DONE] 5ep 어댑터 저장 -> /home/rudwls2717/Latex/experiments/v5_ddi-bench/experiment/ddi334/results/ft_v2/microsoft_Phi-3.5-mini-instruct_real_seed42/epoch_1..5 | wall 0s
+  평가: run_ft_cv_v2.py --tag microsoft_Phi-3.5-mini-instruct_real_seed42 --mode real

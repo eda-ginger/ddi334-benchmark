@@ -1,0 +1,80 @@
+{
+ "tag": "google_gemma-2-27b-it_ideal_seed42",
+ "mode": "ideal",
+ "selected": {
+  "S0": {
+   "epoch": 3,
+   "val_AUROC": 0.976496
+  },
+  "S1": {
+   "epoch": 3,
+   "val_AUROC": 0.840076
+  },
+  "S2": {
+   "epoch": 1,
+   "val_AUROC": 0.481579
+  }
+ },
+ "val_curve": {
+  "S0": {
+   "1": {
+    "AUC-ROC": 0.973635,
+    "PR-AUC": 0.977096,
+    "accuracy": 0.916752,
+    "macro-F1": 0.919701
+   },
+   "2": {
+    "AUC-ROC": 0.976386,
+    "PR-AUC": 0.980095,
+    "accuracy": 0.89709,
+    "macro-F1": 0.903778
+   },
+   "3": {
+    "AUC-ROC": 0.976496,
+    "PR-AUC": 0.980708,
+    "accuracy": 0.923631,
+    "macro-F1": 0.923697
+   }
+  },
+  "S1": {
+   "1": {
+    "AUC-ROC": 0.834085,
+    "PR-AUC": 0.828078,
+    "accuracy": 0.750607,
+    "macro-F1": 0.735652
+   },
+   "2": {
+    "AUC-ROC": 0.833542,
+    "PR-AUC": 0.817242,
+    "accuracy": 0.757288,
+    "macro-F1": 0.752383
+   },
+   "3": {
+    "AUC-ROC": 0.840076,
+    "PR-AUC": 0.829813,
+    "accuracy": 0.752642,
+    "macro-F1": 0.716911
+   }
+  },
+  "S2": {
+   "1": {
+    "AUC-ROC": 0.481579,
+    "PR-AUC": 0.504261,
+    "accuracy": 0.48382,
+    "macro-F1": 0.336062
+   },
+   "2": {
+    "AUC-ROC": 0.479415,
+    "PR-AUC": 0.49881,
+    "accuracy": 0.472391,
+    "macro-F1": 0.362506
+   },
+   "3": {
+    "AUC-ROC": 0.474023,
+    "PR-AUC": 0.534736,
+    "accuracy": 0.492194,
+    "macro-F1": 0.228097
+   }
+  }
+ }
+}

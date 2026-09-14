@@ -1,0 +1,80 @@
+{
+ "tag": "Qwen_Qwen2.5-3B-Instruct_ideal_genes_seed42",
+ "mode": "ideal_genes",
+ "selected": {
+  "S0": {
+   "epoch": 2,
+   "val_AUROC": 0.975963
+  },
+  "S1": {
+   "epoch": 2,
+   "val_AUROC": 0.898682
+  },
+  "S2": {
+   "epoch": 2,
+   "val_AUROC": 0.689113
+  }
+ },
+ "val_curve": {
+  "S0": {
+   "1": {
+    "AUC-ROC": 0.971524,
+    "PR-AUC": 0.974942,
+    "accuracy": 0.91063,
+    "macro-F1": 0.914462
+   },
+   "2": {
+    "AUC-ROC": 0.975963,
+    "PR-AUC": 0.980997,
+    "accuracy": 0.918096,
+    "macro-F1": 0.920566
+   },
+   "3": {
+    "AUC-ROC": 0.974068,
+    "PR-AUC": 0.977978,
+    "accuracy": 0.884372,
+    "macro-F1": 0.892767
+   }
+  },
+  "S1": {
+   "1": {
+    "AUC-ROC": 0.882231,
+    "PR-AUC": 0.881384,
+    "accuracy": 0.80311,
+    "macro-F1": 0.807364
+   },
+   "2": {
+    "AUC-ROC": 0.898682,
+    "PR-AUC": 0.897988,
+    "accuracy": 0.824923,
+    "macro-F1": 0.829401
+   },
+   "3": {
+    "AUC-ROC": 0.884915,
+    "PR-AUC": 0.883592,
+    "accuracy": 0.791236,
+    "macro-F1": 0.808515
+   }
+  },
+  "S2": {
+   "1": {
+    "AUC-ROC": 0.675606,
+    "PR-AUC": 0.683333,
+    "accuracy": 0.616846,
+    "macro-F1": 0.619482
+   },
+   "2": {
+    "AUC-ROC": 0.689113,
+    "PR-AUC": 0.697792,
+    "accuracy": 0.612857,
+    "macro-F1": 0.623291
+   },
+   "3": {
+    "AUC-ROC": 0.687986,
+    "PR-AUC": 0.707595,
+    "accuracy": 0.642597,
+    "macro-F1": 0.68044
+   }
+  }
+ }
+}

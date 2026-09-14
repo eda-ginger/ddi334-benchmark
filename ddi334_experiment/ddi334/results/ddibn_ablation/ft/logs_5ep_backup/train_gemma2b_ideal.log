@@ -1,0 +1,292 @@
+[V2-FT] model=google/gemma-2-2b-it mode=ideal seed=42 merge=True ep=5 -> /home/rudwls2717/Latex/experiments/v5_ddi-bench/experiment/ddi334/results/ft_v2/google_gemma-2-2b-it_ideal_seed42
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:15<00:15, 15.18s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:16<00:00,  7.12s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:16<00:00,  8.33s/it]
+trainable params: 6,389,760 || all params: 2,620,731,648 || trainable%: 0.2438
+  train examples=260466 (mode=ideal)
+Traceback (most recent call last):
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 300, in _run_finalizers
+    finalizer()
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 224, in __call__
+    res = self._callback(*self._args, **self._kwargs)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 133, in _remove_temp_dir
+    rmtree(tempdir)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 725, in rmtree
+    _rmtree_safe_fd(fd, path, onerror)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 681, in _rmtree_safe_fd
+    onerror(os.unlink, fullname, sys.exc_info())
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 679, in _rmtree_safe_fd
+    os.unlink(entry.name, dir_fd=topfd)
+OSError: [Errno 16] Device or resource busy: '.nfs000000001ad4103e000c44ba'
+Traceback (most recent call last):
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 300, in _run_finalizers
+    finalizer()
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 224, in __call__
+    res = self._callback(*self._args, **self._kwargs)
+Traceback (most recent call last):
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 133, in _remove_temp_dir
+    rmtree(tempdir)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 725, in rmtree
+    _rmtree_safe_fd(fd, path, onerror)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 681, in _rmtree_safe_fd
+    onerror(os.unlink, fullname, sys.exc_info())
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 679, in _rmtree_safe_fd
+    os.unlink(entry.name, dir_fd=topfd)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 300, in _run_finalizers
+    finalizer()
+OSError: [Errno 16] Device or resource busy: '.nfs00000000237d10ad000c44b9'
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 224, in __call__
+    res = self._callback(*self._args, **self._kwargs)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 133, in _remove_temp_dir
+    rmtree(tempdir)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 725, in rmtree
+    _rmtree_safe_fd(fd, path, onerror)
+Traceback (most recent call last):
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 681, in _rmtree_safe_fd
+    onerror(os.unlink, fullname, sys.exc_info())
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 679, in _rmtree_safe_fd
+    os.unlink(entry.name, dir_fd=topfd)
+OSError: [Errno 16] Device or resource busy: '.nfs00000000237d10ab000c44bc'
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 300, in _run_finalizers
+    finalizer()
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 224, in __call__
+    res = self._callback(*self._args, **self._kwargs)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 133, in _remove_temp_dir
+    rmtree(tempdir)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 725, in rmtree
+    _rmtree_safe_fd(fd, path, onerror)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 681, in _rmtree_safe_fd
+    onerror(os.unlink, fullname, sys.exc_info())
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 679, in _rmtree_safe_fd
+    os.unlink(entry.name, dir_fd=topfd)
+OSError: [Errno 16] Device or resource busy: '.nfs0000000013b5034e000c44bb'
+  epoch 1/5 loss=0.0786 -> /home/rudwls2717/Latex/experiments/v5_ddi-bench/experiment/ddi334/results/ft_v2/google_gemma-2-2b-it_ideal_seed42/epoch_1 | 35892s
+Traceback (most recent call last):
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 300, in _run_finalizers
+    finalizer()
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 224, in __call__
+    res = self._callback(*self._args, **self._kwargs)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 133, in _remove_temp_dir
+    rmtree(tempdir)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 725, in rmtree
+    _rmtree_safe_fd(fd, path, onerror)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 300, in _run_finalizers
+    finalizer()
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 681, in _rmtree_safe_fd
+    onerror(os.unlink, fullname, sys.exc_info())
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 224, in __call__
+    res = self._callback(*self._args, **self._kwargs)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 300, in _run_finalizers
+    finalizer()
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 679, in _rmtree_safe_fd
+    os.unlink(entry.name, dir_fd=topfd)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 133, in _remove_temp_dir
+    rmtree(tempdir)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 224, in __call__
+    res = self._callback(*self._args, **self._kwargs)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 725, in rmtree
+    _rmtree_safe_fd(fd, path, onerror)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 133, in _remove_temp_dir
+    rmtree(tempdir)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 681, in _rmtree_safe_fd
+    onerror(os.unlink, fullname, sys.exc_info())
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 725, in rmtree
+    _rmtree_safe_fd(fd, path, onerror)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 679, in _rmtree_safe_fd
+    os.unlink(entry.name, dir_fd=topfd)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 681, in _rmtree_safe_fd
+    onerror(os.unlink, fullname, sys.exc_info())
+Traceback (most recent call last):
+OSError: [Errno 16] Device or resource busy: '.nfs00000000047a1e9d000c453d'
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 679, in _rmtree_safe_fd
+    os.unlink(entry.name, dir_fd=topfd)
+OSError: [Errno 16] Device or resource busy: '.nfs0000000003d421bb000c453c'
+OSError: [Errno 16] Device or resource busy: '.nfs0000000004919c00000c453e'
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 300, in _run_finalizers
+    finalizer()
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 224, in __call__
+    res = self._callback(*self._args, **self._kwargs)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 133, in _remove_temp_dir
+    rmtree(tempdir)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 725, in rmtree
+    _rmtree_safe_fd(fd, path, onerror)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 681, in _rmtree_safe_fd
+    onerror(os.unlink, fullname, sys.exc_info())
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 679, in _rmtree_safe_fd
+    os.unlink(entry.name, dir_fd=topfd)
+OSError: [Errno 16] Device or resource busy: '.nfs000000000430000d000c453f'
+  epoch 2/5 loss=0.0379 -> /home/rudwls2717/Latex/experiments/v5_ddi-bench/experiment/ddi334/results/ft_v2/google_gemma-2-2b-it_ideal_seed42/epoch_2 | 69039s
+Traceback (most recent call last):
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 300, in _run_finalizers
+    finalizer()
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 224, in __call__
+    res = self._callback(*self._args, **self._kwargs)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 133, in _remove_temp_dir
+    rmtree(tempdir)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 725, in rmtree
+    _rmtree_safe_fd(fd, path, onerror)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 681, in _rmtree_safe_fd
+    onerror(os.unlink, fullname, sys.exc_info())
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 679, in _rmtree_safe_fd
+    os.unlink(entry.name, dir_fd=topfd)
+OSError: [Errno 16] Device or resource busy: '.nfs00000000237d10f8000c458e'
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 300, in _run_finalizers
+    finalizer()
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 224, in __call__
+    res = self._callback(*self._args, **self._kwargs)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 133, in _remove_temp_dir
+    rmtree(tempdir)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 725, in rmtree
+    _rmtree_safe_fd(fd, path, onerror)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 300, in _run_finalizers
+    finalizer()
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 681, in _rmtree_safe_fd
+    onerror(os.unlink, fullname, sys.exc_info())
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 224, in __call__
+    res = self._callback(*self._args, **self._kwargs)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 679, in _rmtree_safe_fd
+    os.unlink(entry.name, dir_fd=topfd)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 133, in _remove_temp_dir
+    rmtree(tempdir)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 725, in rmtree
+    _rmtree_safe_fd(fd, path, onerror)
+OSError: [Errno 16] Device or resource busy: '.nfs00000000237d10fb000c4590'
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 681, in _rmtree_safe_fd
+    onerror(os.unlink, fullname, sys.exc_info())
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 679, in _rmtree_safe_fd
+    os.unlink(entry.name, dir_fd=topfd)
+OSError: [Errno 16] Device or resource busy: '.nfs00000000237d10fa000c458f'
+Traceback (most recent call last):
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 300, in _run_finalizers
+    finalizer()
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 224, in __call__
+    res = self._callback(*self._args, **self._kwargs)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 133, in _remove_temp_dir
+    rmtree(tempdir)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 725, in rmtree
+    _rmtree_safe_fd(fd, path, onerror)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 681, in _rmtree_safe_fd
+    onerror(os.unlink, fullname, sys.exc_info())
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 679, in _rmtree_safe_fd
+    os.unlink(entry.name, dir_fd=topfd)
+OSError: [Errno 16] Device or resource busy: '.nfs00000000237d10fd000c4591'
+  epoch 3/5 loss=0.0323 -> /home/rudwls2717/Latex/experiments/v5_ddi-bench/experiment/ddi334/results/ft_v2/google_gemma-2-2b-it_ideal_seed42/epoch_3 | 84645s
+Traceback (most recent call last):
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 300, in _run_finalizers
+    finalizer()
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 224, in __call__
+    res = self._callback(*self._args, **self._kwargs)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 133, in _remove_temp_dir
+    rmtree(tempdir)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 725, in rmtree
+    _rmtree_safe_fd(fd, path, onerror)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 681, in _rmtree_safe_fd
+    onerror(os.unlink, fullname, sys.exc_info())
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 679, in _rmtree_safe_fd
+    os.unlink(entry.name, dir_fd=topfd)
+OSError: [Errno 16] Device or resource busy: '.nfs00000000237d1107000c45e7'
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 300, in _run_finalizers
+    finalizer()
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 224, in __call__
+    res = self._callback(*self._args, **self._kwargs)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 133, in _remove_temp_dir
+    rmtree(tempdir)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 300, in _run_finalizers
+    finalizer()
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 725, in rmtree
+    _rmtree_safe_fd(fd, path, onerror)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 224, in __call__
+    res = self._callback(*self._args, **self._kwargs)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 681, in _rmtree_safe_fd
+    onerror(os.unlink, fullname, sys.exc_info())
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 133, in _remove_temp_dir
+    rmtree(tempdir)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 679, in _rmtree_safe_fd
+    os.unlink(entry.name, dir_fd=topfd)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 725, in rmtree
+    _rmtree_safe_fd(fd, path, onerror)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 681, in _rmtree_safe_fd
+    onerror(os.unlink, fullname, sys.exc_info())
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 679, in _rmtree_safe_fd
+    os.unlink(entry.name, dir_fd=topfd)
+OSError: [Errno 16] Device or resource busy: '.nfs00000000237d10fd000c45e8'
+Traceback (most recent call last):
+OSError: [Errno 16] Device or resource busy: '.nfs00000000237d1106000c45e9'
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 300, in _run_finalizers
+    finalizer()
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 224, in __call__
+    res = self._callback(*self._args, **self._kwargs)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 133, in _remove_temp_dir
+    rmtree(tempdir)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 725, in rmtree
+    _rmtree_safe_fd(fd, path, onerror)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 681, in _rmtree_safe_fd
+    onerror(os.unlink, fullname, sys.exc_info())
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 679, in _rmtree_safe_fd
+    os.unlink(entry.name, dir_fd=topfd)
+OSError: [Errno 16] Device or resource busy: '.nfs00000000237d1109000c45ea'
+  epoch 4/5 loss=0.0329 -> /home/rudwls2717/Latex/experiments/v5_ddi-bench/experiment/ddi334/results/ft_v2/google_gemma-2-2b-it_ideal_seed42/epoch_4 | 106248s
+Traceback (most recent call last):
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 300, in _run_finalizers
+    finalizer()
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 224, in __call__
+    res = self._callback(*self._args, **self._kwargs)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 133, in _remove_temp_dir
+    rmtree(tempdir)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 725, in rmtree
+    _rmtree_safe_fd(fd, path, onerror)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 681, in _rmtree_safe_fd
+    onerror(os.unlink, fullname, sys.exc_info())
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 679, in _rmtree_safe_fd
+    os.unlink(entry.name, dir_fd=topfd)
+OSError: [Errno 16] Device or resource busy: '.nfs00000000237d110f000c4635'
+Traceback (most recent call last):
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 300, in _run_finalizers
+    finalizer()
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 224, in __call__
+    res = self._callback(*self._args, **self._kwargs)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 133, in _remove_temp_dir
+    rmtree(tempdir)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 725, in rmtree
+    _rmtree_safe_fd(fd, path, onerror)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 681, in _rmtree_safe_fd
+    onerror(os.unlink, fullname, sys.exc_info())
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 679, in _rmtree_safe_fd
+    os.unlink(entry.name, dir_fd=topfd)
+OSError: [Errno 16] Device or resource busy: '.nfs00000000237d1106000c4638'
+Traceback (most recent call last):
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 300, in _run_finalizers
+    finalizer()
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 224, in __call__
+    res = self._callback(*self._args, **self._kwargs)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 133, in _remove_temp_dir
+    rmtree(tempdir)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 725, in rmtree
+    _rmtree_safe_fd(fd, path, onerror)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 681, in _rmtree_safe_fd
+    onerror(os.unlink, fullname, sys.exc_info())
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 679, in _rmtree_safe_fd
+    os.unlink(entry.name, dir_fd=topfd)
+OSError: [Errno 16] Device or resource busy: '.nfs00000000237d1109000c4636'
+Traceback (most recent call last):
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 300, in _run_finalizers
+    finalizer()
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 224, in __call__
+    res = self._callback(*self._args, **self._kwargs)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/multiprocessing/util.py", line 133, in _remove_temp_dir
+    rmtree(tempdir)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 725, in rmtree
+    _rmtree_safe_fd(fd, path, onerror)
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 681, in _rmtree_safe_fd
+    onerror(os.unlink, fullname, sys.exc_info())
+  File "/home/rudwls2717/micromamba/envs/vllm-llm/lib/python3.10/shutil.py", line 679, in _rmtree_safe_fd
+    os.unlink(entry.name, dir_fd=topfd)
+OSError: [Errno 16] Device or resource busy: '.nfs00000000237d1111000c4637'
+  epoch 5/5 loss=0.0308 -> /home/rudwls2717/Latex/experiments/v5_ddi-bench/experiment/ddi334/results/ft_v2/google_gemma-2-2b-it_ideal_seed42/epoch_5 | 121710s
+[DONE] 5ep 어댑터 저장 -> /home/rudwls2717/Latex/experiments/v5_ddi-bench/experiment/ddi334/results/ft_v2/google_gemma-2-2b-it_ideal_seed42/epoch_1..5 | wall 121710s
+  평가: run_ft_cv_v2.py --tag google_gemma-2-2b-it_ideal_seed42 --mode ideal

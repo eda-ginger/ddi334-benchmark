@@ -1,0 +1,116 @@
+{
+ "tag": "microsoft_Phi-3.5-mini-instruct_ideal_seed42",
+ "mode": "ideal",
+ "selected": {
+  "S0": {
+   "epoch": 3,
+   "val_AUROC": 0.977548
+  },
+  "S1": {
+   "epoch": 1,
+   "val_AUROC": 0.862155
+  },
+  "S2": {
+   "epoch": 1,
+   "val_AUROC": 0.570847
+  }
+ },
+ "val_curve": {
+  "S0": {
+   "1": {
+    "AUC-ROC": 0.973241,
+    "PR-AUC": 0.976507,
+    "accuracy": 0.909232,
+    "macro-F1": 0.913017
+   },
+   "2": {
+    "AUC-ROC": 0.97546,
+    "PR-AUC": 0.978736,
+    "accuracy": 0.915342,
+    "macro-F1": 0.91766
+   },
+   "3": {
+    "AUC-ROC": 0.977548,
+    "PR-AUC": 0.981055,
+    "accuracy": 0.920221,
+    "macro-F1": 0.922882
+   },
+   "4": {
+    "AUC-ROC": 0.97238,
+    "PR-AUC": 0.976216,
+    "accuracy": 0.915817,
+    "macro-F1": 0.915743
+   },
+   "5": {
+    "AUC-ROC": 0.973524,
+    "PR-AUC": 0.976219,
+    "accuracy": 0.899498,
+    "macro-F1": 0.904595
+   }
+  },
+  "S1": {
+   "1": {
+    "AUC-ROC": 0.862155,
+    "PR-AUC": 0.858274,
+    "accuracy": 0.786633,
+    "macro-F1": 0.772919
+   },
+   "2": {
+    "AUC-ROC": 0.859654,
+    "PR-AUC": 0.844082,
+    "accuracy": 0.776842,
+    "macro-F1": 0.758212
+   },
+   "3": {
+    "AUC-ROC": 0.861494,
+    "PR-AUC": 0.861491,
+    "accuracy": 0.781541,
+    "macro-F1": 0.771744
+   },
+   "4": {
+    "AUC-ROC": 0.854889,
+    "PR-AUC": 0.848321,
+    "accuracy": 0.759953,
+    "macro-F1": 0.723422
+   },
+   "5": {
+    "AUC-ROC": 0.857801,
+    "PR-AUC": 0.855806,
+    "accuracy": 0.781502,
+    "macro-F1": 0.770431
+   }
+  },
+  "S2": {
+   "1": {
+    "AUC-ROC": 0.570847,
+    "PR-AUC": 0.578632,
+    "accuracy": 0.539908,
+    "macro-F1": 0.479101
+   },
+   "2": {
+    "AUC-ROC": 0.546258,
+    "PR-AUC": 0.555644,
+    "accuracy": 0.509606,
+    "macro-F1": 0.379114
+   },
+   "3": {
+    "AUC-ROC": 0.55443,
+    "PR-AUC": 0.558951,
+    "accuracy": 0.495237,
+    "macro-F1": 0.444927
+   },
+   "4": {
+    "AUC-ROC": 0.557079,
+    "PR-AUC": 0.570219,
+    "accuracy": 0.523148,
+    "macro-F1": 0.369497
+   },
+   "5": {
+    "AUC-ROC": 0.544127,
+    "PR-AUC": 0.568067,
+    "accuracy": 0.541054,
+    "macro-F1": 0.477221
+   }
+  }
+ }
+}

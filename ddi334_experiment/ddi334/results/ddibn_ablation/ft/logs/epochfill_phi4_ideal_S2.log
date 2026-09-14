@@ -1,0 +1,16 @@
+### 07-28 11:41 phi4_ideal_S2 -> GPU2 (free 81914MB) ###
+error    libmamba Could not set lock (Resource temporarily unavailable)
+warning  libmamba Cannot lock '/home/rudwls2717/.mamba/proc'
+    Waiting for other mamba process to finish
+[test_epochs_gen] merge=False 3 어댑터 serving GPU2: ['ideal_ep1', 'ideal_ep2', 'ideal_ep3']
+[test_epochs_gen] merge=False 3 어댑터 serving GPU2: ['ideal_ep1', 'ideal_ep2', 'ideal_ep3']
+  [v2] 총 11176 질의 (640 pair) 병렬 시작 (workers=24)
+  [v2] 2000/11176 질의 완료
+  [v2] 4000/11176 질의 완료
+  [v2] 6000/11176 질의 완료
+  [v2] 8000/11176 질의 완료
+서버 기동 실패
+### 07-28 12:11 phi4_ideal_S2 완료 ###
+  [v2] 10000/11176 질의 완료
+[ideal:S2:1] AUROC=0.6239 F1=0.2644 | 1921s
+[test_epochs_gen] ALL DONE

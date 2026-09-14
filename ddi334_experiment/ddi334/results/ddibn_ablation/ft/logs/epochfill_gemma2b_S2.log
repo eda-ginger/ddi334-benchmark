@@ -1,0 +1,16 @@
+[test_epochs_gen] merge=True 6 어댑터 serving GPU3: ['real_ep1', 'real_ep2', 'real_ep3', 'ideal_genes_ep1', 'ideal_genes_ep2', 'ideal_genes_ep3']
+  [v2] 총 11176 질의 (640 pair) 병렬 시작 (workers=24)
+  [v2] 2000/11176 질의 완료
+  [v2] 4000/11176 질의 완료
+  [v2] 6000/11176 질의 완료
+  [v2] 8000/11176 질의 완료
+  [v2] 10000/11176 질의 완료
+[real:S2:2] AUROC=0.3638 F1=0.2004 | 3465s
+  [v2] 총 11176 질의 (640 pair) 병렬 시작 (workers=24)
+  [v2] 2000/11176 질의 완료
+  [v2] 4000/11176 질의 완료
+  [v2] 6000/11176 질의 완료
+  [v2] 8000/11176 질의 완료
+  [v2] 10000/11176 질의 완료
+[ideal_genes:S2:1] AUROC=0.5231 F1=0.4265 | 3715s
+[test_epochs_gen] ALL DONE

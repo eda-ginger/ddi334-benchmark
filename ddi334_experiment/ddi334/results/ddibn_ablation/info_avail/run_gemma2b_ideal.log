@@ -1,0 +1,67 @@
+===== 00:46 gpu=2 split=S0 mode=ideal label=gemma2b_zs_ideal =====
+error    libmamba Could not set lock (Resource temporarily unavailable)
+warning  libmamba Cannot lock '/home/rudwls2717/.mamba/proc'
+    Waiting for other mamba process to finish
+[v2/ddibn/S0] rows=1970 model=google/gemma-2-2b-it
+  [v2] 총 34018 질의 (1970 pair) 병렬 시작 (workers=24)
+  [v2] 2000/34018 질의 완료
+  [v2] 4000/34018 질의 완료
+  [v2] 6000/34018 질의 완료
+  [v2] 8000/34018 질의 완료
+  [v2] 10000/34018 질의 완료
+  [v2] 12000/34018 질의 완료
+  [v2] 14000/34018 질의 완료
+  [v2] 16000/34018 질의 완료
+  [v2] 18000/34018 질의 완료
+  [v2] 20000/34018 질의 완료
+  [v2] 22000/34018 질의 완료
+  [v2] 24000/34018 질의 완료
+  [v2] 26000/34018 질의 완료
+  [v2] 28000/34018 질의 완료
+  [v2] 30000/34018 질의 완료
+  [v2] 32000/34018 질의 완료
+  [v2] 34000/34018 질의 완료
+[RESULT] {'AUC-ROC': 0.44094148708022735, 'PR-AUC': 0.4790605365976277, 'accuracy': 0.4999177737974488, 'macro-F1': 0.0008994365359747611, 'P@50': 0.4440191387559809, 'P@N2': 0.4558959974919978, 'n_types': 209} | wall 9629s
+[SAVED] summary.csv + llm_metrics/gemma2b_zs_ideal_S0.json + raw_preds/gemma2b_zs_ideal_S0.npz
+===== 03:28 gpu=2 split=S2 mode=ideal label=gemma2b_zs_ideal =====
+[v2/ddibn/S2] rows=640 model=google/gemma-2-2b-it
+  [v2] 총 11176 질의 (640 pair) 병렬 시작 (workers=24)
+  [v2] 2000/11176 질의 완료
+  [v2] 4000/11176 질의 완료
+  [v2] 6000/11176 질의 완료
+  [v2] 8000/11176 질의 완료
+  [v2] 10000/11176 질의 완료
+[RESULT] {'AUC-ROC': 0.5564549471037937, 'PR-AUC': 0.573413613888578, 'accuracy': 0.5005218571507137, 'macro-F1': 0.0022626956598248466, 'P@50': 0.5135885167464115, 'P@N2': 0.5340660369403593, 'n_types': 209} | wall 3305s
+[SAVED] summary.csv + llm_metrics/gemma2b_zs_ideal_S2.json + raw_preds/gemma2b_zs_ideal_S2.npz
+===== 04:24 gpu=2 split=S1 mode=ideal label=gemma2b_zs_ideal =====
+[v2/ddibn/S1] rows=4978 model=google/gemma-2-2b-it
+  [v2] 총 86742 질의 (4978 pair) 병렬 시작 (workers=24)
+  [v2] 2000/86742 질의 완료
+  [v2] 4000/86742 질의 완료
+  [v2] 6000/86742 질의 완료
+  [v2] 8000/86742 질의 완료
+  [v2] 10000/86742 질의 완료
+  [v2] 12000/86742 질의 완료
+  [v2] 14000/86742 질의 완료
+  [v2] 16000/86742 질의 완료
+  [v2] 18000/86742 질의 완료
+  [v2] 20000/86742 질의 완료
+  [v2] 22000/86742 질의 완료
+  [v2] 24000/86742 질의 완료
+  [v2] 26000/86742 질의 완료
+  [v2] 28000/86742 질의 완료
+  [v2] 30000/86742 질의 완료
+  [v2] 32000/86742 질의 완료
+  [v2] 34000/86742 질의 완료
+  [v2] 36000/86742 질의 완료
+  [v2] 38000/86742 질의 완료
+  [v2] 40000/86742 질의 완료
+  [v2] 42000/86742 질의 완료
+  [v2] 44000/86742 질의 완료
+  [v2] 46000/86742 질의 완료
+  [v2] 48000/86742 질의 완료
+  [v2] 50000/86742 질의 완료
+  [v2] 52000/86742 질의 완료
+  [v2] 54000/86742 질의 완료
+code/oneoff/run_zs_one_mode.sh: line 9: 935406 Killed                  micromamba run -n vllm-llm python code/llm_infer.py --version v2 --dataset ddibn --model $MODEL --gpu $GPU --split $split --mode $MODE --port $PORT --gpu-mem-util $MEM --workers 24 $MERGEFLAG --outdir $OUT --label $LABEL
+===== DONE gpu=2 mode=ideal label=gemma2b_zs_ideal 08:46 =====

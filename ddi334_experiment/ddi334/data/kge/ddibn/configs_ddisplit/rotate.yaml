@@ -1,0 +1,30 @@
+type: baseline
+# DDI-334 (ddibn) KGE: HetioNet bio(334 약물 노드만, rel 0-22) + 334 TWOSIDES train(typed rel 23+). DrugBank DDI 없음.
+# 관계 재번호: relation_map.json 참조. n_relations=232 (bio 23 + TWOSIDES type 수)
+# HP: AstraZeneca/kgem-in-drug-discovery (kge_hetionet/config 그대로)
+dataset: emergnn
+n_relations: 232
+
+data:
+  kg: /home/rudwls2717/Latex/experiments/v5_ddi-bench/experiment/ddi334/data/kge/kg_bio_334.txt
+  ddi_train: /home/rudwls2717/Latex/experiments/v5_ddi-bench/experiment/ddi334/data/kge/ddibn/ddi_train.txt
+
+model:
+  name: RotatE
+  embedding_dim: 512
+
+optimizer:
+  class: Adagrad
+  lr: 0.03
+
+train:
+  loss_function: MarginRankingLoss
+  num_epoch: 500
+  num_negative: 41
+  create_inverse: False
+
+save:
+  path: /home/rudwls2717/Latex/experiments/v5_ddi-bench/experiment/ddi334/data/kge/ddibn_ddisplit/rotate
+
+split_ddi: true
+seed: 42

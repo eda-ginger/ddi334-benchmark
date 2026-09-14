@@ -1,0 +1,80 @@
+{
+ "tag": "Qwen_Qwen2.5-3B-Instruct_real_seed42",
+ "mode": "real",
+ "selected": {
+  "S0": {
+   "epoch": 3,
+   "val_AUROC": 0.976871
+  },
+  "S1": {
+   "epoch": 1,
+   "val_AUROC": 0.892226
+  },
+  "S2": {
+   "epoch": 2,
+   "val_AUROC": 0.512203
+  }
+ },
+ "val_curve": {
+  "S0": {
+   "1": {
+    "AUC-ROC": 0.975288,
+    "PR-AUC": 0.979421,
+    "accuracy": 0.899114,
+    "macro-F1": 0.905491
+   },
+   "2": {
+    "AUC-ROC": 0.976346,
+    "PR-AUC": 0.981222,
+    "accuracy": 0.923383,
+    "macro-F1": 0.924785
+   },
+   "3": {
+    "AUC-ROC": 0.976871,
+    "PR-AUC": 0.981042,
+    "accuracy": 0.919811,
+    "macro-F1": 0.92229
+   }
+  },
+  "S1": {
+   "1": {
+    "AUC-ROC": 0.892226,
+    "PR-AUC": 0.890139,
+    "accuracy": 0.796795,
+    "macro-F1": 0.816999
+   },
+   "2": {
+    "AUC-ROC": 0.883573,
+    "PR-AUC": 0.87913,
+    "accuracy": 0.806053,
+    "macro-F1": 0.814848
+   },
+   "3": {
+    "AUC-ROC": 0.879621,
+    "PR-AUC": 0.877053,
+    "accuracy": 0.799659,
+    "macro-F1": 0.81067
+   }
+  },
+  "S2": {
+   "1": {
+    "AUC-ROC": 0.490914,
+    "PR-AUC": 0.517749,
+    "accuracy": 0.54057,
+    "macro-F1": 0.647839
+   },
+   "2": {
+    "AUC-ROC": 0.512203,
+    "PR-AUC": 0.502366,
+    "accuracy": 0.551771,
+    "macro-F1": 0.606605
+   },
+   "3": {
+    "AUC-ROC": 0.475867,
+    "PR-AUC": 0.525013,
+    "accuracy": 0.483954,
+    "macro-F1": 0.54492
+   }
+  }
+ }
+}

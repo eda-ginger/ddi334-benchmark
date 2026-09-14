@@ -1,0 +1,29 @@
+# Cell 08: TransE frozen entity embedding lookup (HetioNet)
+# Ref: MUFFIN (Chen et al., 2021, Bioinformatics) TransE design
+cell: "08"
+encoder: "TransEEncoder"
+source: "rel"
+
+# Encoder hyperparameters
+hidden_dim: 128
+embed_dim: 128           # TransE embedding dim (matches hetionet_transe_ent_128d.npy)
+num_entities: 34124      # HetioNet total entities (drugs 0-1709, non-drug 1710-34123)
+dropout: 0.2
+
+# Training hyperparameters
+lr: 0.001
+weight_decay: 0.0005
+epochs: 100
+batch_size: 512
+scheduler: cosine
+
+# Data
+num_classes: 86
+dataset: drugbank_cluster
+splits: [S0, S1, S2]
+
+# KG details:
+#   drug_id == entity_id: drugs 0-1709 map directly to entity IDs 0-1709
+#   No separate drug2kgid mapping needed (identity)
+#   TransE embeddings: kge_hetionet/results/baseline/transe_hetionet/hetionet_transe_ent_128d.npy
+#   Run kge_hetionet/run.sh then src/extract_embeddings.py to generate.

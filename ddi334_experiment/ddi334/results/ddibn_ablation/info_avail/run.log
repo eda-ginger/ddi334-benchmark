@@ -1,0 +1,8 @@
+===== 15:58 split=S0 mode=real label=phi35_zs_real =====
+[v2/ddibn/S0] rows=1970 model=microsoft/Phi-3.5-mini-instruct
+  [v2] 총 34018 질의 (1970 pair) 병렬 시작 (workers=24)
+  [v2 row31 t29] FAIL Connection error.
+  [v2 row31 t2] FAIL Connection error.
+  [v2 row31 t22] FAIL Connection error.
+  [v2 row31 t25] FAIL Connection error.
+  [v2 row30 t164] FAIL Connection error.

@@ -1,0 +1,80 @@
+{
+ "tag": "microsoft_phi-4_ideal_genes_seed42",
+ "mode": "ideal_genes",
+ "selected": {
+  "S0": {
+   "epoch": 3,
+   "val_AUROC": 0.979517
+  },
+  "S1": {
+   "epoch": 1,
+   "val_AUROC": 0.857014
+  },
+  "S2": {
+   "epoch": 1,
+   "val_AUROC": 0.543933
+  }
+ },
+ "val_curve": {
+  "S0": {
+   "1": {
+    "AUC-ROC": 0.977283,
+    "PR-AUC": 0.980905,
+    "accuracy": 0.927916,
+    "macro-F1": 0.926598
+   },
+   "2": {
+    "AUC-ROC": 0.97786,
+    "PR-AUC": 0.980944,
+    "accuracy": 0.919499,
+    "macro-F1": 0.922621
+   },
+   "3": {
+    "AUC-ROC": 0.979517,
+    "PR-AUC": 0.983375,
+    "accuracy": 0.931548,
+    "macro-F1": 0.931785
+   }
+  },
+  "S1": {
+   "1": {
+    "AUC-ROC": 0.857014,
+    "PR-AUC": 0.855861,
+    "accuracy": 0.712103,
+    "macro-F1": 0.630171
+   },
+   "2": {
+    "AUC-ROC": 0.848415,
+    "PR-AUC": 0.843895,
+    "accuracy": 0.760981,
+    "macro-F1": 0.737139
+   },
+   "3": {
+    "AUC-ROC": 0.851097,
+    "PR-AUC": 0.848187,
+    "accuracy": 0.732154,
+    "macro-F1": 0.673362
+   }
+  },
+  "S2": {
+   "1": {
+    "AUC-ROC": 0.543933,
+    "PR-AUC": 0.591539,
+    "accuracy": 0.534344,
+    "macro-F1": 0.148879
+   },
+   "2": {
+    "AUC-ROC": 0.512052,
+    "PR-AUC": 0.541485,
+    "accuracy": 0.493819,
+    "macro-F1": 0.249913
+   },
+   "3": {
+    "AUC-ROC": 0.528766,
+    "PR-AUC": 0.555593,
+    "accuracy": 0.506639,
+    "macro-F1": 0.155317
+   }
+  }
+ }
+}

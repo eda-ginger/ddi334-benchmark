@@ -1,0 +1,13 @@
+{
+ "AUC-ROC": 0.8514146694121083,
+ "PR-AUC": 0.8526537189204385,
+ "accuracy": 0.7630756095655848,
+ "macro-F1": 0.7330597024811868,
+ "P@50": 0.9360765550239235,
+ "P@N2": 0.7729922189087581,
+ "n_types": 209,
+ "cell": "v2ft_ep2_microsoft_Phi-3.5-mini-instruct_ideal_seed42",
+ "dataset": "ddibn",
+ "split": "S1",
+ "wall_sec": 0
+}

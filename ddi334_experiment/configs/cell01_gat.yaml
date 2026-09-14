@@ -1,0 +1,29 @@
+# Cell 01: GAT + SAGPool on molecular graph
+# Ref: SSI-DDI (Nyamabo 2021)
+cell: "01"
+encoder: "GATEncoder"
+source: "mol"
+
+# Encoder hyperparameters
+hidden_dim: 128
+num_blocks: 4
+heads: 2
+atom_feat_dim: 55        # SSI-DDI 55-dim atom features
+max_degree: 10
+dropout: 0.2
+
+# Training hyperparameters
+lr: 0.001
+weight_decay: 0.0005
+epochs: 100
+batch_size: 512
+scheduler: cosine
+
+# Data
+num_classes: 86
+dataset: drugbank_cluster
+splits: [S0, S1, S2]
+
+# Feature notes:
+#   Input: mol_to_graph_55d(smiles) -> {x: [N,55], edge_index: [2,E]}
+#   Pre-build via encoder.set_features(mol_graphs_dict)

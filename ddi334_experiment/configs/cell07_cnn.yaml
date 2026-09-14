@@ -1,0 +1,31 @@
+# Cell 07: 1D CNN on SMILES character sequence
+# Ref: SSF-DDI (2024, BMC Bioinformatics)
+cell: "07"
+encoder: "SMILESCNNEncoder"
+source: "mol"
+
+# Encoder hyperparameters
+hidden_dim: 128
+embed_dim: 64            # character embedding dim
+dropout: 0.2
+# vocab_size: 65 (SMILES_CHARS, fixed in code)
+# max_len: 100 (MAX_SMILES_LEN, fixed in code)
+# Conv layers: [4,6,8] kernels x [40,80,160] filters (SSF-DDI original)
+# MaxPool1d(85): 100-4-6-8+3 = 85
+
+# Training hyperparameters
+lr: 0.001
+weight_decay: 0.0005
+epochs: 100
+batch_size: 512
+scheduler: cosine
+
+# Data
+num_classes: 86
+dataset: drugbank_cluster
+splits: [S0, S1, S2]
+
+# Feature notes:
+#   Pre-tokenize SMILES via tokenize_smiles() into integer sequences [max_len=100].
+#   Pre-build via encoder.set_features(smiles_dict)
+#   smiles_dict: {drug_id: smiles_str}

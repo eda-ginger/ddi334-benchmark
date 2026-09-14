@@ -1,0 +1,34 @@
+===== FT 디스패처 시작 16:08 =====
+  claim phi4_real -> GPU1 (free 78GB, util 14%)
+### 16:08 DISPATCH phi4/real -> GPU1 ###
+  claim qwen14b_real -> GPU4 (free 78GB, util 10%)
+### 16:08 DISPATCH qwen14b/real -> GPU4 ###
+  claim gemma2b_ideal -> GPU5 (free 79GB, util 0%)
+### 16:09 DISPATCH gemma2b/ideal -> GPU5 ###
+  claim qwen14b_ideal_genes -> GPU0 (free 57GB, util 31%)
+### 07:45 DISPATCH qwen14b/ideal_genes -> GPU0 ###
+### 13:41 DONE phi4/real (GPU1 해방) ###
+  claim qwen3b_ideal -> GPU1 (free 79GB, util 0%)
+### 13:42 DISPATCH qwen3b/ideal -> GPU1 ###
+### 19:20 DONE qwen14b/real (GPU4 해방) ###
+  claim phi35_ideal -> GPU4 (free 79GB, util 0%)
+### 19:46 DISPATCH phi35/ideal -> GPU4 ###
+### 20:11 DONE gemma2b/ideal (GPU5 해방) ###
+  claim phi4_ideal -> GPU5 (free 63GB, util 0%)
+### 20:12 DISPATCH phi4/ideal -> GPU5 ###
+### 09:53 DONE qwen3b/ideal (GPU1 해방) ###
+  claim gemma2b_ideal_genes -> GPU1 (free 79GB, util 0%)
+### 09:53 DISPATCH gemma2b/ideal_genes -> GPU1 ###
+### 14:57 DONE phi35/ideal (GPU4 해방) ###
+  claim qwen3b_ideal_genes -> GPU4 (free 48GB, util 28%)
+### 14:58 DISPATCH qwen3b/ideal_genes -> GPU4 ###
+### 09:25 DONE phi4/ideal (GPU5 해방) ###
+  claim phi35_ideal_genes -> GPU5 (free 79GB, util 0%)
+### 09:26 DISPATCH phi35/ideal_genes -> GPU5 ###
+### 13:20 DONE qwen3b/ideal_genes (GPU4 해방) ###
+  claim phi4_ideal_genes -> GPU4 (free 79GB, util 0%)
+### 13:21 DISPATCH phi4/ideal_genes -> GPU4 ###
+### 13:50 DONE gemma2b/ideal_genes (GPU1 해방) ###
+### 01:48 DONE phi35/ideal_genes (GPU5 해방) ###
+### 14:06 DONE qwen14b/ideal_genes (GPU0 해방) ###
+### 07:00 DONE phi4/ideal_genes (GPU4 해방) ###

@@ -1,0 +1,5 @@
+[V2-FT] model=Qwen/Qwen2.5-14B-Instruct mode=ideal seed=42 merge=False ep=5 -> /home/rudwls2717/Latex/experiments/v5_ddi-bench/experiment/ddi334/results/ft_v2/Qwen_Qwen2.5-14B-Instruct_ideal_seed42
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading checkpoint shards:   0%|          | 0/8 [00:00<?, ?it/s]Loading checkpoint shards:  12%|█▎        | 1/8 [00:05<00:37,  5.40s/it]Loading checkpoint shards:  25%|██▌       | 2/8 [00:18<01:00, 10.08s/it]Loading checkpoint shards:  38%|███▊      | 3/8 [00:26<00:45,  9.18s/it]Loading checkpoint shards:  50%|█████     | 4/8 [00:35<00:36,  9.16s/it]Loading checkpoint shards:  62%|██████▎   | 5/8 [00:52<00:35, 11.68s/it]Loading checkpoint shards:  75%|███████▌  | 6/8 [01:06<00:25, 12.52s/it]Loading checkpoint shards:  88%|████████▊ | 7/8 [01:21<00:13, 13.35s/it]Loading checkpoint shards: 100%|██████████| 8/8 [01:22<00:00,  9.52s/it]Loading checkpoint shards: 100%|██████████| 8/8 [01:22<00:00, 10.33s/it]
+trainable params: 25,165,824 || all params: 14,795,199,488 || trainable%: 0.1701
+  train examples=260466 (mode=ideal)

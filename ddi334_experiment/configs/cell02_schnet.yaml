@@ -1,0 +1,35 @@
+# Cell 02: SchNet on 3D molecular graph
+# Ref: 3DGT-DDI (2022), MDJCL-DDI (2025)
+cell: "02"
+encoder: "SchNetEncoder"
+source: "mol"
+
+# Encoder hyperparameters (matching 3DGT-DDI/MDJCL-DDI)
+hidden_dim: 128
+num_filters: 128
+num_interactions: 6
+num_gaussians: 50
+cutoff: 10.0
+dropout: 0.2
+
+# Training hyperparameters
+lr: 0.001
+weight_decay: 0.0005
+epochs: 100
+batch_size: 512
+scheduler: cosine
+
+# Data
+num_classes: 86
+dataset: drugbank_cluster
+splits: [S0, S1, S2]
+
+# Excluded drugs (10 drugs that failed 3D coord generation):
+#   drug IDs: 83, 997, 1101, 1436, 1487, 1606, 1686, 1690, 1699, 1704
+#   Replaced with single-atom H dummy (z=1, pos=[0,0,0])
+excluded_drugs: [83, 997, 1101, 1436, 1487, 1606, 1686, 1690, 1699, 1704]
+
+# Feature notes:
+#   Coords precomputed by scripts/precompute_schnet_coords.py
+#   Stored at: experiment/data/schnet_coords.pkl
+#   Format: {drug_id: {'z': np.ndarray, 'pos': np.ndarray}}
