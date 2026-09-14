@@ -54,11 +54,12 @@ files used for S0 (transductive) / S1 / S2 (inductive) evaluation.
 
 The DDI-334 splits and KG triples in `ddi334/data/` are the exact
 files used for the paper's results. The upstream raw sources
-(DrugBank, DRKG, TWOSIDES) are third-party and are not redistributed
-here.
-
-[TODO: 원본 데이터 다운로드/전처리 절차 문서화 — 어떤 소스에서 어떤 스크립트로
-`ddi334/data/`가 만들어지는지, 정확한 순서를 다음 세션에서 정리]
+(DDI-Bench/EmerGNN, TDC TWOSIDES, DrugBank, HetioNet) are third-party
+and are not redistributed here. See
+[`ddi334/DATA_SOURCES.md`](ddi334_experiment/ddi334/DATA_SOURCES.md)
+for exact sources, the required directory layout, and the build
+pipeline (still has two open TODOs: the exact TDC export call, and the
+origin of the raw HetioNet files under `kge_hetionet/data/`).
 
 ## Reproducing a result
 
