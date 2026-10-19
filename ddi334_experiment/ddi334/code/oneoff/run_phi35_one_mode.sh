@@ -5,7 +5,7 @@
 set -u
 cd /home/internal-server-user/Latex/experiments/v5_ddi-bench/experiment/ddi334
 GPU=$1; MODE=$2; LABEL=$3; PORT=$4
-OUT=results/ddibn_ablation/info_avail
+OUT=results/llm/zeroshot
 MODEL=microsoft/Phi-3.5-mini-instruct
 for split in S0 S2 S1; do          # S0 먼저, S1(최대) 마지막
   echo "===== $(date +%H:%M) gpu=$GPU split=$split mode=$MODE label=$LABEL ====="

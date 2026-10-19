@@ -7,8 +7,8 @@
       사전 생성한 {model}_{real,genes,ideal}.pt. 인코더/평가는 기존 cell13과 동일(frozen + split별 val-best).
 cell13은 frozen feature라 가벼움(분 단위).
 
-MODELS env(comma, 기본 "biobert")로 대상 backbone 선택. biobert는 result_dir이 ddibn_doc_{tier}
-(기존 관례 유지), 그 외는 ddibn_doc_{model}_{tier}.
+MODELS env(comma, 기본 "biobert")로 대상 backbone 선택. result_dir =
+document_backbone_comparison/{model}/{existing_drug,novel_drug}/.
 
 선행 조건: build_biobert_template.py --tag {model} 실행 완료({model}_real/genes/ideal.pt 존재).
 
@@ -31,10 +31,11 @@ MODELS = [m for m in os.environ.get("MODELS", "biobert").split(",") if m]
 TIERS = ["real", "ideal"]
 
 
+TIER_DIR = {"real": "novel_drug", "ideal": "existing_drug"}
+
+
 def result_dir(model, tier):
-    if model == "biobert":
-        return os.path.join(DDI334_DIR, "results", f"ddibn_doc_{tier}")   # 기존 관례 유지
-    return os.path.join(DDI334_DIR, "results", f"ddibn_doc_{model}_{tier}")
+    return os.path.join(DDI334_DIR, "results", "document_backbone_comparison", model, TIER_DIR[tier])
 
 
 def job_done(out, seed):

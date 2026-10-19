@@ -1,10 +1,10 @@
 #!/bin/bash
 # S2 재현성 검증: 4모델(gemma2b/gemma27b/qwen3b/qwen14b) x real/ideal, S2만 재실행.
-# 기존 결과(results/ddibn_ablation/info_avail)는 건드리지 않고 별도 폴더에 저장.
+# 기존 결과(results/llm/zeroshot)는 건드리지 않고 별도 폴더에 저장.
 # 목적: FT-real이 S2에서 ZS-real보다 낮게 나온 이상현상이 재현되는지 확인(temperature=0 결정적이라 큰 변화 없을 것으로 예상).
 set -u
 cd /home/internal-server-user/Latex/experiments/v5_ddi-bench/experiment/ddi334
-OUT=results/ddibn_ablation/info_avail_verify
+OUT=results/llm/zeroshot_s2_reproducibility_check
 mkdir -p "$OUT/llm_metrics" "$OUT/raw_preds"
 LOGDIR=results/run_logs
 mkdir -p "$LOGDIR"
@@ -44,4 +44,4 @@ echo "########## WAVE3 DONE $(date +%H:%M:%S) ##########"
 
 echo "########## ALL 8 JOBS DONE $(date +%H:%M:%S) ##########"
 n=$(find "$OUT/llm_metrics" -name "*_zs_*_S2.json" 2>/dev/null | wc -l)
-curl -s -d "DDI-334 S2 ZS 재현성 검증 완료 ($n/8): results/ddibn_ablation/info_avail_verify" ntfy.sh/removed-ntfy-topic >/dev/null
+curl -s -d "DDI-334 S2 ZS 재현성 검증 완료 ($n/8): results/llm/zeroshot_s2_reproducibility_check" ntfy.sh/removed-ntfy-topic >/dev/null

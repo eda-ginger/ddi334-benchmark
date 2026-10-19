@@ -3,7 +3,7 @@
 
 CASE3=1 -> train.py가 kge/ddibn_case3/{kge}/ 임베딩(novel 고립=random) 사용.
 DDI 데이터/splits는 Case-1과 동일(ddibn), KG 임베딩만 case3로 교체.
-결과 -> results/kge_compare_case3/{kge}/ (Case-1의 kge_compare와 분리).
+결과 -> results/kge_comparison/novel_drug/{kge}/ (Case-1의 kge_comparison/existing_drug와 분리).
 GPU당 1 job(KGE 학습과 컴퓨트 공유 방지). job_done이면 skip.
 
 Run: nohup micromamba run -n base python run_cell08_case3.py > results/run_logs/cell08_case3.log 2>&1 &
@@ -12,7 +12,7 @@ import os, subprocess, time, csv, collections
 from collections import deque
 
 HERE = os.path.dirname(os.path.abspath(__file__)); os.chdir(HERE)
-CMP = os.path.join(HERE, "results", "kge_compare_case3")
+CMP = os.path.join(HERE, "results", "kge_comparison", "novel_drug")
 LOGDIR = os.path.join(HERE, "results", "run_logs"); os.makedirs(LOGDIR, exist_ok=True)
 DDIBENCH = "micromamba run -n DDIBench python"
 SEEDS = [0, 42, 124]
@@ -67,7 +67,7 @@ def main():
         for s in SEEDS:
             if job_done(os.path.join(CMP, k, "summary.csv"), "08", s):
                 print(f"skip c08c3_{k}_s{s} (done)", flush=True); continue
-            # CASE3=1 -> train.py가 ddibn_case3/{k} 임베딩 사용
+            # CASE3=1 -> train.py가 kge/ddibn_case3/{k} 임베딩 사용
             cmd = (f"CUDA_VISIBLE_DEVICES={{gpu}} CASE3=1 KGE_TYPE={k} {DDIBENCH} train.py "
                    f"--cell 08 --dataset ddibn --seed {s} --gpu 0 --result_dir {os.path.join(CMP, k)}")
             jobs.append((f"c08c3_{k}_s{s}", cmd))

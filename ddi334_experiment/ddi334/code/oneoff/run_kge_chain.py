@@ -2,12 +2,12 @@
 """DDI-334 KGE 비교 -> 09/10/11 재실행 체인 (기존 결과 절대 미변경, 전부 신규 폴더).
 
 Phase1: 4 KGE(run_kge4.py) 학습 완료까지 대기 (kge/ddibn/{kge}/*ent_*.npy).
-Phase2: cell08 x {rotate,distmult,complex,transh} x 3seed -> results/kge_compare/{kge}/  (KGE_TYPE env)
-        * transe cell08은 이미 results/ddibn_acc/ 에 있음 (유지, 재실행 X)
-Phase3: cell08 S0 accuracy로 최고 KGE 선택 (transe 포함 5종 비교) -> results/kge_compare/best.json
+Phase2: cell08 x {rotate,distmult,complex,transh} x 3seed -> results/kge_comparison/existing_drug/{kge}/  (KGE_TYPE env)
+        * transe cell08은 이미 results/encoders_main/ 에 있음 (유지, 재실행 X)
+Phase3: cell08 S0 accuracy로 최고 KGE 선택 (transe 포함 5종 비교) -> results/kge_comparison/existing_drug/best.json
 Phase4: best가 transe가 아니면 cell 09/10/11 x best x 3seed -> results/ddibn_kge_{best}/  (KGE_TYPE env)
-        * 기존 ddibn_acc 의 transe-init 09/10/11 은 유지
-Phase5: results/kge_compare/CHAIN_DONE 마커 + 요약.
+        * 기존 encoders_main 의 transe-init 09/10/11 은 유지
+Phase5: results/kge_comparison/existing_drug/CHAIN_DONE 마커 + 요약.
 
 GPU 1/3/5 (KGE 학습 종료 후 가용). skip-done 재시작 안전.
 Run: nohup micromamba run -n base python run_kge_chain.py > results/run_logs/chain_orch.log 2>&1 &
@@ -17,8 +17,8 @@ from collections import deque
 
 HERE = os.path.dirname(os.path.abspath(__file__)); os.chdir(HERE)
 KGEDIR = os.path.join(HERE, "kge", "ddibn")
-ACC = os.path.join(HERE, "results", "ddibn_acc")
-CMP = os.path.join(HERE, "results", "kge_compare")
+ACC = os.path.join(HERE, "results", "encoders_main")
+CMP = os.path.join(HERE, "results", "kge_comparison", "existing_drug")
 LOGDIR = os.path.join(HERE, "results", "run_logs"); os.makedirs(LOGDIR, exist_ok=True)
 GPUS = [1, 3, 5]
 KGES = ["rotate", "distmult", "complex", "transh"]
@@ -90,7 +90,7 @@ def main():
     log("Phase1 완료: 4 KGE npy 확인")
 
     # Phase 2: cell08 x kge x seed
-    log("Phase2: cell08 x 4KGE x 3seed -> kge_compare")
+    log("Phase2: cell08 x 4KGE x 3seed -> kge_comparison/existing_drug")
     jobs = []
     for k in KGES:
         for s in SEEDS:
@@ -111,9 +111,9 @@ def main():
     json.dump({"scores_cell08_S0_acc": scores, "best": best}, open(os.path.join(CMP, "best.json"), "w"), indent=1)
     log(f"cell08 S0 acc: {scores} -> best={best}")
 
-    # Phase 4: best로 09/10/11 (transe면 이미 ddibn_acc에 있음)
+    # Phase 4: best로 09/10/11 (transe면 이미 encoders_main에 있음)
     if best == "transe":
-        log("best=transe -> 09/10/11 이미 ddibn_acc에 존재, 재실행 불필요")
+        log("best=transe -> 09/10/11 이미 encoders_main에 존재, 재실행 불필요")
     else:
         outdir = os.path.join(HERE, "results", f"ddibn_kge_{best}")
         log(f"Phase4: cell 09/10/11 x {best} x 3seed -> {outdir}")

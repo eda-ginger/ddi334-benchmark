@@ -7,7 +7,7 @@
 # - gpu busy 마커(gpu{N}.busy)는 ep3 디스패처와 공유 -> GPU 이중점유 방지.
 set -u
 cd /home/internal-server-user/Latex/experiments/v5_ddi-bench/experiment/ddi334
-OUT=results/ddibn_ablation/ft; Q=$OUT/_q; mkdir -p $Q $OUT/logs
+OUT=results/llm/finetuning; Q=$OUT/_q; mkdir -p $Q $OUT/logs
 
 declare -A HF=( [gemma2b]=google/gemma-2-2b-it [qwen3b]=Qwen/Qwen2.5-3B-Instruct [phi35]=microsoft/Phi-3.5-mini-instruct [phi4]=microsoft/phi-4 )
 declare -A MERGE=( [gemma2b]=1 [qwen3b]=0 [phi35]=0 [phi4]=0 )

@@ -2,12 +2,11 @@
 """cell11(R-GCN on whole DDI graph, 약물 노드만) 노드 초기화 비교 (2026-10-19 추가).
 
 cell09 KG subgraph(bio+DDI 혼합, 유전자/질병 포함)와 달리 cell11은 순수 약물-약물 DDI
-그래프(1710 drug node)만 사용한다. 기본(TransE) 결과는 이미 results/ddibn_acc, results/ddibn_case3에
-있음. 여기서는 신규 node-init 2종만 추가:
-  molfp:     Morgan FP(1024d, frozen) 초기화     (NODE_INIT=molfp)
-  molgraph:  분자그래프 원시 원자피처 sum-pool(55d, frozen) 초기화  (NODE_INIT=molgraph)
+그래프(1710 drug node)만 사용한다. molfp(Morgan FP, 1024d)는 train.py의 cell11 기본값이 되어
+results/encoders_main/에 이미 있음(TransE 비교값은 results/encoders_novel_drug/). 여기서는
+molgraph(분자그래프 원시 원자피처 sum-pool, 55d, frozen) 초기화(NODE_INIT=molgraph)만 추가 실행.
 
-결과 -> results/ddibn_cell11_{molfp,molgraph}/ (각각 summary.csv).
+결과 -> results/ddi_network_molgraph_init/ (summary.csv).
 
 Run: nohup micromamba run -n base python run_cell11_cross.py > results/run_logs/cell11_cross.log 2>&1 &
 """
@@ -21,13 +20,12 @@ SEEDS = [0, 42, 124]
 GPUS = [int(g) for g in os.environ.get("GPUS", "0,1,2,3,4,5").split(",") if g.strip()]
 
 COMBOS = {
-    "molfp": {"NODE_INIT": "molfp"},
     "molgraph": {"NODE_INIT": "molgraph"},
 }
 
 
 def out_dir(combo):
-    return os.path.join(HERE, "results", f"ddibn_cell11_{combo}")
+    return os.path.join(HERE, "results", "ddi_network_molgraph_init")
 
 
 def job_done(combo, seed):

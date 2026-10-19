@@ -3,7 +3,7 @@
 # GPU4(genes 학습) 제외. merge-system(gemma).
 set -u
 cd /home/internal-server-user/Latex/experiments/v5_ddi-bench/experiment/ddi334
-OUT=results/ddibn_ablation/ft; LOG=$OUT/logs/epochfill_gemma27b_ideal.log
+OUT=results/llm/finetuning; LOG=$OUT/logs/epochfill_gemma27b_ideal.log
 HF=google/gemma-2-27b-it
 CAND=(1 0)
 TAG=google_gemma-2-27b-it_ideal_seed42

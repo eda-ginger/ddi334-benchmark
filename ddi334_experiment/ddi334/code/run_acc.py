@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """DDI-334 ddibn 인코더 42 config 재실행 (accuracy-primary).
 
-- 신규 폴더 results/ddibn_acc/ 에 저장 (기존 results/ddibn = ROC-AUC 체크포인트 + LLM, 그대로 보존)
+- 신규 폴더 results/encoders_main/ 에 저장 (기존 results/ddibn = ROC-AUC 체크포인트 + LLM, 그대로 보존)
 - code/train.py 가 체크포인트=accuracy, 전 지표(Acc/F1/ROC/PR/P@50/P@(N/2)) + raw .npz 저장
 - GPU 1,3,5 3-way 병렬 (GPU4=gemma LLM+v5 보존 / GPU0=ollama 타인 / GPU2 금지). skip-done 재시작 안전.
 
@@ -15,7 +15,7 @@ HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__))); os.chdir(HER
 GPUS = [1, 3, 5]
 SEEDS = [0, 42, 124]
 CELLS = [f"{i:02d}" for i in range(1, 15)]
-RDIR = os.path.join(HERE, "results", "ddibn_acc")
+RDIR = os.path.join(HERE, "results", "encoders_main")
 SUMMARY = os.path.join(RDIR, "summary.csv")
 LOGDIR = os.path.join(HERE, "results", "run_logs"); os.makedirs(LOGDIR, exist_ok=True)
 DDIBENCH = "micromamba run -n DDIBench python"

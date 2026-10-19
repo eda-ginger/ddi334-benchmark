@@ -6,7 +6,7 @@
 # - resume: ft_train_v2 --resume (이전 epoch 어댑터 있으면 이어서)
 set -u
 cd /home/internal-server-user/Latex/experiments/v5_ddi-bench/experiment/ddi334
-OUT=results/ddibn_ablation/ft; Q=$OUT/_q; mkdir -p $Q $OUT/logs
+OUT=results/llm/finetuning; Q=$OUT/_q; mkdir -p $Q $OUT/logs
 
 declare -A HF=( [gemma2b]=google/gemma-2-2b-it [qwen3b]=Qwen/Qwen2.5-3B-Instruct [phi35]=microsoft/Phi-3.5-mini-instruct [phi4]=microsoft/phi-4 [qwen14b]=Qwen/Qwen2.5-14B-Instruct [gemma27b]=google/gemma-2-27b-it )
 declare -A MERGE=( [gemma2b]=1 [qwen3b]=0 [phi35]=0 [phi4]=0 [qwen14b]=0 [gemma27b]=1 )

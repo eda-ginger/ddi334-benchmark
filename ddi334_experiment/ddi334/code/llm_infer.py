@@ -224,7 +224,7 @@ def main():
     ap.add_argument("--merge-system", action="store_true")  # gemma류
     ap.add_argument("--mode", default="ideal", choices=["ideal", "ideal_genes", "real"])  # V2 정보 ablation
     ap.add_argument("--workers", type=int, default=24)  # 동시 요청 수 (작은 모델은 64+로 GPU 채움)
-    ap.add_argument("--outdir", default="")  # 결과 저장 폴더 override (예: results/ddibn_acc)
+    ap.add_argument("--outdir", default="")  # 결과 저장 폴더 override (예: results/encoders_main)
     a = ap.parse_args()
     global PORT
     PORT = a.port

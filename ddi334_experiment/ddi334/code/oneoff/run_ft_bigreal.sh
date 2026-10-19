@@ -5,7 +5,7 @@
 # - HP = 작은모델과 동일(lr 2e-4, r16/a32, nf4). qwen14b bs4 / gemma27b bs2+merge.
 set -u
 cd /home/internal-server-user/Latex/experiments/v5_ddi-bench/experiment/ddi334
-OUT=results/ddibn_ablation/ft; Q=$OUT/_q; mkdir -p $Q $OUT/logs
+OUT=results/llm/finetuning; Q=$OUT/_q; mkdir -p $Q $OUT/logs
 
 declare -A HF=( [qwen14b]=Qwen/Qwen2.5-14B-Instruct [gemma27b]=google/gemma-2-27b-it )
 declare -A MERGE=( [qwen14b]=0 [gemma27b]=1 )

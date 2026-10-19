@@ -4,7 +4,7 @@
 V1(multi-label JSON) ZS가 chance(~50)라, V2(쌍+타입 r마다 Yes/No 이진질문)로 재시도.
 - vec=1(그 쌍의 pos/neg 후보)만 질문 (209개 전부 X) -> infer_v2.
 - 작은 모델만(빠른 추론): gemma2-2B / qwen2.5-3B / phi-3.5-mini.
-- 결과 results/ddibn_acc/llm_metrics/v2zs_{tag}_{split}.json (V1 ZS와 분리, 같은 폴더).
+- 결과 results/encoders_main/llm_metrics/v2zs_{tag}_{split}.json (V1 ZS와 분리, 같은 폴더).
 - 빈 GPU [0,1] 큐 분산. skip-done(json 존재). split 순서 S0->S2->S1(싼것 먼저).
 
 Run: nohup micromamba run -n base python run_v2zs.py > results/run_logs/v2zs_orch.log 2>&1 &
@@ -13,7 +13,7 @@ import os, subprocess, time
 from collections import deque
 
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__))); os.chdir(HERE)
-OUTDIR = os.path.join(HERE, "results", "ddibn_acc")
+OUTDIR = os.path.join(HERE, "results", "encoders_main")
 LOGDIR = os.path.join(HERE, "results", "run_logs"); os.makedirs(LOGDIR, exist_ok=True)
 VLLM = "micromamba run -n vllm-llm python"
 GPUS = [int(g) for g in os.environ.get("GPUS", "0,1").split(",") if g.strip()]

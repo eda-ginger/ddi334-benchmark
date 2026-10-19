@@ -3,7 +3,7 @@
 
 - KGE init = case3 transe (novel 고립 -> random). CASE3=1로 train.py가 case3 임베딩+case3 triples(subgraph) 사용.
 - 평가 = train.py 기본(split별 val accuracy best epoch). 3 seed.
-- 결과 -> results/ddibn_case3/ (Case-1 results/ddibn_acc/와 분리).
+- 결과 -> results/encoders_novel_drug/ (Case-1 results/encoders_main/와 분리).
 - cell11(가벼움) -> cell09(R-GCN subgraph) -> cell10(GT subgraph, 최장 ~63h) 순.
 - 의존: kge/ddibn_case3/transe/*ent_*.npy 있어야 시작 (없으면 대기).
 
@@ -13,7 +13,7 @@ import os, subprocess, time, csv, collections
 from collections import deque
 
 HERE = os.path.dirname(os.path.abspath(__file__)); os.chdir(HERE)
-OUT = os.path.join(HERE, "results", "ddibn_case3")
+OUT = os.path.join(HERE, "results", "encoders_novel_drug")
 LOGDIR = os.path.join(HERE, "results", "run_logs"); os.makedirs(LOGDIR, exist_ok=True)
 DDIBENCH = "micromamba run -n DDIBench python"
 SEEDS = [0, 42, 124]

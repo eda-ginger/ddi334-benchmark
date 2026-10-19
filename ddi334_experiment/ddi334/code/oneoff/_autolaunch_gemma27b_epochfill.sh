@@ -3,7 +3,7 @@
 # ideal은 제외(불필요). genes는 학습 완료 후 별도. GPU4(genes 학습) 제외. merge-system(gemma).
 set -u
 cd /home/internal-server-user/Latex/experiments/v5_ddi-bench/experiment/ddi334
-OUT=results/ddibn_ablation/ft; LOG=$OUT/logs/epochfill_gemma27b.log
+OUT=results/llm/finetuning; LOG=$OUT/logs/epochfill_gemma27b.log
 HF=google/gemma-2-27b-it
 CAND=(1 0)   # 전용 GPU만 (GPU4=genes학습 / 5=sosა공유 merged27B 무리 / 2·3=타인 제외)
 TAG=google_gemma-2-27b-it_real_seed42

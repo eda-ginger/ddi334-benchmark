@@ -3,7 +3,7 @@
 # 각 모델 6 json 완료까지 대기 후 vLLM 잔존 정리 -> 다음 모델. 끝에 ntfy.
 set -u
 cd /home/internal-server-user/Latex/experiments/v5_ddi-bench/experiment/ddi334
-OUT=results/ddibn_ablation/info_avail
+OUT=results/llm/zeroshot
 L=code/oneoff/run_zs_one_mode.sh
 # 모델: prefix | model | merge | memutil   (작은 것 먼저; GPU2 djk0706 공유라 mem 보수적)
 # Gemma2-27B는 GPU2(여유40GB)에 안 들어가서 이 마스터 제외 -> 별도 처리.

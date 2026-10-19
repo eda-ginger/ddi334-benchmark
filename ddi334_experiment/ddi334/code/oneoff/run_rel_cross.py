@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
-"""Existing/Novel 교차 실험 (cell09 R-GCN subgraph만, 2026-10-19 추가).
+"""Existing/Novel 교차 실험 (cell09 R-GCN subgraph만, Appendix J, 2026-10-19 추가).
 
-기존 A(existing emb + existing subgraph)/D(novel emb + novel subgraph)는 이미 results/ddibn_acc,
-results/ddibn_case3에 있음. 여기서는 4개 신규 조합만 수행:
+기존 A(existing emb + existing subgraph)/D(novel emb + novel subgraph)는 이미
+results/encoders_main, results/encoders_novel_drug에 있음. 여기서는 2개 신규 조합만 수행:
   B: existing subgraph + novel(case3)   TransE 임베딩   (EMB_SRC=case3,  SUBGRAPH_SRC=case1)
   C: novel(case3) subgraph + existing   TransE 임베딩   (EMB_SRC=case1,  SUBGRAPH_SRC=case3)
-  E: existing subgraph + Morgan FP(molfp) 초기화         (NODE_INIT=molfp, SUBGRAPH_SRC=case1)
-  F: novel(case3) subgraph + Morgan FP(molfp) 초기화     (NODE_INIT=molfp, SUBGRAPH_SRC=case3)
+(molfp 초기화로 같은 교차를 보는 E/F 변형은 검토 후 보류 — cell11 쪽 molfp/molgraph 비교로 대체됨.)
 
-결과 -> results/ddibn_cross_{B,C,E,F}/ (각각 summary.csv). GPU 제약 없음(사용자 지시, 2026-10-19) —
+결과 -> results/appendix_j_embedding_subgraph_cross/{novel_embedding_existing_subgraph,
+existing_embedding_novel_subgraph}/ (B, C 각각 summary.csv). GPU 제약 없음(사용자 지시, 2026-10-19) —
 서버의 6개 GPU 모두 후보로 사용(다른 사용자 프로세스가 있어도 메모리 여유로 공유 가능).
 
 Run: nohup micromamba run -n base python run_rel_cross.py > results/run_logs/rel_cross.log 2>&1 &
@@ -25,13 +25,16 @@ GPUS = [int(g) for g in os.environ.get("GPUS", "0,1,2,3,4,5").split(",") if g.st
 COMBOS = {
     "B": {"EMB_SRC": "case3", "SUBGRAPH_SRC": "case1"},
     "C": {"EMB_SRC": "case1", "SUBGRAPH_SRC": "case3"},
-    "E": {"NODE_INIT": "molfp", "SUBGRAPH_SRC": "case1"},
-    "F": {"NODE_INIT": "molfp", "SUBGRAPH_SRC": "case3"},
+}
+
+COMBO_DIR = {
+    "B": "novel_embedding_existing_subgraph",
+    "C": "existing_embedding_novel_subgraph",
 }
 
 
 def out_dir(combo):
-    return os.path.join(HERE, "results", f"ddibn_cross_{combo}")
+    return os.path.join(HERE, "results", "appendix_j_embedding_subgraph_cross", COMBO_DIR[combo])
 
 
 def job_done(combo, seed):

@@ -5,7 +5,7 @@
 set -u
 cd /home/internal-server-user/Latex/experiments/v5_ddi-bench/experiment/ddi334
 MODEL=$1; TAG=$2; MERGE=$3; CELLS=$4; MEM=$5; MINFREE=$6; PORT=$7; IFS=',' read -ra CAND <<< "$8"; NAME=$9
-LOG=results/ddibn_ablation/ft/logs/epochfill_${NAME}.log
+LOG=results/llm/finetuning/logs/epochfill_${NAME}.log
 MERGEFLAG=""; [ "$MERGE" = "1" ] && MERGEFLAG="--merge"
 while :; do
   for g in "${CAND[@]}"; do

@@ -2,7 +2,7 @@
 """끝난 2 KGE(distmult/rotate)로 cell08 먼저 실행 (complex/transh 완주 대기 중 병행).
 
 GPU3/5(메모리 79GB 여유, KGE와 컴퓨트만 공유)에 cell08 x {distmult,rotate} x 3seed = 6run 분산.
-결과 -> results/kge_compare/{kge}/ (run_kge_chain Phase2와 동일 경로 -> 나중에 chain이 job_done으로 skip).
+결과 -> results/kge_comparison/existing_drug/{kge}/ (run_kge_chain Phase2와 동일 경로 -> 나중에 chain이 job_done으로 skip).
 GPU당 1 job씩만(KGE와 컴퓨트 공유라 과포화 방지). job_done이면 skip.
 
 Run: nohup micromamba run -n base python run_cell08_2kge.py > results/run_logs/cell08_2kge.log 2>&1 &
@@ -11,7 +11,7 @@ import os, subprocess, time, csv, collections
 from collections import deque
 
 HERE = os.path.dirname(os.path.abspath(__file__)); os.chdir(HERE)
-CMP = os.path.join(HERE, "results", "kge_compare")
+CMP = os.path.join(HERE, "results", "kge_comparison", "existing_drug")
 LOGDIR = os.path.join(HERE, "results", "run_logs"); os.makedirs(LOGDIR, exist_ok=True)
 DDIBENCH = "micromamba run -n DDIBench python"
 SEEDS = [0, 42, 124]

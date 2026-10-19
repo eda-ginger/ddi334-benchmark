@@ -51,6 +51,50 @@ environment/
 `models/` and `dataio/` are imported by `ddi334/code/train.py` (added to
 `sys.path` there) — they are shared, not a separate pipeline.
 
+`ddi334/results/` is organized by which part of the paper it backs:
+
+```
+results/
+  encoders_main/                        Table 1/D.1: cells 01-15, Existing
+                                         drug condition (the default for
+                                         every cell; Molecule/Bio-profile
+                                         cells have no Novel-drug variant)
+  encoders_novel_drug/                  Section 5.2/Figure: cells 08-11
+                                         under the Novel drug condition
+  appendix_j_embedding_subgraph_cross/  Appendix J: TransE embedding and
+    novel_embedding_existing_subgraph/    KG subgraph crossed independently
+    existing_embedding_novel_subgraph/    for Knowledge graph (R-GCN)
+  document_backbone_comparison/         Appendix C.1: BioBERT vs PubMedBERT
+    {biobert,pubmedbert,scibert}/         vs SciBERT, each under both
+      {existing_drug,novel_drug}/         drug conditions
+  kge_comparison/                       Appendix KGE comparison figure
+    existing_drug/                        (TransE/RotatE/ComplEx/DistMult/
+    novel_drug/                           TransH): link-reconstruction vs
+    novel_drug_embedding_only/            downstream AUROC. novel_drug_embed
+                                           ding_only isolates the embedding
+                                           from the graph-structure effect
+                                           (Section 6.4-style ablation)
+  llm/
+    finetuning/                         Section 5: QLoRA FT, 6 models x
+                                         Existing/Novel ("ideal"/"real" in
+                                         filenames) x 3 epochs
+    zeroshot/                           Section 5: zero-shot, 6 models x
+                                         Existing/Novel
+    zeroshot_s2_reproducibility_check/  reproducibility check for the
+                                         Unseen-Unseen zero-shot numbers
+  ddi_network_molgraph_init/            robustness check for DDI network
+                                         (R-GCN) with a different node
+                                         initialization (not reported in
+                                         the paper; see Reproducing a
+                                         result below)
+  commercial_llm/                       Appendix I: commercial LLM comparison
+  random_baseline.json                  random-prediction reference line
+```
+
+Inside each leaf folder, filenames still use the codebase's internal
+mode names: `real` = Novel drug condition, `ideal` = Existing drug
+condition (and `S0`/`S1`/`S2` = Seen-Seen/Seen-Unseen/Unseen-Unseen).
+
 ## What is / isn't included
 
 **Included**: everything needed to verify every number, table, and
