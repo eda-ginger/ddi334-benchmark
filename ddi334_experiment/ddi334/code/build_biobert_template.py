@@ -40,7 +40,7 @@ OUT_DIRS = [SHARED_PRECOMPUTE_DIR] + [
 ]
 BIO_PROFILE = os.path.join(DDI334_DIR, 'meta', 'bio_profile_llm.json')
 MAX_TOKENS = 512
-TIERS = ['real', 'genes', 'ideal']
+TIERS = ['novel_drug', 'genes', 'existing_drug']
 
 # DOC 계열 BERT 3종 (2026-07-27 미팅 논의, 우리 85편 서베이에서 DOC 모달리티 최다 등장 BERT backbone)
 MODEL_PRESETS = {

@@ -1,16 +1,16 @@
-"""DOC 템플릿 재설계: cell13(frozen text encoder) × 3 tier(real/genes/ideal) × 3 seed × N backbone.
+"""DOC 템플릿 재설계: cell13(frozen text encoder) × 2 tier(novel_drug/existing_drug) × 3 seed × N backbone.
 
-2026-07-27 미팅 피드백 반영 — LLM(§5) real/genes/ideal 템플릿과 통일한 cell13 설계.
+2026-07-27 미팅 피드백 반영 — LLM(§5) novel_drug/existing_drug 템플릿과 통일한 cell13 설계.
 `05_실험설계(DDI334).md` §8 참조. cell14(구 drug name 전용)는 흡수·폐기, 이 트랙에서 실행 안 함.
 2026-07-27 확장(§8.5): DOC_MODEL(backbone) 축 추가 — biobert/pubmedbert/scibert 비교.
 입력: llm_prompts.py DDI334Prompt.drug_text() 템플릿 -> build_biobert_template.py --tag {model}로
-      사전 생성한 {model}_{real,genes,ideal}.pt. 인코더/평가는 기존 cell13과 동일(frozen + split별 val-best).
+      사전 생성한 {model}_{novel_drug,genes,existing_drug}.pt. 인코더/평가는 기존 cell13과 동일(frozen + split별 val-best).
 cell13은 frozen feature라 가벼움(분 단위).
 
 MODELS env(comma, 기본 "biobert")로 대상 backbone 선택. result_dir =
 document_backbone_comparison/{model}/{existing_drug,novel_drug}/.
 
-선행 조건: build_biobert_template.py --tag {model} 실행 완료({model}_real/genes/ideal.pt 존재).
+선행 조건: build_biobert_template.py --tag {model} 실행 완료({model}_novel_drug/genes/existing_drug.pt 존재).
 
 Run: GPUS="3,5" MODELS="pubmedbert,scibert" nohup micromamba run -n base python run_doc_template.py \
      > results/run_logs/doc_template.log 2>&1 &
@@ -28,14 +28,11 @@ SEEDS = [0, 42, 124]
 GPUS = [int(g) for g in os.environ.get("GPUS", "3,5").split(",") if g.strip()]
 SKIP = set(s for s in os.environ.get("SKIP", "").split(",") if s)   # 예: 다른 프로세스가 이미 돌리는 중인 "{model}_{tier}_s{seed}"
 MODELS = [m for m in os.environ.get("MODELS", "biobert").split(",") if m]
-TIERS = ["real", "ideal"]
-
-
-TIER_DIR = {"real": "novel_drug", "ideal": "existing_drug"}
+TIERS = ["novel_drug", "existing_drug"]
 
 
 def result_dir(model, tier):
-    return os.path.join(DDI334_DIR, "results", "document_backbone_comparison", model, TIER_DIR[tier])
+    return os.path.join(DDI334_DIR, "results", "document_backbone_comparison", model, tier)
 
 
 def job_done(out, seed):

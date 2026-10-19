@@ -59,14 +59,14 @@ class DDI334Prompt:
         return V1_SYSTEM, user, schema
 
     # ── 약물 1개 템플릿 텍스트 (tier: real/genes/ideal) — 접두어("Drug N") 없음.
-    #    LLM 프롬프트 블록(_block_real/_block_ideal)과 cell13 BioBERT 텍스트(build_biobert_template.py)가
+    #    LLM 프롬프트 블록(_block_novel_drug/_block_existing_drug)과 cell13 BioBERT 텍스트(build_biobert_template.py)가
     #    이 함수 하나를 공유한다 (05_실험설계(DDI334).md §8, 2026-07-27 통일).
-    def drug_text(self, d, tier='ideal'):
-        """tier='real': SMILES만(이름 없음, 완전 신약 가정).
+    def drug_text(self, d, tier='existing_drug'):
+        """tier='novel_drug': SMILES만(이름 없음, 완전 신약 가정).
         tier='genes' : + Name + Target genes.
-        tier='ideal' : + Indications + Pharmacologic class.
+        tier='existing_drug' : + Indications + Pharmacologic class.
         모든 약물이 동일 포맷 유지 — 정보 없으면 '(none)'으로 명시."""
-        if tier == 'real':
+        if tier == 'novel_drug':
             return f"SMILES: {self.smiles.get(d,'')}\n"
         bp = self.bio.get(str(d), {})
         g = ', '.join(bp.get('genes') or []) or "(none)"
@@ -79,8 +79,8 @@ class DDI334Prompt:
 
     # ── 자연어 버전 (cell13 DOC 추가 실험, 2026-07-28) — drug_text()와 동일 정보,
     #    key:value 템플릿 대신 문장으로 서술. 정보 없으면 "no known ~ documented"로 명시(생략 안 함).
-    def drug_text_nl(self, d, tier='ideal'):
-        if tier == 'real':
+    def drug_text_nl(self, d, tier='existing_drug'):
+        if tier == 'novel_drug':
             return f"The molecule has the SMILES structure {self.smiles.get(d,'')}."
         bp = self.bio.get(str(d), {})
         name, smi = self.name(d), self.smiles.get(d, '')
@@ -104,24 +104,24 @@ class DDI334Prompt:
         return f"Drug {i}\n{body}\n"
 
     # ── Ideal/Real 약물 블록 (프롬프트용 "Drug N" 접두 + 2-space indent) ──
-    def _block_real(self, i, d):
+    def _block_novel_drug(self, i, d):
         """Real(신약): 구조만."""
-        return self._indent_block(i, self.drug_text(d, 'real'))
+        return self._indent_block(i, self.drug_text(d, 'novel_drug'))
 
-    def _block_ideal(self, i, d, genes_only=False):
+    def _block_existing_drug(self, i, d, genes_only=False):
         """Ideal: name + SMILES + target genes(binds) [+ indications + pharmacologic class].
         genes_only=True 면 indications/class 제외 (Ideal 내부 ablation: genes만)."""
-        return self._indent_block(i, self.drug_text(d, 'genes' if genes_only else 'ideal'))
+        return self._indent_block(i, self.drug_text(d, 'genes' if genes_only else 'existing_drug'))
 
     # ── V2: binary-with-R, one side effect.
-    #   mode='ideal'(name+SMILES+genes+ind+class) / 'ideal_genes'(name+SMILES+genes) / 'real'(SMILES만) ──
-    def build_v2(self, d1, d2, type_id, mode='ideal'):
-        if mode == 'real':
-            blk = self._block_real
-        elif mode == 'ideal_genes':
-            blk = lambda i, d: self._block_ideal(i, d, genes_only=True)
+    #   mode='existing_drug'(name+SMILES+genes+ind+class) / 'existing_drug_genes'(name+SMILES+genes) / 'novel_drug'(SMILES만) ──
+    def build_v2(self, d1, d2, type_id, mode='existing_drug'):
+        if mode == 'novel_drug':
+            blk = self._block_novel_drug
+        elif mode == 'existing_drug_genes':
+            blk = lambda i, d: self._block_existing_drug(i, d, genes_only=True)
         else:
-            blk = self._block_ideal
+            blk = self._block_existing_drug
         # 질문은 익명(Drug 1/Drug 2) — Real은 이름이 없으니 일관되게 양쪽 동일
         user = (blk(1, d1) + "\n" + blk(2, d2) + "\n"
                 + f"Question: Does co-administration of Drug 1 and Drug 2 cause "

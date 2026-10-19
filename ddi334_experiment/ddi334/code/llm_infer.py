@@ -99,10 +99,10 @@ def infer_v1(client, model, pb, rows, merge, workers=24):
     return pred, lab
 
 
-def infer_v2(client, model, pb, rows, merge, mode='ideal', workers=24):
+def infer_v2(client, model, pb, rows, merge, mode='existing_drug', workers=24):
     """동시 요청(ThreadPoolExecutor) -> vLLM 배치. 직렬은 Running:1이라 GPU idle+극저속.
     각 (pair, t)별 Yes/No 1건. temperature=0 결정적이므로 병렬해도 결과 불변.
-    mode: ideal / ideal_genes / real (정보 가용성 ablation)."""
+    mode: ideal / existing_drug_genes / real (정보 가용성 ablation)."""
     from concurrent.futures import ThreadPoolExecutor
     N = len(pb.typenames)
     pred = np.zeros((len(rows), N)); lab = np.zeros((len(rows), N + 1))
@@ -222,7 +222,7 @@ def main():
     ap.add_argument("--gpu-mem-util", type=float, default=0.85)  # 공유 GPU면 낮춤
     ap.add_argument("--port", type=int, default=12341)  # 병렬 잡 충돌 방지: 잡마다 고유 포트
     ap.add_argument("--merge-system", action="store_true")  # gemma류
-    ap.add_argument("--mode", default="ideal", choices=["ideal", "ideal_genes", "real"])  # V2 정보 ablation
+    ap.add_argument("--mode", default="existing_drug", choices=["existing_drug", "existing_drug_genes", "novel_drug"])  # V2 정보 ablation
     ap.add_argument("--workers", type=int, default=24)  # 동시 요청 수 (작은 모델은 64+로 GPU 채움)
     ap.add_argument("--outdir", default="")  # 결과 저장 폴더 override (예: results/encoders_main)
     a = ap.parse_args()

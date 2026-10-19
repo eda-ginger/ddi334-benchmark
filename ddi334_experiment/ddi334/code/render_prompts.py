@@ -20,7 +20,7 @@ def main():
     ds = sys.argv[1] if len(sys.argv) > 1 else "ddibn"
     pb = DDI334Prompt(ds)
     out = os.path.join(HERE, "data", "prompt")
-    MODES = ("ideal", "ideal_genes", "real")
+    MODES = ("existing_drug", "existing_drug_genes", "novel_drug")
     for m in MODES:
         os.makedirs(os.path.join(out, m), exist_ok=True)
     open(os.path.join(out, "_system.txt"), "w").write(V2_SYSTEM + "\n")

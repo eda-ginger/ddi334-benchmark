@@ -76,8 +76,8 @@ results/
                                            (Section 6.4-style ablation)
   llm/
     finetuning/                         Section 5: QLoRA FT, 6 models x
-                                         Existing/Novel ("ideal"/"real" in
-                                         filenames) x 3 epochs
+                                         Existing/Novel drug condition x
+                                         3 epochs
     zeroshot/                           Section 5: zero-shot, 6 models x
                                          Existing/Novel
     zeroshot_s2_reproducibility_check/  reproducibility check for the
@@ -91,8 +91,8 @@ results/
   random_baseline.json                  random-prediction reference line
 ```
 
-Inside each leaf folder, filenames still use the codebase's internal
-mode names: `real` = Novel drug condition, `ideal` = Existing drug
+Inside each leaf folder, filenames use the codebase's internal mode
+names `novel_drug` / `existing_drug` for the Existing/Novel drug
 condition (and `S0`/`S1`/`S2` = Seen-Seen/Seen-Unseen/Unseen-Unseen).
 
 ## What is / isn't included

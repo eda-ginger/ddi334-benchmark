@@ -9,7 +9,7 @@
 - 평가: run_ft_cv.py (vLLM LoRA serving, split별 best epoch)
 
 Usage (vllm-llm 또는 peft env):
-  python ft_train.py --model microsoft/Phi-3.5-mini-instruct --mode ideal --gpu 0 \
+  python ft_train.py --model microsoft/Phi-3.5-mini-instruct --mode existing_drug --gpu 0 \
       [--epochs 5 --seed 42 --resume]
 """
 import argparse, json, os, sys, time, random
@@ -77,7 +77,7 @@ def make_collator(tok, merge, max_len=1024):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", required=True)
-    ap.add_argument("--mode", required=True, choices=["real", "ideal", "ideal_genes"])
+    ap.add_argument("--mode", required=True, choices=["novel_drug", "existing_drug", "existing_drug_genes"])
     ap.add_argument("--gpu", required=True)
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--epochs", type=int, default=5)

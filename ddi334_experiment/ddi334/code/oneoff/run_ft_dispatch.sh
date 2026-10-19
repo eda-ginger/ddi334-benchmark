@@ -48,7 +48,7 @@ PORT_OFF=1; [ "$POLICY" = "best" ] && PORT_OFF=2
 
 PAIRS=()
 IFS=',' read -ra MLIST <<< "$MODELS"
-for m in "${MLIST[@]}"; do PAIRS+=("$m:real" "$m:ideal"); done
+for m in "${MLIST[@]}"; do PAIRS+=("$m:novel_drug" "$m:existing_drug"); done
 
 tag_of(){ echo "${HF[$1]//\//_}_${2}_seed42"; }
 is_done(){

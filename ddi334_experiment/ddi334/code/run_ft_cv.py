@@ -7,9 +7,9 @@ ft_train.py(어댑터 epoch_1..N) -> vLLM LoRA serving:
 결과: results/llm/finetuning/llm_metrics/ft_{tag}_{split}.json  (+ _cv.json 선택기록)
 
 Usage (vllm-llm):
-  python run_ft_cv.py --tag microsoft_Phi-3.5-mini-instruct_ideal_seed42 \
-     --model microsoft/Phi-3.5-mini-instruct --mode ideal \
-     --ckpt results/ft_checkpoints/microsoft_Phi-3.5-mini-instruct_ideal_seed42 --gpu 0 --epochs 3
+  python run_ft_cv.py --tag microsoft_Phi-3.5-mini-instruct_existing_drug_seed42 \
+     --model microsoft/Phi-3.5-mini-instruct --mode existing_drug \
+     --ckpt results/ft_checkpoints/microsoft_Phi-3.5-mini-instruct_existing_drug_seed42 --gpu 0 --epochs 3
 """
 import argparse, json, os, sys, time
 import numpy as np
@@ -58,7 +58,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--tag", required=True)
     ap.add_argument("--model", required=True)
-    ap.add_argument("--mode", required=True, choices=["real", "ideal", "ideal_genes"])
+    ap.add_argument("--mode", required=True, choices=["novel_drug", "existing_drug", "existing_drug_genes"])
     ap.add_argument("--ckpt", required=True)
     ap.add_argument("--dataset", default="ddibn")
     ap.add_argument("--gpu", default="0")
