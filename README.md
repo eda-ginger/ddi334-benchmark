@@ -32,13 +32,11 @@ ddi334_experiment/
   models/          model/encoder definitions (GAT, SchNet, GT, MLP, CNN,
                    ChemBERTa, BioBERT, KGE-based encoders, ...)
   dataio/          dataset loading
-  configs/         top-level experiment configs
-  train.py         main trainer for the 14 review-encoder cells (+ cell15)
-  ft_train.py      fine-tuning entry point
-  zs_inference.py  zero-shot LLM inference entry point
   ddi334/
-    code/              DDI-334-specific scripts (dataset build, KG build,
-                       LLM prompt rendering/inference, result aggregation, ...)
+    code/              main trainer (`train.py`, cells 01-15) and all
+                       DDI-334-specific scripts (dataset build, KG build,
+                       LLM prompt rendering/inference, result aggregation,
+                       cross-evaluation ablations, ...). See below.
     data/              train/valid/test split files (S0/S1/S2), drug/type
                        maps, KG triples used for the Relation modality
     meta/              cluster split definition, id maps, type names
@@ -49,6 +47,9 @@ ddi334_experiment/
 environment/
   README.md, *_requirements.txt   exact pip environments used
 ```
+
+`models/` and `dataio/` are imported by `ddi334/code/train.py` (added to
+`sys.path` there) — they are shared, not a separate pipeline.
 
 ## What is / isn't included
 
@@ -62,9 +63,11 @@ files used for S0 (transductive) / S1 / S2 (inductive) evaluation.
 - Per-sample raw prediction arrays (`raw_preds/*.npz`) — only the
   aggregated metrics computed from them are kept
 - Precomputed encoder embedding caches (SchNet coordinates, ChemBERTa/
-  BioBERT embeddings, TransE/KGE embeddings, rendered LLM prompt
-  jsonl files) — derived from the raw external data below and
-  regenerable with the scripts in `ddi334/code/`
+  BioBERT embeddings, TransE/KGE embeddings, Morgan-fingerprint/
+  pooled-atom-feature node-init caches, rendered LLM prompt jsonl
+  files) — derived from the raw external data below and regenerable
+  with the scripts in `ddi334/code/` (the fingerprint/atom-feature
+  caches are rebuilt automatically on first run of `train.py`)
 - Training/inference logs
 
 ## Data
@@ -82,16 +85,56 @@ precomputation).
 ## Reproducing a result
 
 ```bash
-cd ddi334_experiment
+cd ddi334_experiment/ddi334/code
 
 # example: cell04 (SchNet), DDI-334 (ddibn), seed 42
 python train.py --cell 04 --dataset ddibn --gpu 0 --seed 42
 ```
 
+`--checkpoint_metric` is not a flag here — checkpoint selection (accuracy,
+per-split, patience=10 early stopping, as described in the paper's
+Appendix E.1) is fixed in `train.py` and is not configurable.
+
+**Existing / Novel drug conditions** (biological-relation availability for
+Unseen drugs, Section 4 of the paper) are selected with env vars, not CLI
+flags:
+
+```bash
+# Existing drug condition (default)
+python train.py --cell 09 --dataset ddibn --gpu 0 --seed 42
+
+# Novel drug condition (Unseen drugs' biological relations removed)
+CASE3=1 python train.py --cell 09 --dataset ddibn --gpu 0 --seed 42
+```
+
+**DDI network (R-GCN), cell 11** — the paper reports this cell initialized
+with a 1,024-bit Morgan fingerprint (4.66M parameters), not the TransE
+default. Reproduce it with:
+
+```bash
+NODE_INIT=molfp python train.py --cell 11 --dataset ddibn --gpu 0 --seed 42
+```
+
+**Appendix J** (crossing the Existing/Novel condition of the TransE
+embedding independently from that of the KG subgraph, for Knowledge graph
+(R-GCN)/(Graph Transformer), cells 09/10) uses two more env vars that
+override `CASE3` when set:
+
+```bash
+# e.g. Novel subgraph + Existing TransE embedding
+EMB_SRC=case1 SUBGRAPH_SRC=case3 python train.py --cell 09 --dataset ddibn --gpu 0 --seed 42
+```
+
+`NODE_INIT=molgraph` (sum-pooled raw atom features instead of a fingerprint
+or TransE) is also available for cells 09/10/11 as a further robustness
+check; it is not used for any number reported in the paper.
+
 See `ddi334/code/` for dataset build (`build_dataset.py`, `build_kg.py`,
 `build_bio_profile.py`, ...), LLM prompt rendering/inference
-(`render_prompts.py`, `llm_infer.py`, `llm_infer_commercial.py`), and
-fine-tuning (`ft_train_v1.py`, `ft_train_v2.py`, `run_ft_cv_v2.py`).
+(`render_prompts.py`, `llm_infer.py`, `llm_infer_commercial.py`),
+fine-tuning (`ft_train_v1.py`, `ft_train_v2.py`, `run_ft_cv_v2.py`), and
+the batch launchers used for the ablations above (`oneoff/run_rel_case3.py`,
+`oneoff/run_rel_cross.py`, `oneoff/run_cell11_cross.py`).
 
 ## Environment
 

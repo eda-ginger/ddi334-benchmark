@@ -336,6 +336,8 @@ class MorganFPEncoder(nn.Module):
     """Cell 04 (MOL): Morgan Fingerprint (ECFP4) -> 2-layer MLP.
 
     Source: MRLF-DDI (Zhong et al., 2025) — Morgan 1024-bit, radius=2, MLP -> 128d.
+    Also cited in the manuscript (Appendix C.2) as ComNet (Zhang et al., 2025), fingerprint view:
+      ECFP radius 2, 1,024-d. Same fingerprint settings; the 2-layer MLP is our own.
     Fair-exp adaptation: 원 모델의 multi-representation 중 FP branch만 사용
       (다른 모달리티/분기 제거) 하여 fingerprint 단일 인코더로 통제 비교.
     """

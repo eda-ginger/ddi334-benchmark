@@ -55,7 +55,24 @@ from dataio.dataset import DDIBatch
 
 def load_kge_embeddings(dataset, kge_type='transe'):
     """KGE entity 임베딩 [34124, dim]. {ds}/precompute/{type}_ent.npy 우선, 없으면 kge/{ds}/{type}/.
-    CASE3 env=1이면 kge/{ds}_case3/{type}/ 사용(신약 고립 KG로 학습한 임베딩, precompute 무시)."""
+    CASE3 env=1이면 kge/{ds}_case3/{type}/ 사용(신약 고립 KG로 학습한 임베딩, precompute 무시).
+    EMB_SRC env('case1'/'case3')가 설정되면 CASE3과 무관하게 임베딩 소스만 강제 선택
+    (Existing/Novel subgraph x Existing/Novel TransE 교차 실험용, 2026-10-19 추가)."""
+    emb_src = os.environ.get('EMB_SRC')
+    if emb_src == 'case3':
+        d = os.path.join(KGE_DIR, f'{dataset}_case3', kge_type)
+        npys = sorted(f for f in os.listdir(d) if f.endswith('.npy') and 'ent_' in f)
+        if not npys:
+            raise FileNotFoundError(f"EMB_SRC=case3 KGE .npy 없음: {d}")
+        print(f"  [KGE/EMB_SRC=case3] {os.path.join(d, npys[-1])}")
+        return torch.from_numpy(np.load(os.path.join(d, npys[-1]))).float()
+    if emb_src == 'case1':
+        d = os.path.join(KGE_DIR, dataset, kge_type)
+        npys = sorted(f for f in os.listdir(d) if f.endswith('.npy') and 'ent_' in f)
+        if not npys:
+            raise FileNotFoundError(f"EMB_SRC=case1 KGE .npy 없음: {d}")
+        print(f"  [KGE/EMB_SRC=case1] {os.path.join(d, npys[-1])}")
+        return torch.from_numpy(np.load(os.path.join(d, npys[-1]))).float()
     if os.environ.get('DDISPLIT'):   # 진단: DDI-split 학습 임베딩 (Ideal=ddibn_ddisplit / Real=+CASE3=ddibn_ddisplit_case3)
         sub = f'{dataset}_ddisplit_case3' if os.environ.get('CASE3') else f'{dataset}_ddisplit'
         d = os.path.join(KGE_DIR, sub, kge_type)
@@ -192,6 +209,47 @@ def load_drug_fingerprints(smiles_dict):
     return fps
 
 
+def load_molfp_embeddings():
+    """Morgan FP(1024d, radius2) 기반 초기 node feature (NODE_INIT=molfp, 2026-10-19 추가).
+    db_id==entity_id identity 활용: drug 행(0-1709)만 분자 구조로 채우고, 비-drug HetioNet
+    entity(유전자/질병 등, 1710+)는 0으로 둔다 — '약물 자체의 분자 정보는 Existing/Novel 조건과
+    무관하게 항상 보유'라는 전제로, R-GCN subgraph(cell09) TransE 초기화와 대조하기 위한 실험용."""
+    cache = os.path.join(PRECOMPUTE_DIR, 'molfp_ent_1024d.npy')
+    if os.path.exists(cache):
+        print(f"  [NODE_INIT/molfp] {cache}")
+        return torch.from_numpy(np.load(cache)).float()
+    smiles = load_drug_smiles()
+    fps = load_drug_fingerprints(smiles)
+    emb = np.zeros((NUM_HETIONET_ENTITIES, 1024), dtype=np.float32)
+    for did, fp in fps.items():
+        if did < NUM_HETIONET_ENTITIES:
+            emb[did] = fp
+    np.save(cache, emb)
+    print(f"  [NODE_INIT/molfp] computed -> {cache} ({len(fps)} drugs)")
+    return torch.from_numpy(emb).float()
+
+
+def load_molgraph_pooled_embeddings(num_drugs=1710):
+    """분자그래프(mol graph)에 들어가는 원자 단위 초기 노드 표현(55d, SSI-DDI feat, cell01과 동일)을
+    분자 하나당 합산(sum-pool)해서 고정 벡터 하나로 만든 것 (NODE_INIT=molgraph, 2026-10-19 추가,
+    cell11 DDI-network-only 실험용). GAT 등 GNN을 거치지 않은 '그래프에 넣기 전' 원시 노드 피처이며,
+    fingerprint와 동일하게 frozen 벡터로 cell11의 R-GCN 초기값에 사용한다."""
+    cache = os.path.join(PRECOMPUTE_DIR, 'molgraph_pooled_55d.npy')
+    if os.path.exists(cache):
+        print(f"  [NODE_INIT/molgraph] {cache}")
+        return torch.from_numpy(np.load(cache)).float()
+    smiles = load_drug_smiles()
+    graphs = load_mol_graphs_55d(smiles)
+    dim = next(iter(graphs.values()))['x'].shape[1]
+    emb = np.zeros((num_drugs, dim), dtype=np.float32)
+    for did, g in graphs.items():
+        if did < num_drugs:
+            emb[did] = g['x'].sum(axis=0)
+    np.save(cache, emb)
+    print(f"  [NODE_INIT/molgraph] computed -> {cache} ({len(graphs)} drugs, dim={dim})")
+    return torch.from_numpy(emb).float()
+
+
 def load_mol_graphs_55d(smiles_dict):
     from models.encoders import mol_to_graph_55d
     return {did: mol_to_graph_55d(smi) for did, smi in smiles_dict.items()}
@@ -290,11 +348,20 @@ def build_model(cell, device, drug_ids, dataset=None):
             encoder.entity_embedding.weight.copy_(kge_emb)
         encoder.set_features(num_drugs=1710)
     elif cell == '11':
-        # R-GCN on whole DDI graph (Decagon) + TransE fine-tunable init. subgraph 불필요.
+        # R-GCN on whole DDI graph (Decagon) + frozen init. subgraph 불필요.
         # node=db_id (identity, num_drugs=1710 cover). rel=type_idx+inverse (ddi_whole.pt).
-        kge_type = os.environ.get('KGE_TYPE', 'transe')
-        kge_emb = load_kge_embeddings(dataset, kge_type)
-        drug_kge = kge_emb[:1710]   # rows 0-1709 = drug slots (db_id==entity_id)
+        # NODE_INIT env('transe' 기본 / 'molfp' / 'molgraph')로 초기 노드값 소스 선택.
+        # 이 그래프는 약물 노드만 존재(유전자/질병 없음) — cell09/10의 KG subgraph와 다름,
+        # 2026-10-19 cell09 E/F 대신 여기에 molfp/molgraph 실험을 추가.
+        node_init = os.environ.get('NODE_INIT', 'transe')
+        if node_init == 'molfp':
+            drug_kge = load_molfp_embeddings()[:1710]
+        elif node_init == 'molgraph':
+            drug_kge = load_molgraph_pooled_embeddings(num_drugs=1710)
+        else:
+            kge_type = os.environ.get('KGE_TYPE', 'transe')
+            kge_emb = load_kge_embeddings(dataset, kge_type)
+            drug_kge = kge_emb[:1710]   # rows 0-1709 = drug slots (db_id==entity_id)
         whole = torch.load(os.path.join(PRECOMPUTE_DIR, 'ddi_whole.pt'), weights_only=False)
         encoder = RGCNWholeDDIEncoder(
             hidden_dim=hd, num_drugs=1710, num_relations=int(whole['num_relations']),
@@ -306,12 +373,26 @@ def build_model(cell, device, drug_ids, dataset=None):
         # KG subgraph (bio 0-22 + TWOSIDES train 23+). node=db_id (identity, drug2kg=None).
         # num_relations = n_relations(non-doubled, 232/1331); 추출기가 inverse로 내부 doubling.
         # 캐시: {ds}/precompute/subgraph_cache/ (데이터셋별 KG가 달라 반드시 분리)
-        kge_type = os.environ.get('KGE_TYPE', 'transe')
-        kge_emb = load_kge_embeddings(dataset, kge_type)
-        num_ent = kge_emb.shape[0]
+        # NODE_INIT env('transe' 기본 / 'molfp')로 초기 노드 feature 소스 선택. SUBGRAPH_SRC env('case1'/'case3')로
+        # CASE3과 무관하게 subgraph(그래프 연결)만 강제 선택 — Existing/Novel 임베딩 x Existing/Novel subgraph
+        # 교차 실험 + Morgan FP 초기화 실험용 (2026-10-19 추가, 둘 다 미설정이면 기존 동작과 동일).
+        node_init = os.environ.get('NODE_INIT', 'transe')
+        if node_init == 'molfp':
+            init_emb = load_molfp_embeddings()
+        else:
+            kge_type = os.environ.get('KGE_TYPE', 'transe')
+            init_emb = load_kge_embeddings(dataset, kge_type)
+        num_ent = init_emb.shape[0]
         rm = json.load(open(os.path.join(KGE_DIR, dataset, 'relation_map.json')))
         num_rel = int(rm['n_relations'])                       # 232 / 1331
-        if os.environ.get('CASE3'):   # 신약 고립 KG: novel edge 제거된 triples + 별도 캐시(case1 재사용 금지)
+        subgraph_src = os.environ.get('SUBGRAPH_SRC')
+        if subgraph_src == 'case1':
+            use_case3_subgraph = False
+        elif subgraph_src == 'case3':
+            use_case3_subgraph = True
+        else:
+            use_case3_subgraph = bool(os.environ.get('CASE3'))
+        if use_case3_subgraph:   # 신약 고립 KG: novel edge 제거된 triples + 별도 캐시(case1 재사용 금지)
             triples = np.load(os.path.join(DDI334_DIR, 'data', 'case3', 'kg_triples_case3.npy'))   # [E,3] (h,t,r)
             cache_dir = os.path.join(PRECOMPUTE_DIR, 'subgraph_cache_case3')
         else:
@@ -321,8 +402,8 @@ def build_model(cell, device, drug_ids, dataset=None):
             encoder = RGCNSubgraphEncoder(
                 hidden_dim=hd, dropout=dr, num_entities=num_ent, num_relations=num_rel,
                 num_bases=4, num_layers=2, edge_dropout=0.4,
-                use_transe_init=True, input_dim=kge_emb.shape[1])
-            encoder.load_transe_init(kge_emb)
+                use_transe_init=True, input_dim=init_emb.shape[1])
+            encoder.load_transe_init(init_emb)
             encoder.set_features(num_drugs=1710)
             encoder.set_kg_data(triples, num_ent, num_rel, cache_dir=cache_dir)
             transform = None
@@ -330,8 +411,8 @@ def build_model(cell, device, drug_ids, dataset=None):
             encoder = GraphTransformerKGEncoder(
                 hidden_dim=hd, dropout=dr, num_entities=num_ent, num_relations=num_rel,
                 num_layers=2, num_heads=4, max_distance=8, max_degree=50,
-                use_transe_init=True, input_dim=kge_emb.shape[1])
-            encoder.set_transe_init(kge_emb)
+                use_transe_init=True, input_dim=init_emb.shape[1])
+            encoder.set_transe_init(init_emb)
             encoder.set_features(num_drugs=1710)
             encoder.set_kg_data(triples, num_ent, num_rel,
                                 hop=2, max_nodes_per_hop=200, cache_dir=cache_dir)
