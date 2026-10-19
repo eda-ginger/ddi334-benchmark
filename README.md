@@ -4,7 +4,7 @@
 
 Code and results for the DDI-334 experiments reported in:
 
-> [TODO: 논문 인용 정보 (저자, 저널, 연도, DOI) — 투고/억셉 후 확정]
+> [TODO: citation information (authors, journal, year, DOI) — to be finalized after submission/acceptance]
 
 DDI-334 is a 334-drug benchmark (TWOSIDES x DrugBank overlap) used to
 compare how Molecule / Relation / Document information sources, and
@@ -138,8 +138,8 @@ check; it is not used for any number reported in the paper.
 See `ddi334/code/` for dataset build (`build_dataset.py`, `build_kg.py`,
 `build_bio_profile.py`, ...), LLM prompt rendering/inference
 (`render_prompts.py`, `llm_infer.py`, `llm_infer_commercial.py`),
-fine-tuning (`ft_train_v1.py`, `ft_train_v2.py`, `run_ft_cv_v2.py`), and
-the batch launchers used for the ablations above (`oneoff/run_rel_case3.py`,
+fine-tuning (`ft_train_v2.py`, `run_ft_cv_v2.py`), and the batch
+launchers used for the ablations above (`oneoff/run_rel_case3.py`,
 `oneoff/run_rel_cross.py`, `oneoff/run_cell11_cross.py`).
 
 ## Environment

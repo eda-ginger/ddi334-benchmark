@@ -7,9 +7,9 @@ actually used to produce the results in this repository.
 
 | Environment | Python | Used for |
 |---|---|---|
-| `ddibench_requirements.txt` | 3.8 | `train.py`, `ft_train.py` (review-encoder cells 01-15), everything in `ddi334/code/` except LLM inference/fine-tuning and KGE training |
+| `ddibench_requirements.txt` | 3.8 | `ddi334/code/train.py` (review-encoder cells 01-15) and everything else in `ddi334/code/` except LLM inference/fine-tuning and KGE training |
 | `dglke_requirements.txt` | 3.8 | KGE embedding training (TransE/RotatE/ComplEx/DistMult/TransH) that produces `ddi334/data/kge/*/{transe,rotate,complex,distmult,transh}/` |
-| `vllm_llm_requirements.txt` | 3.10 | `zs_inference.py`, `ddi334/code/llm_infer.py`, `llm_infer_commercial.py`, `ft_train_v1.py`, `ft_train_v2.py`, `run_ft_cv.py`, `run_ft_cv_v2.py` (all LLM zero-shot / fine-tuning) |
+| `vllm_llm_requirements.txt` | 3.10 | `ddi334/code/llm_infer.py`, `llm_infer_commercial.py`, `ft_train_v2.py`, `run_ft_cv_v2.py` (all LLM zero-shot / fine-tuning) |
 
 ## Setup
 
@@ -34,4 +34,4 @@ index for your CUDA version first, then `pip install` the rest of the
 requirements file with `--no-deps` for the already-installed packages,
 or adjust the pinned versions accordingly.
 
-GPU used for all reported experiments: [TODO: GPU 모델 명시 필요 — 예: A100 80GB].
+GPU used for all reported experiments: [TODO: specify GPU model, e.g. A100 80GB].
