@@ -16,7 +16,7 @@ PAIRS=(qwen14b:real qwen14b:ideal gemma27b:real gemma27b:ideal)
 ALLOWED=(1 4 5 0)   # 2/3 = djk0706 몫 제외
 
 tag_of(){ echo "${HF[$1]//\//_}_${2}_seed42"; }
-is_done(){ local t=$(tag_of $1 $2); [ -f "$OUT/llm_metrics/v2ft_${t}_bestDONE" ]; }
+is_done(){ local t=$(tag_of $1 $2); [ -f "$OUT/llm_metrics/ft_${t}_bestDONE" ]; }
 freegb(){ echo $(( (81920-$(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits -i $1 2>/dev/null)) / 1024 )); }
 util(){ nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits -i $1 2>/dev/null; }
 
@@ -24,10 +24,10 @@ run_pair(){  # $1=gpu $2=model $3=mode $4=port
   local gpu=$1 m=$2 mode=$3 base=$4 hf=${HF[$2]} merge=${MERGE[$2]} batch=${BATCH[$2]} evmem=${EVMEM[$2]}
   local mflag=""; [ "$merge" = "1" ] && mflag="--merge-system"; local tag=$(tag_of $m $mode)
   echo "### $(date +%H:%M) BIGRE-DISPATCH $m/$mode -> GPU$gpu ###"
-  micromamba run -n vllm-llm python code/ft_train_v2.py --model $hf --mode $mode --gpu $gpu \
+  micromamba run -n vllm-llm python code/ft_train.py --model $hf --mode $mode --gpu $gpu \
     --epochs 3 --batch_size $batch --resume > $OUT/logs/train_${m}_${mode}.log 2>&1
-  micromamba run -n vllm-llm python code/run_ft_cv_v2.py --tag $tag --model $hf --mode $mode \
-    --ckpt results/ft_v2/$tag --gpu $gpu --epochs 3 --policy both --gpu-mem-util $evmem --port $((base+1)) $mflag \
+  micromamba run -n vllm-llm python code/run_ft_cv.py --tag $tag --model $hf --mode $mode \
+    --ckpt results/ft_checkpoints/$tag --gpu $gpu --epochs 3 --policy both --gpu-mem-util $evmem --port $((base+1)) $mflag \
     > $OUT/logs/eval_${m}_${mode}.log 2>&1
   touch $Q/${m}_${mode}.done; rm -f $Q/gpu${gpu}.busy
   echo "### $(date +%H:%M) BIGRE-DONE $m/$mode (GPU$gpu 해방) ###"

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Phi real/ideal의 미측정 (epoch,split) test 셀만 채우는 일회성 러너.
 - 한 서버에 real ep1/2/3 + ideal ep1/2/3 어댑터를 올리고, --cells 로 지정된 셀만 test.
-- 저장: v2ft_ep{e}_{tag}_{sp}.json  (ep3-고정과 동일 네이밍 규약, e=1/2)
+- 저장: ft_ep{e}_{tag}_{sp}.json  (ep3-고정과 동일 네이밍 규약, e=1/2)
 - 기존 파일 있으면 skip (idempotent).
 run 예: python code/oneoff/test_epochs_phi.py --model microsoft/Phi-3.5-mini-instruct \
   --realtag microsoft_Phi-3.5-mini-instruct_real_seed42 --idealtag microsoft_Phi-3.5-mini-instruct_ideal_seed42 \
@@ -12,7 +12,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) 
 import numpy as np
 from openai import OpenAI
 import llm_infer as LI
-import run_ft_cv_v2 as R
+import run_ft_cv as R
 from llm_prompts import DDI334Prompt
 
 ap = argparse.ArgumentParser()
@@ -26,9 +26,9 @@ ap.add_argument("--cells", required=True)  # "real:S2:2,ideal:S1:2,..."  (mode:s
 a = ap.parse_args()
 LI.PORT = a.port
 
-FT = os.path.join(R.OUTDIR, "..", "..", "ft_v2")  # results/ft_v2
-ckpt = {"real": os.path.join("results", "ft_v2", a.realtag),
-        "ideal": os.path.join("results", "ft_v2", a.idealtag)}
+FT = os.path.join(R.OUTDIR, "..", "..", "ft_checkpoints")  # results/ft_checkpoints
+ckpt = {"real": os.path.join("results", "ft_checkpoints", a.realtag),
+        "ideal": os.path.join("results", "ft_checkpoints", a.idealtag)}
 tag = {"real": a.realtag, "ideal": a.idealtag}
 
 adapters = []
@@ -48,7 +48,7 @@ try:
     rpdir = os.path.join(R.OUTDIR, "raw_preds"); os.makedirs(rpdir, exist_ok=True)
     for cell in a.cells.split(","):
         mode, sp, ep = cell.split(":")
-        outj = os.path.join(R.OUTDIR, "llm_metrics", f"v2ft_ep{ep}_{tag[mode]}_{sp}.json")
+        outj = os.path.join(R.OUTDIR, "llm_metrics", f"ft_ep{ep}_{tag[mode]}_{sp}.json")
         if os.path.exists(outj):
             print(f"[{cell}] skip (이미 있음)", flush=True); continue
         trows = R.load_rows("ddibn", "test", sp)
@@ -56,8 +56,8 @@ try:
         pred, lab = LI.infer_v2(client, f"{mode}_ep{ep}", pb, trows, False, mode=mode)
         m = LI.evaluate(pred, lab)
         print(f"[{cell}] AUROC={m['AUC-ROC']:.4f} F1={m['macro-F1']:.4f} | {time.time()-t0:.0f}s", flush=True)
-        LI.save_results("ddibn", f"v2ft_ep{ep}_{tag[mode]}", sp, m, 0, outdir=R.OUTDIR)
-        np.savez(os.path.join(rpdir, f"v2ft_ep{ep}_{tag[mode]}_{sp}.npz"), pred=pred, lab=lab)
+        LI.save_results("ddibn", f"ft_ep{ep}_{tag[mode]}", sp, m, 0, outdir=R.OUTDIR)
+        np.savez(os.path.join(rpdir, f"ft_ep{ep}_{tag[mode]}_{sp}.npz"), pred=pred, lab=lab)
     print("[test_epochs] ALL DONE", flush=True)
 finally:
     proc.terminate()

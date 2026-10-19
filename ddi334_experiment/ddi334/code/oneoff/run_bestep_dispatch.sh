@@ -2,8 +2,8 @@
 # DDI-334 V2 best-epoch 재평가 디스패처 (재학습 X).
 # - 대상: 작은 4모델 x {real, ideal} = 8 pair
 # - 전제: 각 pair의 ep3DONE + 저장된 epoch_1/2/3 어댑터 존재 (없으면 skip=대기)
-# - 동작: run_ft_cv_v2 --policy best (val 스윕으로 split별 best epoch 선택 -> test)
-# - done 판정 = v2ft_{tag}_bestDONE 마커. claim = atomic mkdir 락 ($key.best.lock).
+# - 동작: run_ft_cv.py --policy best (val 스윕으로 split별 best epoch 선택 -> test)
+# - done 판정 = ft_{tag}_bestDONE 마커. claim = atomic mkdir 락 ($key.best.lock).
 # - gpu busy 마커(gpu{N}.busy)는 ep3 디스패처와 공유 -> GPU 이중점유 방지.
 set -u
 cd /home/internal-server-user/Latex/experiments/v5_ddi-bench/experiment/ddi334
@@ -18,8 +18,8 @@ PAIRS=(gemma2b:real qwen3b:real phi35:real phi4:real \
 ALLOWED=(1 4 5 0)
 
 tag_of(){ echo "${HF[$1]//\//_}_${2}_seed42"; }
-best_done(){ local t=$(tag_of $1 $2); [ -f "$OUT/llm_metrics/v2ft_${t}_bestDONE" ]; }
-ep3_ready(){ local t=$(tag_of $1 $2); [ -f "$OUT/llm_metrics/v2ft_${t}_ep3DONE" ] && [ -d "$OUT/../../ft_v2/$t/epoch_3" ] 2>/dev/null; }
+best_done(){ local t=$(tag_of $1 $2); [ -f "$OUT/llm_metrics/ft_${t}_bestDONE" ]; }
+ep3_ready(){ local t=$(tag_of $1 $2); [ -f "$OUT/llm_metrics/ft_${t}_ep3DONE" ] && [ -d "$OUT/../../ft_checkpoints/$t/epoch_3" ] 2>/dev/null; }
 freegb(){ echo $(( (81920-$(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits -i $1 2>/dev/null)) / 1024 )); }
 util(){ nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits -i $1 2>/dev/null; }
 
@@ -27,8 +27,8 @@ run_pair(){  # $1=gpu $2=model $3=mode $4=port
   local gpu=$1 m=$2 mode=$3 base=$4 hf=${HF[$2]} merge=${MERGE[$2]} evmem=${EVMEM[$2]}
   local mflag=""; [ "$merge" = "1" ] && mflag="--merge-system"; local tag=$(tag_of $m $mode)
   echo "### $(date +%H:%M) BEST-DISPATCH $m/$mode -> GPU$gpu ###"
-  micromamba run -n vllm-llm python code/run_ft_cv_v2.py --tag $tag --model $hf --mode $mode \
-    --ckpt results/ft_v2/$tag --gpu $gpu --epochs 3 --policy best --gpu-mem-util $evmem --port $((base+2)) $mflag \
+  micromamba run -n vllm-llm python code/run_ft_cv.py --tag $tag --model $hf --mode $mode \
+    --ckpt results/ft_checkpoints/$tag --gpu $gpu --epochs 3 --policy best --gpu-mem-util $evmem --port $((base+2)) $mflag \
     > $OUT/logs/best_${m}_${mode}.log 2>&1
   touch $Q/${m}_${mode}.best.done; rm -f $Q/gpu${gpu}.busy
   echo "### $(date +%H:%M) BEST-DONE $m/$mode (GPU$gpu 해방) ###"

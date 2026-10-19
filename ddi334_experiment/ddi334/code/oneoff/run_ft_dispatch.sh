@@ -1,9 +1,9 @@
 #!/bin/bash
 # DDI-334 V2 FT 동적 디스패처: 12 pair 큐를 빈 GPU에 자동 배정(여러 개 동시).
-# - done 판정 = eval json(v2ft_{tag}_S2.json) 존재 -> 재실행 안 함(중복 방지, idempotent)
+# - done 판정 = eval json(ft_{tag}_S2.json) 존재 -> 재실행 안 함(중복 방지, idempotent)
 # - claim = atomic mkdir 락. GPU busy 마커로 1 GPU=1 pair.
 # - 빈 GPU = (free GB >= 모델 need) AND (util < 35) AND (우리 busy 마커 없음)
-# - resume: ft_train_v2 --resume (이전 epoch 어댑터 있으면 이어서)
+# - resume: ft_train.py --resume (이전 epoch 어댑터 있으면 이어서)
 set -u
 cd /home/internal-server-user/Latex/experiments/v5_ddi-bench/experiment/ddi334
 OUT=results/llm/finetuning; Q=$OUT/_q; mkdir -p $Q $OUT/logs
@@ -20,7 +20,7 @@ ALLOWED=(1 4 5 0)   # 1/4/5 우리 전용, 0은 비면 기회적, 2/3은 djk0706
 
 tag_of(){ echo "${HF[$1]//\//_}_${2}_seed42"; }
 DONE_SUFFIX=${DONE_SUFFIX:-ep3DONE}   # 현재 ep3 공정. best 공정 시 bestDONE로
-is_done(){ local t=$(tag_of $1 $2); [ -f "$OUT/llm_metrics/v2ft_${t}_${DONE_SUFFIX}" ]; }
+is_done(){ local t=$(tag_of $1 $2); [ -f "$OUT/llm_metrics/ft_${t}_${DONE_SUFFIX}" ]; }
 freegb(){ echo $(( (81920-$(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits -i $1 2>/dev/null)) / 1024 )); }
 util(){ nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits -i $1 2>/dev/null; }
 
@@ -28,10 +28,10 @@ run_pair(){  # $1=gpu $2=model $3=mode $4=port
   local gpu=$1 m=$2 mode=$3 base=$4 hf=${HF[$2]} merge=${MERGE[$2]} batch=${BATCH[$2]} evmem=${EVMEM[$2]}
   local mflag=""; [ "$merge" = "1" ] && mflag="--merge-system"; local tag=$(tag_of $m $mode)
   echo "### $(date +%H:%M) DISPATCH $m/$mode -> GPU$gpu ###"
-  micromamba run -n vllm-llm python code/ft_train_v2.py --model $hf --mode $mode --gpu $gpu \
+  micromamba run -n vllm-llm python code/ft_train.py --model $hf --mode $mode --gpu $gpu \
     --epochs 3 --batch_size $batch --resume > $OUT/logs/train_${m}_${mode}.log 2>&1
-  micromamba run -n vllm-llm python code/run_ft_cv_v2.py --tag $tag --model $hf --mode $mode \
-    --ckpt results/ft_v2/$tag --gpu $gpu --epochs 3 --policy ep3 --gpu-mem-util $evmem --port $((base+1)) $mflag \
+  micromamba run -n vllm-llm python code/run_ft_cv.py --tag $tag --model $hf --mode $mode \
+    --ckpt results/ft_checkpoints/$tag --gpu $gpu --epochs 3 --policy ep3 --gpu-mem-util $evmem --port $((base+1)) $mflag \
     > $OUT/logs/eval_${m}_${mode}.log 2>&1
   touch $Q/${m}_${mode}.done; rm -f $Q/gpu${gpu}.busy
   echo "### $(date +%H:%M) DONE $m/$mode (GPU$gpu 해방) ###"

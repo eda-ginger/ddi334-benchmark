@@ -182,7 +182,7 @@ check; it is not used for any number reported in the paper.
 See `ddi334/code/` for dataset build (`build_dataset.py`, `build_kg.py`,
 `build_bio_profile.py`, ...), LLM prompt rendering/inference
 (`render_prompts.py`, `llm_infer.py`),
-fine-tuning (`ft_train_v2.py`, `run_ft_cv_v2.py`), and the batch
+fine-tuning (`ft_train.py`, `run_ft_cv.py`), and the batch
 launchers used for the ablations above (`oneoff/run_rel_case3.py`,
 `oneoff/run_rel_cross.py`, `oneoff/run_cell11_cross.py`).
 
