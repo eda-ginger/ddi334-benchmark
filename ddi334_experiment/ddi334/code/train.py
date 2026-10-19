@@ -350,10 +350,12 @@ def build_model(cell, device, drug_ids, dataset=None):
     elif cell == '11':
         # R-GCN on whole DDI graph (Decagon) + frozen init. subgraph 불필요.
         # node=db_id (identity, num_drugs=1710 cover). rel=type_idx+inverse (ddi_whole.pt).
-        # NODE_INIT env('transe' 기본 / 'molfp' / 'molgraph')로 초기 노드값 소스 선택.
-        # 이 그래프는 약물 노드만 존재(유전자/질병 없음) — cell09/10의 KG subgraph와 다름,
-        # 2026-10-19 cell09 E/F 대신 여기에 molfp/molgraph 실험을 추가.
-        node_init = os.environ.get('NODE_INIT', 'transe')
+        # NODE_INIT env('molfp' 기본 / 'transe' / 'molgraph')로 초기 노드값 소스 선택.
+        # 이 그래프는 약물 노드만 존재(유전자/질병 없음) — cell09/10의 KG subgraph와 다름.
+        # 2026-10-19 molfp(Morgan FP, 4.66M params)가 본문 "DDI network (R-GCN)" 공식 결과로
+        # 채택됨에 따라 기본값을 transe->molfp로 전환 (cell09/10은 그대로 transe 기본 유지).
+        # 옛 TransE 결과 재현은 NODE_INIT=transe로 명시.
+        node_init = os.environ.get('NODE_INIT', 'molfp')
         if node_init == 'molfp':
             drug_kge = load_molfp_embeddings()[:1710]
         elif node_init == 'molgraph':

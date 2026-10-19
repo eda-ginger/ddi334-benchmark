@@ -108,11 +108,17 @@ CASE3=1 python train.py --cell 09 --dataset ddibn --gpu 0 --seed 42
 ```
 
 **DDI network (R-GCN), cell 11** — the paper reports this cell initialized
-with a 1,024-bit Morgan fingerprint (4.66M parameters), not the TransE
-default. Reproduce it with:
+with a 1,024-bit Morgan fingerprint (4.66M parameters). This is the
+*default* for cell 11 (`NODE_INIT` defaults to `molfp` there, unlike cells
+09/10 where it defaults to `transe`):
 
 ```bash
-NODE_INIT=molfp python train.py --cell 11 --dataset ddibn --gpu 0 --seed 42
+python train.py --cell 11 --dataset ddibn --gpu 0 --seed 42
+# equivalent to: NODE_INIT=molfp python train.py --cell 11 ...
+
+# the earlier TransE-initialized version of this cell (not used in the
+# paper) is reproduced with:
+NODE_INIT=transe python train.py --cell 11 --dataset ddibn --gpu 0 --seed 42
 ```
 
 **Appendix J** (crossing the Existing/Novel condition of the TransE
