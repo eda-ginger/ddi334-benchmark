@@ -28,7 +28,7 @@ SEEDS = [0, 42, 124]
 GPUS = [int(g) for g in os.environ.get("GPUS", "3,5").split(",") if g.strip()]
 SKIP = set(s for s in os.environ.get("SKIP", "").split(",") if s)   # 예: 다른 프로세스가 이미 돌리는 중인 "{model}_{tier}_s{seed}"
 MODELS = [m for m in os.environ.get("MODELS", "biobert").split(",") if m]
-TIERS = ["real", "genes", "ideal"]
+TIERS = ["real", "ideal"]
 
 
 def result_dir(model, tier):

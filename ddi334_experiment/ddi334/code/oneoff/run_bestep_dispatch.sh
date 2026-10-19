@@ -1,6 +1,6 @@
 #!/bin/bash
 # DDI-334 V2 best-epoch 재평가 디스패처 (재학습 X).
-# - 대상: 작은 4모델 x {real, ideal, ideal_genes} = 12 pair
+# - 대상: 작은 4모델 x {real, ideal} = 8 pair
 # - 전제: 각 pair의 ep3DONE + 저장된 epoch_1/2/3 어댑터 존재 (없으면 skip=대기)
 # - 동작: run_ft_cv_v2 --policy best (val 스윕으로 split별 best epoch 선택 -> test)
 # - done 판정 = v2ft_{tag}_bestDONE 마커. claim = atomic mkdir 락 ($key.best.lock).
@@ -14,8 +14,7 @@ declare -A MERGE=( [gemma2b]=1 [qwen3b]=0 [phi35]=0 [phi4]=0 )
 declare -A EVMEM=( [gemma2b]=0.4 [qwen3b]=0.4 [phi35]=0.4 [phi4]=0.6 )
 declare -A NEED=( [gemma2b]=28 [qwen3b]=28 [phi35]=28 [phi4]=38 )
 PAIRS=(gemma2b:real qwen3b:real phi35:real phi4:real \
-       gemma2b:ideal qwen3b:ideal phi35:ideal phi4:ideal \
-       gemma2b:ideal_genes qwen3b:ideal_genes phi35:ideal_genes phi4:ideal_genes)
+       gemma2b:ideal qwen3b:ideal phi35:ideal phi4:ideal)
 ALLOWED=(1 4 5 0)
 
 tag_of(){ echo "${HF[$1]//\//_}_${2}_seed42"; }

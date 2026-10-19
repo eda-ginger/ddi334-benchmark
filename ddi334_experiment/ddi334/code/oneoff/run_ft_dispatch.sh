@@ -15,8 +15,7 @@ declare -A EVMEM=( [gemma2b]=0.4 [qwen3b]=0.4 [phi35]=0.4 [phi4]=0.6 [qwen14b]=0
 declare -A NEED=( [gemma2b]=28 [qwen3b]=28 [phi35]=28 [phi4]=38 [qwen14b]=38 [gemma27b]=60 )  # GB free 필요(eval bf16 기준)
 PAIRS=(gemma2b:real qwen3b:real phi35:real phi4:real qwen14b:real \
        gemma2b:ideal qwen3b:ideal phi35:ideal phi4:ideal qwen14b:ideal \
-       gemma2b:ideal_genes qwen3b:ideal_genes phi35:ideal_genes phi4:ideal_genes qwen14b:ideal_genes \
-       gemma27b:real gemma27b:ideal gemma27b:ideal_genes)   # 27B 맨 뒤(가장 느림)
+       gemma27b:real gemma27b:ideal)   # 27B 맨 뒤(가장 느림)
 ALLOWED=(1 4 5 0)   # 1/4/5 우리 전용, 0은 비면 기회적, 2/3은 djk0706 전용(제외)
 
 tag_of(){ echo "${HF[$1]//\//_}_${2}_seed42"; }
