@@ -2,7 +2,7 @@
 """SMILES -> RDKit 30-feature structure description (legacy DOC 입력, novel/existing 조건과 무관).
 모두 SMILES에서 RDKit 직접계산 (외부DB·실측 0 -> novel drug에도 유효). 근거: 09 문서 §4.1.
 A.필수6(Lipinski+Veber) B.물리화학4 C.원소조성5 D.고리/방향족3 E.입체/이온화3 F.작용기9 = 30.
-출력: novel_drug/rdkit_desc.json {drug_id: description}."""
+출력: legacy_doc/rdkit_desc.json {drug_id: description}."""
 import json, os
 from rdkit import Chem
 from rdkit.Chem import Descriptors, Crippen, Lipinski, rdMolDescriptors, Fragments, QED, GraphDescriptors

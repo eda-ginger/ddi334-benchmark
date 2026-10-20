@@ -32,14 +32,13 @@ from torch.optim import AdamW
 from torch.utils.data import Dataset, DataLoader
 from sklearn.metrics import average_precision_score, roc_auc_score, accuracy_score, f1_score
 
-# ── 경로 (스크립트는 ddi334/code/ 안, models/·dataio/는 ddi334/ 바로 밑) ──
+# ── 경로 (스크립트는 ddi334/code/ 안; encoders.py/ddi_model.py/dataset.py도 같은 폴더) ──
 DDI334_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.insert(0, DDI334_DIR)              # models/, dataio/ 임포트용
 PRECOMPUTE_DIR = os.path.join(DDI334_DIR, 'data', 'precompute')   # main()에서 데이터셋별로 재설정됨
 KGE_DIR = os.path.join(DDI334_DIR, 'data', 'kge')       # REL KGE 임베딩 (데이터셋별)
 NUM_HETIONET_ENTITIES = 34124
 
-from models.encoders import (
+from encoders import (
     GATEncoder, MorganFPEncoder, SchNetEncoder,             # MOL 구조 (01/04/02)
     GraphTransformerMolEncoder, SMILESCNNEncoder,           # MOL 구조 (03/07)
     ChemBERTaEncoder,                                        # frozen (06)
@@ -48,8 +47,8 @@ from models.encoders import (
     RGCNSubgraphEncoder, GraphTransformerKGEncoder,         # REL (09/10)
     BioProfileMLPEncoder,                                   # REL raw MLP (15)
 )
-from models.ddi_model import DDIModel
-from dataio.dataset import DDIBatch
+from ddi_model import DDIModel
+from dataset import DDIBatch
 
 
 def load_kge_embeddings(dataset, kge_type='transe'):
@@ -242,12 +241,12 @@ def load_molgraph_pooled_embeddings(num_drugs=1710):
 
 
 def load_mol_graphs_55d(smiles_dict):
-    from models.encoders import mol_to_graph_55d
+    from encoders import mol_to_graph_55d
     return {did: mol_to_graph_55d(smi) for did, smi in smiles_dict.items()}
 
 
 def load_mol_graphs_tiger(smiles_dict):
-    from models.encoders import mol_to_graph_tiger
+    from encoders import mol_to_graph_tiger
     return {did: mol_to_graph_tiger(smi) for did, smi in smiles_dict.items()}
 
 
@@ -376,7 +375,7 @@ def build_model(cell, device, drug_ids, dataset=None):
         else:
             use_novel_drug_subgraph = bool(os.environ.get('NOVEL_DRUG'))
         if use_novel_drug_subgraph:   # 신약 고립 KG: novel edge 제거된 triples + 별도 캐시(existing_drug 재사용 금지)
-            triples = np.load(os.path.join(DDI334_DIR, 'data', 'novel_drug', 'kg_triples_novel_drug.npy'))   # [E,3] (h,t,r)
+            triples = np.load(os.path.join(DDI334_DIR, 'data', 'kge', 'kg_triples_novel_drug.npy'))   # [E,3] (h,t,r)
             cache_dir = os.path.join(PRECOMPUTE_DIR, 'subgraph_cache_novel_drug')
         else:
             triples = np.load(os.path.join(PRECOMPUTE_DIR, 'kg_triples.npy'))   # [E,3] (h,t,r)

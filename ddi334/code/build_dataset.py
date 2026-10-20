@@ -100,7 +100,7 @@ def build_id_maps():
         'local2db': {str(k): v for k, v in local2db.items()},
         'db_ids': db_ids,
     }
-    with open(os.path.join(DDI334_DIR, 'meta', 'id_maps.json'), 'w') as f:
+    with open(os.path.join(DDI334_DIR, 'data', 'id_maps.json'), 'w') as f:
         json.dump(id_maps, f, indent=0)
     print(f"[1] id_maps.json: 334 약물 (cid/db/local). db_id 범위 {db_ids[0]}~{db_ids[-1]}")
     return set(db_ids), {c: cid2db[c] for c in sorted_cids}
@@ -161,7 +161,7 @@ def build_cluster_split(db_set):
         if abs(len(dk2) - TARGET_DK) < abs(len(dk) - TARGET_DK):
             dk, dn = dk2, dn2
     assert len(dk) + len(dn) == N_DRUGS
-    with open(os.path.join(DDI334_DIR, 'meta', 'cluster_split.json'), 'w') as f:
+    with open(os.path.join(DDI334_DIR, 'data', 'cluster_split.json'), 'w') as f:
         json.dump({'gamma': GAMMA, 'seed': SEED,
                    'Dk': sorted(dk), 'Dn': sorted(dn)}, f, indent=0)
     print(f"[2] cluster_split.json: Dk={len(dk)} / Dn={len(dn)} (gamma={GAMMA}, seed={SEED})")

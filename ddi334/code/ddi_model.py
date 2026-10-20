@@ -14,7 +14,7 @@ import torch
 import torch.nn as nn
 from typing import Dict, Optional
 
-from models.encoders import GATEncoder
+from encoders import GATEncoder
 
 
 class DDIModel(nn.Module):

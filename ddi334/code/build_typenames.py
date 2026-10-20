@@ -50,7 +50,7 @@ def main():
 
     # tdc dense index i = rank of i-th smallest present Y (build_dataset raw2dense)
     tdc_map = {str(i): names[sorted_y[i]] for i in range(len(sorted_y))}
-    json.dump(tdc_map, open(os.path.join(HERE, 'meta', 'twosides_typenames_tdc.json'), 'w'),
+    json.dump(tdc_map, open(os.path.join(HERE, 'data', 'twosides_typenames_tdc.json'), 'w'),
               ensure_ascii=False, indent=0)
     print(f"[tdc] {len(tdc_map)} -> twosides_typenames_tdc.json")
 
@@ -70,7 +70,7 @@ def main():
         else:
             unmatched.append(i)
     assert not ambig and not unmatched, f"ambig={ambig} unmatched={unmatched}"
-    json.dump(ddibn_map, open(os.path.join(HERE, 'meta', 'twosides_typenames_ddibn.json'), 'w'),
+    json.dump(ddibn_map, open(os.path.join(HERE, 'data', 'twosides_typenames_ddibn.json'), 'w'),
               ensure_ascii=False, indent=0)
     print(f"[ddibn] {len(ddibn_map)} -> twosides_typenames_ddibn.json "
           f"(shared {len(shared)} pairs, 209/209 exact 1:1)")

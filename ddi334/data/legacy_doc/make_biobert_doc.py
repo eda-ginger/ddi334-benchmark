@@ -3,15 +3,15 @@
 원본 data/precompute/scripts/biobert.py와 동일 방식 (dmis-lab/biobert-base-cased-v1.2, [CLS], 768-d).
 입력 텍스트만 다름:
   - smiles    : drug_smiles.json 의 SMILES 문자열
-  - rdkitdesc : novel_drug/rdkit_desc.json 의 RDKit 30-feature JSON 문자열 (SMILES 포함)
+  - rdkitdesc : legacy_doc/rdkit_desc.json 의 RDKit 30-feature JSON 문자열 (SMILES 포함)
 출력: ddibn/precompute/biobert_smiles.pt , biobert_rdkitdesc.pt
       {'embeddings': {int id: Tensor[768]}, 'hidden_dim':768, 'model_name':..., 'input_type':...}
 
-Run (CPU, GPU 점유 회피): micromamba run -n DDIBench python novel_drug/make_biobert_doc.py
+Run (CPU, GPU 점유 회피): micromamba run -n DDIBench python legacy_doc/make_biobert_doc.py
 """
 import json, os, time, torch
 
-HERE = os.path.dirname(os.path.abspath(__file__))          # .../ddi334/novel_drug
+HERE = os.path.dirname(os.path.abspath(__file__))          # .../ddi334/data/legacy_doc
 DDI334 = os.path.dirname(HERE)
 PRECOMP = os.path.join(DDI334, "ddibn", "precompute")
 MODEL_NAME = "dmis-lab/biobert-base-cased-v1.2"

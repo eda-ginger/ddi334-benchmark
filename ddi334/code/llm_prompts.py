@@ -33,12 +33,12 @@ V2_SYSTEM = (
 
 class DDI334Prompt:
     def __init__(self, dataset):
-        self.typenames = json.load(open(os.path.join(HERE, 'meta', f'twosides_typenames_{dataset}.json')))
+        self.typenames = json.load(open(os.path.join(HERE, 'data', f'twosides_typenames_{dataset}.json')))
         names_raw = json.load(open(NAMES_JSON))['drug2name']
         self.name_map = {int(k): v['name'] for k, v in names_raw.items()}
         self.smiles = {int(k): v for k, v in json.load(open(SMILES_JSON)).items()}
         # bio profile (Ideal 입력): db_id -> {genes, indications, pharm_class}  (build_bio_profile.py)
-        bp_path = os.path.join(HERE, 'meta', 'bio_profile_llm.json')
+        bp_path = os.path.join(HERE, 'data', 'bio_profile_llm.json')
         self.bio = json.load(open(bp_path)) if os.path.exists(bp_path) else {}
 
     def name(self, db):
@@ -129,9 +129,45 @@ class DDI334Prompt:
         return V2_SYSTEM, user
 
 
-if __name__ == '__main__':
-    import sys
-    ds = sys.argv[1] if len(sys.argv) > 1 else 'ddibn'
+RENDER_SPLITS = ["train", "valid_S0", "test_S0", "valid_S1", "test_S1", "valid_S2", "test_S2"]
+
+
+def render_cache(ds='ddibn'):
+    """V2 Existing/Novel 프롬프트를 미리 렌더 -> data/prompt/{existing_drug,novel_drug}/{split}.jsonl.
+    각 줄: {"d1","d2","type","y","user"} (y=polarity: 1 양성쌍 / 0 음성쌍). build_v2(mode=...)와
+    동일 로직 -> 재생성 가능(gitignore 대상). 입력 데이터(data/bio_profile_llm.json 등)는 data/에
+    유지, 산출 프롬프트만 data/prompt/에. (render_prompts.py 흡수, 2026-10-20)"""
+    pb = DDI334Prompt(ds)
+    out = os.path.join(HERE, "data", "prompt")
+    MODES = ("existing_drug", "existing_drug_genes", "novel_drug")
+    for m in MODES:
+        os.makedirs(os.path.join(out, m), exist_ok=True)
+    total = 0
+    for sp in RENDER_SPLITS:
+        path = os.path.join(HERE, "data", ds, f"{sp}.txt")
+        if not os.path.exists(path):
+            continue
+        fh = {m: open(os.path.join(out, m, f"{sp}.jsonl"), "w") for m in MODES}
+        n = 0
+        for line in open(path):
+            p = line.split()
+            if len(p) < 4:
+                continue
+            d1, d2, pol = int(p[0]), int(p[1]), int(p[3])
+            qids = [i for i, x in enumerate(p[2].split(',')) if x == '1']
+            for t in qids:
+                for m in MODES:
+                    _, u = pb.build_v2(d1, d2, t, mode=m)
+                    fh[m].write(json.dumps({"d1": d1, "d2": d2, "type": t, "y": pol, "user": u}, ensure_ascii=False) + "\n")
+                n += 1
+        for f in fh.values():
+            f.close()
+        total += n
+        print(f"  {sp}: {n} prompts", flush=True)
+    print(f"[render] {ds} 총 {total} (쌍,타입) x existing_drug/novel_drug -> {out}/")
+
+
+def demo(ds='ddibn'):
     pb = DDI334Prompt(ds)
     # 실제 첫 positive 행에서 queried type 뽑아 프롬프트 시연
     for line in open(os.path.join(HERE, 'data', ds, 'test_S0.txt')):
@@ -145,3 +181,14 @@ if __name__ == '__main__':
             s2, u2 = pb.build_v2(d1, d2, qids[0])
             print("="*70, "\nV2 [System]\n", s2, "\n\nV2 [User]\n", u2)
             break
+
+
+if __name__ == '__main__':
+    # demo (기본):  python llm_prompts.py [ddibn]
+    # render cache: python llm_prompts.py render [ddibn]
+    import sys
+    args = sys.argv[1:]
+    if args and args[0] == 'render':
+        render_cache(args[1] if len(args) > 1 else 'ddibn')
+    else:
+        demo(args[0] if args else 'ddibn')

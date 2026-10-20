@@ -51,7 +51,7 @@ MODELS = {
 
 
 def load_334():
-    idm = json.load(open(os.path.join(DDI334_DIR, 'meta', 'id_maps.json')))
+    idm = json.load(open(os.path.join(DDI334_DIR, 'data', 'id_maps.json')))
     return set(int(x) for x in idm['db_ids'])
 
 

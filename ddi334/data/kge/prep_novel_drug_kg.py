@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Novel drug KG 전처리: 신약(Dn) 목록 + 신약-고립 bio KG + kg_triples_novel_drug. (GPU 불필요, 재현용)
-출력: novel_drug/{novel_drugs.json, kg_bio_334_novel_drug.txt, kg_triples_novel_drug.npy}"""
+출력: kge/{novel_drugs.json, kg_bio_334_novel_drug.txt, kg_triples_novel_drug.npy}"""
 import numpy as np, json, os
 HERE = os.path.dirname(os.path.abspath(__file__)); DD = os.path.join(HERE, "..")
 def drugs(fn):

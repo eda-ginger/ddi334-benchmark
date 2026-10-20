@@ -36,7 +36,7 @@ DDI334_DIR = os.path.dirname(HERE)                                      # ddi334
 EXPERIMENT_DIR = os.path.dirname(DDI334_DIR)                            # v5_ddi-bench/experiment
 SHARED_PRECOMPUTE_DIR = os.path.join(EXPERIMENT_DIR, 'data', 'precompute')          # 공유 소스본
 OUT_DIRS = [SHARED_PRECOMPUTE_DIR, os.path.join(DDI334_DIR, 'data', 'ddibn', 'precompute')]  # 실제 train.py가 읽는 곳
-BIO_PROFILE = os.path.join(DDI334_DIR, 'meta', 'bio_profile_llm.json')
+BIO_PROFILE = os.path.join(DDI334_DIR, 'data', 'bio_profile_llm.json')
 MAX_TOKENS = 512
 TIERS = ['novel_drug', 'genes', 'existing_drug']
 

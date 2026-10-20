@@ -7,8 +7,8 @@
   - Pharmacologic class : Compound-(class)-PharmacologicClass
 (Side Effect는 예측 라벨과 동일 어휘라 누수 -> 제외. up/down-regulate(간접 gene)도 제외.)
 
-입력: data/kge/kg_bio_334.txt, kge_hetionet/data/entity_drug.json, meta/hetionet_names.json
-출력: meta/bio_profile_llm.json  { "<db_id>": {"genes":[..], "indications":[..], "pharm_class":[..]} }
+입력: data/kge/kg_bio_334.txt, kge_hetionet/data/entity_drug.json, data/hetionet_names.json
+출력: data/bio_profile_llm.json  { "<db_id>": {"genes":[..], "indications":[..], "pharm_class":[..]} }
 Run: micromamba run -n DDIBench python code/build_bio_profile.py
 """
 import json
@@ -23,7 +23,7 @@ GENE_REL = '6'          # CbG (binds) = 직접 표적
 
 e2i = json.load(open(os.path.join(V5, 'kge_hetionet', 'data', 'entity_drug.json')))
 i2e = {v: k for k, v in e2i.items()}
-nm = {int(k): v for k, v in json.load(open(os.path.join(HERE, 'meta', 'hetionet_names.json'))).items()}
+nm = {int(k): v for k, v in json.load(open(os.path.join(HERE, 'data', 'hetionet_names.json'))).items()}
 
 genes = defaultdict(list); dis = defaultdict(list); cls = defaultdict(list)
 for line in open(os.path.join(HERE, 'data', 'kge', 'kg_bio_334.txt')):
@@ -44,7 +44,7 @@ out = {}
 for d in dbids:
     out[str(d)] = {"genes": sorted(genes[d]), "indications": sorted(dis[d]), "pharm_class": sorted(cls[d])}
 
-path = os.path.join(HERE, 'meta', 'bio_profile_llm.json')
+path = os.path.join(HERE, 'data', 'bio_profile_llm.json')
 json.dump(out, open(path, 'w'), ensure_ascii=False, indent=0)
 ng = sum(1 for d in dbids if genes[d]); nd = sum(1 for d in dbids if dis[d]); nc = sum(1 for d in dbids if cls[d])
 print(f"[bio_profile] {len(dbids)} 약물 -> {path}")

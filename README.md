@@ -31,16 +31,16 @@ is not the full experiment history of the underlying project.
 ddi334/
   code/              main trainer (`train.py`, cells 01-15 excluding
                      05/12, two Jaccard+PCA variants that were tried
-                     but are not reported in the paper) and all
+                     but are not reported in the paper), the shared
+                     model/dataset modules it imports (`encoders.py`,
+                     `ddi_model.py`, `dataset.py`), and all
                      DDI-334-specific scripts (dataset build, KG build,
                      LLM prompt rendering/inference, fine-tuning, ...).
                      See below.
-  models/            model/encoder definitions (GAT, SchNet, GT, MLP,
-                     CNN, ChemBERTa, BioBERT, KGE-based encoders, ...)
-  dataio/            dataset loading
-  data/              train/valid/test split files (S0/S1/S2), drug/type
-                     maps, KG triples used for the Relation modality
-  meta/              cluster split definition, id maps, type names
+  data/              train/valid/test split files (S0/S1/S2), KG
+                     triples, cluster-split/id-map/type-name metadata,
+                     and the precomputed encoder inputs under
+                     `ddibn/precompute/`
   results/           summary metrics (per-class scores, configs used,
                      loss curves, LLM ZS/FT metrics, KGE comparison
                      results, commercial-LLM comparison)
@@ -48,9 +48,6 @@ ddi334/
 environment/
   README.md, *_requirements.txt   exact pip environments used
 ```
-
-`models/` and `dataio/` are imported by `ddi334/code/train.py` (added to
-`sys.path` there) — they are shared, not a separate pipeline.
 
 `ddi334/results/` is organized by which part of the paper it backs:
 
@@ -238,7 +235,7 @@ by a random vector, so no KGE retraining is involved).
 (Appendix C.1): cell 13 with `DOC_MODEL` selecting the backbone, 3 seeds
 each. Each backbone's embeddings must first be built once with
 `build_biobert_template.py --tag {biobert,pubmedbert,scibert}` (reads
-`meta/bio_profile_llm.json`, writes into `data/ddibn/precompute/`):
+`data/bio_profile_llm.json`, writes into `data/ddibn/precompute/`):
 
 ```bash
 DOC_MODEL=pubmedbert DOC_INPUT=novel_drug python train.py --cell 13 --dataset ddibn --gpu 0 --seed 42 \

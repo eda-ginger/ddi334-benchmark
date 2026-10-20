@@ -28,7 +28,7 @@ DATASETS = ['ddibn']
 
 
 def db334():
-    return set(int(x) for x in json.load(open(os.path.join(DDI334_DIR, 'meta', 'id_maps.json')))['db_ids'])
+    return set(int(x) for x in json.load(open(os.path.join(DDI334_DIR, 'data', 'id_maps.json')))['db_ids'])
 
 
 def filter_emb_pt(src_name, ids, out_dirs, has_embeddings=True):
