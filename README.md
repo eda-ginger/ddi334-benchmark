@@ -189,7 +189,7 @@ launchers used for the ablations above (`oneoff/run_rel_case3.py`,
 ## Environment
 
 Three separate environments were used (PyG/DGL/vLLM version conflicts
-made a single environment impractical): `ddibench` (review-encoder
+made a single environment impractical): `DDIBench` (review-encoder
 training), `dglke` (KGE training), `vllm-llm` (LLM zero-shot/fine-tune).
 See [`environment/README.md`](environment/README.md) for exact
 versions and setup instructions.

@@ -73,14 +73,6 @@ def load_kge_embeddings(dataset, kge_type='transe'):
             raise FileNotFoundError(f"EMB_SRC=case1 KGE .npy 없음: {d}")
         print(f"  [KGE/EMB_SRC=case1] {os.path.join(d, npys[-1])}")
         return torch.from_numpy(np.load(os.path.join(d, npys[-1]))).float()
-    if os.environ.get('DDISPLIT'):   # 진단: DDI-split 학습 임베딩 (Ideal=ddibn_ddisplit / Real=+CASE3=ddibn_ddisplit_case3)
-        sub = f'{dataset}_ddisplit_case3' if os.environ.get('CASE3') else f'{dataset}_ddisplit'
-        d = os.path.join(KGE_DIR, sub, kge_type)
-        npys = sorted(f for f in os.listdir(d) if f.endswith('.npy') and 'ent_' in f)
-        if not npys:
-            raise FileNotFoundError(f"DDISPLIT KGE .npy 없음: {d}")
-        print(f"  [KGE/DDISPLIT{'/CASE3' if os.environ.get('CASE3') else ''}] {os.path.join(d, npys[-1])}")
-        return torch.from_numpy(np.load(os.path.join(d, npys[-1]))).float()
     if os.environ.get('CASE3'):
         d = os.path.join(KGE_DIR, f'{dataset}_case3', kge_type)
         npys = sorted(f for f in os.listdir(d) if f.endswith('.npy') and 'ent_' in f)

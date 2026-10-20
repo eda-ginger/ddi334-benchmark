@@ -14,8 +14,8 @@ actually used to produce the results in this repository.
 ## Setup
 
 ```bash
-conda create -n ddibench python=3.8 -y
-conda activate ddibench
+conda create -n DDIBench python=3.8 -y
+conda activate DDIBench
 pip install -r environment/ddibench_requirements.txt
 
 conda create -n dglke python=3.8 -y
