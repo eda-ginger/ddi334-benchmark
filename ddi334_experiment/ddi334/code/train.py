@@ -43,8 +43,8 @@ NUM_HETIONET_ENTITIES = 34124
 from models.encoders import (
     GATEncoder, MorganFPEncoder, SchNetEncoder,             # MOL 구조 (01/04/02)
     GraphTransformerMolEncoder, SMILESCNNEncoder,           # MOL 구조 (03/07)
-    FPJaccardEncoder, ChemBERTaEncoder,                     # frozen (05/06)
-    InteractionJaccardEncoder, BioBERTEncoder,              # frozen (12 / 13·14)
+    ChemBERTaEncoder,                                        # frozen (06)
+    BioBERTEncoder,                                          # frozen (13·14)
     TransEEncoder, RGCNWholeDDIEncoder,                     # REL (08/11)
     RGCNSubgraphEncoder, GraphTransformerKGEncoder,         # REL (09/10)
     BioProfileMLPEncoder,                                   # REL raw MLP (15)
@@ -55,32 +55,32 @@ from dataio.dataset import DDIBatch
 
 def load_kge_embeddings(dataset, kge_type='transe'):
     """KGE entity 임베딩 [34124, dim]. {ds}/precompute/{type}_ent.npy 우선, 없으면 kge/{ds}/{type}/.
-    CASE3 env=1이면 kge/{ds}_case3/{type}/ 사용(신약 고립 KG로 학습한 임베딩, precompute 무시).
-    EMB_SRC env('case1'/'case3')가 설정되면 CASE3과 무관하게 임베딩 소스만 강제 선택
+    NOVEL_DRUG env=1이면 kge/{ds}_novel_drug/{type}/ 사용(신약 고립 KG로 학습한 임베딩, precompute 무시).
+    EMB_SRC env('existing_drug'/'novel_drug')가 설정되면 NOVEL_DRUG과 무관하게 임베딩 소스만 강제 선택
     (Existing/Novel subgraph x Existing/Novel TransE 교차 실험용, 2026-10-19 추가)."""
     emb_src = os.environ.get('EMB_SRC')
-    if emb_src == 'case3':
-        d = os.path.join(KGE_DIR, f'{dataset}_case3', kge_type)
+    if emb_src == 'novel_drug':
+        d = os.path.join(KGE_DIR, f'{dataset}_novel_drug', kge_type)
         npys = sorted(f for f in os.listdir(d) if f.endswith('.npy') and 'ent_' in f)
         if not npys:
-            raise FileNotFoundError(f"EMB_SRC=case3 KGE .npy 없음: {d}")
-        print(f"  [KGE/EMB_SRC=case3] {os.path.join(d, npys[-1])}")
+            raise FileNotFoundError(f"EMB_SRC=novel_drug KGE .npy 없음: {d}")
+        print(f"  [KGE/EMB_SRC=novel_drug] {os.path.join(d, npys[-1])}")
         return torch.from_numpy(np.load(os.path.join(d, npys[-1]))).float()
-    if emb_src == 'case1':
+    if emb_src == 'existing_drug':
         d = os.path.join(KGE_DIR, dataset, kge_type)
         npys = sorted(f for f in os.listdir(d) if f.endswith('.npy') and 'ent_' in f)
         if not npys:
-            raise FileNotFoundError(f"EMB_SRC=case1 KGE .npy 없음: {d}")
-        print(f"  [KGE/EMB_SRC=case1] {os.path.join(d, npys[-1])}")
+            raise FileNotFoundError(f"EMB_SRC=existing_drug KGE .npy 없음: {d}")
+        print(f"  [KGE/EMB_SRC=existing_drug] {os.path.join(d, npys[-1])}")
         return torch.from_numpy(np.load(os.path.join(d, npys[-1]))).float()
-    if os.environ.get('CASE3'):
-        d = os.path.join(KGE_DIR, f'{dataset}_case3', kge_type)
+    if os.environ.get('NOVEL_DRUG'):
+        d = os.path.join(KGE_DIR, f'{dataset}_novel_drug', kge_type)
         npys = sorted(f for f in os.listdir(d) if f.endswith('.npy') and 'ent_' in f)
         if not npys:
-            raise FileNotFoundError(f"CASE3 KGE .npy 없음: {d}")
-        print(f"  [KGE/CASE3] {os.path.join(d, npys[-1])}")
+            raise FileNotFoundError(f"NOVEL_DRUG KGE .npy 없음: {d}")
+        print(f"  [KGE/NOVEL_DRUG] {os.path.join(d, npys[-1])}")
         return torch.from_numpy(np.load(os.path.join(d, npys[-1]))).float()
-    if os.environ.get('ABLNR'):   # ablation: Case-1 임베딩 그대로 + novel 행만 random (재학습 X)
+    if os.environ.get('ABLNR'):   # ablation: existing_drug 임베딩 그대로 + novel 행만 random (재학습 X)
         d = os.path.join(KGE_DIR, f'{dataset}_ablnr', kge_type)
         npys = sorted(f for f in os.listdir(d) if f.endswith('.npy') and 'ent_' in f)
         if not npys:
@@ -276,13 +276,6 @@ def load_biobert_embeddings(input_type='description'):
     return payload['embeddings'], payload['hidden_dim']
 
 
-def load_pca_embeddings(kind):
-    """Cell 05 fp / Cell 12 bio PCA. PRECOMPUTE_DIR({ds}/precompute). returns (emb_dict, input_dim)."""
-    fname = 'fp_pca.pt' if kind == 'fp' else 'bio_pca.pt'
-    pl = torch.load(os.path.join(PRECOMPUTE_DIR, fname), map_location='cpu', weights_only=False)
-    return pl['embeddings'], pl['input_dim']
-
-
 def load_raw_bio_profile():
     """Cell 15: raw HetioNet bio-neighbor multi-hot vector (build_bio_raw.py). No similarity/PCA."""
     pl = torch.load(os.path.join(PRECOMPUTE_DIR, 'bio_raw.pt'), map_location='cpu', weights_only=False)
@@ -311,9 +304,6 @@ def build_model(cell, device, drug_ids, dataset=None):
     elif cell == '04':
         fps = load_drug_fingerprints(load_drug_smiles())
         encoder = MorganFPEncoder(hidden_dim=hd, dropout=dr); encoder.set_features(fps)
-    elif cell == '05':
-        emb, dim = load_pca_embeddings('fp')
-        encoder = FPJaccardEncoder(hidden_dim=hd, dropout=dr, bert_dim=dim); encoder.set_features(emb)
     elif cell == '06':
         encoder = ChemBERTaEncoder(hidden_dim=hd, dropout=dr, bert_dim=384); encoder.set_features(load_chemberta_embeddings())
     elif cell == '07':
@@ -367,8 +357,8 @@ def build_model(cell, device, drug_ids, dataset=None):
         # KG subgraph (bio 0-22 + TWOSIDES train 23+). node=db_id (identity, drug2kg=None).
         # num_relations = n_relations(non-doubled, 232/1331); 추출기가 inverse로 내부 doubling.
         # 캐시: {ds}/precompute/subgraph_cache/ (데이터셋별 KG가 달라 반드시 분리)
-        # NODE_INIT env('transe' 기본 / 'molfp')로 초기 노드 feature 소스 선택. SUBGRAPH_SRC env('case1'/'case3')로
-        # CASE3과 무관하게 subgraph(그래프 연결)만 강제 선택 — Existing/Novel 임베딩 x Existing/Novel subgraph
+        # NODE_INIT env('transe' 기본 / 'molfp')로 초기 노드 feature 소스 선택. SUBGRAPH_SRC env('existing_drug'/'novel_drug')로
+        # NOVEL_DRUG과 무관하게 subgraph(그래프 연결)만 강제 선택 — Existing/Novel 임베딩 x Existing/Novel subgraph
         # 교차 실험 + Morgan FP 초기화 실험용 (2026-10-19 추가, 둘 다 미설정이면 기존 동작과 동일).
         node_init = os.environ.get('NODE_INIT', 'transe')
         if node_init == 'molfp':
@@ -380,15 +370,15 @@ def build_model(cell, device, drug_ids, dataset=None):
         rm = json.load(open(os.path.join(KGE_DIR, dataset, 'relation_map.json')))
         num_rel = int(rm['n_relations'])                       # 232 / 1331
         subgraph_src = os.environ.get('SUBGRAPH_SRC')
-        if subgraph_src == 'case1':
-            use_case3_subgraph = False
-        elif subgraph_src == 'case3':
-            use_case3_subgraph = True
+        if subgraph_src == 'existing_drug':
+            use_novel_drug_subgraph = False
+        elif subgraph_src == 'novel_drug':
+            use_novel_drug_subgraph = True
         else:
-            use_case3_subgraph = bool(os.environ.get('CASE3'))
-        if use_case3_subgraph:   # 신약 고립 KG: novel edge 제거된 triples + 별도 캐시(case1 재사용 금지)
-            triples = np.load(os.path.join(DDI334_DIR, 'data', 'case3', 'kg_triples_case3.npy'))   # [E,3] (h,t,r)
-            cache_dir = os.path.join(PRECOMPUTE_DIR, 'subgraph_cache_case3')
+            use_novel_drug_subgraph = bool(os.environ.get('NOVEL_DRUG'))
+        if use_novel_drug_subgraph:   # 신약 고립 KG: novel edge 제거된 triples + 별도 캐시(existing_drug 재사용 금지)
+            triples = np.load(os.path.join(DDI334_DIR, 'data', 'novel_drug', 'kg_triples_novel_drug.npy'))   # [E,3] (h,t,r)
+            cache_dir = os.path.join(PRECOMPUTE_DIR, 'subgraph_cache_novel_drug')
         else:
             triples = np.load(os.path.join(PRECOMPUTE_DIR, 'kg_triples.npy'))   # [E,3] (h,t,r)
             cache_dir = os.path.join(PRECOMPUTE_DIR, 'subgraph_cache')
@@ -414,11 +404,6 @@ def build_model(cell, device, drug_ids, dataset=None):
         rel_ctx = {'extractor': encoder.subgraph_extractor,
                    'drug2kg_table': encoder._drug2kg_table,
                    'transform': transform}
-    elif cell == '12':
-        # Bio interaction profile -> DDI-334 train-only PCA (fit=Dk 270). frozen feature.
-        emb, dim = load_pca_embeddings('bio')
-        encoder = InteractionJaccardEncoder(hidden_dim=hd, dropout=dr, bert_dim=dim)
-        encoder.set_features(emb)
     elif cell == '15':
         # Bio interaction profile, raw multi-hot (no Jaccard/PCA) -> 2-layer MLP,
         # mirrors Cell 04 (MorganFPEncoder). build_bio_raw.py precompute.
@@ -426,7 +411,7 @@ def build_model(cell, device, drug_ids, dataset=None):
         encoder = BioProfileMLPEncoder(hidden_dim=hd, dropout=dr, fp_dim=dim)
         encoder.set_features(emb)
     else:
-        raise ValueError(f"Cell '{cell}' not supported (01-15)")
+        raise ValueError(f"Cell '{cell}' not supported (01,02,03,04,06,07,08,09,10,11,13,14,15)")
 
     if cell in ('08', '09', '10', '11', '12', '15'):
         source_key = 'rel'

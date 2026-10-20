@@ -68,19 +68,6 @@ class FrozenVectorEncoder(nn.Module):
 # 입력 데이터(precompute)만 다르고 연산(MLP)은 같은 것들을 한 곳에 통칭.
 # ══════════════════════════════════════════════════════════════
 
-class FPJaccardEncoder(FrozenVectorEncoder):
-    """Cell 05 (MOL): Morgan FP pairwise Jaccard -> PCA -> MLP refinement.
-
-    Source: DDIMDL (Deng et al., 2020) — Morgan FP Jaccard similarity + PCA.
-    Fair-exp adaptation: Jaccard+PCA를 train(Dk) 약물에만 fit(누수 제거)하고 외부
-      precompute(`precompute_pca.py`); dim = #Dk. set_features는 [N, dim] (bert_dim=PCA dim).
-    """
-
-    def __init__(self, hidden_dim: int = 128, dropout: float = 0.2,
-                 bert_dim: int = 270, **kwargs):
-        super().__init__(hidden_dim=hidden_dim, dropout=dropout, bert_dim=bert_dim, **kwargs)
-
-
 class ChemBERTaEncoder(FrozenVectorEncoder):
     """Cell 06 (MOL): ChemBERTa frozen [CLS] -> linear projection.
 
@@ -92,20 +79,6 @@ class ChemBERTaEncoder(FrozenVectorEncoder):
 
     def __init__(self, hidden_dim: int = 128, dropout: float = 0.2,
                  bert_dim: int = 384, **kwargs):
-        super().__init__(hidden_dim=hidden_dim, dropout=dropout, bert_dim=bert_dim, **kwargs)
-
-
-class InteractionJaccardEncoder(FrozenVectorEncoder):
-    """Cell 12 (REL): HetioNet bio interaction profile Jaccard -> PCA -> MLP.
-
-    Source: DDIMDL (Deng et al., 2020) — multi-attribute interaction-profile Jaccard + PCA.
-    Fair-exp adaptation: HetioNet bio 이웃(drug-gene/pathway 등) 프로파일로 pairwise
-      Jaccard -> PCA(`precompute_pca.py`)를 train(Dk)에만 fit(누수 제거);
-      set_features는 [N, dim] (bert_dim = PCA dim).
-    """
-
-    def __init__(self, hidden_dim: int = 128, dropout: float = 0.2,
-                 bert_dim: int = 270, **kwargs):
         super().__init__(hidden_dim=hidden_dim, dropout=dropout, bert_dim=bert_dim, **kwargs)
 
 
@@ -382,7 +355,7 @@ class BioProfileMLPEncoder(nn.Module):
       (MorganFPEncoder), so that the two raw-vector-to-MLP cells (Molecule
       fingerprint / Relation bio profile) share one architecture and differ only
       in their input vector (user decision, 2026-09-08). No Jaccard similarity or
-      PCA step, unlike Cell 12 (InteractionJaccardEncoder), which reduces the same
+      PCA step, unlike an earlier, unreported variant that reduced the same
       raw profile through similarity+PCA first.
     Input (build_bio_raw.py): 554-dim binary vector = which of 554 non-drug HetioNet
       entities (486 target Gene / 68 Disease) each drug connects to. Restricted to

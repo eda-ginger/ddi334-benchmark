@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """DDI-334 KGE 비교 -> 09/10/11 재실행 체인 (기존 결과 절대 미변경, 전부 신규 폴더).
 
-Phase1: 4 KGE(run_kge4.py) 학습 완료까지 대기 (kge/ddibn/{kge}/*ent_*.npy).
+Phase1: 4 KGE(run_kge_train.py) 학습 완료까지 대기 (kge/ddibn/{kge}/*ent_*.npy).
 Phase2: cell08 x {rotate,distmult,complex,transh} x 3seed -> results/kge_comparison/existing_drug/{kge}/  (KGE_TYPE env)
         * transe cell08은 이미 results/encoders_main/ 에 있음 (유지, 재실행 X)
 Phase3: cell08 S0 accuracy로 최고 KGE 선택 (transe 포함 5종 비교) -> results/kge_comparison/existing_drug/best.json

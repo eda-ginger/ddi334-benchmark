@@ -33,7 +33,9 @@ ddi334_experiment/
                    ChemBERTa, BioBERT, KGE-based encoders, ...)
   dataio/          dataset loading
   ddi334/
-    code/              main trainer (`train.py`, cells 01-15) and all
+    code/              main trainer (`train.py`, cells 01-15 excluding
+                       05/12, two Jaccard+PCA variants that were tried
+                       but are not reported in the paper) and all
                        DDI-334-specific scripts (dataset build, KG build,
                        LLM prompt rendering/inference, result aggregation,
                        cross-evaluation ablations, ...). See below.
@@ -55,10 +57,12 @@ environment/
 
 ```
 results/
-  encoders_main/                        Table 1/D.1: cells 01-15, Existing
-                                         drug condition (the default for
-                                         every cell; Molecule/Bio-profile
-                                         cells have no Novel-drug variant)
+  encoders_main/                        Table 1/D.1: cells 01-15 excluding
+                                         05/12 (see code/ note above),
+                                         Existing drug condition (the
+                                         default for every cell;
+                                         Molecule/Bio-profile cells have
+                                         no Novel-drug variant)
   encoders_novel_drug/                  Section 5.2/Figure: cells 08-11
                                          under the Novel drug condition
   appendix_j_embedding_subgraph_cross/  Appendix J: TransE embedding and
@@ -148,7 +152,7 @@ flags:
 python train.py --cell 09 --dataset ddibn --gpu 0 --seed 42
 
 # Novel drug condition (Unseen drugs' biological relations removed)
-CASE3=1 python train.py --cell 09 --dataset ddibn --gpu 0 --seed 42
+NOVEL_DRUG=1 python train.py --cell 09 --dataset ddibn --gpu 0 --seed 42
 ```
 
 **DDI network (R-GCN), cell 11** — the paper reports this cell initialized
@@ -168,12 +172,23 @@ NODE_INIT=transe python train.py --cell 11 --dataset ddibn --gpu 0 --seed 42
 **Appendix J** (crossing the Existing/Novel condition of the TransE
 embedding independently from that of the KG subgraph, for Knowledge graph
 (R-GCN)/(Graph Transformer), cells 09/10) uses two more env vars that
-override `CASE3` when set:
+override `NOVEL_DRUG` when set:
 
 ```bash
 # e.g. Novel subgraph + Existing TransE embedding
-EMB_SRC=case1 SUBGRAPH_SRC=case3 python train.py --cell 09 --dataset ddibn --gpu 0 --seed 42
+EMB_SRC=existing_drug SUBGRAPH_SRC=novel_drug python train.py --cell 09 --dataset ddibn --gpu 0 --seed 42
 ```
+
+**KGE comparison (Appendix)**: only the TransE entity embeddings are
+included in this repository (for both drug conditions), since they are
+what `cell08/09/10/11` use by default and what cell 11's and the
+Appendix-J cross-evaluation's reported numbers were produced with. The
+RotatE/ComplEx/DistMult/TransH comparison numbers in
+`results/kge_comparison/` are the exact values used for the paper's KGE
+comparison figure, but retraining those four KGE types from this
+repository (`KGE_TYPE=rotate ...`) is not supported since their trained
+embeddings are not included (RotatE's in particular exceeds GitHub's
+100MB file-size limit).
 
 `NODE_INIT=molgraph` (sum-pooled raw atom features instead of a fingerprint
 or TransE) is also available for cells 09/10/11 as a further robustness
@@ -183,8 +198,8 @@ See `ddi334/code/` for dataset build (`build_dataset.py`, `build_kg.py`,
 `build_bio_profile.py`, ...), LLM prompt rendering/inference
 (`render_prompts.py`, `llm_infer.py`),
 fine-tuning (`ft_train.py`, `run_ft_cv.py`), and the batch
-launchers used for the ablations above (`oneoff/run_rel_case3.py`,
-`oneoff/run_rel_cross.py`, `oneoff/run_cell11_cross.py`).
+launchers used for the ablations above (`oneoff/run_novel_drug_cells.py`,
+`oneoff/run_kge_train.py`, `oneoff/run_rel_cross.py`, `oneoff/run_cell11_cross.py`).
 
 ## Environment
 

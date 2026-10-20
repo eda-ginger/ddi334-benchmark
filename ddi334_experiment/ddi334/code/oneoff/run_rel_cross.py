@@ -3,8 +3,8 @@
 
 기존 A(existing emb + existing subgraph)/D(novel emb + novel subgraph)는 이미
 results/encoders_main, results/encoders_novel_drug에 있음. 여기서는 2개 신규 조합만 수행:
-  B: existing subgraph + novel(case3)   TransE 임베딩   (EMB_SRC=case3,  SUBGRAPH_SRC=case1)
-  C: novel(case3) subgraph + existing   TransE 임베딩   (EMB_SRC=case1,  SUBGRAPH_SRC=case3)
+  B: existing subgraph + novel   TransE 임베딩   (EMB_SRC=novel_drug,  SUBGRAPH_SRC=existing_drug)
+  C: novel subgraph + existing   TransE 임베딩   (EMB_SRC=existing_drug,  SUBGRAPH_SRC=novel_drug)
 (molfp 초기화로 같은 교차를 보는 E/F 변형은 검토 후 보류 — cell11 쪽 molfp/molgraph 비교로 대체됨.)
 
 결과 -> results/appendix_j_embedding_subgraph_cross/{novel_embedding_existing_subgraph,
@@ -23,8 +23,8 @@ SEEDS = [0, 42, 124]
 GPUS = [int(g) for g in os.environ.get("GPUS", "0,1,2,3,4,5").split(",") if g.strip()]
 
 COMBOS = {
-    "B": {"EMB_SRC": "case3", "SUBGRAPH_SRC": "case1"},
-    "C": {"EMB_SRC": "case1", "SUBGRAPH_SRC": "case3"},
+    "B": {"EMB_SRC": "novel_drug", "SUBGRAPH_SRC": "existing_drug"},
+    "C": {"EMB_SRC": "existing_drug", "SUBGRAPH_SRC": "novel_drug"},
 }
 
 COMBO_DIR = {
