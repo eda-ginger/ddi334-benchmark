@@ -1,5 +1,5 @@
 #!/bin/bash
-# 남은 4종 ZS V2 ablation 마스터: 모델 순차, 모델당 2모드(real/ideal) GPU 3/4/5 병렬.
+# 남은 4종 ZS V2 ablation 마스터: 모델 순차, 모델당 2모드(novel_drug/existing_drug) GPU 3/4/5 병렬.
 # 각 모델 6 json 완료까지 대기 후 vLLM 잔존 정리 -> 다음 모델. 끝에 ntfy.
 set -u
 cd /home/internal-server-user/Latex/experiments/v5_ddi-bench/experiment/ddi334
@@ -15,8 +15,8 @@ MODELS=(
 for entry in "${MODELS[@]}"; do
   IFS='|' read -r pre model merge mem <<< "$entry"
   echo "########## MODEL $pre ($model) merge=$merge mem=$mem $(date +%H:%M) ##########"
-  bash $L 0 real  ${pre}_zs_real  12373 "$model" "$merge" "$mem" > $OUT/run_${pre}_real.log  2>&1 &
-  bash $L 2 ideal ${pre}_zs_ideal 12375 "$model" "$merge" "$mem" > $OUT/run_${pre}_ideal.log 2>&1 &
+  bash $L 0 novel_drug  ${pre}_zs_novel_drug  12373 "$model" "$merge" "$mem" > $OUT/run_${pre}_novel_drug.log  2>&1 &
+  bash $L 2 existing_drug ${pre}_zs_existing_drug 12375 "$model" "$merge" "$mem" > $OUT/run_${pre}_existing_drug.log 2>&1 &
   # 이 모델 6 json 완료까지 대기 (최대 ~8h)
   for i in $(seq 1 2880); do
     n=$(find $OUT/llm_metrics -name "${pre}_zs_*.json" 2>/dev/null | wc -l)

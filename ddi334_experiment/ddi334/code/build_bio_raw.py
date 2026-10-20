@@ -11,7 +11,7 @@ feeds the raw multi-hot vector directly into a 2-layer MLP, mirroring Cell 04
 No similarity/PCA step, so unlike bio_pca.pt this raw profile has no
 train-only-fit leakage concern (each drug's feature is computed independently
 of the drug-pair split, same reasoning as the raw Morgan fingerprint used by
-Cell 04) — one shared file suffices for both ddibn and tdc.
+Cell 04) — one shared file suffices for ddibn.
 
 Reuses precompute_pca.py's bio_profile_hetionet() logic exactly (same feature
 index / neighbor extraction), just skips the Jaccard+PCA step and saves the
@@ -28,7 +28,7 @@ DDI334_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 V5_DIR = os.path.dirname(os.path.dirname(DDI334_DIR))
 KG_BIO_334 = os.path.join(DDI334_DIR, 'data', 'kge', 'kg_bio_334.txt')
 DRUG_MAX = 1710
-DATASETS = ['ddibn', 'tdc']
+DATASETS = ['ddibn']
 SIDE_EFFECT_REL = '21'    # Compound-causes-Side Effect: same vocabulary as the DDI-334
                            # prediction label (adverse events) -> leakage, must be excluded.
                            # Already excluded for this reason in build_bio_profile.py (LLM

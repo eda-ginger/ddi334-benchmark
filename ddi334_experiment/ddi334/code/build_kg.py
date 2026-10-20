@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-DDI-334 KGE용 KG 빌더 (option b) — 데이터셋별(ddibn/tdc) 따로
+DDI-334 KGE용 KG 빌더 (option b) — ddibn 데이터셋용
 ==============================================================
 사용자 확정 설계:
   - HetioNet 전체 유지 (bio 관계 + 비-334 약물의 DrugBank DDI)
@@ -13,13 +13,13 @@ KGE 학습은 기존 `kge_hetionet/baseline.py`(PyKEEN, AstraZeneca HP) 재활�
 입력:
   - kge_hetionet/data/KG.txt              HetioNet bio (rel 86-108)  ← config의 data.kg (공유, 80/10/10 split)
   - kge_hetionet/data/train.txt           DrugBank DDI (rel 0-85)    ← 비-334만 추려 ddi_train에 포함
-  - ddi334/{ddibn,tdc}/train.txt          DDI-334 TWOSIDES train     ← 334 상호작용(rel 109)
+  - ddi334/ddibn/train.txt                 DDI-334 TWOSIDES train     ← 334 상호작용(rel 109)
   - ddi334/id_maps.json                   334 db_id
 
 출력 (ddi334/kge/):
-  ddibn/ddi_train.txt , tdc/ddi_train.txt          (비334 DrugBank + 334 ts-train rel109; 전부 KGE train행)
-  {ddibn,tdc}/configs/{transe,rotate,distmult,complex,transh}.yaml
-  run_all.sh                                        (10 학습: 5 model × 2 dataset)
+  ddibn/ddi_train.txt                              (비334 DrugBank + 334 ts-train rel109; 전부 KGE train행)
+  ddibn/configs/{transe,rotate,distmult,complex,transh}.yaml
+  run_all.sh                                        (5 학습: 5 model × 1 dataset)
 
 Run: python3 build_kg.py
 """
@@ -38,7 +38,7 @@ OUT_KGE = os.path.join(DDI334_DIR, 'data', 'kge')
 BIO_ORIG_BASE = 86   # 원본 HetioNet bio 관계 시작 id (86-108) -> -86 시프트해 0-22
 BIO_N = 23           # bio 관계 수 (86-108)
 TS_REL_BASE = BIO_N  # TWOSIDES typed 관계 = 23 + type_idx
-DATASETS = ['ddibn', 'tdc']
+DATASETS = ['ddibn']
 
 # 5종 KGE AstraZeneca HP (kge_hetionet/config/baseline/hetionet/*.yaml 그대로)
 MODELS = {

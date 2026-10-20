@@ -23,7 +23,7 @@ ap.add_argument("--gpu", default="0")
 ap.add_argument("--port", type=int, default=12720)
 ap.add_argument("--mem", type=float, default=0.4)
 ap.add_argument("--merge", action="store_true")
-ap.add_argument("--cells", required=True)  # "real:S2:2,existing_drug_genes:S2:1"
+ap.add_argument("--cells", required=True)  # "novel_drug:S2:2,existing_drug_genes:S2:1"
 a = ap.parse_args()
 LI.PORT = a.port
 

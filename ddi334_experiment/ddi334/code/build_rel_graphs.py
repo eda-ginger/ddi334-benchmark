@@ -2,10 +2,10 @@
 """
 DDI-334 REL 그래프 사전 제작 (Cell 09/10 KG subgraph, Cell 11 DDI whole graph)
 =============================================================================
-재번호 KG(bio 0-22, TWOSIDES 23+)에 맞춰 09/10/11이 쓸 그래프를 데이터셋별
-precompute에 만들어 둔다. (node init=TransE는 별도 kge/{ds}/transe/.npy)
+재번호 KG(bio 0-22, TWOSIDES 23+)에 맞춰 09/10/11이 쓸 그래프를 ddibn
+precompute에 만들어 둔다. (node init=TransE는 별도 kge/ddibn/transe/.npy)
 
-출력 (ddi334/{ddibn,tdc}/precompute/):
+출력 (ddi334/ddibn/precompute/):
   kg_triples.npy   [E,3] (h, t, r)  — Cell 09/10 subgraph 추출용 KG (v5 load_hetionet_triples 순서)
                    = bio(kg_bio_334, rel 0-22) + TWOSIDES train(ddi_train, rel 23+)
   ddi_whole.pt     Cell 11 (Decagon) 용 전체 DDI 그래프
@@ -25,7 +25,7 @@ import torch
 DDI334_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 KGE = os.path.join(DDI334_DIR, 'data', 'kge')
 KG_BIO = os.path.join(KGE, 'kg_bio_334.txt')
-DATASETS = ['ddibn', 'tdc']
+DATASETS = ['ddibn']
 BIO_N = 23   # TWOSIDES rel = BIO_N + type_idx
 
 

@@ -5,13 +5,12 @@ DDI-334 전용 PCA 전처리 (Cell 05 FP, Cell 12 bio) — 누수 방지 재계�
 기존 precompute의 fp_pca/bio_pca는 v5/1710 DrugBank split(train 1347)로 fit돼
 DDI-334의 cold(Dn) 약물이 PCA basis에 들어가 inductive 누수가 있었다.
 
-이 스크립트는 KGE와 동일 원칙으로 **데이터셋별(ddibn/tdc)** 재계산:
-  - Jaccard 기준 + PCA fit = 해당 데이터셋 **train.txt 등장 약물만** (cold Dn 제외)
+이 스크립트는 KGE와 동일 원칙으로 **ddibn 데이터셋** 재계산:
+  - Jaccard 기준 + PCA fit = ddibn **train.txt 등장 약물만** (cold Dn 제외)
   - 모든 334 약물을 그 basis로 transform
-  - 데이터셋별 train 약물이 다를 수 있어 따로 보관
 
 방법은 기존 scripts/{fp_pca,bio_pca}.py 그대로(train-only Jaccard+PCA), fit set만 교체.
-출력: ddi334/precompute/{ddibn,tdc}/{fp_pca.pt, bio_pca.pt}  (334 db_id 키)
+출력: ddi334/precompute/ddibn/{fp_pca.pt, bio_pca.pt}  (334 db_id 키)
 
 Run: micromamba run -n DDIBench python precompute_pca.py
 """
@@ -28,7 +27,7 @@ DDI334_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 EXP_DIR = os.path.dirname(DDI334_DIR)
 SMILES_JSON = os.path.join(EXP_DIR, 'data', 'drug_smiles.json')
 KG_BIO_334 = os.path.join(DDI334_DIR, 'data', 'kge', 'kg_bio_334.txt')   # HetioNet bio (334 약물 노드만)
-DATASETS = ['ddibn', 'tdc']               # 데이터셋별 train 약물로 fit, 폴더 안에 저장
+DATASETS = ['ddibn']               # ddibn train 약물로 fit, 폴더 안에 저장
 DRUG_MAX = 1710        # entity id < 1710 = 약물, >= 1710 = 비-약물(gene/disease/...)
 FP_COMPONENTS = 128
 BIO_COMPONENTS = 384   # min(384, n_fit)로 자동 클램프
@@ -49,7 +48,7 @@ def load_all_ids():
 
 def load_dk():
     """기준(reference/fit) 약물 = Dk(known) 270. cold(Dn 64)만 제외.
-    cluster split이 ddibn/tdc 공통이라 두 데이터셋 동일."""
+    cluster split 기준(Dk/Dn)."""
     split = json.load(open(os.path.join(DDI334_DIR, 'meta', 'cluster_split.json')))
     return sorted(int(x) for x in split['Dk'])
 
@@ -121,7 +120,7 @@ def main():
     bio_all, n_bio_feat = bio_profile_hetionet(all_ids)
     print(f"bio profile (HetioNet 이웃): {bio_all.shape} (feat={n_bio_feat} 비약물 entity)")
 
-    fit_ids = load_dk()   # Dk 270 (cold Dn 제외), ddibn/tdc 공통
+    fit_ids = load_dk()   # Dk 270 (cold Dn 제외)
     # DDIMDL 방식: PCA n_components = 기준 약물 수(=Dk 270) 전체 유지 (축소가 아닌 decorrelation)
     n_comp = len(fit_ids)
     print(f"all(334)={len(all_ids)}  fit/Dk={len(fit_ids)}  PCA dim={n_comp} (DDIMDL: 기준약물 수 전체)")

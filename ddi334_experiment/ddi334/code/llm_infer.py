@@ -102,7 +102,7 @@ def infer_v1(client, model, pb, rows, merge, workers=24):
 def infer_v2(client, model, pb, rows, merge, mode='existing_drug', workers=24):
     """동시 요청(ThreadPoolExecutor) -> vLLM 배치. 직렬은 Running:1이라 GPU idle+극저속.
     각 (pair, t)별 Yes/No 1건. temperature=0 결정적이므로 병렬해도 결과 불변.
-    mode: ideal / existing_drug_genes / real (정보 가용성 ablation)."""
+    mode: existing_drug / existing_drug_genes / novel_drug (정보 가용성 ablation)."""
     from concurrent.futures import ThreadPoolExecutor
     N = len(pb.typenames)
     pred = np.zeros((len(rows), N)); lab = np.zeros((len(rows), N + 1))

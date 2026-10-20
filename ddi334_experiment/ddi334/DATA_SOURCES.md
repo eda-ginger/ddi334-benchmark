@@ -53,10 +53,12 @@ raw sources.
       -> `cluster_split.json` (Dk=270 known / Dn=64 novel drugs)
    3. Build the "neither TWOSIDES-connected nor DrugBank-connected"
       negative pool from all `C(334, 2)` pairs
-   4. For each dataset version (`ddibn` 209-type, `tdc` 1,308-type):
-      collect positives, split by Dk/Dn membership into S0/S1/S2,
-      cross negatives 1:1 -> writes `ddibn/` and `tdc/` (train/valid/
-      test `*.txt`, format `h t y0,...,y(N-1) p`)
+   4. Collect ddibn (209-type) positives, split by Dk/Dn membership
+      into S0/S1/S2, cross negatives 1:1 -> writes `ddibn/` (train/
+      valid/test `*.txt`, format `h t y0,...,y(N-1) p`). The raw TDC
+      TWOSIDES CSVs (`meeting/ddi334_tdc/*.csv`, 1,308-type) are only
+      used upstream, in step 1, to define the 334-drug universe; this
+      repository does not ship or use a separate 1,308-type dataset.
 
 2. **`ddi334/code/build_kg.py`** (produces KGE training inputs under
    `ddi334/data/kge/`):

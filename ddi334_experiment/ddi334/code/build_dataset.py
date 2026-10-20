@@ -17,8 +17,7 @@ DDI-334 Dataset Builder — 소스에서 최종까지 한 번에 (재현 가능)
   - id_maps.json          334 약물의 cid<->db<->local 매핑 (단일 진실 소스)
   - cluster_split.json    Dk(270)/Dn(64), gamma=0.25 seed=42 (재현 기준)
   - ddibn/                최종 ddibn 데이터셋 (209 type, pos+neg 1:1 교차, db 공간)
-  - tdc/                  최종 tdc 데이터셋 (1308 type, 동일)
-  각 데이터셋 행 포맷: "h t y0,...,y(N-1) p"   (p=1 positive / p=0 negative)
+  행 포맷: "h t y0,...,y(N-1) p"   (p=1 positive / p=0 negative)
 
 [파이프라인]  (전부 메모리상, 중간 디렉토리 없음)
   1. id_maps   : 334 약물 cid/db/local 매핑 확정
@@ -236,33 +235,6 @@ def collect_ddibn_positives(db_set):
     return N, pair_vec
 
 
-def collect_tdc_positives(db_set, cid2db):
-    """meeting/ddi334_tdc CSV -> {(db1,db2): 1308-hot} + type_map(raw Y->dense)."""
-    # type_map: 334내 모든 Y 수집 -> dense
-    all_y = set()
-    pair_rawy = defaultdict(set)
-    for s in TDC_SPLITS:
-        with open(os.path.join(MEETING_TDC, f'{s}.csv')) as f:
-            for row in csv.DictReader(f):
-                d1, d2 = cid2db.get(row['ID1']), cid2db.get(row['ID2'])
-                if d1 is None or d2 is None or d1 == d2:
-                    continue
-                y = int(row['Y'])
-                all_y.add(y)
-                pair_rawy[canon(d1, d2)].add(y)
-    sorted_y = sorted(all_y)
-    raw2dense = {y: i for i, y in enumerate(sorted_y)}
-    N = len(sorted_y)
-    pair_vec = {}
-    for key, ys in pair_rawy.items():
-        vec = [0] * N
-        for y in ys:
-            vec[raw2dense[y]] = 1
-        pair_vec[key] = vec
-    type_map = {str(y): raw2dense[y] for y in sorted_y}
-    return N, pair_vec, type_map
-
-
 # ═════════════════════════════════════════════════════════════════════════════
 # 5. split 배정 + negative 1:1 + 출력
 # ═════════════════════════════════════════════════════════════════════════════
@@ -350,13 +322,7 @@ def main():
     sp1 = split_pairs(pos1, dk, dn)
     add_negatives_and_write('ddibn', sp1, set(neither), dk, dn, N1, None)
 
-    print("\n[4-5] tdc (1308 type)")
-    N2, pos2, tmap2 = collect_tdc_positives(db_set, cid2db)
-    print(f"  positives: {len(pos2)} pairs / types: {N2}")
-    sp2 = split_pairs(pos2, dk, dn)
-    add_negatives_and_write('tdc', sp2, set(neither), dk, dn, N2, tmap2)
-
-    print(f"\n[DONE] ddi334/ddibn (N={N1}), ddi334/tdc (N={N2}) + id_maps.json + cluster_split.json")
+    print(f"\n[DONE] ddi334/ddibn (N={N1}) + id_maps.json + cluster_split.json")
 
 
 if __name__ == '__main__':

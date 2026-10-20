@@ -1,14 +1,14 @@
 # DDI-334 KGE 학습 결과 기록
 
 REL 셀(08 TransE / 09 RGCN-sub / 10 GT-KG / 11 RGCN-whole)의 노드 입력으로 쓰는
-KGE 엔티티 임베딩 학습 기록. 각 데이터셋(ddibn/tdc)별로 따로 학습.
+KGE 엔티티 임베딩 학습 기록 (ddibn 데이터셋).
 
-## KG 구성 (공통)
+## KG 구성
 - **bio KG**: `kg_bio_334.txt` = HetioNet bio 엣지 중 334 약물만 닿는 것, **1,547,425 edges**, rel 0-22 (23종)
-- **TWOSIDES train (typed)**: `{ds}/ddi_train.txt` — ddibn **130,233 edges** / tdc (별도), rel 23+ (type_idx)
+- **TWOSIDES train (typed)**: `ddibn/ddi_train.txt` — **130,233 edges**, rel 23+ (type_idx)
 - **DrugBank DDI 없음** (cold-drug 누수 방지)
-- 관계 재번호: `{ds}/relation_map.json` (bio 0-22, TWOSIDES 23+)
-- n_relations: **ddibn 232 / tdc 1331** | entity 공간: **34124** (drug db_id + bio HetioNet id)
+- 관계 재번호: `ddibn/relation_map.json` (bio 0-22, TWOSIDES 23+)
+- n_relations: **232** | entity 공간: **34124** (drug db_id + bio HetioNet id)
 
 ## HP (AstraZeneca / kgem-in-drug-discovery, 전 모델 공통)
 - optimizer Adagrad lr=0.02 | loss MarginRankingLoss | num_epoch 500 | num_negative 61
@@ -24,11 +24,6 @@ KGE 엔티티 임베딩 학습 기록. 각 데이터셋(ddibn/tdc)별로 따로 
 | ddibn | DistMult | ⏳ 대기 | | | | | | |
 | ddibn | ComplEx | ⏳ 대기 | | | | | | |
 | ddibn | TransH | ⏳ 대기 | | | | | | |
-| tdc | TransE | ✅ 완료 (2026-06-16, ~6h, GPU1) | 0.169→0.031 | 0.907 | 0.986 | 0.190 | (34124,304) finite, 334약물 cos 0.22±0.15 (collapse X) | `tdc/transe/hetionet_transe_ent_304d.npy` |
-| tdc | RotatE | ⏳ 대기 | | | | | | |
-| tdc | DistMult | ⏳ 대기 | | | | | | |
-| tdc | ComplEx | ⏳ 대기 | | | | | | |
-| tdc | TransH | ⏳ 대기 | | | | | | |
 
 ## 판정 기준 (건강도)
 - **loss 수렴**: 말기 loss가 plateau (TransE ddibn 0.044)

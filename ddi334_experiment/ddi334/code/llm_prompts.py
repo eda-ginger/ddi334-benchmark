@@ -58,7 +58,7 @@ class DDI334Prompt:
                   "additionalProperties": False}
         return V1_SYSTEM, user, schema
 
-    # ── 약물 1개 템플릿 텍스트 (tier: real/genes/ideal) — 접두어("Drug N") 없음.
+    # ── 약물 1개 템플릿 텍스트 (tier: novel_drug/genes/existing_drug) — 접두어("Drug N") 없음.
     #    LLM 프롬프트 블록(_block_novel_drug/_block_existing_drug)과 cell13 BioBERT 텍스트(build_biobert_template.py)가
     #    이 함수 하나를 공유한다 (05_실험설계(DDI334).md §8, 2026-07-27 통일).
     def drug_text(self, d, tier='existing_drug'):

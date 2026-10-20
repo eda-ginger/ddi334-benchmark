@@ -1,24 +1,24 @@
-"""cell13 DOC 템플릿 [CLS] 임베딩 3종 (real/genes/ideal) — backbone 선택 가능.
+"""cell13 DOC 템플릿 [CLS] 임베딩 3종 (novel_drug/genes/existing_drug) — backbone 선택 가능.
 
-2026-07-27 미팅 피드백 반영 — LLM(§5, llm_prompts.py) real/genes/ideal 템플릿과
+2026-07-27 미팅 피드백 반영 — LLM(§5, llm_prompts.py) novel_drug/genes/existing_drug 템플릿과
 동일한 텍스트를 cell13(frozen text encoder)에도 사용 (05_실험설계(DDI334).md §8).
 텍스트는 llm_prompts.py의 DDI334Prompt.drug_text()를 그대로 재사용(단일 소스).
 2026-07-27 확장(§8.5): DOC 계열 BERT 3종(biobert/pubmedbert/scibert) 비교를 위해
 backbone을 --tag로 선택 가능하게 일반화. hidden_dim은 각 모델 config에서 동적으로
 읽음(하드코딩 금지 — 모델마다 dimension이 다를 수 있음).
 
-  real  : SMILES만
-  genes : + Name + Target genes
-  ideal : + Indications + Pharmacologic class
+  novel_drug    : SMILES만
+  genes         : + Name + Target genes
+  existing_drug : + Indications + Pharmacologic class
 
 대상 약물 = bio_profile_llm.json의 334드럭(DDI-334 전체, db_id 공간).
 전처리 방식은 기존 precompute/scripts/biobert.py와 동일([CLS], max_length=512).
 
-출력: ddi334/data/{ddibn,tdc}/precompute/{tag}_{real,genes,ideal}.pt
-      + experiment/data/precompute/{tag}_{real,genes,ideal}.pt (공유 소스본, assemble_precompute.py 관례)
+출력: ddi334/data/ddibn/precompute/{tag}_{novel_drug,genes,existing_drug}.pt
+      + experiment/data/precompute/{tag}_{novel_drug,genes,existing_drug}.pt (공유 소스본, assemble_precompute.py 관례)
       {'embeddings': {int db_id: Tensor[dim]}, 'hidden_dim':dim(모델별 실제값), 'model_name':..., 'input_type':...}
       (train.py는 실행 시 PRECOMPUTE_DIR을 ddi334/data/{dataset}/precompute/로 재설정하므로
-       load_biobert_embeddings가 실제로 읽는 곳은 데이터셋별 경로 — assemble_precompute.py 참조)
+       load_biobert_embeddings가 실제로 읽는 곳은 ddibn 경로 — assemble_precompute.py 참조)
 
 Run: micromamba run -n DDIBench python build_biobert_template.py --tag biobert [--device cuda:0]
      micromamba run -n DDIBench python build_biobert_template.py --tag pubmedbert
@@ -35,9 +35,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))                       # ddi334
 DDI334_DIR = os.path.dirname(HERE)                                      # ddi334
 EXPERIMENT_DIR = os.path.dirname(DDI334_DIR)                            # v5_ddi-bench/experiment
 SHARED_PRECOMPUTE_DIR = os.path.join(EXPERIMENT_DIR, 'data', 'precompute')          # 공유 소스본
-OUT_DIRS = [SHARED_PRECOMPUTE_DIR] + [
-    os.path.join(DDI334_DIR, 'data', ds, 'precompute') for ds in ('ddibn', 'tdc')   # 실제 train.py가 읽는 곳
-]
+OUT_DIRS = [SHARED_PRECOMPUTE_DIR, os.path.join(DDI334_DIR, 'data', 'ddibn', 'precompute')]  # 실제 train.py가 읽는 곳
 BIO_PROFILE = os.path.join(DDI334_DIR, 'meta', 'bio_profile_llm.json')
 MAX_TOKENS = 512
 TIERS = ['novel_drug', 'genes', 'existing_drug']

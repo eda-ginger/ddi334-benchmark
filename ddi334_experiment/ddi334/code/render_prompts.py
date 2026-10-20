@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""V2 Ideal/Real 프롬프트를 미리 렌더 -> data/prompt/{ideal,real}/{split}.jsonl.
+"""V2 Existing/Novel 프롬프트를 미리 렌더 -> data/prompt/{existing_drug,novel_drug}/{split}.jsonl.
 
 각 줄: {"d1","d2","type","y","user"}  (y=polarity: 1 양성쌍 / 0 음성쌍)
 system 프롬프트는 상수라 data/prompt/_system.txt 에 1회 저장.
-build_v2(mode=ideal/real)와 동일 로직 -> 재생성 가능(gitignore 대상).
+build_v2(mode=existing_drug/novel_drug)와 동일 로직 -> 재생성 가능(gitignore 대상).
 입력 데이터(meta/bio_profile_llm.json 등)는 meta/에 유지, 산출 프롬프트만 data/에.
 Run: micromamba run -n DDIBench python code/render_prompts.py [ddibn]
 """
@@ -46,7 +46,7 @@ def main():
             f.close()
         total += n
         print(f"  {sp}: {n} prompts", flush=True)
-    print(f"[render] {ds} 총 {total} (쌍,타입) x ideal/real -> {out}/")
+    print(f"[render] {ds} 총 {total} (쌍,타입) x existing_drug/novel_drug -> {out}/")
 
 
 if __name__ == "__main__":

@@ -3,7 +3,7 @@
 
 - 학습 데이터: data/prompt/{mode}/train.jsonl (이미 렌더됨; 각 줄 {d1,d2,type,y,user})
   target = " Yes" if y==1 else " No"  (V2 binary-with-R)
-- mode: real / ideal (Case-3 / Case-1)
+- mode: novel_drug / existing_drug (Case-3 / Case-1)
 - QLoRA 설정 ft_train_v1과 동일 (4bit nf4, LoRA r16/a32 q/k/v/o, AdamW 2e-4, 5ep, seed42)
 - epoch마다 어댑터 저장 + (resume용) optimizer/scheduler/rng 저장
 - 평가: run_ft_cv.py (vLLM LoRA serving, split별 best epoch)

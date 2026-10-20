@@ -14,7 +14,7 @@ encoder(GAT/SchNet/GT/MLP/CNN/ChemBERTa/BioBERT)만 모델로 꽂는다.
                   세 split 전부 patience 초과 시 종료
   HP            : main.py argparse  AdamW/lr3e-4/wd1e-5/batch128/patience10, scheduler 없음
 
-데이터: ddi334/{ddibn,tdc}/  ("h t y0,...,y(N-1) p", db_id 공간, pos/neg 1:1 교차)
+데이터: ddi334/ddibn/  ("h t y0,...,y(N-1) p", db_id 공간, pos/neg 1:1 교차)
 Usage:
   micromamba run -n DDIBench python train.py --cell 04 --dataset ddibn --gpu 0 --seed 42
 """
@@ -269,7 +269,7 @@ def load_chemberta_embeddings():
 
 
 def load_biobert_embeddings(input_type='description'):
-    # real/genes/ideal (2026-07-27, 05_실험설계(DDI334).md §8): LLM(§5) 템플릿과 통일한 cell13 3-tier.
+    # novel_drug/genes/existing_drug (2026-07-27, 05_실험설계(DDI334).md §8): LLM(§5) 템플릿과 통일한 cell13 3-tier.
     #   build_biobert_template.py로 생성. DOC_MODEL env(biobert/pubmedbert/scibert)로 backbone 선택
     #   (2026-07-27 확장, §8.5). description/drugname/smiles_c3/rdkitdesc_c3는 구설계(legacy, biobert 고정).
     # 반환: (embeddings dict, hidden_dim) — 모델마다 실제 dim을 payload에서 읽어옴(하드코딩 금지).
@@ -327,14 +327,14 @@ def build_model(cell, device, drug_ids, dataset=None):
     elif cell == '07':
         encoder = SMILESCNNEncoder(hidden_dim=hd, dropout=dr); encoder.set_features(load_drug_smiles())
     elif cell == '13':
-        # DOC_INPUT env로 입력 텍스트 선택. 2026-07-27~: real/genes/ideal(LLM 템플릿과 통일, §8) 사용.
+        # DOC_INPUT env로 입력 텍스트 선택. 2026-07-27~: novel_drug/genes/existing_drug(LLM 템플릿과 통일, §8) 사용.
         # description/smiles_c3/rdkitdesc_c3는 구설계(legacy, 재현용으로만 남김).
         # DOC_MODEL env(biobert/pubmedbert/scibert, §8.5)로 backbone 선택 — bert_dim은 payload에서 동적으로 읽음.
         doc_inp = os.environ.get('DOC_INPUT', 'description')
         emb, bert_dim = load_biobert_embeddings(doc_inp)
         encoder = BioBERTEncoder(hidden_dim=hd, dropout=dr, bert_dim=bert_dim); encoder.set_features(emb)
     elif cell == '14':
-        # legacy(drug name 전용, Real 카운터파트 없음) — cell13 real/genes/ideal에 흡수됨. 재현용으로만 유지.
+        # legacy(drug name 전용, novel_drug 카운터파트 없음) — cell13 novel_drug/genes/existing_drug에 흡수됨. 재현용으로만 유지.
         emb, bert_dim = load_biobert_embeddings('drugname')
         encoder = BioBERTEncoder(hidden_dim=hd, dropout=dr, bert_dim=bert_dim); encoder.set_features(emb)
     # ── REL 셀 ──
@@ -704,7 +704,7 @@ def train(cell, dataset, gpu=0, seed=0, epochs=None, result_dir=None, apk=False)
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--cell', required=True)
-    ap.add_argument('--dataset', required=True, choices=['ddibn', 'tdc'])
+    ap.add_argument('--dataset', required=True, choices=['ddibn'])
     ap.add_argument('--gpu', type=int, default=0)
     ap.add_argument('--seed', type=int, default=0)
     ap.add_argument('--epochs', type=int, default=None)

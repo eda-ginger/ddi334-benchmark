@@ -3,13 +3,13 @@
 DDI-334 precompute 정리: MOL/REL/DOC 전처리 파일을 각 {ds}/precompute/에 모음
 ====================================================================================
 공유 v5 per-drug feature(chemberta/biobert/schnet, db_id 키, 데이터셋 무관)를
-**334 약물로 필터링**해 ddibn/tdc 각 precompute에 넣어 자기완결적으로 만든다.
+**334 약물로 필터링**해 ddibn precompute에 넣어 자기완결적으로 만든다.
 
 이미 데이터셋별로 있는 것: fp_pca.pt, bio_pca.pt (Dk fit), kg_triples.npy, ddi_whole.pt
 이 스크립트가 채우는 것 (334 필터):
   MOL: drug_smiles.json(런타임 graph/CNN/FP용), schnet_coords.pt+schnet_drop.json(Cell02), chemberta.pt(Cell06)
   DOC: biobert_description.pt(Cell13), biobert_drugname.pt(Cell14)
-  REL: transe_ent.npy (kge/{ds}/transe 학습 완료 시 복사; Cell08/09/10/11 node init)
+  REL: transe_ent.npy (kge/ddibn/transe 학습 완료 시 복사; Cell08/09/10/11 node init)
 
 Run: micromamba run -n DDIBench python assemble_precompute.py
 """
@@ -24,7 +24,7 @@ EXP_DIR = os.path.dirname(DDI334_DIR)
 PC_V5 = os.path.join(EXP_DIR, 'data', 'precompute')
 SMILES = os.path.join(EXP_DIR, 'data', 'drug_smiles.json')
 KGE = os.path.join(DDI334_DIR, 'data', 'kge')
-DATASETS = ['ddibn', 'tdc']
+DATASETS = ['ddibn']
 
 
 def db334():
