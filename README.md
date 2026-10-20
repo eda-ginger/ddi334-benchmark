@@ -28,24 +28,23 @@ is not the full experiment history of the underlying project.
 ## Structure
 
 ```
-ddi334_experiment/
-  models/          model/encoder definitions (GAT, SchNet, GT, MLP, CNN,
-                   ChemBERTa, BioBERT, KGE-based encoders, ...)
-  dataio/          dataset loading
-  ddi334/
-    code/              main trainer (`train.py`, cells 01-15 excluding
-                       05/12, two Jaccard+PCA variants that were tried
-                       but are not reported in the paper) and all
-                       DDI-334-specific scripts (dataset build, KG build,
-                       LLM prompt rendering/inference, result aggregation,
-                       cross-evaluation ablations, ...). See below.
-    data/              train/valid/test split files (S0/S1/S2), drug/type
-                       maps, KG triples used for the Relation modality
-    meta/              cluster split definition, id maps, type names
-    results/           summary metrics (per-class scores, configs used,
-                       loss curves, LLM ZS/FT metrics, KGE comparison
-                       results, commercial-LLM comparison)
-    DATA_SOURCES.md    upstream data sources + build pipeline
+ddi334/
+  code/              main trainer (`train.py`, cells 01-15 excluding
+                     05/12, two Jaccard+PCA variants that were tried
+                     but are not reported in the paper) and all
+                     DDI-334-specific scripts (dataset build, KG build,
+                     LLM prompt rendering/inference, fine-tuning, ...).
+                     See below.
+  models/            model/encoder definitions (GAT, SchNet, GT, MLP,
+                     CNN, ChemBERTa, BioBERT, KGE-based encoders, ...)
+  dataio/            dataset loading
+  data/              train/valid/test split files (S0/S1/S2), drug/type
+                     maps, KG triples used for the Relation modality
+  meta/              cluster split definition, id maps, type names
+  results/           summary metrics (per-class scores, configs used,
+                     loss curves, LLM ZS/FT metrics, KGE comparison
+                     results, commercial-LLM comparison)
+  DATA_SOURCES.md    upstream data sources + build pipeline
 environment/
   README.md, *_requirements.txt   exact pip environments used
 ```
@@ -125,15 +124,22 @@ files used for the paper's results. The upstream raw sources
 (DDI-Bench/EmerGNN, TDC TWOSIDES, DrugBank, HetioNet) are third-party
 and are not redistributed here.
 
-See [`ddi334/DATA_SOURCES.md`](ddi334_experiment/ddi334/DATA_SOURCES.md)
+See [`ddi334/DATA_SOURCES.md`](ddi334/DATA_SOURCES.md)
 for exact sources, the required sibling-folder layout, and the build
 pipeline (`build_dataset.py` -> `build_kg.py` -> per-encoder
 precomputation).
 
 ## Reproducing a result
 
+There is no batch-launcher script in this repository — every command
+below is a single, self-contained invocation. The full set of results in
+a given `results/` folder is just that command repeated across the listed
+cells/models/seeds; how you parallelize that across your own GPUs is up
+to you (we used a handful of small internal dispatcher scripts tuned to
+our specific shared server, which is why they aren't included here).
+
 ```bash
-cd ddi334_experiment/ddi334/code
+cd ddi334/code
 
 # example: cell04 (SchNet), DDI-334 (ddibn), seed 42
 python train.py --cell 04 --dataset ddibn --gpu 0 --seed 42
@@ -141,7 +147,21 @@ python train.py --cell 04 --dataset ddibn --gpu 0 --seed 42
 
 `--checkpoint_metric` is not a flag here — checkpoint selection (accuracy,
 per-split, patience=10 early stopping, as described in the paper's
-Appendix E.1) is fixed in `train.py` and is not configurable.
+Appendix E.1) is fixed in `train.py` and is not configurable. One call of
+`train.py` trains once and evaluates all three splits (S0/S1/S2) itself —
+there is no `--split` flag.
+
+**`results/encoders_main/`** (Table 1/D.1): the command above, repeated
+over every reported cell and seed:
+
+```bash
+for cell in 01 02 03 04 06 07 08 09 10 11 13 14 15; do
+  for seed in 0 42 124; do
+    python train.py --cell $cell --dataset ddibn --gpu 0 --seed $seed \
+      --result_dir ../results/encoders_main
+  done
+done
+```
 
 **Existing / Novel drug conditions** (biological-relation availability for
 Unseen drugs, Section 4 of the paper) are selected with env vars, not CLI
@@ -153,6 +173,20 @@ python train.py --cell 09 --dataset ddibn --gpu 0 --seed 42
 
 # Novel drug condition (Unseen drugs' biological relations removed)
 NOVEL_DRUG=1 python train.py --cell 09 --dataset ddibn --gpu 0 --seed 42
+```
+
+**`results/encoders_novel_drug/`** (Section 5.2 figure): cells 08-11 under
+`NOVEL_DRUG=1`, 3 seeds each (cell 08 additionally needs `KGE_TYPE=transe`
+and writes to `results/kge_comparison/novel_drug/transe/` instead — see
+the KGE comparison note below):
+
+```bash
+for cell in 09 10 11; do
+  for seed in 0 42 124; do
+    NOVEL_DRUG=1 python train.py --cell $cell --dataset ddibn --gpu 0 --seed $seed \
+      --result_dir ../results/encoders_novel_drug
+  done
+done
 ```
 
 **DDI network (R-GCN), cell 11** — the paper reports this cell initialized
@@ -169,13 +203,19 @@ python train.py --cell 11 --dataset ddibn --gpu 0 --seed 42
 NODE_INIT=transe python train.py --cell 11 --dataset ddibn --gpu 0 --seed 42
 ```
 
-**Appendix J** (crossing the Existing/Novel condition of the TransE
-embedding independently from that of the KG subgraph, for Knowledge graph
-(R-GCN)/(Graph Transformer), cells 09/10) uses two more env vars that
-override `NOVEL_DRUG` when set:
+`results/ddi_network_molgraph_init/` (not used for any number in the
+paper) is the same cell with `NODE_INIT=molgraph` (sum-pooled raw atom
+features instead of a fingerprint or TransE), 3 seeds.
+
+**`results/appendix_j_embedding_subgraph_cross/`** (Appendix J: crossing
+the Existing/Novel condition of the TransE embedding independently from
+that of the KG subgraph, Knowledge graph (R-GCN), cell 09 only) uses two
+more env vars that override `NOVEL_DRUG` when set, 3 seeds each:
 
 ```bash
-# e.g. Novel subgraph + Existing TransE embedding
+# novel_embedding_existing_subgraph/
+EMB_SRC=novel_drug SUBGRAPH_SRC=existing_drug python train.py --cell 09 --dataset ddibn --gpu 0 --seed 42
+# existing_embedding_novel_subgraph/
 EMB_SRC=existing_drug SUBGRAPH_SRC=novel_drug python train.py --cell 09 --dataset ddibn --gpu 0 --seed 42
 ```
 
@@ -188,18 +228,53 @@ RotatE/ComplEx/DistMult/TransH comparison numbers in
 comparison figure, but retraining those four KGE types from this
 repository (`KGE_TYPE=rotate ...`) is not supported since their trained
 embeddings are not included (RotatE's in particular exceeds GitHub's
-100MB file-size limit).
+100MB file-size limit). `results/kge_comparison/{existing_drug,novel_drug}/transe/`
+is reproduced the same way as `encoders_main`/`encoders_novel_drug` cell 08
+above; `novel_drug_embedding_only/` additionally needs `ABLNR=1` (reuses the
+existing-drug TransE embedding as-is, with only the Novel-drug rows replaced
+by a random vector, so no KGE retraining is involved).
 
-`NODE_INIT=molgraph` (sum-pooled raw atom features instead of a fingerprint
-or TransE) is also available for cells 09/10/11 as a further robustness
-check; it is not used for any number reported in the paper.
+**`results/document_backbone_comparison/{biobert,pubmedbert,scibert}/{existing_drug,novel_drug}/`**
+(Appendix C.1): cell 13 with `DOC_MODEL` selecting the backbone, 3 seeds
+each. Each backbone's embeddings must first be built once with
+`build_biobert_template.py --tag {biobert,pubmedbert,scibert}` (reads
+`meta/bio_profile_llm.json`, writes into `data/ddibn/precompute/`):
+
+```bash
+DOC_MODEL=pubmedbert DOC_INPUT=novel_drug python train.py --cell 13 --dataset ddibn --gpu 0 --seed 42 \
+  --result_dir ../results/document_backbone_comparison/pubmedbert/novel_drug
+```
+
+**`results/llm/zeroshot/`** (Section 5): `llm_infer.py` for each of the 6
+models (`google/gemma-2-2b-it`, `Qwen/Qwen2.5-3B-Instruct`,
+`microsoft/Phi-3.5-mini-instruct`, `microsoft/phi-4`,
+`Qwen/Qwen2.5-14B-Instruct`, `google/gemma-2-27b-it`) x 2 drug conditions
+x 3 splits (temperature=0, seed hardcoded, so one call per split/mode/model
+is deterministic and sufficient — no repeated seeds):
+
+```bash
+python llm_infer.py --version v2 --dataset ddibn --model google/gemma-2-2b-it \
+  --gpu 0 --split S0 --mode existing_drug --outdir ../results/llm/zeroshot
+```
+
+`results/llm/zeroshot_s2_reproducibility_check/` is the same command for
+the S2 split only, re-run into a separate output directory as a
+determinism check (see `Reproducibility` discussion in the paper).
+
+**`results/llm/finetuning/`** (Section 5): QLoRA fine-tune (`ft_train.py`,
+3 epochs, seed 42) then evaluate (`run_ft_cv.py`, which itself evaluates
+all 3 splits and selects the best epoch per split by validation AUROC),
+for each of the same 6 models x 2 drug conditions:
+
+```bash
+python ft_train.py --model google/gemma-2-2b-it --mode existing_drug --gpu 0 --epochs 3
+python run_ft_cv.py --tag google_gemma-2-2b-it_existing_drug_seed42 \
+  --model google/gemma-2-2b-it --mode existing_drug \
+  --ckpt ../results/ft_checkpoints/google_gemma-2-2b-it_existing_drug_seed42 --gpu 0 --epochs 3
+```
 
 See `ddi334/code/` for dataset build (`build_dataset.py`, `build_kg.py`,
-`build_bio_profile.py`, ...), LLM prompt rendering/inference
-(`render_prompts.py`, `llm_infer.py`),
-fine-tuning (`ft_train.py`, `run_ft_cv.py`), and the batch
-launchers used for the ablations above (`oneoff/run_novel_drug_cells.py`,
-`oneoff/run_kge_train.py`, `oneoff/run_rel_cross.py`, `oneoff/run_cell11_cross.py`).
+`build_bio_profile.py`, ...) and prompt rendering (`llm_prompts.py`).
 
 ## Environment
 

@@ -32,11 +32,10 @@ from torch.optim import AdamW
 from torch.utils.data import Dataset, DataLoader
 from sklearn.metrics import average_precision_score, roc_auc_score, accuracy_score, f1_score
 
-# ── 경로 (스크립트는 ddi334/ 안) ──
+# ── 경로 (스크립트는 ddi334/code/ 안, models/·dataio/는 ddi334/ 바로 밑) ──
 DDI334_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-EXPERIMENT_DIR = os.path.dirname(DDI334_DIR)
-sys.path.insert(0, EXPERIMENT_DIR)              # models/, dataio/ 임포트용
-PRECOMPUTE_DIR = os.path.join(EXPERIMENT_DIR, 'data', 'precompute')
+sys.path.insert(0, DDI334_DIR)              # models/, dataio/ 임포트용
+PRECOMPUTE_DIR = os.path.join(DDI334_DIR, 'data', 'precompute')   # main()에서 데이터셋별로 재설정됨
 KGE_DIR = os.path.join(DDI334_DIR, 'data', 'kge')       # REL KGE 임베딩 (데이터셋별)
 NUM_HETIONET_ENTITIES = 34124
 

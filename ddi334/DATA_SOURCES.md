@@ -7,31 +7,40 @@ data came from and how to regenerate everything from scratch.
 
 ## Required directory layout
 
-The build scripts (`build_dataset.py`, `build_kg.py`) resolve their
-input paths relative to a fixed sibling-folder layout that mirrors how
-this project's working repository is organized:
+The build scripts (`build_dataset.py`, `build_kg.py`, and most other
+`build_*.py` files) hardcode the sibling-folder layout of the *original*
+internal server working tree they were developed in, which nested this
+repository's `ddi334/` one level deeper (inside an `experiment/` wrapper
+that sat alongside `original_repo/`, `kge_hetionet/`, and `meeting/`).
+That extra wrapper level was removed from this public repository for
+clarity, so these scripts' hardcoded relative paths to
+`original_repo/`, `kge_hetionet/`, and `meeting/` no longer resolve
+as-is even if you had copies of that raw data:
 
 ```
-<some root>/
-  ddi334_experiment/        <- this repository
-    ddi334/code/build_dataset.py, build_kg.py, ...
-  original_repo/
-    DDI_Ben/
-      DDI_Ben/data/{twosides_cluster,drugbank_cluster,initial}/...
-      EmerGNN/DrugBank/data/KG.txt
-  kge_hetionet/
-    data/{KG.txt, train.txt, twosides.csv, drugbank.tab,
-          hetionet_edges.sif.gz, hetionet_nodes.tsv}
+<original internal layout, for reference only>
+  v5_ddi-bench/
+    experiment/
+      ddi334/code/build_dataset.py, build_kg.py, ...   <- this repo's ddi334/
+    original_repo/
+      DDI_Ben/
+        DDI_Ben/data/{twosides_cluster,drugbank_cluster,initial}/...
+        EmerGNN/DrugBank/data/KG.txt
+    kge_hetionet/
+      data/{KG.txt, train.txt, twosides.csv, drugbank.tab,
+            hetionet_edges.sif.gz, hetionet_nodes.tsv}
   meeting/
     ddi334_tdc/*.csv
 ```
 
 `original_repo/` and `kge_hetionet/` are **not included** in this
 repository (they are third-party / regenerable raw data, not our
-code). To rerun the build scripts as-is, recreate this layout
-yourself — or adapt the hardcoded paths near the top of
-`build_dataset.py` / `build_kg.py` to point at wherever you put the
-raw sources.
+code) — these build scripts are included as documentation of exactly
+how the shipped `ddi334/data/` files were produced, not as something
+you are expected to re-run. To actually re-run one, recreate the
+layout above and adapt the hardcoded path constants near the top of
+the script (`DDI334_DIR`/`EXP_DIR`/`V5_DIR`/`LATEX_ROOT` or similar) to
+point at wherever you put the raw sources.
 
 ## Upstream sources
 
