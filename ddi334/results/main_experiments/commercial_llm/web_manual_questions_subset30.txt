@@ -1,6 +1,4 @@
-DDI-334 commercial LLM web-UI manual query subset (n=30 drug pairs, novel+existing = 60 questions total).
-Submitted by hand into each model's web chat interface, not via API -- responses may reflect the
-model's own web-search tool use (see Appendix I).
+DDI-334 commercial LLM web-UI manual query subset (n=30 drug pairs, 60 questions total).
 
 ===== [01-EXISTING] (label=0, source=random_negative) =====
 You are a pharmacology expert. Given information on two drugs and a question
