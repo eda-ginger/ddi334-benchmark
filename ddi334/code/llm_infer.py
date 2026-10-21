@@ -225,7 +225,7 @@ def main():
     ap.add_argument("--merge-system", action="store_true")  # gemma류
     ap.add_argument("--mode", default="existing_drug", choices=["existing_drug", "existing_drug_genes", "novel_drug"])  # V2 정보 ablation
     ap.add_argument("--workers", type=int, default=24)  # 동시 요청 수 (작은 모델은 64+로 GPU 채움)
-    ap.add_argument("--outdir", default="")  # 결과 저장 폴더 override (예: results/encoders_main)
+    ap.add_argument("--outdir", default="")  # 결과 저장 폴더 override (예: results/main_experiments/01-12_encoders)
     a = ap.parse_args()
     global PORT
     PORT = a.port

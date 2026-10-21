@@ -4,7 +4,7 @@
 ft_train.py(어댑터 epoch_1..N) -> vLLM LoRA serving:
   1) 각 epoch 어댑터를 full val_S0/S1/S2로 infer_v2(mode) -> split별 best epoch (val AUROC 기준, 인코더 일관)
   2) split별 best epoch 어댑터로 test_{split} 평가 -> 저장
-결과: results/llm/finetuning/llm_metrics/ft_{tag}_{split}.json  (+ _cv.json 선택기록)
+결과: results/main_experiments/13-18_llm/finetuning/llm_metrics/ft_{tag}_{split}.json  (+ _cv.json 선택기록)
 
 Usage (vllm-llm):
   python run_ft_cv.py --tag microsoft_Phi-3.5-mini-instruct_existing_drug_seed42 \
