@@ -30,8 +30,10 @@ is not the full experiment history of the underlying project.
 ```
 ddi334/
   code/              main trainer (`train.py`, cells 01-15 excluding
-                     05/12, two Jaccard+PCA variants that were tried
-                     but are not reported in the paper), the shared
+                     05/12 (two Jaccard+PCA variants that were tried
+                     but are not reported in the paper) and 14 (a
+                     drug-name-only Document cell superseded by cell
+                     13's existing_drug/novel_drug tiers)), the shared
                      model/dataset modules it imports (`encoders.py`,
                      `ddi_model.py`, `dataset.py`), and all
                      DDI-334-specific scripts (dataset build, KG build,
@@ -58,11 +60,16 @@ environment/
 ```
 results/
   encoders_main/                        Table 1/D.1: cells 01-15 excluding
-                                         05/12 (see code/ note above),
+                                         05/12/14 (see code/ note above),
                                          Existing drug condition (the
                                          default for every cell;
                                          Molecule/Bio-profile cells have
-                                         no Novel-drug variant)
+                                         no Novel-drug variant). Cell 13
+                                         here is SciBERT + existing_drug
+                                         (DOC_MODEL/DOC_INPUT defaults),
+                                         same run as
+                                         document_backbone_comparison/
+                                         scibert/existing_drug/ below
   encoders_novel_drug/                  Section 5.2/Figure: cells 08-11
                                          under the Novel drug condition
   appendix_j_embedding_subgraph_cross/  Appendix J: TransE embedding and
@@ -156,7 +163,7 @@ there is no `--split` flag.
 over every reported cell and seed:
 
 ```bash
-for cell in 01 02 03 04 06 07 08 09 10 11 13 14 15; do
+for cell in 01 02 03 04 06 07 08 09 10 11 13 15; do
   for seed in 0 42 124; do
     python train.py --cell $cell --gpu 0 --seed $seed \
       --result_dir ../results/encoders_main
@@ -237,7 +244,11 @@ by a random vector, so no KGE retraining is involved).
 
 **`results/document_backbone_comparison/{biobert,pubmedbert,scibert}/{existing_drug,novel_drug}/`**
 (Appendix C.1): cell 13 with `DOC_MODEL` selecting the backbone, 3 seeds
-each. Each backbone's embeddings must first be built once with
+each. `scibert` is the default (`DOC_MODEL`/`DOC_INPUT` need no override for
+`existing_drug`) and is also the main-text Table 1/D.1 result
+(`encoders_main`'s cell 13 above is this exact run); `biobert`/`pubmedbert`
+are only used for this Appendix C.1 comparison. Each backbone's embeddings
+must first be built once with
 `build_biobert_template.py --tag {biobert,pubmedbert,scibert}` (reads
 `data/document/bio_profile_llm.json`, writes into `data/document/`):
 

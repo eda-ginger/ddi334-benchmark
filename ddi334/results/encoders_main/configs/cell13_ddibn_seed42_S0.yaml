@@ -3,7 +3,7 @@ dataset: ddibn
 split: S0
 seed: 42
 checkpoint_metric: accuracy
-best_epoch: 32
+best_epoch: 46
 n_params: 158289
 n_types: 209
 hp_lr: 0.0003

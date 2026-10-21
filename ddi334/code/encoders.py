@@ -83,12 +83,13 @@ class ChemBERTaEncoder(FrozenVectorEncoder):
 
 
 class BioBERTEncoder(FrozenVectorEncoder):
-    """Cell 13/14 (DOC): BioBERT frozen [CLS] -> linear projection.
+    """Cell 13 (DOC): BERT-family frozen [CLS] -> linear projection.
 
-    Source: LLME (Im & Ko, 2025) — dmis-lab/biobert-base-cased-v1.1 frozen [CLS] 768-d.
+    Source: LLME (Im & Ko, 2025) — frozen [CLS] 768-d.
     Fair-exp adaptation: [CLS]를 frozen으로 고정하고 단일 linear projection만 학습
       (multi-layer MLP 없음); 텍스트 임베딩은 외부 precompute.
-      Cell 13 = drug description / Cell 14 = drug name 입력.
+      입력 tier(existing_drug/genes/novel_drug)는 DOC_INPUT env, backbone(기본 SciBERT,
+      원고 Table 1/D.1 설정; BioBERT/PubMedBERT는 Appendix C.1 비교용)은 DOC_MODEL env로 선택.
     """
 
     def __init__(self, hidden_dim: int = 128, dropout: float = 0.2,
