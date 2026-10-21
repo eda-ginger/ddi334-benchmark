@@ -133,6 +133,8 @@ results/
     commercial_llm/                       Figure 7 + Appendix I (Tables
                                            I.1, I.2): local vs commercial
                                            LLM comparison
+    random_baseline.json                  random-prediction reference
+                                           line (Figure 6 dashed line)
   appendix/
     c_document_backbone_comparison/       Appendix C.4 (Table C.1):
       {biobert,pubmedbert,scibert}/         BioBERT vs PubMedBERT vs
@@ -151,8 +153,6 @@ results/
       existing_embedding_novel_subgraph/    crossed independently for
                                              Knowledge graph (subgraph
                                              R-GCN, cell 10)
-  random_baseline.json                  random-prediction reference line
-                                         (Figure 6 dashed line)
 ```
 
 Inside each leaf folder, filenames use the codebase's internal mode
