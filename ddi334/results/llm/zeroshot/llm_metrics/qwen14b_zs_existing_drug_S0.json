@@ -6,7 +6,7 @@
  "P@50": 0.45569377990430626,
  "P@N2": 0.4636990280790927,
  "n_types": 209,
- "cell": "qwen14b_zs_ideal",
+ "cell": "qwen14b_zs_existing_drug",
  "dataset": "ddibn",
  "split": "S0",
  "wall_sec": 7689.9908809661865

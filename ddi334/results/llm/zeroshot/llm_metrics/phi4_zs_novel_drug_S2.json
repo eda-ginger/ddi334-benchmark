@@ -6,7 +6,7 @@
  "P@50": 0.4955980861244018,
  "P@N2": 0.49357302237051265,
  "n_types": 209,
- "cell": "phi4_zs_real",
+ "cell": "phi4_zs_novel_drug",
  "dataset": "ddibn",
  "split": "S2",
  "wall_sec": 1432.9648296833038

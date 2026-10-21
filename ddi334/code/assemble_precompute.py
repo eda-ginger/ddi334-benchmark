@@ -6,10 +6,10 @@ DDI-334 precompute 정리: MOL/REL/DOC 전처리 파일을 모달리티별 폴�
 **334 약물로 필터링**해 data/molecule, document/에 넣어 자기완결적으로 만든다.
 
 이 스크립트가 채우는 것 (334 필터):
-  MOL: drug_smiles.json(런타임 graph/CNN/FP용), schnet_coords.pt+schnet_drop.json(Cell02), chemberta.pt(Cell06)
+  MOL: drug_smiles.json(런타임 graph/CNN/FP용), schnet_coords.pt+schnet_drop.json(Cell06), chemberta.pt(Cell02)
 
-Cell13(DOC)의 existing_drug/genes/novel_drug tier 임베딩은 이 스크립트가 아니라
-build_biobert_template.py가 bio_profile_llm.json에서 직접 생성한다 (이 스크립트가 다루는
+Cell12(DOC)의 existing_drug/genes/novel_drug tier 임베딩은 이 스크립트가 아니라
+build_biobert_template.py가 bio_profile_text.json에서 직접 생성한다 (이 스크립트가 다루는
 '334 필터링'과 무관 — 처음부터 334드럭 전용으로 만들어짐).
 
 TransE 등 KGE 임베딩은 kge/existing_drug/{type}/*.npy에서 train.py가 직접 읽으므로
@@ -58,8 +58,8 @@ def main():
     print(f"  drug_smiles.json: {len(smi)} (MOL 런타임 graph/CNN/FP)")
 
     # MOL: chemberta, schnet
-    print(f"  chemberta.pt: {filter_emb_pt('chemberta.pt', ids, [mol_dir])} (MOL Cell06)")
-    print(f"  schnet_coords.pt: {filter_emb_pt('schnet_coords.pt', ids, [mol_dir], has_embeddings=False)} (MOL Cell02)")
+    print(f"  chemberta.pt: {filter_emb_pt('chemberta.pt', ids, [mol_dir])} (MOL Cell02)")
+    print(f"  schnet_coords.pt: {filter_emb_pt('schnet_coords.pt', ids, [mol_dir], has_embeddings=False)} (MOL Cell06)")
     # schnet_drop 불필요: 334 약물 전부 3D 좌표 있음 (failed 0) -> 생성 안 함
 
     print("[DONE] MOL -> data/molecule/ 정리")

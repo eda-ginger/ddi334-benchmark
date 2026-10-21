@@ -6,7 +6,7 @@
  "P@50": 0.4440191387559809,
  "P@N2": 0.4558959974919978,
  "n_types": 209,
- "cell": "gemma2b_zs_ideal",
+ "cell": "gemma2b_zs_existing_drug",
  "dataset": "ddibn",
  "split": "S0",
  "wall_sec": 9628.85497045517

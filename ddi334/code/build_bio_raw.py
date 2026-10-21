@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 """
-DDI-334 Cell 15 (REL) precompute: raw HetioNet bio-neighbor multi-hot vector
+DDI-334 Cell 07 (REL) precompute: raw HetioNet bio-neighbor multi-hot vector
 =============================================================================
 An earlier, unreported variant (InteractionJaccardEncoder) reduced this same
 raw profile through Jaccard similarity + train-only PCA before the MLP head.
-Cell 15 instead feeds the raw multi-hot vector directly into a 2-layer MLP,
-mirroring Cell 04 (MorganFPEncoder)'s raw-fingerprint-to-MLP pattern for the
+Cell 07 instead feeds the raw multi-hot vector directly into a 2-layer MLP,
+mirroring Cell 03 (MorganFPEncoder)'s raw-fingerprint-to-MLP pattern for the
 Molecule modality (user decision, appendix.md B.3, 2026-09-08).
 
 No similarity/PCA step, so this raw profile has no train-only-fit leakage
 concern (each drug's feature is computed independently of the drug-pair
-split, same reasoning as the raw Morgan fingerprint used by Cell 04) — one
+split, same reasoning as the raw Morgan fingerprint used by Cell 03) — one
 shared file suffices for ddibn.
 
 Reuses the earlier Jaccard+PCA variant's bio_profile_hetionet() logic exactly
@@ -33,7 +33,7 @@ SIDE_EFFECT_REL = '21'    # Compound-causes-Side Effect: same vocabulary as the 
                            # Already excluded for this reason in build_bio_profile.py (LLM
                            # prompt text) and data/prompt/ANALYSIS.md; the earlier Jaccard+PCA
                            # variant's bio_profile_hetionet() did NOT exclude it -- found
-                           # 2026-09-08 while building this raw-vector cell (Cell 15).
+                           # 2026-09-08 while building this raw-vector cell (Cell 07).
 GENE_REL_DIRECT = '6'     # Compound-binds-Gene (CbG) = direct target only. Other Gene-typed
                            # relations (7=upregulates, 18=downregulates) are indirect and are
                            # already excluded for that reason in build_bio_profile.py's
@@ -98,7 +98,7 @@ def main():
 
     emb = {d: torch.from_numpy(M[i].astype(np.float32)) for i, d in enumerate(all_ids)}
     out_dir = os.path.join(DDI334_DIR, 'data', 'relation')
-    out_path = os.path.join(out_dir, 'bio_raw.pt')
+    out_path = os.path.join(out_dir, 'bio_profile.pt')
     torch.save({'embeddings': emb, 'input_dim': n_feat, 'n_all': len(all_ids),
                 'source': 'hetionet_bio_neighbors_raw',
                 'method': 'bio_raw_multihot_no_similarity_no_pca'}, out_path)

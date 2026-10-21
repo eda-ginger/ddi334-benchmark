@@ -8,7 +8,7 @@
 (Side Effect는 예측 라벨과 동일 어휘라 누수 -> 제외. up/down-regulate(간접 gene)도 제외.)
 
 입력: data/relation/kge/kg_bio_334.txt, kge_hetionet/data/entity_drug.json, data/relation/hetionet_names.json
-출력: data/document/bio_profile_llm.json  { "<db_id>": {"genes":[..], "indications":[..], "pharm_class":[..]} }
+출력: data/document/bio_profile_text.json  { "<db_id>": {"genes":[..], "indications":[..], "pharm_class":[..]} }
 Run: micromamba run -n DDIBench python code/build_bio_profile.py
 """
 import json
@@ -44,7 +44,7 @@ out = {}
 for d in dbids:
     out[str(d)] = {"genes": sorted(genes[d]), "indications": sorted(dis[d]), "pharm_class": sorted(cls[d])}
 
-path = os.path.join(HERE, 'data', 'document', 'bio_profile_llm.json')
+path = os.path.join(HERE, 'data', 'document', 'bio_profile_text.json')
 json.dump(out, open(path, 'w'), ensure_ascii=False, indent=0)
 ng = sum(1 for d in dbids if genes[d]); nd = sum(1 for d in dbids if dis[d]); nc = sum(1 for d in dbids if cls[d])
 print(f"[bio_profile] {len(dbids)} 약물 -> {path}")

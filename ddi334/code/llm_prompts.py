@@ -38,7 +38,7 @@ class DDI334Prompt:
         self.name_map = {int(k): v for k, v in json.load(open(NAMES_JSON)).items()}
         self.smiles = {int(k): v for k, v in json.load(open(SMILES_JSON)).items()}
         # bio profile (Ideal 입력): db_id -> {genes, indications, pharm_class}  (build_bio_profile.py)
-        bp_path = os.path.join(DOC_DIR, 'bio_profile_llm.json')
+        bp_path = os.path.join(DOC_DIR, 'bio_profile_text.json')
         self.bio = json.load(open(bp_path)) if os.path.exists(bp_path) else {}
 
     def name(self, db):
@@ -59,7 +59,7 @@ class DDI334Prompt:
         return V1_SYSTEM, user, schema
 
     # ── 약물 1개 템플릿 텍스트 (tier: novel_drug/genes/existing_drug) — 접두어("Drug N") 없음.
-    #    LLM 프롬프트 블록(_block_novel_drug/_block_existing_drug)과 cell13 BioBERT 텍스트(build_biobert_template.py)가
+    #    LLM 프롬프트 블록(_block_novel_drug/_block_existing_drug)과 cell12 BioBERT 텍스트(build_biobert_template.py)가
     #    이 함수 하나를 공유한다 (05_실험설계(DDI334).md §8, 2026-07-27 통일).
     def drug_text(self, d, tier='existing_drug'):
         """tier='novel_drug': SMILES만(이름 없음, 완전 신약 가정).
@@ -77,7 +77,7 @@ class DDI334Prompt:
         cl = ', '.join(bp.get('pharm_class') or []) or "(none)"
         return text + f"Indications: {ind}\nPharmacologic class: {cl}\n"
 
-    # ── 자연어 버전 (cell13 DOC 추가 실험, 2026-07-28) — drug_text()와 동일 정보,
+    # ── 자연어 버전 (cell12 DOC 추가 실험, 2026-07-28) — drug_text()와 동일 정보,
     #    key:value 템플릿 대신 문장으로 서술. 정보 없으면 "no known ~ documented"로 명시(생략 안 함).
     def drug_text_nl(self, d, tier='existing_drug'):
         if tier == 'novel_drug':

@@ -6,7 +6,7 @@
  "P@50": 0.5171291866028708,
  "P@N2": 0.588945385530608,
  "n_types": 209,
- "cell": "qwen3b_zs_real",
+ "cell": "qwen3b_zs_novel_drug",
  "dataset": "ddibn",
  "split": "S2",
  "wall_sec": 1612.8553199768066

@@ -120,7 +120,7 @@ class DDIBatch:
 
 
 def build_collate_fn(
-    gat_cache=None,           # list of PyG Data, indexed by drug_id (for Cell 01 GAT)
+    gat_cache=None,           # list of PyG Data, indexed by drug_id (for Cell 04 GAT)
     subgraph_extractor=None,  # SubgraphExtractor instance (for Cells 09, 10)
     drug2kg_table=None,       # torch.Tensor: drug_id -> kg_entity_id
     subgraph_transform=None,  # optional callable: Data -> Data (e.g. GT._to_tiger_inputs)
@@ -128,12 +128,12 @@ def build_collate_fn(
     """Build a collate function that optionally pre-batches mol graphs and subgraphs.
 
     Args:
-        gat_cache: if provided, pre-batch PyG Data for GAT (Cell 01).
+        gat_cache: if provided, pre-batch PyG Data for GAT (Cell 04).
         subgraph_extractor: if provided, pre-extract KG subgraphs (Cells 09, 10).
         drug2kg_table: required if subgraph_extractor is provided.
         subgraph_transform: optional per-Data transform applied before batching.
-            Cell 09 (R-GCN subgraph): None (uses edge_index/edge_type directly).
-            Cell 10 (GT KG): pass encoder._to_tiger_inputs to convert to sp_edge_*.
+            Cell 10 (R-GCN subgraph): None (uses edge_index/edge_type directly).
+            Cell 11 (GT KG): pass encoder._to_tiger_inputs to convert to sp_edge_*.
     """
     from torch_geometric.data import Batch as PyGBatch
 

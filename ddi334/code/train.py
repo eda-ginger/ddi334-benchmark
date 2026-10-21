@@ -46,13 +46,13 @@ KGE_DIR = os.path.join(REL_DIR, 'kge')                         # REL KGE 임베�
 NUM_HETIONET_ENTITIES = 34124
 
 from encoders import (
-    GATEncoder, MorganFPEncoder, SchNetEncoder,             # MOL 구조 (01/04/02)
-    GraphTransformerMolEncoder, SMILESCNNEncoder,           # MOL 구조 (03/07)
-    ChemBERTaEncoder,                                        # frozen (06)
-    BioBERTEncoder,                                          # frozen (13·14)
-    TransEEncoder, RGCNWholeDDIEncoder,                     # REL (08/11)
-    RGCNSubgraphEncoder, GraphTransformerKGEncoder,         # REL (09/10)
-    BioProfileMLPEncoder,                                   # REL raw MLP (15)
+    GATEncoder, MorganFPEncoder, SchNetEncoder,             # MOL 구조 (04/03/06)
+    GraphTransformerMolEncoder, SMILESCNNEncoder,           # MOL 구조 (05/01)
+    ChemBERTaEncoder,                                        # frozen (02)
+    BioBERTEncoder,                                          # frozen (12)
+    TransEEncoder, RGCNWholeDDIEncoder,                     # REL (09/08)
+    RGCNSubgraphEncoder, GraphTransformerKGEncoder,         # REL (10/11)
+    BioProfileMLPEncoder,                                   # REL raw MLP (07)
 )
 from ddi_model import DDIModel
 from dataset import DDIBatch
@@ -147,7 +147,7 @@ class DDI334Dataset(Dataset):
 
 def build_collate(gat_cache=None, subgraph_extractor=None,
                   drug2kg_table=None, subgraph_transform=None):
-    """gat_cache: Cell 01 mol graph. subgraph_*: Cell 09/10 KG subgraph (v5 build_collate_fn)."""
+    """gat_cache: Cell 04 mol graph. subgraph_*: Cell 10/11 KG subgraph (v5 build_collate_fn)."""
     from torch_geometric.data import Batch as PyGBatch
 
     def collate(samples):
@@ -199,7 +199,7 @@ def load_molfp_embeddings():
     """Morgan FP(1024d, radius2) 기반 초기 node feature (NODE_INIT=molfp, 2026-10-19 추가).
     db_id==entity_id identity 활용: drug 행(0-1709)만 분자 구조로 채우고, 비-drug HetioNet
     entity(유전자/질병 등, 1710+)는 0으로 둔다 — '약물 자체의 분자 정보는 Existing/Novel 조건과
-    무관하게 항상 보유'라는 전제로, R-GCN subgraph(cell09) TransE 초기화와 대조하기 위한 실험용."""
+    무관하게 항상 보유'라는 전제로, R-GCN subgraph(cell10) TransE 초기화와 대조하기 위한 실험용."""
     cache = os.path.join(MOL_DIR, 'molfp_ent_1024d.npy')
     if os.path.exists(cache):
         print(f"  [NODE_INIT/molfp] {cache}")
@@ -216,10 +216,10 @@ def load_molfp_embeddings():
 
 
 def load_molgraph_pooled_embeddings(num_drugs=1710):
-    """분자그래프(mol graph)에 들어가는 원자 단위 초기 노드 표현(55d, SSI-DDI feat, cell01과 동일)을
+    """분자그래프(mol graph)에 들어가는 원자 단위 초기 노드 표현(55d, SSI-DDI feat, cell04과 동일)을
     분자 하나당 합산(sum-pool)해서 고정 벡터 하나로 만든 것 (NODE_INIT=molgraph, 2026-10-19 추가,
-    cell11 DDI-network-only 실험용). GAT 등 GNN을 거치지 않은 '그래프에 넣기 전' 원시 노드 피처이며,
-    fingerprint와 동일하게 frozen 벡터로 cell11의 R-GCN 초기값에 사용한다."""
+    cell08 DDI-network-only 실험용). GAT 등 GNN을 거치지 않은 '그래프에 넣기 전' 원시 노드 피처이며,
+    fingerprint와 동일하게 frozen 벡터로 cell08의 R-GCN 초기값에 사용한다."""
     cache = os.path.join(MOL_DIR, 'molgraph_pooled_55d.npy')
     if os.path.exists(cache):
         print(f"  [NODE_INIT/molgraph] {cache}")
@@ -255,7 +255,7 @@ def load_chemberta_embeddings():
 
 
 def load_biobert_embeddings(input_type='existing_drug'):
-    # novel_drug/genes/existing_drug (2026-07-27, 05_실험설계(DDI334).md §8): LLM(§5) 템플릿과 통일한 cell13 3-tier.
+    # novel_drug/genes/existing_drug (2026-07-27, 05_실험설계(DDI334).md §8): LLM(§5) 템플릿과 통일한 cell12 3-tier.
     #   build_biobert_template.py로 생성. DOC_MODEL env(biobert/pubmedbert/scibert, 기본 scibert = 원고
     #   Table 1/D.1 설정)로 backbone 선택 (2026-07-27 확장, §8.5; biobert/pubmedbert는 Appendix C.1 비교용).
     # 반환: (embeddings dict, hidden_dim) — 모델마다 실제 dim을 payload에서 읽어옴(하드코딩 금지).
@@ -266,62 +266,57 @@ def load_biobert_embeddings(input_type='existing_drug'):
 
 
 def load_raw_bio_profile():
-    """Cell 15: raw HetioNet bio-neighbor multi-hot vector (build_bio_raw.py). No similarity/PCA."""
-    pl = torch.load(os.path.join(REL_DIR, 'bio_raw.pt'), map_location='cpu', weights_only=False)
+    """Cell 07: raw HetioNet bio-neighbor multi-hot vector (build_bio_raw.py). No similarity/PCA."""
+    pl = torch.load(os.path.join(REL_DIR, 'bio_profile.pt'), map_location='cpu', weights_only=False)
     return pl['embeddings'], pl['input_dim']
 
 
-# ── Model builder (cells 01-07, 13) — train_ddi334.py와 동일 ──
+# ── Model builder — 원고 Table 2 번호(01-12) 그대로 사용 (2026-10-21 내부 cell 번호를 원고에 맞춰 재배열) ──
 def build_model(cell, device, drug_ids):
     hd, dr = HP['hidden_dim'], HP['dropout']
     encoder, gat_cache, exclude = None, None, set()
-    rel_ctx = None   # Cell 09/10 subgraph: {extractor, drug2kg_table, transform}
+    rel_ctx = None   # Cell 10/11 subgraph: {extractor, drug2kg_table, transform}
 
+    # ── MOL 셀 (01-06) ──
     if cell == '01':
-        # GAT는 GT(Cell 03)와 동일한 TIGER 67-d 노드 피처 사용 (노드 피처 통일, 아키텍처만 변수)
+        # SMILES (1D-CNN)
+        encoder = SMILESCNNEncoder(hidden_dim=hd, dropout=dr); encoder.set_features(load_drug_smiles())
+    elif cell == '02':
+        # SMILES (ChemBERTa, frozen)
+        encoder = ChemBERTaEncoder(hidden_dim=hd, dropout=dr, bert_dim=384); encoder.set_features(load_chemberta_embeddings())
+    elif cell == '03':
+        # Fingerprint (MLP)
+        fps = load_drug_fingerprints(load_drug_smiles())
+        encoder = MorganFPEncoder(hidden_dim=hd, dropout=dr); encoder.set_features(fps)
+    elif cell == '04':
+        # Molecular graph (GAT). GT(Cell 05)와 동일한 TIGER 67-d 노드 피처 사용 (노드 피처 통일, 아키텍처만 변수)
         g = load_mol_graphs_tiger(load_drug_smiles())
         encoder = GATEncoder(hidden_dim=hd, dropout=dr, atom_feat_dim=67); encoder.set_features(g); gat_cache = encoder._data_cache
-    elif cell == '02':
+    elif cell == '05':
+        # Molecular graph (Graph Transformer)
+        g = load_mol_graphs_tiger(load_drug_smiles())
+        encoder = GraphTransformerMolEncoder(hidden_dim=hd, dropout=dr); encoder.set_features(g)
+    elif cell == '06':
+        # Molecular graph (SchNet)
         coords = load_schnet_coords()
         encoder = SchNetEncoder(hidden_dim=hd, dropout=dr); encoder.set_features(coords)
         for db_id in drug_ids:
             if db_id not in coords:   # 334 전부 3D 좌표 있음(검증) -> exclude 0. schnet_drop 불필요
                 exclude.add(db_id)
-    elif cell == '03':
-        g = load_mol_graphs_tiger(load_drug_smiles())
-        encoder = GraphTransformerMolEncoder(hidden_dim=hd, dropout=dr); encoder.set_features(g)
-    elif cell == '04':
-        fps = load_drug_fingerprints(load_drug_smiles())
-        encoder = MorganFPEncoder(hidden_dim=hd, dropout=dr); encoder.set_features(fps)
-    elif cell == '06':
-        encoder = ChemBERTaEncoder(hidden_dim=hd, dropout=dr, bert_dim=384); encoder.set_features(load_chemberta_embeddings())
+    # ── REL 셀 (07-11) ──
     elif cell == '07':
-        encoder = SMILESCNNEncoder(hidden_dim=hd, dropout=dr); encoder.set_features(load_drug_smiles())
-    elif cell == '13':
-        # DOC_INPUT env로 입력 텍스트 선택. novel_drug/genes/existing_drug(LLM 템플릿과 통일, §8) 중 하나,
-        # 기본 existing_drug = 원고 Table 1/D.1 설정. DOC_MODEL env(biobert/pubmedbert/scibert, §8.5)로
-        # backbone 선택, 기본 scibert = 원고 설정 (biobert/pubmedbert는 Appendix C.1 비교용) —
-        # bert_dim은 payload에서 동적으로 읽음.
-        doc_inp = os.environ.get('DOC_INPUT', 'existing_drug')
-        emb, bert_dim = load_biobert_embeddings(doc_inp)
-        encoder = BioBERTEncoder(hidden_dim=hd, dropout=dr, bert_dim=bert_dim); encoder.set_features(emb)
-    # ── REL 셀 ──
+        # Bio profile (MLP). raw multi-hot (no Jaccard/PCA) -> 2-layer MLP,
+        # mirrors Cell 03 (MorganFPEncoder). build_bio_raw.py precompute.
+        emb, dim = load_raw_bio_profile()
+        encoder = BioProfileMLPEncoder(hidden_dim=hd, dropout=dr, fp_dim=dim)
+        encoder.set_features(emb)
     elif cell == '08':
-        # KGE frozen lookup (TransE 기본; KGE_TYPE 환경변수로 5종 선택). db_id==entity_id (identity).
-        kge_type = os.environ.get('KGE_TYPE', 'transe')
-        kge_emb = load_kge_embeddings(kge_type)
-        encoder = TransEEncoder(hidden_dim=hd, dropout=dr,
-                                num_entities=NUM_HETIONET_ENTITIES, embed_dim=kge_emb.shape[1])
-        with torch.no_grad():
-            encoder.entity_embedding.weight.copy_(kge_emb)
-        encoder.set_features(num_drugs=1710)
-    elif cell == '11':
-        # R-GCN on whole DDI graph (Decagon) + frozen init. subgraph 불필요.
-        # node=db_id (identity, num_drugs=1710 cover). rel=type_idx+inverse (ddi_whole.pt).
+        # DDI network (R-GCN), whole graph + frozen init. subgraph 불필요.
+        # node=db_id (identity, num_drugs=1710 cover). rel=type_idx+inverse (ddi_network.pt).
         # NODE_INIT env('molfp' 기본 / 'transe' / 'molgraph')로 초기 노드값 소스 선택.
-        # 이 그래프는 약물 노드만 존재(유전자/질병 없음) — cell09/10의 KG subgraph와 다름.
+        # 이 그래프는 약물 노드만 존재(유전자/질병 없음) — cell10/11의 KG subgraph와 다름.
         # 2026-10-19 molfp(Morgan FP, 4.66M params)가 본문 "DDI network (R-GCN)" 공식 결과로
-        # 채택됨에 따라 기본값을 transe->molfp로 전환 (cell09/10은 그대로 transe 기본 유지).
+        # 채택됨에 따라 기본값을 transe->molfp로 전환 (cell10/11은 그대로 transe 기본 유지).
         # 옛 TransE 결과 재현은 NODE_INIT=transe로 명시.
         node_init = os.environ.get('NODE_INIT', 'molfp')
         if node_init == 'molfp':
@@ -332,17 +327,27 @@ def build_model(cell, device, drug_ids):
             kge_type = os.environ.get('KGE_TYPE', 'transe')
             kge_emb = load_kge_embeddings(kge_type)
             drug_kge = kge_emb[:1710]   # rows 0-1709 = drug slots (db_id==entity_id)
-        whole = torch.load(os.path.join(REL_DIR, 'ddi_whole.pt'), weights_only=False)
+        whole = torch.load(os.path.join(REL_DIR, 'ddi_network.pt'), weights_only=False)
         encoder = RGCNWholeDDIEncoder(
             hidden_dim=hd, num_drugs=1710, num_relations=int(whole['num_relations']),
             num_bases=30, num_layers=2, dropout=dr, edge_dropout=0.4,
             use_transe_init=True, input_dim=drug_kge.shape[1])
         encoder.set_transe_init(drug_kge)
         encoder.set_ddi_graph(whole['edge_index'], whole['edge_type'])
-    elif cell in ('09', '10'):
+    elif cell == '09':
+        # Knowledge graph (KGE, frozen lookup). TransE 기본; KGE_TYPE 환경변수로 선택. db_id==entity_id (identity).
+        kge_type = os.environ.get('KGE_TYPE', 'transe')
+        kge_emb = load_kge_embeddings(kge_type)
+        encoder = TransEEncoder(hidden_dim=hd, dropout=dr,
+                                num_entities=NUM_HETIONET_ENTITIES, embed_dim=kge_emb.shape[1])
+        with torch.no_grad():
+            encoder.entity_embedding.weight.copy_(kge_emb)
+        encoder.set_features(num_drugs=1710)
+    elif cell in ('10', '11'):
+        # Knowledge graph (subgraph): 10=R-GCN / 11=Graph Transformer.
         # KG subgraph (bio 0-22 + TWOSIDES train 23+). node=db_id (identity, drug2kg=None).
         # num_relations = n_relations(non-doubled, 232/1331); 추출기가 inverse로 내부 doubling.
-        # 캐시: {ds}/precompute/subgraph_cache/ (데이터셋별 KG가 달라 반드시 분리)
+        # 캐시: data/relation/subgraph_cache/
         # NODE_INIT env('transe' 기본 / 'molfp')로 초기 노드 feature 소스 선택. SUBGRAPH_SRC env('existing_drug'/'novel_drug')로
         # NOVEL_DRUG과 무관하게 subgraph(그래프 연결)만 강제 선택 — Existing/Novel 임베딩 x Existing/Novel subgraph
         # 교차 실험 + Morgan FP 초기화 실험용 (2026-10-19 추가, 둘 다 미설정이면 기존 동작과 동일).
@@ -368,7 +373,7 @@ def build_model(cell, device, drug_ids):
         else:
             triples = np.load(os.path.join(REL_DIR, 'kg_triples.npy'))   # [E,3] (h,t,r)
             cache_dir = os.path.join(REL_DIR, 'subgraph_cache')
-        if cell == '09':
+        if cell == '10':
             encoder = RGCNSubgraphEncoder(
                 hidden_dim=hd, dropout=dr, num_entities=num_ent, num_relations=num_rel,
                 num_bases=4, num_layers=2, edge_dropout=0.4,
@@ -377,7 +382,7 @@ def build_model(cell, device, drug_ids):
             encoder.set_features(num_drugs=1710)
             encoder.set_kg_data(triples, num_ent, num_rel, cache_dir=cache_dir)
             transform = None
-        else:  # '10'
+        else:  # '11'
             encoder = GraphTransformerKGEncoder(
                 hidden_dim=hd, dropout=dr, num_entities=num_ent, num_relations=num_rel,
                 num_layers=2, num_heads=4, max_distance=8, max_degree=50,
@@ -390,18 +395,21 @@ def build_model(cell, device, drug_ids):
         rel_ctx = {'extractor': encoder.subgraph_extractor,
                    'drug2kg_table': encoder._drug2kg_table,
                    'transform': transform}
-    elif cell == '15':
-        # Bio interaction profile, raw multi-hot (no Jaccard/PCA) -> 2-layer MLP,
-        # mirrors Cell 04 (MorganFPEncoder). build_bio_raw.py precompute.
-        emb, dim = load_raw_bio_profile()
-        encoder = BioProfileMLPEncoder(hidden_dim=hd, dropout=dr, fp_dim=dim)
-        encoder.set_features(emb)
+    # ── DOC 셀 (12) ──
+    elif cell == '12':
+        # Description/Mention (SciBERT, frozen). DOC_INPUT env로 입력 텍스트 선택.
+        # novel_drug/genes/existing_drug(LLM 템플릿과 통일, §8) 중 하나, 기본 existing_drug = 원고
+        # Table 2/D.1 설정. DOC_MODEL env(biobert/pubmedbert/scibert, §8.5)로 backbone 선택, 기본
+        # scibert = 원고 설정 (biobert/pubmedbert는 Appendix C.1 비교용) — bert_dim은 payload에서 동적으로 읽음.
+        doc_inp = os.environ.get('DOC_INPUT', 'existing_drug')
+        emb, bert_dim = load_biobert_embeddings(doc_inp)
+        encoder = BioBERTEncoder(hidden_dim=hd, dropout=dr, bert_dim=bert_dim); encoder.set_features(emb)
     else:
-        raise ValueError(f"Cell '{cell}' not supported (01,02,03,04,06,07,08,09,10,11,13,15)")
+        raise ValueError(f"Cell '{cell}' not supported (01-12)")
 
-    if cell in ('08', '09', '10', '11', '12', '15'):
+    if cell in ('07', '08', '09', '10', '11'):
         source_key = 'rel'
-    elif cell == '13':
+    elif cell == '12':
         source_key = 'doc'
     else:
         source_key = 'mol'
@@ -530,7 +538,7 @@ def train(cell, gpu=0, seed=0, epochs=None, result_dir=None, apk=False):
         vds[s] = DDI334Dataset(SPLITS_DIR, f'valid_{s}', exclude)
         tds[s] = DDI334Dataset(SPLITS_DIR, f'test_{s}', exclude)
 
-    # Cell 09/10: 학습 전 전체 약물쌍 subgraph 미리 추출 -> 캐시 (worker가 CoW fork로 공유)
+    # Cell 10/11: 학습 전 전체 약물쌍 subgraph 미리 추출 -> 캐시 (worker가 CoW fork로 공유)
     if rel_ctx is not None:
         tbl = rel_ctx['drug2kg_table']
         uniq = set()
