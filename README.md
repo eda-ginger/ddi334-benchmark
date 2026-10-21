@@ -81,10 +81,10 @@ reported in the paper and are not in this repository at all, so the
 numbering above has no gaps.)
 
 The paper's Instruction (LLM) configurations, Table 2 #13-18, are not
-renumbered the same way — `results/llm/` and `results/commercial_llm/`
-already label every file by the actual HF model id or a short nickname
-(`google/gemma-2-2b-it`, `qwen3b`, ...), which identifies the model more
-directly than a number would:
+renumbered the same way — `results/main_experiments/13-18_llm/` and
+`results/commercial_llm/` already label every file by the actual HF model
+id or a short nickname (`google/gemma-2-2b-it`, `qwen3b`, ...), which
+identifies the model more directly than a number would:
 
 | # | Model |
 |---|---|
@@ -99,68 +99,67 @@ directly than a number would:
 
 ```
 results/
-  encoders_main/                        Figure 6 (Existing drug / "Single
-                                         setting" markers) + Table D.1:
-                                         cells 01-12, Existing drug
-                                         condition (the default for every
-                                         cell; Molecule/Bio-profile cells
-                                         have no Novel-drug variant).
-                                         Cell 12 here is SciBERT +
-                                         existing_drug (DOC_MODEL/DOC_INPUT
-                                         defaults), the same run as
-                                         document_backbone_comparison/
-                                         scibert/existing_drug/ below
-  encoders_novel_drug/                  Figure 6 (Novel drug / open-circle
-                                         markers) + Section 5.2: cells
-                                         08, 10, 11 under the Novel drug
-                                         condition (cell 09's Novel-drug
-                                         run lives in kge_comparison/
-                                         novel_drug/transe/ instead, see
-                                         below)
-  appendix_h_embedding_subgraph_cross/  Appendix H (Table H.1): TransE
-    novel_embedding_existing_subgraph/    embedding and KG subgraph
-    existing_embedding_novel_subgraph/    crossed independently for
-                                           Knowledge graph (subgraph R-GCN,
-                                           cell 10)
-  document_backbone_comparison/         Appendix C.4 (Table C.1): BioBERT
-    {biobert,pubmedbert,scibert}/         vs PubMedBERT vs SciBERT, each
-      {existing_drug,novel_drug}/         under both drug conditions
-  kge_comparison/                       Appendix F (Figure F.1): TransE/
-    existing_drug/                        RotatE/ComplEx link-reconstruction
-    novel_drug/                           (Hits@10) vs downstream DDI
-    novel_drug_embedding_only/            prediction (AUROC). novel_drug_
-                                           embedding_only isolates the
-                                           embedding from the
-                                           graph-structure effect
-  llm/
-    finetuning/                         Figure 6 (Instruction "F" markers):
-                                         QLoRA FT, 6 models x Existing/
-                                         Novel drug condition x 3 epochs
-    zeroshot/                           Figure 6 (Instruction "Z" markers):
-                                         zero-shot, 6 models x Existing/
-                                         Novel
-    zeroshot_s2_reproducibility_check/  reproducibility check for the
-                                         Unseen-Unseen zero-shot numbers
-  ddi_network_molgraph_init/            robustness check for DDI network
-                                         (R-GCN, cell 08) with a different
-                                         node initialization (not reported
-                                         in the paper; see Reproducing a
-                                         result below)
-  commercial_llm/                       Figure 7 + Appendix I (Tables I.1,
-                                         I.2): local vs commercial LLM
-                                         comparison
+  main_experiments/                     everything backing Figure 6 (+
+                                         Table D.1 and Appendix G's
+                                         AUPRC/AP@50, which are just more
+                                         columns of the same summary.csv
+                                         files, not separate runs)
+    01-12_encoders/                       cells 01-12, one flat
+                                           summary.csv (+ configs/
+                                           loss_curves/ per_class/). A
+                                           `condition` column (and a
+                                           matching filename suffix)
+                                           marks each row/file:
+                                           `single` = the cell has no
+                                           Existing/Novel distinction
+                                           (Molecule cells, Bio profile,
+                                           KGE, SciBERT); `existing`/
+                                           `novel` = cells 08/10/11,
+                                           which do (one row per
+                                           condition, same cell number).
+                                           Cell 12's `single` run here is
+                                           the same as appendix/
+                                           c_document_backbone_comparison/
+                                           scibert/existing_drug/ below
+    13-18_llm/                            Instruction #13-18
+      zeroshot/                             zero-shot, 6 models x
+                                             Existing/Novel drug
+      finetuning/                           QLoRA fine-tune, 6 models x
+                                             Existing/Novel drug (only
+                                             the val-AUROC-selected best
+                                             checkpoint per split is
+                                             kept — see Reproducing a
+                                             result below)
+    commercial_llm/                       Figure 7 + Appendix I (Tables
+                                           I.1, I.2): local vs commercial
+                                           LLM comparison
+  appendix/
+    c_document_backbone_comparison/       Appendix C.4 (Table C.1):
+      {biobert,pubmedbert,scibert}/         BioBERT vs PubMedBERT vs
+        {existing_drug,novel_drug}/         SciBERT, each under both
+                                             drug conditions
+    f_kge_comparison/                     Appendix F (Figure F.1): TransE/
+      existing_drug/                        RotatE/ComplEx link-
+      novel_drug/                           reconstruction (Hits@10) vs
+      novel_drug_embedding_only/            downstream DDI prediction
+                                             (AUROC). novel_drug_
+                                             embedding_only isolates the
+                                             embedding from the
+                                             graph-structure effect
+    h_embedding_subgraph_cross/           Appendix H (Table H.1): TransE
+      novel_embedding_existing_subgraph/    embedding and KG subgraph
+      existing_embedding_novel_subgraph/    crossed independently for
+                                             Knowledge graph (subgraph
+                                             R-GCN, cell 10)
   random_baseline.json                  random-prediction reference line
                                          (Figure 6 dashed line)
 ```
 
-Appendix G (AUPRC/AP@50/zero-shot response-distribution supplementary
-figures) is not a separate results folder — it's the same `test_PR-AUC`/
-`test_P@50`/`test_P@N2` columns already in every `summary.csv` above,
-recomputed from the same runs as Figure 6/7.
-
 Inside each leaf folder, filenames use the codebase's internal mode
-names `novel_drug` / `existing_drug` for the Existing/Novel drug
-condition (and `S0`/`S1`/`S2` = Seen-Seen/Seen-Unseen/Unseen-Unseen).
+names `novel_drug` / `existing_drug` (or the shorter `novel`/`existing`
+used for `main_experiments/01-12_encoders/`'s `condition` column and
+filename suffix) for the Existing/Novel drug condition, and `S0`/`S1`/`S2`
+= Seen-Seen/Seen-Unseen/Unseen-Unseen.
 
 ## What is / isn't included
 
@@ -215,21 +214,22 @@ Appendix E.1) is fixed in `train.py` and is not configurable. One call of
 `train.py` trains once and evaluates all three splits (S0/S1/S2) itself —
 there is no `--split` flag.
 
-**`results/encoders_main/`** (Figure 6 + Table D.1): the command above,
-repeated over every cell (01-12) and seed:
+**`results/main_experiments/01-12_encoders/`** (Figure 6 + Table D.1): the
+command above, repeated over every cell (01-12) and seed:
 
 ```bash
 for cell in 01 02 03 04 05 06 07 08 09 10 11 12; do
   for seed in 0 42 124; do
     python train.py --cell $cell --gpu 0 --seed $seed \
-      --result_dir ../results/encoders_main
+      --result_dir ../results/main_experiments/01-12_encoders
   done
 done
 ```
 
 **Existing / Novel drug conditions** (biological-relation availability for
 Unseen drugs, Section 4 of the paper) are selected with env vars, not CLI
-flags:
+flags, and only matter for cells 08, 10, 11 (every other cell's input is
+identical either way):
 
 ```bash
 # Existing drug condition (default)
@@ -239,20 +239,20 @@ python train.py --cell 10 --gpu 0 --seed 42
 NOVEL_DRUG=1 python train.py --cell 10 --gpu 0 --seed 42
 ```
 
-**`results/encoders_novel_drug/`** (Section 5.2 figure): cells 08, 10, 11
-under `NOVEL_DRUG=1`, 3 seeds each (cell 09's Novel-drug run additionally
-needs `KGE_TYPE=transe` and writes to
-`results/kge_comparison/novel_drug/transe/` instead — see the KGE
-comparison note below):
-
-```bash
-for cell in 08 10 11; do
-  for seed in 0 42 124; do
-    NOVEL_DRUG=1 python train.py --cell $cell --gpu 0 --seed $seed \
-      --result_dir ../results/encoders_novel_drug
-  done
-done
-```
+Running both conditions for cells 08/10/11 into the same
+`--result_dir` would overwrite/collide, since `train.py` names its own
+output files `cell{N}_ddibn_seed{S}...` regardless of `NOVEL_DRUG` — it
+has no concept of "condition" in its output naming. This repository's
+shipped `main_experiments/01-12_encoders/` has every cell 08/10/11 file
+(and `summary.csv` row) relabeled by hand with an `_existing`/`_novel`
+filename suffix and a `condition` column (`single` for the other, single-
+condition cells) purely so both runs can live in one folder; reproducing
+this exactly means running Existing and Novel into separate directories
+and merging/relabeling them the same way, or just keeping them in two
+`--result_dir`s if you don't need the exact same layout. Cell 09's
+Novel-drug run additionally needs `KGE_TYPE=transe` and writes to
+`results/appendix/f_kge_comparison/novel_drug/transe/` instead — see the
+KGE comparison note below.
 
 **DDI network (R-GCN), cell 08** — the paper reports this cell initialized
 with a 1,024-bit Morgan fingerprint (4.66M parameters). This is the
@@ -268,11 +268,10 @@ python train.py --cell 08 --gpu 0 --seed 42
 NODE_INIT=transe python train.py --cell 08 --gpu 0 --seed 42
 ```
 
-`results/ddi_network_molgraph_init/` (not used for any number in the
-paper) is the same cell with `NODE_INIT=molgraph` (sum-pooled raw atom
-features instead of a fingerprint or TransE), 3 seeds.
+(An earlier `NODE_INIT=molgraph` robustness check for this cell is not
+used for any number in the paper and is not in this repository.)
 
-**`results/appendix_h_embedding_subgraph_cross/`** (Appendix H, Table H.1:
+**`results/appendix/h_embedding_subgraph_cross/`** (Appendix H, Table H.1:
 crossing the Existing/Novel condition of the TransE embedding independently
 from that of the KG subgraph, Knowledge graph subgraph R-GCN, cell 10 only)
 uses two more env vars that override `NOVEL_DRUG` when set, 3 seeds each:
@@ -288,35 +287,37 @@ EMB_SRC=existing_drug SUBGRAPH_SRC=novel_drug python train.py --cell 10 --gpu 0 
 included in this repository (for both drug conditions), since they are
 what cells 08-11 use by default and what cell 08's and the Appendix H
 cross-evaluation's reported numbers were produced with. The RotatE/ComplEx
-comparison numbers in `results/kge_comparison/` are the exact values used
-for the paper's Figure F.1, but retraining those two KGE types from this
-repository (`KGE_TYPE=rotate ...`) is not supported since their trained
-embeddings are not included (RotatE's in particular exceeds GitHub's
-100MB file-size limit). DistMult/TransH were trained during development
-but are not reported anywhere in the paper, so they are not in this
-repository at all. `results/kge_comparison/{existing_drug,novel_drug}/transe/`
-is reproduced the same way as `encoders_main`/`encoders_novel_drug` cell 09
+comparison numbers in `results/appendix/f_kge_comparison/` are the exact
+values used for the paper's Figure F.1, but retraining those two KGE
+types from this repository (`KGE_TYPE=rotate ...`) is not supported since
+their trained embeddings are not included (RotatE's in particular exceeds
+GitHub's 100MB file-size limit). DistMult/TransH were trained during
+development but are not reported anywhere in the paper, so they are not
+in this repository at all.
+`results/appendix/f_kge_comparison/{existing_drug,novel_drug}/transe/` is
+reproduced the same way as `main_experiments/01-12_encoders` cell 09
 above; `novel_drug_embedding_only/` additionally needs `ABLNR=1` (reuses the
 existing-drug TransE embedding as-is, with only the Novel-drug rows replaced
 by a random vector, so no KGE retraining is involved).
 
-**`results/document_backbone_comparison/{biobert,pubmedbert,scibert}/{existing_drug,novel_drug}/`**
+**`results/appendix/c_document_backbone_comparison/{biobert,pubmedbert,scibert}/{existing_drug,novel_drug}/`**
 (Appendix C.4, Table C.1): cell 12 with `DOC_MODEL` selecting the backbone,
 3 seeds each. `scibert` is the default (`DOC_MODEL`/`DOC_INPUT` need no
 override for `existing_drug`) and is also the main-text Figure 6 result
-(and Table D.1's parameter count) — (`encoders_main`'s cell 12 above is
-this exact run); `biobert`/`pubmedbert` are only used for this Appendix
-C.4 comparison. Each backbone's embeddings must first be built once with
-`build_biobert_template.py --tag {biobert,pubmedbert,scibert}` (reads
-`data/document/bio_profile_text.json`, writes into `data/document/`):
+(and Table D.1's parameter count) — (`main_experiments/01-12_encoders`'s
+cell 12 above is this exact run); `biobert`/`pubmedbert` are only used for
+this Appendix C.4 comparison. Each backbone's embeddings must first be
+built once with `build_biobert_template.py --tag {biobert,pubmedbert,scibert}`
+(reads `data/document/bio_profile_text.json`, writes into `data/document/`):
 
 ```bash
 DOC_MODEL=pubmedbert DOC_INPUT=novel_drug python train.py --cell 12 --gpu 0 --seed 42 \
-  --result_dir ../results/document_backbone_comparison/pubmedbert/novel_drug
+  --result_dir ../results/appendix/c_document_backbone_comparison/pubmedbert/novel_drug
 ```
 
-**`results/llm/zeroshot/`** (Figure 6, Instruction #13-18, "Z" markers): `llm_infer.py` for each of the 6
-models (`google/gemma-2-2b-it`, `Qwen/Qwen2.5-3B-Instruct`,
+**`results/main_experiments/13-18_llm/zeroshot/`** (Figure 6, Instruction
+#13-18, "Z" markers): `llm_infer.py` for each of the 6 models
+(`google/gemma-2-2b-it`, `Qwen/Qwen2.5-3B-Instruct`,
 `microsoft/Phi-3.5-mini-instruct`, `microsoft/phi-4`,
 `Qwen/Qwen2.5-14B-Instruct`, `google/gemma-2-27b-it`) x 2 drug conditions
 x 3 splits (temperature=0, seed hardcoded, so one call per split/mode/model
@@ -324,17 +325,15 @@ is deterministic and sufficient — no repeated seeds):
 
 ```bash
 python llm_infer.py --version v2 --model google/gemma-2-2b-it \
-  --gpu 0 --split S0 --mode existing_drug --outdir ../results/llm/zeroshot
+  --gpu 0 --split S0 --mode existing_drug \
+  --outdir ../results/main_experiments/13-18_llm/zeroshot
 ```
 
-`results/llm/zeroshot_s2_reproducibility_check/` is the same command for
-the S2 split only, re-run into a separate output directory as a
-determinism check (see `Reproducibility` discussion in the paper).
-
-**`results/llm/finetuning/`** (Figure 6, Instruction #13-18, "F" markers): QLoRA fine-tune (`ft_train.py`,
-3 epochs, seed 42) then evaluate (`run_ft_cv.py`, which itself evaluates
-all 3 splits and selects the best epoch per split by validation AUROC),
-for each of the same 6 models x 2 drug conditions:
+**`results/main_experiments/13-18_llm/finetuning/`** (Figure 6, Instruction
+#13-18, "F" markers): QLoRA fine-tune (`ft_train.py`, 3 epochs, seed 42)
+then evaluate (`run_ft_cv.py`, which itself evaluates all 3 splits and
+selects the best epoch per split by validation AUROC), for each of the
+same 6 models x 2 drug conditions:
 
 ```bash
 python ft_train.py --model google/gemma-2-2b-it --mode existing_drug --gpu 0 --epochs 3
@@ -342,6 +341,15 @@ python run_ft_cv.py --tag google_gemma-2-2b-it_existing_drug_seed42 \
   --model google/gemma-2-2b-it --mode existing_drug \
   --ckpt ../results/ft_checkpoints/google_gemma-2-2b-it_existing_drug_seed42 --gpu 0 --epochs 3
 ```
+
+`run_ft_cv.py` saves both a validation-AUROC-selected "best" checkpoint's
+test metrics per split and a full per-epoch sweep (`--policy both`, the
+default); this repository ships only the former (`ft_{tag}_{split}.json`
++ its `summary.csv` rows, since that's the policy Appendix E.1 describes
+as what was actually used) plus each run's `_cv.json` (the per-epoch
+validation curve that the best-epoch selection was made from, kept for
+transparency) — not the discarded `ft_ep1_`/`ft_ep2_`/`ft_ep3_` epoch-sweep
+files.
 
 See `ddi334/code/` for dataset build (`build_dataset.py`, `build_kg.py`,
 `build_bio_profile.py`, ...) and prompt rendering (`llm_prompts.py`).
