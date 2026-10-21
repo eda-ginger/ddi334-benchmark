@@ -113,9 +113,13 @@ results/
                                            `single` = the cell has no
                                            Existing/Novel distinction
                                            (Molecule cells, Bio profile,
-                                           KGE, SciBERT); `existing`/
-                                           `novel` = cells 08/10/11,
-                                           which do (one row per
+                                           DDI network, KGE, SciBERT —
+                                           DDI network's Existing/Novel
+                                           inputs are identical by
+                                           construction, so the paper
+                                           reports one number for it too);
+                                           `existing`/`novel` = cells
+                                           10/11, which do (one row per
                                            condition, same cell number).
                                            Cell 12's `single` run here is
                                            the same as appendix/
@@ -144,10 +148,11 @@ results/
       existing_drug/                        RotatE/ComplEx link-
       novel_drug/                           reconstruction (Hits@10) vs
       novel_drug_embedding_only/            downstream DDI prediction
-                                             (AUROC). novel_drug_
-                                             embedding_only isolates the
-                                             embedding from the
-                                             graph-structure effect
+                                             (AUROC); novel_drug_embedding_
+                                             only/transe/ is specifically
+                                             Figure F.1's "TransE Existing
+                                             drug" data point (see
+                                             Reproducing a result below)
     h_embedding_subgraph_cross/           Appendix H (Table H.1): TransE
       novel_embedding_existing_subgraph/    embedding and KG subgraph
       existing_embedding_novel_subgraph/    crossed independently for
@@ -228,8 +233,10 @@ done
 
 **Existing / Novel drug conditions** (biological-relation availability for
 Unseen drugs, Section 4 of the paper) are selected with env vars, not CLI
-flags, and only matter for cells 08, 10, 11 (every other cell's input is
-identical either way):
+flags, and only matter for cells 09, 10, 11 (every other cell's input is
+identical either way — including cell 08, DDI network R-GCN: its DDI
+connections and molecular node features are the same under both
+conditions by construction, so the paper reports a single number for it):
 
 ```bash
 # Existing drug condition (default)
@@ -239,12 +246,12 @@ python train.py --cell 10 --gpu 0 --seed 42
 NOVEL_DRUG=1 python train.py --cell 10 --gpu 0 --seed 42
 ```
 
-Running both conditions for cells 08/10/11 into the same
-`--result_dir` would overwrite/collide, since `train.py` names its own
-output files `cell{N}_ddibn_seed{S}...` regardless of `NOVEL_DRUG` — it
-has no concept of "condition" in its output naming. This repository's
-shipped `main_experiments/01-12_encoders/` has every cell 08/10/11 file
-(and `summary.csv` row) relabeled by hand with an `_existing`/`_novel`
+Running both conditions for cells 10/11 into the same `--result_dir`
+would overwrite/collide, since `train.py` names its own output files
+`cell{N}_ddibn_seed{S}...` regardless of `NOVEL_DRUG` — it has no concept
+of "condition" in its output naming. This repository's shipped
+`main_experiments/01-12_encoders/` has every cell 10/11 file (and
+`summary.csv` row) relabeled by hand with an `_existing`/`_novel`
 filename suffix and a `condition` column (`single` for the other, single-
 condition cells) purely so both runs can live in one folder; reproducing
 this exactly means running Existing and Novel into separate directories
@@ -285,8 +292,9 @@ EMB_SRC=existing_drug SUBGRAPH_SRC=novel_drug python train.py --cell 10 --gpu 0 
 
 **KGE comparison (Appendix F)**: only the TransE entity embeddings are
 included in this repository (for both drug conditions), since they are
-what cells 08-11 use by default and what cell 08's and the Appendix H
-cross-evaluation's reported numbers were produced with. The RotatE/ComplEx
+what cells 09-11 use by default (cell 08 defaults to `molfp` instead, see
+above) and what the Appendix H cross-evaluation's reported numbers were
+produced with. The RotatE/ComplEx
 comparison numbers in `results/appendix/f_kge_comparison/` are the exact
 values used for the paper's Figure F.1, but retraining those two KGE
 types from this repository (`KGE_TYPE=rotate ...`) is not supported since
@@ -294,11 +302,16 @@ their trained embeddings are not included (RotatE's in particular exceeds
 GitHub's 100MB file-size limit). DistMult/TransH were trained during
 development but are not reported anywhere in the paper, so they are not
 in this repository at all.
-`results/appendix/f_kge_comparison/{existing_drug,novel_drug}/transe/` is
-reproduced the same way as `main_experiments/01-12_encoders` cell 09
-above; `novel_drug_embedding_only/` additionally needs `ABLNR=1` (reuses the
-existing-drug TransE embedding as-is, with only the Novel-drug rows replaced
-by a random vector, so no KGE retraining is involved).
+`results/appendix/f_kge_comparison/novel_drug/transe/` is reproduced the
+same way as `main_experiments/01-12_encoders` cell 09's Novel-drug run
+above. `novel_drug_embedding_only/transe/` is Figure F.1's actual "TransE
+Existing drug" data point — it needs `ABLNR=1` (reuses the Existing-drug
+TransE embedding as-is, with only the Novel-drug rows replaced by a
+random vector, so no KGE retraining is involved) rather than the plain
+Existing-drug run cell 09 uses elsewhere; the two give different
+Seen-Unseen AUROC (87.6% here vs. 84.3% for cell 09's own run), which is
+why this repository ships both instead of pointing Figure F.1 at cell 09's
+number.
 
 **`results/appendix/c_document_backbone_comparison/{biobert,pubmedbert,scibert}/{existing_drug,novel_drug}/`**
 (Appendix C.4, Table C.1): cell 12 with `DOC_MODEL` selecting the backbone,
