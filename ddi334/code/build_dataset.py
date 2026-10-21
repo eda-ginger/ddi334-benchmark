@@ -13,10 +13,10 @@ DDI-334 Dataset Builder — 소스에서 최종까지 한 번에 (재현 가능)
   - kge_hetionet/data/twosides.csv               TWOSIDES 연결(type-무관) 판정용
   - data/smiles/twosides_drugbank_mapping.csv    cid<->drugbank<->int_id(db_id)
 
-[산출물]  (모두 ddi334/ 아래)
+[산출물]  (모두 ddi334/data/splits/ 아래)
   - id_maps.json          334 약물의 cid<->db<->local 매핑 (단일 진실 소스)
   - cluster_split.json    Dk(270)/Dn(64), gamma=0.25 seed=42 (재현 기준)
-  - ddibn/                최종 ddibn 데이터셋 (209 type, pos+neg 1:1 교차, db 공간)
+  - train/valid/test_{S0,S1,S2}.txt   최종 데이터셋 (209 type, pos+neg 1:1 교차, db 공간)
   행 포맷: "h t y0,...,y(N-1) p"   (p=1 positive / p=0 negative)
 
 [파이프라인]  (전부 메모리상, 중간 디렉토리 없음)
@@ -100,7 +100,7 @@ def build_id_maps():
         'local2db': {str(k): v for k, v in local2db.items()},
         'db_ids': db_ids,
     }
-    with open(os.path.join(DDI334_DIR, 'data', 'id_maps.json'), 'w') as f:
+    with open(os.path.join(DDI334_DIR, 'data', 'splits', 'id_maps.json'), 'w') as f:
         json.dump(id_maps, f, indent=0)
     print(f"[1] id_maps.json: 334 약물 (cid/db/local). db_id 범위 {db_ids[0]}~{db_ids[-1]}")
     return set(db_ids), {c: cid2db[c] for c in sorted_cids}
@@ -161,7 +161,7 @@ def build_cluster_split(db_set):
         if abs(len(dk2) - TARGET_DK) < abs(len(dk) - TARGET_DK):
             dk, dn = dk2, dn2
     assert len(dk) + len(dn) == N_DRUGS
-    with open(os.path.join(DDI334_DIR, 'data', 'cluster_split.json'), 'w') as f:
+    with open(os.path.join(DDI334_DIR, 'data', 'splits', 'cluster_split.json'), 'w') as f:
         json.dump({'gamma': GAMMA, 'seed': SEED,
                    'Dk': sorted(dk), 'Dn': sorted(dn)}, f, indent=0)
     print(f"[2] cluster_split.json: Dk={len(dk)} / Dn={len(dn)} (gamma={GAMMA}, seed={SEED})")
@@ -266,7 +266,7 @@ def split_pairs(pair_vec, dk, dn):
 
 
 def add_negatives_and_write(name, splits, neither, dk, dn, n_types, type_map):
-    out_dir = os.path.join(DDI334_DIR, 'data', name)
+    out_dir = os.path.join(DDI334_DIR, 'data', 'splits')
     os.makedirs(out_dir, exist_ok=True)
 
     # neither bucket
@@ -322,7 +322,7 @@ def main():
     sp1 = split_pairs(pos1, dk, dn)
     add_negatives_and_write('ddibn', sp1, set(neither), dk, dn, N1, None)
 
-    print(f"\n[DONE] ddi334/ddibn (N={N1}) + id_maps.json + cluster_split.json")
+    print(f"\n[DONE] ddi334/data/splits/ (N={N1}) + id_maps.json + cluster_split.json")
 
 
 if __name__ == '__main__':

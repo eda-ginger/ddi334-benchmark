@@ -37,10 +37,14 @@ ddi334/
                      DDI-334-specific scripts (dataset build, KG build,
                      LLM prompt rendering/inference, fine-tuning, ...).
                      See below.
-  data/              train/valid/test split files (S0/S1/S2), KG
-                     triples, cluster-split/id-map/type-name metadata,
-                     and the precomputed encoder inputs under
-                     `ddibn/precompute/`
+  data/              organized by modality:
+                       splits/    train/valid/test split files (S0/S1/S2),
+                                  cluster-split/id-map/type-name metadata
+                       molecule/  SMILES, SchNet coordinates, ChemBERTa embeddings
+                       relation/  KG triples, DDI-whole graph, KGE embeddings
+                                  (`relation/kge/`)
+                       document/  BioBERT/PubMedBERT/SciBERT embeddings,
+                                  bio-profile text source
   results/           summary metrics (per-class scores, configs used,
                      loss curves, LLM ZS/FT metrics, KGE comparison
                      results, commercial-LLM comparison)
@@ -138,8 +142,8 @@ our specific shared server, which is why they aren't included here).
 ```bash
 cd ddi334/code
 
-# example: cell04 (SchNet), DDI-334 (ddibn), seed 42
-python train.py --cell 04 --dataset ddibn --gpu 0 --seed 42
+# example: cell04 (SchNet), seed 42
+python train.py --cell 04 --gpu 0 --seed 42
 ```
 
 `--checkpoint_metric` is not a flag here — checkpoint selection (accuracy,
@@ -154,7 +158,7 @@ over every reported cell and seed:
 ```bash
 for cell in 01 02 03 04 06 07 08 09 10 11 13 14 15; do
   for seed in 0 42 124; do
-    python train.py --cell $cell --dataset ddibn --gpu 0 --seed $seed \
+    python train.py --cell $cell --gpu 0 --seed $seed \
       --result_dir ../results/encoders_main
   done
 done
@@ -166,10 +170,10 @@ flags:
 
 ```bash
 # Existing drug condition (default)
-python train.py --cell 09 --dataset ddibn --gpu 0 --seed 42
+python train.py --cell 09 --gpu 0 --seed 42
 
 # Novel drug condition (Unseen drugs' biological relations removed)
-NOVEL_DRUG=1 python train.py --cell 09 --dataset ddibn --gpu 0 --seed 42
+NOVEL_DRUG=1 python train.py --cell 09 --gpu 0 --seed 42
 ```
 
 **`results/encoders_novel_drug/`** (Section 5.2 figure): cells 08-11 under
@@ -180,7 +184,7 @@ the KGE comparison note below):
 ```bash
 for cell in 09 10 11; do
   for seed in 0 42 124; do
-    NOVEL_DRUG=1 python train.py --cell $cell --dataset ddibn --gpu 0 --seed $seed \
+    NOVEL_DRUG=1 python train.py --cell $cell --gpu 0 --seed $seed \
       --result_dir ../results/encoders_novel_drug
   done
 done
@@ -192,12 +196,12 @@ with a 1,024-bit Morgan fingerprint (4.66M parameters). This is the
 09/10 where it defaults to `transe`):
 
 ```bash
-python train.py --cell 11 --dataset ddibn --gpu 0 --seed 42
+python train.py --cell 11 --gpu 0 --seed 42
 # equivalent to: NODE_INIT=molfp python train.py --cell 11 ...
 
 # the earlier TransE-initialized version of this cell (not used in the
 # paper) is reproduced with:
-NODE_INIT=transe python train.py --cell 11 --dataset ddibn --gpu 0 --seed 42
+NODE_INIT=transe python train.py --cell 11 --gpu 0 --seed 42
 ```
 
 `results/ddi_network_molgraph_init/` (not used for any number in the
@@ -211,9 +215,9 @@ more env vars that override `NOVEL_DRUG` when set, 3 seeds each:
 
 ```bash
 # novel_embedding_existing_subgraph/
-EMB_SRC=novel_drug SUBGRAPH_SRC=existing_drug python train.py --cell 09 --dataset ddibn --gpu 0 --seed 42
+EMB_SRC=novel_drug SUBGRAPH_SRC=existing_drug python train.py --cell 09 --gpu 0 --seed 42
 # existing_embedding_novel_subgraph/
-EMB_SRC=existing_drug SUBGRAPH_SRC=novel_drug python train.py --cell 09 --dataset ddibn --gpu 0 --seed 42
+EMB_SRC=existing_drug SUBGRAPH_SRC=novel_drug python train.py --cell 09 --gpu 0 --seed 42
 ```
 
 **KGE comparison (Appendix)**: only the TransE entity embeddings are
@@ -235,10 +239,10 @@ by a random vector, so no KGE retraining is involved).
 (Appendix C.1): cell 13 with `DOC_MODEL` selecting the backbone, 3 seeds
 each. Each backbone's embeddings must first be built once with
 `build_biobert_template.py --tag {biobert,pubmedbert,scibert}` (reads
-`data/bio_profile_llm.json`, writes into `data/ddibn/precompute/`):
+`data/document/bio_profile_llm.json`, writes into `data/document/`):
 
 ```bash
-DOC_MODEL=pubmedbert DOC_INPUT=novel_drug python train.py --cell 13 --dataset ddibn --gpu 0 --seed 42 \
+DOC_MODEL=pubmedbert DOC_INPUT=novel_drug python train.py --cell 13 --gpu 0 --seed 42 \
   --result_dir ../results/document_backbone_comparison/pubmedbert/novel_drug
 ```
 
@@ -250,7 +254,7 @@ x 3 splits (temperature=0, seed hardcoded, so one call per split/mode/model
 is deterministic and sufficient — no repeated seeds):
 
 ```bash
-python llm_infer.py --version v2 --dataset ddibn --model google/gemma-2-2b-it \
+python llm_infer.py --version v2 --model google/gemma-2-2b-it \
   --gpu 0 --split S0 --mode existing_drug --outdir ../results/llm/zeroshot
 ```
 

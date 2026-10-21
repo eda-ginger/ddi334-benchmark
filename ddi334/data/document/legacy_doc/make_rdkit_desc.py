@@ -7,8 +7,9 @@ import json, os
 from rdkit import Chem
 from rdkit.Chem import Descriptors, Crippen, Lipinski, rdMolDescriptors, Fragments, QED, GraphDescriptors
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-SM = json.load(open(os.path.join(HERE, "..", "ddibn", "precompute", "drug_smiles.json")))
+HERE = os.path.dirname(os.path.abspath(__file__))             # .../ddi334/data/document/legacy_doc
+DATA_DIR = os.path.dirname(os.path.dirname(HERE))              # .../ddi334/data
+SM = json.load(open(os.path.join(DATA_DIR, "molecule", "drug_smiles.json")))
 HALO = {9, 17, 35, 53, 85}
 ACID_SMARTS = [Chem.MolFromSmarts(s) for s in ["[CX3](=O)[OX2H1]", "[SX4](=O)(=O)[OX2H1]"]]
 BASE_SMARTS = Chem.MolFromSmarts("[NX3;!$(NC=O);!$(N=O);!$(NS(=O)=O);!$(N#*)]")

@@ -8,9 +8,9 @@
            컬럼 패턴(어느 쌍이 그 부작용을 갖는지)이 동일한 tdc 컬럼을 찾아 정렬.
            (검증: 209/209 정확 1:1, 모호 0, 미매칭 0 — shared 15,471쌍 기준)
 
-출력 (ddi334/):
-  twosides_typenames_ddibn.json  {"0": "aplasia pure red cell", ..., "208": ...}
-  twosides_typenames_tdc.json    {"0": ..., ..., "1307": ...}
+출력 (ddi334/data/splits/):
+  typenames.json  {"0": "aplasia pure red cell", ..., "208": ...}
+  (tdc 트랙은 이후 전부 제거됨 — 이 스크립트의 tdc 관련 부분은 역사적 기록, 재실행 불가)
 
 Run: micromamba run -n DDIBench python build_typenames.py
 """
@@ -32,9 +32,10 @@ def y2name():
 
 
 def load_pos(ds):
+    data_dir = os.path.join(HERE, 'data', 'splits') if ds == 'ddibn' else os.path.join(HERE, 'data', ds)
     pv = {}
     for sp in SPLITS:
-        for line in open(os.path.join(HERE, 'data', ds, f'{sp}.txt')):
+        for line in open(os.path.join(data_dir, f'{sp}.txt')):
             p = line.split()
             if len(p) == 4 and p[3] == '1':
                 a, b = int(p[0]), int(p[1])
@@ -70,9 +71,9 @@ def main():
         else:
             unmatched.append(i)
     assert not ambig and not unmatched, f"ambig={ambig} unmatched={unmatched}"
-    json.dump(ddibn_map, open(os.path.join(HERE, 'data', 'twosides_typenames_ddibn.json'), 'w'),
+    json.dump(ddibn_map, open(os.path.join(HERE, 'data', 'splits', 'typenames.json'), 'w'),
               ensure_ascii=False, indent=0)
-    print(f"[ddibn] {len(ddibn_map)} -> twosides_typenames_ddibn.json "
+    print(f"[ddibn] {len(ddibn_map)} -> data/splits/typenames.json "
           f"(shared {len(shared)} pairs, 209/209 exact 1:1)")
     print("  sample:", {k: ddibn_map[k] for k in ['0', '1', '2', '3', '4']})
 

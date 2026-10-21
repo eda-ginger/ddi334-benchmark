@@ -63,14 +63,14 @@ point at wherever you put the raw sources.
    3. Build the "neither TWOSIDES-connected nor DrugBank-connected"
       negative pool from all `C(334, 2)` pairs
    4. Collect ddibn (209-type) positives, split by Dk/Dn membership
-      into S0/S1/S2, cross negatives 1:1 -> writes `ddibn/` (train/
+      into S0/S1/S2, cross negatives 1:1 -> writes `data/splits/` (train/
       valid/test `*.txt`, format `h t y0,...,y(N-1) p`). The raw TDC
       TWOSIDES CSVs (`meeting/ddi334_tdc/*.csv`, 1,308-type) are only
       used upstream, in step 1, to define the 334-drug universe; this
       repository does not ship or use a separate 1,308-type dataset.
 
 2. **`ddi334/code/build_kg.py`** (produces KGE training inputs under
-   `ddi334/data/kge/`):
+   `ddi334/data/relation/kge/`):
    - Combines HetioNet bio edges (`kge_hetionet/data/KG.txt`, non-DDI
      relations) with the non-334-drug subset of DrugBank DDI
      (`kge_hetionet/data/train.txt`) and the 334-drug TWOSIDES
@@ -79,6 +79,12 @@ point at wherever you put the raw sources.
    - KGE models (TransE/RotatE/DistMult/ComplEx/TransH) are then
      trained with `kge_hetionet/src/baseline.py` (PyKEEN, hyperparameters
      from the AstraZeneca DRKG baseline configs)
+   - `run_all.sh` and `configs/*.yaml` under `data/relation/kge/` are frozen
+     snapshots of the actual training run (not regenerated for this
+     repository's folder layout), so they still show the internal
+     server's absolute paths and the pre-rename folder name `ddibn`
+     (now `existing_drug` / `novel_drug` here) — reference only, not
+     meant to be re-run as-is
 
 3. Encoder-specific precomputation (`ddi334/code/build_bio_profile.py`,
    `build_bio_raw.py`, `build_biobert_template.py`,

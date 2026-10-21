@@ -6,16 +6,17 @@
   - 후보: 그 행의 queried side effect(vec=1)만 (전 실험과 동일하게 queried만 사용)
   - V1: candidate side effects 목록 -> JSON {id: true/false} (guided_json)
   - V2: side effect 1개 질문 -> Yes/No (guided_choice + logprob)
-  - type 이름: twosides_typenames_{ds}.json
+  - type 이름: data/splits/typenames.json
 """
 import json
 import os
 
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-EXP = os.path.dirname(HERE)
-LATEX = os.path.abspath(os.path.join(EXP, '..', '..', '..'))
-NAMES_JSON = os.path.join(LATEX, 'data', 'embeddings', 'drugbank_names.json')
-SMILES_JSON = os.path.join(LATEX, 'data', 'smiles', 'drugbank_id2smiles.json')
+SPLITS_DIR = os.path.join(HERE, 'data', 'splits')
+MOL_DIR = os.path.join(HERE, 'data', 'molecule')
+DOC_DIR = os.path.join(HERE, 'data', 'document')
+NAMES_JSON = os.path.join(SPLITS_DIR, 'drug_names.json')      # {db_id: name} (333/334; db_id 325엔 이름 소스 자체가 없어 drug_{id} fallback)
+SMILES_JSON = os.path.join(MOL_DIR, 'drug_smiles.json')       # {db_id: smiles}, 334 전부
 
 V1_SYSTEM = (
     "You are a pharmacology expert. Given information on two drugs and a list of\n"
@@ -32,13 +33,12 @@ V2_SYSTEM = (
 
 
 class DDI334Prompt:
-    def __init__(self, dataset):
-        self.typenames = json.load(open(os.path.join(HERE, 'data', f'twosides_typenames_{dataset}.json')))
-        names_raw = json.load(open(NAMES_JSON))['drug2name']
-        self.name_map = {int(k): v['name'] for k, v in names_raw.items()}
+    def __init__(self):
+        self.typenames = json.load(open(os.path.join(SPLITS_DIR, 'typenames.json')))
+        self.name_map = {int(k): v for k, v in json.load(open(NAMES_JSON)).items()}
         self.smiles = {int(k): v for k, v in json.load(open(SMILES_JSON)).items()}
         # bio profile (Ideal 입력): db_id -> {genes, indications, pharm_class}  (build_bio_profile.py)
-        bp_path = os.path.join(HERE, 'data', 'bio_profile_llm.json')
+        bp_path = os.path.join(DOC_DIR, 'bio_profile_llm.json')
         self.bio = json.load(open(bp_path)) if os.path.exists(bp_path) else {}
 
     def name(self, db):
@@ -132,19 +132,19 @@ class DDI334Prompt:
 RENDER_SPLITS = ["train", "valid_S0", "test_S0", "valid_S1", "test_S1", "valid_S2", "test_S2"]
 
 
-def render_cache(ds='ddibn'):
+def render_cache():
     """V2 Existing/Novel 프롬프트를 미리 렌더 -> data/prompt/{existing_drug,novel_drug}/{split}.jsonl.
     각 줄: {"d1","d2","type","y","user"} (y=polarity: 1 양성쌍 / 0 음성쌍). build_v2(mode=...)와
-    동일 로직 -> 재생성 가능(gitignore 대상). 입력 데이터(data/bio_profile_llm.json 등)는 data/에
+    동일 로직 -> 재생성 가능(gitignore 대상). 입력 데이터(data/splits, data/document 등)는 그대로
     유지, 산출 프롬프트만 data/prompt/에. (render_prompts.py 흡수, 2026-10-20)"""
-    pb = DDI334Prompt(ds)
+    pb = DDI334Prompt()
     out = os.path.join(HERE, "data", "prompt")
     MODES = ("existing_drug", "existing_drug_genes", "novel_drug")
     for m in MODES:
         os.makedirs(os.path.join(out, m), exist_ok=True)
     total = 0
     for sp in RENDER_SPLITS:
-        path = os.path.join(HERE, "data", ds, f"{sp}.txt")
+        path = os.path.join(SPLITS_DIR, f"{sp}.txt")
         if not os.path.exists(path):
             continue
         fh = {m: open(os.path.join(out, m, f"{sp}.jsonl"), "w") for m in MODES}
@@ -164,13 +164,13 @@ def render_cache(ds='ddibn'):
             f.close()
         total += n
         print(f"  {sp}: {n} prompts", flush=True)
-    print(f"[render] {ds} 총 {total} (쌍,타입) x existing_drug/novel_drug -> {out}/")
+    print(f"[render] 총 {total} (쌍,타입) x existing_drug/novel_drug -> {out}/")
 
 
-def demo(ds='ddibn'):
-    pb = DDI334Prompt(ds)
+def demo():
+    pb = DDI334Prompt()
     # 실제 첫 positive 행에서 queried type 뽑아 프롬프트 시연
-    for line in open(os.path.join(HERE, 'data', ds, 'test_S0.txt')):
+    for line in open(os.path.join(SPLITS_DIR, 'test_S0.txt')):
         p = line.split()
         if p[3] == '1':
             d1, d2 = int(p[0]), int(p[1])
@@ -184,11 +184,11 @@ def demo(ds='ddibn'):
 
 
 if __name__ == '__main__':
-    # demo (기본):  python llm_prompts.py [ddibn]
-    # render cache: python llm_prompts.py render [ddibn]
+    # demo (기본):  python llm_prompts.py
+    # render cache: python llm_prompts.py render
     import sys
     args = sys.argv[1:]
     if args and args[0] == 'render':
-        render_cache(args[1] if len(args) > 1 else 'ddibn')
+        render_cache()
     else:
-        demo(args[0] if args else 'ddibn')
+        demo()

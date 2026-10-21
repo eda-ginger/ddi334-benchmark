@@ -7,7 +7,7 @@
 - vLLM OpenAI 서버 (vllm-llm env에서 실행)
 
 Usage (vllm-llm env):
-  python llm_infer.py --version v1 --dataset ddibn --model Qwen/Qwen2.5-3B-Instruct \
+  python llm_infer.py --version v1 --model Qwen/Qwen2.5-3B-Instruct \
       --gpu 3 --split S0 --limit 16        # smoke
 """
 import argparse, json, os, subprocess, sys, time
@@ -16,6 +16,8 @@ from openai import OpenAI
 from sklearn.metrics import roc_auc_score, average_precision_score, accuracy_score, f1_score
 
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SPLITS_DIR = os.path.join(HERE, 'data', 'splits')
+DATASET_TAG = 'ddibn'   # 결과 파일명/summary.csv 스키마 보존용 상수 (경로 구성에는 쓰이지 않음)
 sys.path.insert(0, HERE)
 from llm_prompts import DDI334Prompt
 
@@ -48,9 +50,9 @@ def wait_ready(timeout=600):
     return False
 
 
-def load_rows(ds, split, limit):
+def load_rows(split, limit):
     rows = []
-    for line in open(os.path.join(HERE, 'data', ds, f'test_{split}.txt')):
+    for line in open(os.path.join(SPLITS_DIR, f'test_{split}.txt')):
         p = line.split()
         if len(p) != 4:
             continue
@@ -213,7 +215,6 @@ def save_results(ds, cell_label, split, metrics, wall, outdir=None):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--version", required=True, choices=["v1", "v2"])
-    ap.add_argument("--dataset", default="ddibn")
     ap.add_argument("--model", required=True)
     ap.add_argument("--gpu", default="3")
     ap.add_argument("--split", default="S0")
@@ -229,9 +230,9 @@ def main():
     global PORT
     PORT = a.port
 
-    pb = DDI334Prompt(a.dataset)
-    rows = load_rows(a.dataset, a.split, a.limit)
-    print(f"[{a.version}/{a.dataset}/{a.split}] rows={len(rows)} model={a.model}")
+    pb = DDI334Prompt()
+    rows = load_rows(a.split, a.limit)
+    print(f"[{a.version}/{DATASET_TAG}/{a.split}] rows={len(rows)} model={a.model}")
 
     proc, log = start_server(a.model, a.gpu, a.merge_system, a.gpu_mem_util)
     try:
@@ -247,10 +248,10 @@ def main():
         wall = time.time() - t0
         print(f"[RESULT] {metrics} | wall {wall:.0f}s")
         label = a.label or f"{a.version}_{a.model.replace('/','_')}"
-        save_results(a.dataset, label, a.split, metrics, wall, outdir=a.outdir or None)
+        save_results(DATASET_TAG, label, a.split, metrics, wall, outdir=a.outdir or None)
         # raw 예측 저장 (분포 분석용; 인코더 raw_preds와 동일 위치/형식).
         # V2: pred=p_yes[행,타입], V1: pred=0/1[행,타입], lab=multihot+polarity[행,N+1].
-        rdir = a.outdir or os.path.join(HERE, 'results', a.dataset)
+        rdir = a.outdir or os.path.join(HERE, 'results', DATASET_TAG)
         rpdir = os.path.join(rdir, 'raw_preds'); os.makedirs(rpdir, exist_ok=True)
         np.savez(os.path.join(rpdir, f'{label}_{a.split}.npz'), pred=pred, lab=lab)
         print(f"[SAVED] summary.csv + llm_metrics/{label}_{a.split}.json + raw_preds/{label}_{a.split}.npz")

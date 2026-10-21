@@ -14,11 +14,9 @@ backbone을 --tag로 선택 가능하게 일반화. hidden_dim은 각 모델 con
 대상 약물 = bio_profile_llm.json의 334드럭(DDI-334 전체, db_id 공간).
 전처리 방식은 기존 precompute/scripts/biobert.py와 동일([CLS], max_length=512).
 
-출력: ddi334/data/ddibn/precompute/{tag}_{novel_drug,genes,existing_drug}.pt
-      + experiment/data/precompute/{tag}_{novel_drug,genes,existing_drug}.pt (공유 소스본, assemble_precompute.py 관례)
+출력: ddi334/data/document/{tag}_{novel_drug,genes,existing_drug}.pt
       {'embeddings': {int db_id: Tensor[dim]}, 'hidden_dim':dim(모델별 실제값), 'model_name':..., 'input_type':...}
-      (train.py는 실행 시 PRECOMPUTE_DIR을 ddi334/data/{dataset}/precompute/로 재설정하므로
-       load_biobert_embeddings가 실제로 읽는 곳은 ddibn 경로 — assemble_precompute.py 참조)
+      (train.py의 load_biobert_embeddings가 실제로 읽는 곳도 data/document/)
 
 Run: micromamba run -n DDIBench python build_biobert_template.py --tag biobert [--device cuda:0]
      micromamba run -n DDIBench python build_biobert_template.py --tag pubmedbert
@@ -33,10 +31,9 @@ import torch
 
 HERE = os.path.dirname(os.path.abspath(__file__))                       # ddi334/code
 DDI334_DIR = os.path.dirname(HERE)                                      # ddi334
-EXPERIMENT_DIR = os.path.dirname(DDI334_DIR)                            # v5_ddi-bench/experiment
-SHARED_PRECOMPUTE_DIR = os.path.join(EXPERIMENT_DIR, 'data', 'precompute')          # 공유 소스본
-OUT_DIRS = [SHARED_PRECOMPUTE_DIR, os.path.join(DDI334_DIR, 'data', 'ddibn', 'precompute')]  # 실제 train.py가 읽는 곳
-BIO_PROFILE = os.path.join(DDI334_DIR, 'data', 'bio_profile_llm.json')
+DOC_DIR = os.path.join(DDI334_DIR, 'data', 'document')                  # 실제 train.py가 읽는 곳
+OUT_DIRS = [DOC_DIR]
+BIO_PROFILE = os.path.join(DOC_DIR, 'bio_profile_llm.json')
 MAX_TOKENS = 512
 TIERS = ['novel_drug', 'genes', 'existing_drug']
 
@@ -64,7 +61,7 @@ def main():
     sys.path.insert(0, HERE)
     from llm_prompts import DDI334Prompt
 
-    pb = DDI334Prompt('ddibn')   # typenames는 drug_text에 안 쓰이므로 dataset 무관
+    pb = DDI334Prompt()   # typenames는 drug_text에 안 쓰임
     drug_ids = sorted(int(k) for k in json.load(open(BIO_PROFILE)).keys())
     print(f'Target drugs: {len(drug_ids)}')
 

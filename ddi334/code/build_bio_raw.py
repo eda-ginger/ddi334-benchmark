@@ -26,9 +26,8 @@ import torch
 
 DDI334_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 V5_DIR = os.path.dirname(os.path.dirname(DDI334_DIR))
-KG_BIO_334 = os.path.join(DDI334_DIR, 'data', 'kge', 'kg_bio_334.txt')
+KG_BIO_334 = os.path.join(DDI334_DIR, 'data', 'relation', 'kge', 'kg_bio_334.txt')
 DRUG_MAX = 1710
-DATASETS = ['ddibn']
 SIDE_EFFECT_REL = '21'    # Compound-causes-Side Effect: same vocabulary as the DDI-334
                            # prediction label (adverse events) -> leakage, must be excluded.
                            # Already excluded for this reason in build_bio_profile.py (LLM
@@ -53,7 +52,7 @@ ALLOWED_TYPES = {'Gene', 'Disease'}   # target gene (direct binding) + indicatio
 
 
 def load_all_ids():
-    idm = json.load(open(os.path.join(DDI334_DIR, 'data', 'id_maps.json')))
+    idm = json.load(open(os.path.join(DDI334_DIR, 'data', 'splits', 'id_maps.json')))
     return sorted(int(x) for x in idm['db_ids'])              # 334
 
 
@@ -98,14 +97,12 @@ def main():
     print(f"  {empty}/{len(all_ids)} drugs with zero HetioNet bio neighbors (all-zero vector)")
 
     emb = {d: torch.from_numpy(M[i].astype(np.float32)) for i, d in enumerate(all_ids)}
-    for ds in DATASETS:
-        out_dir = os.path.join(DDI334_DIR, 'data', ds, 'precompute')
-        os.makedirs(out_dir, exist_ok=True)
-        out_path = os.path.join(out_dir, 'bio_raw.pt')
-        torch.save({'embeddings': emb, 'input_dim': n_feat, 'n_all': len(all_ids),
-                    'source': 'hetionet_bio_neighbors_raw',
-                    'method': 'bio_raw_multihot_no_similarity_no_pca'}, out_path)
-        print(f"  -> {out_path}")
+    out_dir = os.path.join(DDI334_DIR, 'data', 'relation')
+    out_path = os.path.join(out_dir, 'bio_raw.pt')
+    torch.save({'embeddings': emb, 'input_dim': n_feat, 'n_all': len(all_ids),
+                'source': 'hetionet_bio_neighbors_raw',
+                'method': 'bio_raw_multihot_no_similarity_no_pca'}, out_path)
+    print(f"  -> {out_path}")
 
 
 if __name__ == '__main__':

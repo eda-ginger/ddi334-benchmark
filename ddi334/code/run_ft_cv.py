@@ -18,13 +18,15 @@ HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__))); sys.path.ins
 import llm_infer as LI
 from llm_prompts import DDI334Prompt
 
+SPLITS_DIR = os.path.join(HERE, "data", "splits")
+DATASET_TAG = "ddibn"   # 결과 파일명/summary.csv 스키마 보존용 상수 (경로 구성에는 쓰이지 않음)
 OUTDIR = os.path.join(HERE, "results", "llm", "finetuning")
 SPLITS = ("S0", "S1", "S2")
 
 
-def load_rows(ds, prefix, split, limit=0):
+def load_rows(prefix, split, limit=0):
     rows = []
-    for line in open(os.path.join(HERE, 'data', ds, f"{prefix}_{split}.txt")):
+    for line in open(os.path.join(SPLITS_DIR, f"{prefix}_{split}.txt")):
         p = line.split()
         if len(p) != 4:
             continue
@@ -60,7 +62,6 @@ def main():
     ap.add_argument("--model", required=True)
     ap.add_argument("--mode", required=True, choices=["novel_drug", "existing_drug", "existing_drug_genes"])
     ap.add_argument("--ckpt", required=True)
-    ap.add_argument("--dataset", default="ddibn")
     ap.add_argument("--gpu", default="0")
     ap.add_argument("--epochs", type=int, default=5)
     ap.add_argument("--gpu-mem-util", type=float, default=0.5)
@@ -74,7 +75,7 @@ def main():
     eps = [e for e in range(1, a.epochs + 1) if os.path.isdir(os.path.join(a.ckpt, f"epoch_{e}"))]
     adapters = [(f"ep{e}", os.path.join(a.ckpt, f"epoch_{e}")) for e in eps]
     print(f"[ftcv_v2/{a.tag}] {len(adapters)} epoch 어댑터 LoRA serving (GPU{a.gpu}, mode={a.mode})", flush=True)
-    pb = DDI334Prompt(a.dataset)
+    pb = DDI334Prompt()
     proc, log = start_lora_server(a.model, a.gpu, adapters, a.merge_system, a.gpu_mem_util, a.port)
     try:
         if not LI.wait_ready(timeout=1200):
@@ -90,12 +91,12 @@ def main():
                 e3json = os.path.join(OUTDIR, "llm_metrics", f"ft_ep3_{a.tag}_{sp}.json")
                 if os.path.exists(e3json):
                     print(f"  [TEST ep3 {sp}] skip", flush=True); continue
-                trows = load_rows(a.dataset, "test", sp)
+                trows = load_rows("test", sp)
                 t0 = time.time()
                 pred, lab = LI.infer_v2(client, "ep3", pb, trows, a.merge_system, mode=a.mode)
                 m = LI.evaluate(pred, lab)
                 print(f"  [TEST ep3 {sp}]: {m} | {time.time()-t0:.0f}s", flush=True)
-                LI.save_results(a.dataset, f"ft_ep3_{a.tag}", sp, m, 0, outdir=OUTDIR)
+                LI.save_results(DATASET_TAG, f"ft_ep3_{a.tag}", sp, m, 0, outdir=OUTDIR)
                 np.savez(os.path.join(rpdir, f"ft_ep3_{a.tag}_{sp}.npz"), pred=pred, lab=lab)
             open(os.path.join(OUTDIR, "llm_metrics", f"ft_{a.tag}_ep3DONE"), "w").close()
             print(f"[ftcv_v2/{a.tag}] ep3 DONE", flush=True)
@@ -113,7 +114,7 @@ def main():
                       open(prog_path, "w"), indent=1)
 
         for sp in SPLITS:
-            vrows = load_rows(a.dataset, "valid", sp)
+            vrows = load_rows("valid", sp)
             print(f"  [{sp}] val rows={len(vrows)} (FULL)", flush=True)
             for e in eps:
                 if e in valcurve[sp]:   # 이미 평가된 슬롯 -> skip (resume)
@@ -141,11 +142,11 @@ def main():
             if os.path.exists(bjson):
                 mb = json.load(open(bjson)); print(f"  [TEST best {sp}] skip", flush=True)
             else:
-                trows = load_rows(a.dataset, "test", sp)
+                trows = load_rows("test", sp)
                 pred, lab = LI.infer_v2(client, f"ep{be}", pb, trows, a.merge_system, mode=a.mode)
                 mb = LI.evaluate(pred, lab)
                 print(f"  [TEST best {sp}] ep{be}: AUROC={mb['AUC-ROC']:.4f}", flush=True)
-                LI.save_results(a.dataset, f"ft_{a.tag}", sp, mb, 0, outdir=OUTDIR)
+                LI.save_results(DATASET_TAG, f"ft_{a.tag}", sp, mb, 0, outdir=OUTDIR)
                 np.savez(os.path.join(rpdir, f"ft_{a.tag}_{sp}.npz"), pred=pred, lab=lab)
             # --- ep3 고정 정책 (ep3 어댑터 있을 때만) ---
             e3json = os.path.join(OUTDIR, "llm_metrics", f"ft_ep3_{a.tag}_{sp}.json")
@@ -154,14 +155,14 @@ def main():
             elif EP3 not in eps:
                 print(f"  [TEST ep3 {sp}] ep3 어댑터 없음 -> skip", flush=True)
             elif be == EP3 and mb is not None:
-                LI.save_results(a.dataset, f"ft_ep3_{a.tag}", sp, mb, 0, outdir=OUTDIR)
+                LI.save_results(DATASET_TAG, f"ft_ep3_{a.tag}", sp, mb, 0, outdir=OUTDIR)
                 print(f"  [TEST ep3 {sp}] = best(ep3) 재사용", flush=True)
             else:
-                if trows is None: trows = load_rows(a.dataset, "test", sp)
+                if trows is None: trows = load_rows("test", sp)
                 pred, lab = LI.infer_v2(client, f"ep{EP3}", pb, trows, a.merge_system, mode=a.mode)
                 m3 = LI.evaluate(pred, lab)
                 print(f"  [TEST ep3 {sp}]: AUROC={m3['AUC-ROC']:.4f}", flush=True)
-                LI.save_results(a.dataset, f"ft_ep3_{a.tag}", sp, m3, 0, outdir=OUTDIR)
+                LI.save_results(DATASET_TAG, f"ft_ep3_{a.tag}", sp, m3, 0, outdir=OUTDIR)
                 np.savez(os.path.join(rpdir, f"ft_ep3_{a.tag}_{sp}.npz"), pred=pred, lab=lab)
         save_prog()
         open(os.path.join(OUTDIR, "llm_metrics", f"ft_{a.tag}_bestDONE"), "w").close()

@@ -14,9 +14,10 @@ encoder(GAT/SchNet/GT/MLP/CNN/ChemBERTa/BioBERT)만 모델로 꽂는다.
                   세 split 전부 patience 초과 시 종료
   HP            : main.py argparse  AdamW/lr3e-4/wd1e-5/batch128/patience10, scheduler 없음
 
-데이터: ddi334/ddibn/  ("h t y0,...,y(N-1) p", db_id 공간, pos/neg 1:1 교차)
+데이터: ddi334/data/splits/  ("h t y0,...,y(N-1) p", db_id 공간, pos/neg 1:1 교차)
+          data/molecule, data/relation, data/document — 모달리티별 전처리 입력
 Usage:
-  micromamba run -n DDIBench python train.py --cell 04 --dataset ddibn --gpu 0 --seed 42
+  micromamba run -n DDIBench python train.py --cell 04 --gpu 0 --seed 42
 """
 import os
 import sys
@@ -34,8 +35,14 @@ from sklearn.metrics import average_precision_score, roc_auc_score, accuracy_sco
 
 # ── 경로 (스크립트는 ddi334/code/ 안; encoders.py/ddi_model.py/dataset.py도 같은 폴더) ──
 DDI334_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PRECOMPUTE_DIR = os.path.join(DDI334_DIR, 'data', 'precompute')   # main()에서 데이터셋별로 재설정됨
-KGE_DIR = os.path.join(DDI334_DIR, 'data', 'kge')       # REL KGE 임베딩 (데이터셋별)
+DATASET_TAG = 'ddibn'   # 결과 파일명/summary.csv 스키마 보존용 상수. data/ 경로 구성에는 쓰이지 않음
+                        # (데이터셋이 하나뿐이라 --dataset 플래그는 제거했지만, 이미 커밋된
+                        # results/*/summary.csv·loss_curves 파일명과의 포맷 호환을 위해 값만 유지)
+SPLITS_DIR = os.path.join(DDI334_DIR, 'data', 'splits')        # train/valid/test 분할 + 메타
+MOL_DIR = os.path.join(DDI334_DIR, 'data', 'molecule')         # Molecule 모달리티 입력
+REL_DIR = os.path.join(DDI334_DIR, 'data', 'relation')         # Relation 모달리티 입력
+DOC_DIR = os.path.join(DDI334_DIR, 'data', 'document')         # Document 모달리티 입력
+KGE_DIR = os.path.join(REL_DIR, 'kge')                         # REL KGE 임베딩 (existing_drug/novel_drug)
 NUM_HETIONET_ENTITIES = 34124
 
 from encoders import (
@@ -51,48 +58,37 @@ from ddi_model import DDIModel
 from dataset import DDIBatch
 
 
-def load_kge_embeddings(dataset, kge_type='transe'):
-    """KGE entity 임베딩 [34124, dim]. {ds}/precompute/{type}_ent.npy 우선, 없으면 kge/{ds}/{type}/.
-    NOVEL_DRUG env=1이면 kge/{ds}_novel_drug/{type}/ 사용(신약 고립 KG로 학습한 임베딩, precompute 무시).
+def load_kge_embeddings(kge_type='transe'):
+    """KGE entity 임베딩 [34124, dim]. 기본: kge/existing_drug/{type}/.
+    NOVEL_DRUG env=1이면 kge/novel_drug/{type}/ 사용(신약 고립 KG로 학습한 임베딩).
     EMB_SRC env('existing_drug'/'novel_drug')가 설정되면 NOVEL_DRUG과 무관하게 임베딩 소스만 강제 선택
     (Existing/Novel subgraph x Existing/Novel TransE 교차 실험용, 2026-10-19 추가)."""
     emb_src = os.environ.get('EMB_SRC')
-    if emb_src == 'novel_drug':
-        d = os.path.join(KGE_DIR, f'{dataset}_novel_drug', kge_type)
+    if emb_src in ('novel_drug', 'existing_drug'):
+        d = os.path.join(KGE_DIR, emb_src, kge_type)
         npys = sorted(f for f in os.listdir(d) if f.endswith('.npy') and 'ent_' in f)
         if not npys:
-            raise FileNotFoundError(f"EMB_SRC=novel_drug KGE .npy 없음: {d}")
-        print(f"  [KGE/EMB_SRC=novel_drug] {os.path.join(d, npys[-1])}")
-        return torch.from_numpy(np.load(os.path.join(d, npys[-1]))).float()
-    if emb_src == 'existing_drug':
-        d = os.path.join(KGE_DIR, dataset, kge_type)
-        npys = sorted(f for f in os.listdir(d) if f.endswith('.npy') and 'ent_' in f)
-        if not npys:
-            raise FileNotFoundError(f"EMB_SRC=existing_drug KGE .npy 없음: {d}")
-        print(f"  [KGE/EMB_SRC=existing_drug] {os.path.join(d, npys[-1])}")
+            raise FileNotFoundError(f"EMB_SRC={emb_src} KGE .npy 없음: {d}")
+        print(f"  [KGE/EMB_SRC={emb_src}] {os.path.join(d, npys[-1])}")
         return torch.from_numpy(np.load(os.path.join(d, npys[-1]))).float()
     if os.environ.get('NOVEL_DRUG'):
-        d = os.path.join(KGE_DIR, f'{dataset}_novel_drug', kge_type)
+        d = os.path.join(KGE_DIR, 'novel_drug', kge_type)
         npys = sorted(f for f in os.listdir(d) if f.endswith('.npy') and 'ent_' in f)
         if not npys:
             raise FileNotFoundError(f"NOVEL_DRUG KGE .npy 없음: {d}")
         print(f"  [KGE/NOVEL_DRUG] {os.path.join(d, npys[-1])}")
         return torch.from_numpy(np.load(os.path.join(d, npys[-1]))).float()
     if os.environ.get('ABLNR'):   # ablation: existing_drug 임베딩 그대로 + novel 행만 random (재학습 X)
-        d = os.path.join(KGE_DIR, f'{dataset}_ablnr', kge_type)
+        d = os.path.join(KGE_DIR, 'ablnr', kge_type)
         npys = sorted(f for f in os.listdir(d) if f.endswith('.npy') and 'ent_' in f)
         if not npys:
             raise FileNotFoundError(f"ABLNR KGE .npy 없음: {d}")
         print(f"  [KGE/ABLNR] {os.path.join(d, npys[-1])}")
         return torch.from_numpy(np.load(os.path.join(d, npys[-1]))).float()
-    pc = os.path.join(PRECOMPUTE_DIR, f'{kge_type}_ent.npy')
-    if os.path.exists(pc):
-        print(f"  [KGE] {pc}")
-        return torch.from_numpy(np.load(pc)).float()
-    d = os.path.join(KGE_DIR, dataset, kge_type)
+    d = os.path.join(KGE_DIR, 'existing_drug', kge_type)
     npys = sorted(f for f in os.listdir(d) if f.endswith('.npy') and 'ent_' in f)
     if not npys:
-        raise FileNotFoundError(f"KGE .npy 없음: {pc} / {d}")
+        raise FileNotFoundError(f"KGE .npy 없음: {d}")
     print(f"  [KGE] {os.path.join(d, npys[-1])}")
     return torch.from_numpy(np.load(os.path.join(d, npys[-1]))).float()
 
@@ -182,7 +178,7 @@ def build_collate(gat_cache=None, subgraph_extractor=None,
 
 # ── Feature loaders (train.py와 동일, db_id 키) ──
 def load_drug_smiles():
-    with open(os.path.join(PRECOMPUTE_DIR, 'drug_smiles.json')) as f:
+    with open(os.path.join(MOL_DIR, 'drug_smiles.json')) as f:
         return {int(k): v for k, v in json.load(f).items()}
 
 
@@ -204,7 +200,7 @@ def load_molfp_embeddings():
     db_id==entity_id identity 활용: drug 행(0-1709)만 분자 구조로 채우고, 비-drug HetioNet
     entity(유전자/질병 등, 1710+)는 0으로 둔다 — '약물 자체의 분자 정보는 Existing/Novel 조건과
     무관하게 항상 보유'라는 전제로, R-GCN subgraph(cell09) TransE 초기화와 대조하기 위한 실험용."""
-    cache = os.path.join(PRECOMPUTE_DIR, 'molfp_ent_1024d.npy')
+    cache = os.path.join(MOL_DIR, 'molfp_ent_1024d.npy')
     if os.path.exists(cache):
         print(f"  [NODE_INIT/molfp] {cache}")
         return torch.from_numpy(np.load(cache)).float()
@@ -224,7 +220,7 @@ def load_molgraph_pooled_embeddings(num_drugs=1710):
     분자 하나당 합산(sum-pool)해서 고정 벡터 하나로 만든 것 (NODE_INIT=molgraph, 2026-10-19 추가,
     cell11 DDI-network-only 실험용). GAT 등 GNN을 거치지 않은 '그래프에 넣기 전' 원시 노드 피처이며,
     fingerprint와 동일하게 frozen 벡터로 cell11의 R-GCN 초기값에 사용한다."""
-    cache = os.path.join(PRECOMPUTE_DIR, 'molgraph_pooled_55d.npy')
+    cache = os.path.join(MOL_DIR, 'molgraph_pooled_55d.npy')
     if os.path.exists(cache):
         print(f"  [NODE_INIT/molgraph] {cache}")
         return torch.from_numpy(np.load(cache)).float()
@@ -251,11 +247,11 @@ def load_mol_graphs_tiger(smiles_dict):
 
 
 def load_schnet_coords():
-    return torch.load(os.path.join(PRECOMPUTE_DIR, 'schnet_coords.pt'), map_location='cpu', weights_only=False)
+    return torch.load(os.path.join(MOL_DIR, 'schnet_coords.pt'), map_location='cpu', weights_only=False)
 
 
 def load_chemberta_embeddings():
-    return torch.load(os.path.join(PRECOMPUTE_DIR, 'chemberta.pt'), map_location='cpu', weights_only=False)['embeddings']
+    return torch.load(os.path.join(MOL_DIR, 'chemberta.pt'), map_location='cpu', weights_only=False)['embeddings']
 
 
 def load_biobert_embeddings(input_type='description'):
@@ -270,18 +266,18 @@ def load_biobert_embeddings(input_type='description'):
     else:
         doc_model = os.environ.get('DOC_MODEL', 'biobert')
         fname = f'{doc_model}_{input_type}.pt'
-    payload = torch.load(os.path.join(PRECOMPUTE_DIR, fname), map_location='cpu', weights_only=False)
+    payload = torch.load(os.path.join(DOC_DIR, fname), map_location='cpu', weights_only=False)
     return payload['embeddings'], payload['hidden_dim']
 
 
 def load_raw_bio_profile():
     """Cell 15: raw HetioNet bio-neighbor multi-hot vector (build_bio_raw.py). No similarity/PCA."""
-    pl = torch.load(os.path.join(PRECOMPUTE_DIR, 'bio_raw.pt'), map_location='cpu', weights_only=False)
+    pl = torch.load(os.path.join(REL_DIR, 'bio_raw.pt'), map_location='cpu', weights_only=False)
     return pl['embeddings'], pl['input_dim']
 
 
 # ── Model builder (cells 01-07, 13-14) — train_ddi334.py와 동일 ──
-def build_model(cell, device, drug_ids, dataset=None):
+def build_model(cell, device, drug_ids):
     hd, dr = HP['hidden_dim'], HP['dropout']
     encoder, gat_cache, exclude = None, None, set()
     rel_ctx = None   # Cell 09/10 subgraph: {extractor, drug2kg_table, transform}
@@ -321,7 +317,7 @@ def build_model(cell, device, drug_ids, dataset=None):
     elif cell == '08':
         # KGE frozen lookup (TransE 기본; KGE_TYPE 환경변수로 5종 선택). db_id==entity_id (identity).
         kge_type = os.environ.get('KGE_TYPE', 'transe')
-        kge_emb = load_kge_embeddings(dataset, kge_type)
+        kge_emb = load_kge_embeddings(kge_type)
         encoder = TransEEncoder(hidden_dim=hd, dropout=dr,
                                 num_entities=NUM_HETIONET_ENTITIES, embed_dim=kge_emb.shape[1])
         with torch.no_grad():
@@ -342,9 +338,9 @@ def build_model(cell, device, drug_ids, dataset=None):
             drug_kge = load_molgraph_pooled_embeddings(num_drugs=1710)
         else:
             kge_type = os.environ.get('KGE_TYPE', 'transe')
-            kge_emb = load_kge_embeddings(dataset, kge_type)
+            kge_emb = load_kge_embeddings(kge_type)
             drug_kge = kge_emb[:1710]   # rows 0-1709 = drug slots (db_id==entity_id)
-        whole = torch.load(os.path.join(PRECOMPUTE_DIR, 'ddi_whole.pt'), weights_only=False)
+        whole = torch.load(os.path.join(REL_DIR, 'ddi_whole.pt'), weights_only=False)
         encoder = RGCNWholeDDIEncoder(
             hidden_dim=hd, num_drugs=1710, num_relations=int(whole['num_relations']),
             num_bases=30, num_layers=2, dropout=dr, edge_dropout=0.4,
@@ -363,9 +359,9 @@ def build_model(cell, device, drug_ids, dataset=None):
             init_emb = load_molfp_embeddings()
         else:
             kge_type = os.environ.get('KGE_TYPE', 'transe')
-            init_emb = load_kge_embeddings(dataset, kge_type)
+            init_emb = load_kge_embeddings(kge_type)
         num_ent = init_emb.shape[0]
-        rm = json.load(open(os.path.join(KGE_DIR, dataset, 'relation_map.json')))
+        rm = json.load(open(os.path.join(KGE_DIR, 'existing_drug', 'relation_map.json')))
         num_rel = int(rm['n_relations'])                       # 232 / 1331
         subgraph_src = os.environ.get('SUBGRAPH_SRC')
         if subgraph_src == 'existing_drug':
@@ -375,11 +371,11 @@ def build_model(cell, device, drug_ids, dataset=None):
         else:
             use_novel_drug_subgraph = bool(os.environ.get('NOVEL_DRUG'))
         if use_novel_drug_subgraph:   # 신약 고립 KG: novel edge 제거된 triples + 별도 캐시(existing_drug 재사용 금지)
-            triples = np.load(os.path.join(DDI334_DIR, 'data', 'kge', 'kg_triples_novel_drug.npy'))   # [E,3] (h,t,r)
-            cache_dir = os.path.join(PRECOMPUTE_DIR, 'subgraph_cache_novel_drug')
+            triples = np.load(os.path.join(KGE_DIR, 'kg_triples_novel_drug.npy'))   # [E,3] (h,t,r)
+            cache_dir = os.path.join(REL_DIR, 'subgraph_cache_novel_drug')
         else:
-            triples = np.load(os.path.join(PRECOMPUTE_DIR, 'kg_triples.npy'))   # [E,3] (h,t,r)
-            cache_dir = os.path.join(PRECOMPUTE_DIR, 'subgraph_cache')
+            triples = np.load(os.path.join(REL_DIR, 'kg_triples.npy'))   # [E,3] (h,t,r)
+            cache_dir = os.path.join(REL_DIR, 'subgraph_cache')
         if cell == '09':
             encoder = RGCNSubgraphEncoder(
                 hidden_dim=hd, dropout=dr, num_entities=num_ent, num_relations=num_rel,
@@ -508,7 +504,7 @@ def evaluate(model, loader, device, want_per_type=False, want_raw=False):
 
 
 # ── Training ──
-def train(cell, dataset, gpu=0, seed=0, epochs=None, result_dir=None, apk=False):
+def train(cell, gpu=0, seed=0, epochs=None, result_dir=None, apk=False):
     global NUM_TYPES
     torch.manual_seed(seed); np.random.seed(seed)
     if torch.cuda.is_available():
@@ -517,33 +513,30 @@ def train(cell, dataset, gpu=0, seed=0, epochs=None, result_dir=None, apk=False)
     if epochs:
         HP['epochs'] = epochs
 
-    data_dir = os.path.join(DDI334_DIR, 'data', dataset)
-    global PRECOMPUTE_DIR
-    PRECOMPUTE_DIR = os.path.join(data_dir, 'precompute')   # 모든 MOL/REL/DOC feature를 여기서 로드
-    meta = json.load(open(os.path.join(data_dir, 'meta.json')))
+    meta = json.load(open(os.path.join(SPLITS_DIR, 'meta.json')))
     NUM_TYPES = meta['n_types']
-    drug_ids = [int(v) for v in json.load(open(os.path.join(data_dir, 'drug_map.json'))).values()]
+    drug_ids = [int(v) for v in json.load(open(os.path.join(SPLITS_DIR, 'drug_map.json'))).values()]
 
     if result_dir is None:
-        result_dir = os.path.join(DDI334_DIR, 'results', dataset)
+        result_dir = os.path.join(DDI334_DIR, 'results', DATASET_TAG)
     os.makedirs(result_dir, exist_ok=True)
 
-    print(f"\n[DDI-334/{dataset}] Cell {cell} | N={NUM_TYPES} | {device} | seed={seed}")
-    ntfy(f"[DDI334/{dataset}] Cell{cell} seed{seed} START | N={NUM_TYPES}")
+    print(f"\n[DDI-334/{DATASET_TAG}] Cell {cell} | N={NUM_TYPES} | {device} | seed={seed}")
+    ntfy(f"[DDI334/{DATASET_TAG}] Cell{cell} seed{seed} START | N={NUM_TYPES}")
 
-    model, exclude, gat_cache, rel_ctx = build_model(cell, device, drug_ids, dataset=dataset)
+    model, exclude, gat_cache, rel_ctx = build_model(cell, device, drug_ids)
     model = model.to(device)
     n_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
     if exclude:
         print(f"  excluded {len(exclude)} drugs (no 3D coords)")
 
     # datasets 먼저 (subgraph precompute에 전 split 쌍 필요)
-    train_ds = DDI334Dataset(data_dir, 'train', exclude)
+    train_ds = DDI334Dataset(SPLITS_DIR, 'train', exclude)
     splits = ['S0', 'S1', 'S2']
     vds, tds = {}, {}
     for s in splits:
-        vds[s] = DDI334Dataset(data_dir, f'valid_{s}', exclude)
-        tds[s] = DDI334Dataset(data_dir, f'test_{s}', exclude)
+        vds[s] = DDI334Dataset(SPLITS_DIR, f'valid_{s}', exclude)
+        tds[s] = DDI334Dataset(SPLITS_DIR, f'test_{s}', exclude)
 
     # Cell 09/10: 학습 전 전체 약물쌍 subgraph 미리 추출 -> 캐시 (worker가 CoW fork로 공유)
     if rel_ctx is not None:
@@ -552,7 +545,7 @@ def train(cell, dataset, gpu=0, seed=0, epochs=None, result_dir=None, apk=False)
         for ds_ in [train_ds] + list(vds.values()) + list(tds.values()):
             for a, b in ds_.pairs:
                 uniq.add((int(tbl[int(a)]), int(tbl[int(b)])))
-        print(f"  [subgraph] precompute {len(uniq)} distinct pairs -> {os.path.join(PRECOMPUTE_DIR, 'subgraph_cache')}")
+        print(f"  [subgraph] precompute {len(uniq)} distinct pairs -> {os.path.join(REL_DIR, 'subgraph_cache')}")
         rel_ctx['extractor'].precompute_all(list(uniq), transform_fn=rel_ctx['transform'])
 
     collate = build_collate(
@@ -614,7 +607,7 @@ def train(cell, dataset, gpu=0, seed=0, epochs=None, result_dir=None, apk=False)
             break
 
     wall = time.time() - start
-    tag = f"cell{cell}_{dataset}_seed{seed}"
+    tag = f"cell{cell}_{DATASET_TAG}_seed{seed}"
     # 2026-06-17: 전 지표(ROC/PR/Acc/F1/P@50/P@(N/2)) + raw 점수(.npz) 항상 저장 (apk 인자는 하위호환 무시)
     for sub in ['loss_curves', 'per_class', 'configs', 'raw_preds']:
         os.makedirs(os.path.join(result_dir, sub), exist_ok=True)
@@ -646,14 +639,14 @@ def train(cell, dataset, gpu=0, seed=0, epochs=None, result_dir=None, apk=False)
                 w.writerow([round(float(x), 6) for x in per_type[key]])
         # config yaml
         with open(os.path.join(result_dir, 'configs', f'{tag}_{s}.yaml'), 'w') as f:
-            f.write(f"cell: '{cell}'\ndataset: {dataset}\nsplit: {s}\nseed: {seed}\n"
+            f.write(f"cell: '{cell}'\ndataset: {DATASET_TAG}\nsplit: {s}\nseed: {seed}\n"
                     f"checkpoint_metric: {CKPT_METRIC}\nbest_epoch: {best_epoch[s]}\n"
                     f"n_params: {n_params}\nn_types: {NUM_TYPES}\n"
                     f"hp_lr: {HP['lr']}\nhp_weight_decay: {HP['weight_decay']}\n"
                     f"hp_batch_size: {HP['batch_size']}\nhp_dropout: {HP['dropout']}\n"
                     f"hp_hidden_dim: {HP['hidden_dim']}\nhp_epochs: {HP['epochs']}\n"
                     f"hp_patience: {HP['patience']}\nhp_optimizer: AdamW\n")
-        row = {'cell': cell, 'dataset': dataset, 'seed': seed, 'split': s,
+        row = {'cell': cell, 'dataset': DATASET_TAG, 'seed': seed, 'split': s,
                'checkpoint_metric': CKPT_METRIC, 'best_epoch': best_epoch[s],
                'n_params': n_params, 'wall_time_sec': round(wall, 1),
                'test_accuracy': round(tm['accuracy'], 6), 'test_macro-F1': round(tm['macro-F1'], 6),
@@ -671,7 +664,7 @@ def train(cell, dataset, gpu=0, seed=0, epochs=None, result_dir=None, apk=False)
         if not exists:
             w.writeheader()
         w.writerows(rows)
-    ntfy(f"[DDI334/{dataset}] Cell{cell} seed{seed} DONE {wall:.0f}s\n" +
+    ntfy(f"[DDI334/{DATASET_TAG}] Cell{cell} seed{seed} DONE {wall:.0f}s\n" +
          " ".join(f"{r['split']}:acc{r['test_accuracy']:.3f}/f1{r['test_macro-F1']:.3f}" for r in rows))
     print(f"  saved -> {summary} (+loss_curves/per_class/configs)")
 
@@ -679,7 +672,6 @@ def train(cell, dataset, gpu=0, seed=0, epochs=None, result_dir=None, apk=False)
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--cell', required=True)
-    ap.add_argument('--dataset', required=True, choices=['ddibn'])
     ap.add_argument('--gpu', type=int, default=0)
     ap.add_argument('--seed', type=int, default=0)
     ap.add_argument('--epochs', type=int, default=None)
@@ -687,7 +679,7 @@ def main():
     ap.add_argument('--apk', action='store_true',
                     help='재현 검증 + P@50/P@(N/2) 산출 + raw 점수 .npz 저장 (summary_apk.csv 별도 기록)')
     args = ap.parse_args()
-    train(args.cell, args.dataset, args.gpu, args.seed, args.epochs, args.result_dir, apk=args.apk)
+    train(args.cell, args.gpu, args.seed, args.epochs, args.result_dir, apk=args.apk)
 
 
 if __name__ == '__main__':

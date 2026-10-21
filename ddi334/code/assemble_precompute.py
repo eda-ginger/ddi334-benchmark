@@ -1,34 +1,31 @@
 #!/usr/bin/env python3
 """
-DDI-334 precompute 정리: MOL/REL/DOC 전처리 파일을 각 {ds}/precompute/에 모음
+DDI-334 precompute 정리: MOL/REL/DOC 전처리 파일을 모달리티별 폴더에 모음
 ====================================================================================
 공유 v5 per-drug feature(chemberta/biobert/schnet, db_id 키, 데이터셋 무관)를
-**334 약물로 필터링**해 ddibn precompute에 넣어 자기완결적으로 만든다.
+**334 약물로 필터링**해 data/molecule, document/에 넣어 자기완결적으로 만든다.
 
-이미 데이터셋별로 있는 것: fp_pca.pt, bio_pca.pt (Dk fit), kg_triples.npy, ddi_whole.pt
 이 스크립트가 채우는 것 (334 필터):
   MOL: drug_smiles.json(런타임 graph/CNN/FP용), schnet_coords.pt+schnet_drop.json(Cell02), chemberta.pt(Cell06)
   DOC: biobert_description.pt(Cell13), biobert_drugname.pt(Cell14)
-  REL: transe_ent.npy (kge/ddibn/transe 학습 완료 시 복사; Cell08/09/10/11 node init)
+
+TransE 등 KGE 임베딩은 kge/existing_drug/{type}/*.npy에서 train.py가 직접 읽으므로
+(load_kge_embeddings의 fallback 경로) 별도 복사 단계가 필요 없다.
 
 Run: micromamba run -n DDIBench python assemble_precompute.py
 """
 import os
 import json
-import shutil
-import numpy as np
 import torch
 
 DDI334_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 EXP_DIR = os.path.dirname(DDI334_DIR)
 PC_V5 = os.path.join(EXP_DIR, 'data', 'precompute')
 SMILES = os.path.join(EXP_DIR, 'data', 'drug_smiles.json')
-KGE = os.path.join(DDI334_DIR, 'data', 'kge')
-DATASETS = ['ddibn']
 
 
 def db334():
-    return set(int(x) for x in json.load(open(os.path.join(DDI334_DIR, 'data', 'id_maps.json')))['db_ids'])
+    return set(int(x) for x in json.load(open(os.path.join(DDI334_DIR, 'data', 'splits', 'id_maps.json')))['db_ids'])
 
 
 def filter_emb_pt(src_name, ids, out_dirs, has_embeddings=True):
@@ -49,39 +46,26 @@ def filter_emb_pt(src_name, ids, out_dirs, has_embeddings=True):
 def main():
     ids = db334()
     print(f"334 db_id 로드: {len(ids)}")
-    out_dirs = [os.path.join(DDI334_DIR, 'data', ds, 'precompute') for ds in DATASETS]
-    for od in out_dirs:
-        os.makedirs(od, exist_ok=True)
+    mol_dir = os.path.join(DDI334_DIR, 'data', 'molecule')
+    doc_dir = os.path.join(DDI334_DIR, 'data', 'document')
+    os.makedirs(mol_dir, exist_ok=True)
+    os.makedirs(doc_dir, exist_ok=True)
 
-    # drug_smiles.json (334)
+    # drug_smiles.json (334, MOL)
     smi = {k: v for k, v in json.load(open(SMILES)).items() if int(k) in ids}
-    for od in out_dirs:
-        json.dump(smi, open(os.path.join(od, 'drug_smiles.json'), 'w'))
+    json.dump(smi, open(os.path.join(mol_dir, 'drug_smiles.json'), 'w'))
     print(f"  drug_smiles.json: {len(smi)} (MOL 런타임 graph/CNN/FP)")
 
     # MOL: chemberta, schnet
-    print(f"  chemberta.pt: {filter_emb_pt('chemberta.pt', ids, out_dirs)} (MOL Cell06)")
-    print(f"  schnet_coords.pt: {filter_emb_pt('schnet_coords.pt', ids, out_dirs, has_embeddings=False)} (MOL Cell02)")
+    print(f"  chemberta.pt: {filter_emb_pt('chemberta.pt', ids, [mol_dir])} (MOL Cell06)")
+    print(f"  schnet_coords.pt: {filter_emb_pt('schnet_coords.pt', ids, [mol_dir], has_embeddings=False)} (MOL Cell02)")
     # schnet_drop 불필요: 334 약물 전부 3D 좌표 있음 (failed 0) -> 생성 안 함
 
     # DOC: biobert
-    print(f"  biobert_description.pt: {filter_emb_pt('biobert_description.pt', ids, out_dirs)} (DOC Cell13)")
-    print(f"  biobert_drugname.pt: {filter_emb_pt('biobert_drugname.pt', ids, out_dirs)} (DOC Cell14)")
+    print(f"  biobert_description.pt: {filter_emb_pt('biobert_description.pt', ids, [doc_dir])} (DOC Cell13)")
+    print(f"  biobert_drugname.pt: {filter_emb_pt('biobert_drugname.pt', ids, [doc_dir])} (DOC Cell14)")
 
-    # REL: TransE node init (kge/{ds}/transe 완료 시 복사)
-    for ds in DATASETS:
-        tdir = os.path.join(KGE, ds, 'transe')
-        npys = [f for f in os.listdir(tdir)] if os.path.isdir(tdir) else []
-        npys = [f for f in npys if f.endswith('.npy') and 'ent_' in f]
-        if npys:
-            src = os.path.join(tdir, sorted(npys)[-1])
-            dst = os.path.join(DDI334_DIR, 'data', ds, 'precompute', 'transe_ent.npy')
-            shutil.copy(src, dst)
-            print(f"  [{ds}] transe_ent.npy 복사 ({os.path.basename(src)})")
-        else:
-            print(f"  [{ds}] TransE 미완료 — transe_ent.npy 나중에 복사 필요")
-
-    print("[DONE] MOL/REL/DOC precompute를 각 {ds}/precompute/에 정리")
+    print("[DONE] MOL -> data/molecule/, DOC -> data/document/ 정리")
 
 
 if __name__ == '__main__':
