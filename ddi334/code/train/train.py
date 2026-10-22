@@ -17,7 +17,7 @@ encoder(GAT/SchNet/GT/MLP/CNN/ChemBERTa/BioBERT)만 모델로 꽂는다.
 데이터: ddi334/data/splits/  ("h t y0,...,y(N-1) p", db_id 공간, pos/neg 1:1 교차)
           data/molecule, data/relation, data/document — 모달리티별 전처리 입력
 Usage:
-  micromamba run -n DDIBench python encoders/train.py --cell 04 --gpu 0 --seed 42
+  micromamba run -n DDIBench python train/train.py --cell 04 --gpu 0 --seed 42
 """
 import os
 import sys

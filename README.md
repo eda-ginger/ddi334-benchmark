@@ -38,7 +38,7 @@ ddi334/
                                   `bio_profile.py`
                        document/  `bio_profile_text.py`,
                                   `bert_template.py`
-    encoders/        main trainer (`train.py`, cells 01-12 — numbered to
+    train/           main trainer (`train.py`, cells 01-12 — numbered to
                      match the paper's Table 2 exactly, see "Paper
                      correspondence" below) and the shared model/dataset
                      modules it imports (`encoders.py`, `ddi_model.py`,
@@ -66,7 +66,7 @@ environment/
 
 ### Paper correspondence
 
-`encoders/train.py --cell` numbers are the same 01-12 as the manuscript's **Table 2**
+`train/train.py --cell` numbers are the same 01-12 as the manuscript's **Table 2**
 (not an internal numbering scheme that needs translating):
 
 | # | Modality | Input | Model |
@@ -192,7 +192,7 @@ files used for S0 (transductive) / S1 / S2 (inductive) evaluation.
   pooled-atom-feature node-init caches, rendered LLM prompt jsonl
   files) — derived from the raw external data below and regenerable
   with the scripts in `ddi334/code/` (the fingerprint/atom-feature
-  caches are rebuilt automatically on first run of `encoders/train.py`)
+  caches are rebuilt automatically on first run of `train/train.py`)
 - Training/inference logs
 
 ## Data
@@ -220,7 +220,7 @@ our specific shared server, which is why they aren't included here).
 cd ddi334/code
 
 # example: cell01 (SMILES 1D-CNN), seed 42
-python encoders/train.py --cell 01 --gpu 0 --seed 42
+python train/train.py --cell 01 --gpu 0 --seed 42
 ```
 
 `--checkpoint_metric` is not a flag here — checkpoint selection (accuracy,
@@ -235,7 +235,7 @@ command above, repeated over every cell (01-12) and seed:
 ```bash
 for cell in 01 02 03 04 05 06 07 08 09 10 11 12; do
   for seed in 0 42 124; do
-    python encoders/train.py --cell $cell --gpu 0 --seed $seed \
+    python train/train.py --cell $cell --gpu 0 --seed $seed \
       --result_dir ../results/main_experiments/01-12_encoders
   done
 done
@@ -250,10 +250,10 @@ conditions by construction, so the paper reports a single number for it):
 
 ```bash
 # Existing drug condition (default)
-python encoders/train.py --cell 10 --gpu 0 --seed 42
+python train/train.py --cell 10 --gpu 0 --seed 42
 
 # Novel drug condition (Unseen drugs' biological relations removed)
-NOVEL_DRUG=1 python encoders/train.py --cell 10 --gpu 0 --seed 42
+NOVEL_DRUG=1 python train/train.py --cell 10 --gpu 0 --seed 42
 ```
 
 Running both conditions for cells 10/11 into the same `--result_dir`
@@ -277,12 +277,12 @@ with a 1,024-bit Morgan fingerprint (4.66M parameters). This is the
 10/11 where it defaults to `transe`):
 
 ```bash
-python encoders/train.py --cell 08 --gpu 0 --seed 42
-# equivalent to: NODE_INIT=molfp python encoders/train.py --cell 08 ...
+python train/train.py --cell 08 --gpu 0 --seed 42
+# equivalent to: NODE_INIT=molfp python train/train.py --cell 08 ...
 
 # the earlier TransE-initialized version of this cell (not used in the
 # paper) is reproduced with:
-NODE_INIT=transe python encoders/train.py --cell 08 --gpu 0 --seed 42
+NODE_INIT=transe python train/train.py --cell 08 --gpu 0 --seed 42
 ```
 
 (An earlier `NODE_INIT=molgraph` robustness check for this cell was not
@@ -296,9 +296,9 @@ uses two more env vars that override `NOVEL_DRUG` when set, 3 seeds each:
 
 ```bash
 # novel_embedding_existing_subgraph/
-EMB_SRC=novel_drug SUBGRAPH_SRC=existing_drug python encoders/train.py --cell 10 --gpu 0 --seed 42
+EMB_SRC=novel_drug SUBGRAPH_SRC=existing_drug python train/train.py --cell 10 --gpu 0 --seed 42
 # existing_embedding_novel_subgraph/
-EMB_SRC=existing_drug SUBGRAPH_SRC=novel_drug python encoders/train.py --cell 10 --gpu 0 --seed 42
+EMB_SRC=existing_drug SUBGRAPH_SRC=novel_drug python train/train.py --cell 10 --gpu 0 --seed 42
 ```
 
 **KGE comparison (Appendix F)**: only the TransE entity embeddings are
@@ -335,7 +335,7 @@ built once with `build/document/bert_template.py --tag {scibert,biobert,pubmedbe
 (reads `data/document/bio_profile_text.json`, writes into `data/document/`):
 
 ```bash
-DOC_MODEL=pubmedbert DOC_INPUT=novel_drug python encoders/train.py --cell 12 --gpu 0 --seed 42 \
+DOC_MODEL=pubmedbert DOC_INPUT=novel_drug python train/train.py --cell 12 --gpu 0 --seed 42 \
   --result_dir ../results/appendix/c_document_backbone_comparison/pubmedbert/novel_drug
 ```
 

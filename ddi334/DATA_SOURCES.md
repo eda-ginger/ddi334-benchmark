@@ -89,7 +89,7 @@ point at wherever you put the raw sources.
 3. Encoder-specific precomputation (`ddi334/code/build/relation/bio_profile.py`,
    `build/document/bio_profile_text.py`, `build/document/bert_template.py`,
    `build/molecule/precompute.py`, ...) turns the above into the per-cell
-   input caches consumed by `encoders/train.py` (not shipped in this repo —
+   input caches consumed by `train/train.py` (not shipped in this repo —
    see the main README's "What is / isn't included" section).
 
 4. `data/splits/typenames.json` (209 side-effect names, e.g. `{"0": "aplasia
