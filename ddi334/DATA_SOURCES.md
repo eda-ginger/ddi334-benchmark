@@ -92,6 +92,19 @@ point at wherever you put the raw sources.
    input caches consumed by `encoders/train.py` (not shipped in this repo —
    see the main README's "What is / isn't included" section).
 
+4. `data/splits/typenames.json` (209 side-effect names, e.g. `{"0": "aplasia
+   pure red cell", ...}`, used to render LLM prompts in human-readable form
+   instead of bare type indices) has no corresponding script in this
+   repository, since its derivation script required the raw TDC TWOSIDES
+   CSVs (`meeting/ddi334_tdc/*.csv`, 1,308-type, named) that are not
+   included here either — so the script could not be re-run as shipped
+   and was removed rather than kept as dead code. For provenance: our
+   209-type DDI-Bench-based positive-pair pattern was matched column-by-
+   column against the TDC 1,308-type positive-pair pattern on the 15,471
+   drug pairs the two datasets share; every one of the 209 types matched
+   exactly one TDC column (no ambiguous or unmatched types), so each
+   type's name was taken directly from that TDC column's label.
+
 ## Verification
 
 `build_dataset.py`'s output was checked by SHA256 against the version

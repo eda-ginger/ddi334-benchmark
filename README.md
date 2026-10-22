@@ -32,7 +32,7 @@ ddi334/
   code/
     build/           dataset/KG/precompute build scripts, grouped by modality
                      like `data/` itself:
-                       splits/    `build_dataset.py`, `build_typenames.py`
+                       splits/    `build_dataset.py`
                        molecule/  `assemble_precompute.py`
                        relation/  `build_kg.py`, `build_rel_graphs.py`,
                                   `build_bio_profile_rel.py`
