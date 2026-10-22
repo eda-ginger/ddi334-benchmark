@@ -7,9 +7,9 @@ actually used to produce the results in this repository.
 
 | Environment | Python | Used for |
 |---|---|---|
-| `ddibench_requirements.txt` | 3.8 | `ddi334/code/train.py` (review-encoder cells 01-15) and everything else in `ddi334/code/` except LLM inference/fine-tuning and KGE training |
+| `ddibench_requirements.txt` | 3.8 | `ddi334/code/train/train.py` (encoder cells 01-12) and everything else in `ddi334/code/` except LLM inference/fine-tuning and KGE training |
 | `dglke_requirements.txt` | 3.8 | KGE embedding training (TransE/RotatE/ComplEx/DistMult/TransH) that produces `ddi334/data/relation/kge/*/{transe,rotate,complex,distmult,transh}/` |
-| `vllm_llm_requirements.txt` | 3.10 | `ddi334/code/llm_infer.py`, `ft_train.py`, `run_ft_cv.py` (all LLM zero-shot / fine-tuning) |
+| `vllm_llm_requirements.txt` | 3.10 | `ddi334/code/llm/zeroshot.py`, `finetuning_train.py`, `finetuning_eval.py` (all LLM zero-shot / fine-tuning, cells 13-18) |
 
 ## Setup
 
