@@ -52,6 +52,21 @@ point at wherever you put the raw sources.
 | **DrugBank** full XML | Drug descriptions, SMILES cross-check | Requires a DrugBank academic license (https://go.drugbank.com/releases/latest) — cannot be redistributed here. This project used `drugbank_5.1.12_full.xml`. |
 | **HetioNet raw files** (`kge_hetionet/data/hetionet_edges.sif.gz`, `hetionet_nodes.tsv`, `drugbank.tab`, `twosides.csv`) | Bio-relation KG for the Relation-modality encoders; base for the KGE training in `kge_hetionet/` | Downloaded directly from the official HetioNet project's GitHub repository (`hetio/hetionet`, v1.0 data release, https://het.io/). Note: `drugbank.tab` and `twosides.csv` here are the raw DrugBank/TWOSIDES cross-reference tables HetioNet ships alongside its graph, not the same files as the DrugBank XML / TDC TWOSIDES CSVs above. |
 
+### Two name-lookup files with no build script
+
+`data/splits/drug_names.json` (db_id -> drug name, 333/334) and
+`data/relation/hetionet_names.json` (entity_id -> name, 3,117 non-drug
+HetioNet entities) are not pipeline outputs — they are themselves raw
+lookup tables lifted directly from the two licensed/upstream sources
+above (DrugBank's name field for `drug_names.json`, `hetionet_nodes.tsv`
+for `hetionet_names.json`), keyed by this project's own db_id / entity_id
+numbering. Since the DrugBank XML and HetioNet node file are not
+redistributed in this repository either (see the table above), there is
+no extraction script to ship: these two JSON files are included as-is,
+the same way the split/triple files in `data/` are included as the exact
+outputs actually used, without the unredistributable raw inputs behind
+them.
+
 ## Build pipeline
 
 1. **`ddi334/code/build/splits/dataset.py`** (env: `ddibench`, seed=42, fully
