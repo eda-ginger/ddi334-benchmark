@@ -86,11 +86,22 @@ point at wherever you put the raw sources.
      (now `existing_drug` / `novel_drug` here) — reference only, not
      meant to be re-run as-is
 
-3. Encoder-specific precomputation (`ddi334/code/build/relation/bio_profile.py`,
-   `build/document/bio_profile_text.py`, `build/document/bert_template.py`,
-   `build/molecule/precompute.py`, ...) turns the above into the per-cell
-   input caches consumed by `train/train.py` (not shipped in this repo —
-   see the main README's "What is / isn't included" section).
+3. Encoder-specific precomputation turns the above into the per-cell input
+   caches consumed by `train/train.py` (not shipped in this repo — see the
+   main README's "What is / isn't included" section):
+   - `build/relation/kg_triples.py` (Cell 10/11 subgraph-extraction KG),
+     `build/relation/ddi_network.py` (Cell 08 whole DDI graph),
+     `build/relation/bio_profile.py` (Cell 07 raw bio-neighbor vector)
+   - `build/document/bio_profile_text.py` (genes/indications/pharm-class
+     text source), `build/document/bert_template.py` (Cell 12 frozen
+     BERT embeddings)
+   - `build/molecule/precompute.py` (filters the shared drug_smiles.json
+     down to the 334-drug cohort), `build/molecule/chemberta.py` (Cell 02),
+     `build/molecule/schnet_coords.py` (Cell 06) — the latter two compute
+     their embeddings directly for these 334 drugs rather than filtering a
+     precomputed pool, so they are fully reproducible from this repository
+     alone (unlike step 2's KGE training, which depends on the external
+     `kge_hetionet/src/baseline.py`)
 
 4. `data/splits/typenames.json` (209 side-effect names, e.g. `{"0": "aplasia
    pure red cell", ...}`, used to render LLM prompts in human-readable form

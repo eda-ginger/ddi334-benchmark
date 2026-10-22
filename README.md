@@ -33,9 +33,10 @@ ddi334/
     build/           dataset/KG/precompute build scripts, grouped by modality
                      like `data/` itself:
                        splits/    `dataset.py`
-                       molecule/  `precompute.py`
-                       relation/  `kg.py`, `graphs.py`,
-                                  `bio_profile.py`
+                       molecule/  `precompute.py`, `chemberta.py`,
+                                  `schnet_coords.py`
+                       relation/  `kg.py`, `kg_triples.py`,
+                                  `ddi_network.py`, `bio_profile.py`
                        document/  `bio_profile_text.py`,
                                   `bert_template.py`
     train/           main trainer (`train.py`, cells 01-12 — numbered to

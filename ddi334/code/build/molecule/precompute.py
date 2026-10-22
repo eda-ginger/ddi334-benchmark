@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 """
-DDI-334 precompute 정리: MOL 전처리 파일을 data/molecule/에 모음
+DDI-334 drug_smiles.json 334-필터: data/molecule/의 첫 단계
 ====================================================================================
-공유 v5 per-drug feature(chemberta/schnet, db_id 키, 데이터셋 무관)를
-**334 약물로 필터링**해 data/molecule/에 넣어 자기완결적으로 만든다.
-
-이 스크립트가 채우는 것 (334 필터, MOL만 — REL/DOC은 다른 build 스크립트 담당):
-  MOL: drug_smiles.json(런타임 graph/CNN/FP용), schnet_coords.pt+schnet_drop.json(Cell06), chemberta.pt(Cell02)
+공유 v5 drug_smiles.json(1,710드럭, 이 repo 밖의 raw 소스)을 DDI-334 334드럭으로
+필터링해 data/molecule/drug_smiles.json을 만든다. chemberta.py/schnet_coords.py가
+그 다음 단계로 이 파일을 읽어 각자의 임베딩/좌표를 처음부터 계산한다(별도 외부
+precompute 풀에서 자르는 방식이 아님 — per-drug 계산이라 334개만 돌려도 동일).
 
 Cell12(DOC)의 existing_drug/novel_drug tier 임베딩은 이 스크립트가 아니라
 build/document/bert_template.py가 bio_profile_text.json에서 직접 생성한다
@@ -19,31 +18,14 @@ Run: micromamba run -n DDIBench python build/molecule/precompute.py
 """
 import os
 import json
-import torch
 
 DDI334_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 EXP_DIR = os.path.dirname(DDI334_DIR)
-PC_V5 = os.path.join(EXP_DIR, 'data', 'precompute')
 SMILES = os.path.join(EXP_DIR, 'data', 'drug_smiles.json')
 
 
 def db334():
     return set(int(x) for x in json.load(open(os.path.join(DDI334_DIR, 'data', 'splits', 'id_maps.json')))['db_ids'])
-
-
-def filter_emb_pt(src_name, ids, out_dirs, has_embeddings=True):
-    """payload['embeddings'] (or raw dict) {db_id: tensor} -> 334만 남겨 저장."""
-    payload = torch.load(os.path.join(PC_V5, src_name), map_location='cpu', weights_only=False)
-    if has_embeddings:
-        emb = payload['embeddings']
-        filt = {k: v for k, v in emb.items() if int(k) in ids}
-        new = dict(payload); new['embeddings'] = filt; new['n_drugs'] = len(filt)
-    else:   # raw dict {db_id: value} (schnet_coords)
-        filt = {k: v for k, v in payload.items() if int(k) in ids}
-        new = filt
-    for od in out_dirs:
-        torch.save(new, os.path.join(od, src_name))
-    return len(filt)
 
 
 def main():
@@ -52,17 +34,11 @@ def main():
     mol_dir = os.path.join(DDI334_DIR, 'data', 'molecule')
     os.makedirs(mol_dir, exist_ok=True)
 
-    # drug_smiles.json (334, MOL)
     smi = {k: v for k, v in json.load(open(SMILES)).items() if int(k) in ids}
     json.dump(smi, open(os.path.join(mol_dir, 'drug_smiles.json'), 'w'))
-    print(f"  drug_smiles.json: {len(smi)} (MOL 런타임 graph/CNN/FP)")
+    print(f"  drug_smiles.json: {len(smi)} (MOL 런타임 graph/CNN/FP, chemberta.py/schnet_coords.py의 입력)")
 
-    # MOL: chemberta, schnet
-    print(f"  chemberta.pt: {filter_emb_pt('chemberta.pt', ids, [mol_dir])} (MOL Cell02)")
-    print(f"  schnet_coords.pt: {filter_emb_pt('schnet_coords.pt', ids, [mol_dir], has_embeddings=False)} (MOL Cell06)")
-    # schnet_drop 불필요: 334 약물 전부 3D 좌표 있음 (failed 0) -> 생성 안 함
-
-    print("[DONE] MOL -> data/molecule/ 정리")
+    print("[DONE] data/molecule/drug_smiles.json 생성 -> chemberta.py, schnet_coords.py 실행 가능")
 
 
 if __name__ == '__main__':
