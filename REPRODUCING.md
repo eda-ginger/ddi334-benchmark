@@ -10,7 +10,6 @@ across the listed seeds/models/conditions. Run from `ddi334/code`.
 |---|---|---|---|
 | `main_experiments/01-12_encoders/` | 01-12 | `train/train.py --cell NN --gpu 0 --seed S` | seeds 0/42/124. No `--split` or `--checkpoint_metric` flag — fixed per Appendix E.1 |
 | — Existing/Novel drug condition | 09,10,11 | add `NOVEL_DRUG=1` | only these 3 cells differ; everything else is `condition=single` |
-| — Cell 08 default vs. old TransE variant | 08 | `NODE_INIT=molfp` (default) / `NODE_INIT=transe` | paper reports `molfp` only |
 | `appendix/h_embedding_subgraph_cross/` | 10 | `EMB_SRC=... SUBGRAPH_SRC=existing_drug\|novel_drug` | Table H.1 |
 | `appendix/f_kge_comparison/` | 09-11 | `KGE_TYPE=transe\|rotate\|complex` | only TransE embeddings are shipped (RotatE/ComplEx too large); `novel_drug_embedding_only/transe/` needs `ABLNR=1` (Figure F.1's "TransE Existing drug" point) |
 | `appendix/c_document_backbone_comparison/` | 12 | `DOC_MODEL=scibert\|biobert\|pubmedbert` | build each backbone once: `build/document/mention_description.py --tag <name>` |
