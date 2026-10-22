@@ -1,27 +1,27 @@
 #!/usr/bin/env python3
 """
-DDI-334 precompute 정리: MOL/REL/DOC 전처리 파일을 모달리티별 폴더에 모음
+DDI-334 precompute 정리: MOL 전처리 파일을 data/molecule/에 모음
 ====================================================================================
-공유 v5 per-drug feature(chemberta/biobert/schnet, db_id 키, 데이터셋 무관)를
-**334 약물로 필터링**해 data/molecule, document/에 넣어 자기완결적으로 만든다.
+공유 v5 per-drug feature(chemberta/schnet, db_id 키, 데이터셋 무관)를
+**334 약물로 필터링**해 data/molecule/에 넣어 자기완결적으로 만든다.
 
-이 스크립트가 채우는 것 (334 필터):
+이 스크립트가 채우는 것 (334 필터, MOL만 — REL/DOC은 다른 build 스크립트 담당):
   MOL: drug_smiles.json(런타임 graph/CNN/FP용), schnet_coords.pt+schnet_drop.json(Cell06), chemberta.pt(Cell02)
 
-Cell12(DOC)의 existing_drug/genes/novel_drug tier 임베딩은 이 스크립트가 아니라
-build_biobert_template.py가 bio_profile_text.json에서 직접 생성한다 (이 스크립트가 다루는
-'334 필터링'과 무관 — 처음부터 334드럭 전용으로 만들어짐).
+Cell12(DOC)의 existing_drug/novel_drug tier 임베딩은 이 스크립트가 아니라
+build/document/build_biobert_template.py가 bio_profile_text.json에서 직접 생성한다
+(이 스크립트가 다루는 '334 필터링'과 무관 — 처음부터 334드럭 전용으로 만들어짐).
 
 TransE 등 KGE 임베딩은 kge/existing_drug/{type}/*.npy에서 train.py가 직접 읽으므로
 (load_kge_embeddings의 fallback 경로) 별도 복사 단계가 필요 없다.
 
-Run: micromamba run -n DDIBench python build/assemble_precompute.py
+Run: micromamba run -n DDIBench python build/molecule/assemble_precompute.py
 """
 import os
 import json
 import torch
 
-DDI334_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+DDI334_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 EXP_DIR = os.path.dirname(DDI334_DIR)
 PC_V5 = os.path.join(EXP_DIR, 'data', 'precompute')
 SMILES = os.path.join(EXP_DIR, 'data', 'drug_smiles.json')

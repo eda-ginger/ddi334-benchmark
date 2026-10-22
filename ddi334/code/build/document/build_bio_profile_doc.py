@@ -9,13 +9,13 @@
 
 입력: data/relation/kge/kg_bio_334.txt, kge_hetionet/data/entity_drug.json, data/relation/hetionet_names.json
 출력: data/document/bio_profile_text.json  { "<db_id>": {"genes":[..], "indications":[..], "pharm_class":[..]} }
-Run: micromamba run -n DDIBench python build/build_bio_profile_doc.py
+Run: micromamba run -n DDIBench python build/document/build_bio_profile_doc.py
 """
 import json
 import os
 from collections import defaultdict
 
-HERE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))   # ddi334/
+HERE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))   # ddi334/
 EXP = os.path.dirname(HERE)
 V5 = os.path.dirname(EXP)
 DRUG_MAX = 1710

@@ -30,11 +30,14 @@ is not the full experiment history of the underlying project.
 ```
 ddi334/
   code/
-    build/           dataset/KG/precompute build scripts (`build_dataset.py`,
-                     `build_kg.py`, `build_rel_graphs.py`,
-                     `build_bio_profile_rel.py`, `build_bio_profile_doc.py`,
-                     `build_biobert_template.py`, `build_typenames.py`,
-                     `assemble_precompute.py`)
+    build/           dataset/KG/precompute build scripts, grouped by modality
+                     like `data/` itself:
+                       splits/    `build_dataset.py`, `build_typenames.py`
+                       molecule/  `assemble_precompute.py`
+                       relation/  `build_kg.py`, `build_rel_graphs.py`,
+                                  `build_bio_profile_rel.py`
+                       document/  `build_bio_profile_doc.py`,
+                                  `build_biobert_template.py`
     encoders/        main trainer (`train.py`, cells 01-12 — numbered to
                      match the paper's Table 2 exactly, see "Paper
                      correspondence" below) and the shared model/dataset
@@ -201,7 +204,7 @@ and are not redistributed here.
 
 See [`ddi334/DATA_SOURCES.md`](ddi334/DATA_SOURCES.md)
 for exact sources, the required sibling-folder layout, and the build
-pipeline (`build/build_dataset.py` -> `build/build_kg.py` -> per-encoder
+pipeline (`build/splits/build_dataset.py` -> `build/relation/build_kg.py` -> per-encoder
 precomputation).
 
 ## Reproducing a result
@@ -328,7 +331,7 @@ override for `existing_drug`) and is also the main-text Figure 6 result
 (and Table D.1's parameter count) — (`main_experiments/01-12_encoders`'s
 cell 12 above is this exact run); `biobert`/`pubmedbert` are only used for
 this Appendix C.4 comparison. Each backbone's embeddings must first be
-built once with `build/build_biobert_template.py --tag {biobert,pubmedbert,scibert}`
+built once with `build/document/build_biobert_template.py --tag {biobert,pubmedbert,scibert}`
 (reads `data/document/bio_profile_text.json`, writes into `data/document/`):
 
 ```bash
@@ -372,8 +375,10 @@ validation curve that the best-epoch selection was made from, kept for
 transparency) — not the discarded `ft_ep1_`/`ft_ep2_`/`ft_ep3_` epoch-sweep
 files.
 
-See `ddi334/code/build/` for dataset build (`build_dataset.py`,
-`build_kg.py`, `build_bio_profile_rel.py`, `build_bio_profile_doc.py`,
+See `ddi334/code/build/` (grouped into `splits/`, `molecule/`, `relation/`,
+`document/` subfolders by modality, same as `data/`) for dataset build
+(`splits/build_dataset.py`, `relation/build_kg.py`,
+`relation/build_bio_profile_rel.py`, `document/build_bio_profile_doc.py`,
 ...) and `ddi334/code/llm/` for prompt rendering (`llm_prompts.py`).
 
 ## Environment

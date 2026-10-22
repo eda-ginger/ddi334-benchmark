@@ -17,14 +17,14 @@ Reuses the earlier Jaccard+PCA variant's bio_profile_hetionet() logic exactly
 (same feature index / neighbor extraction), just skips the Jaccard+PCA step
 and saves the raw binary matrix instead.
 
-Run: micromamba run -n DDIBench python build/build_bio_profile_rel.py
+Run: micromamba run -n DDIBench python build/relation/build_bio_profile_rel.py
 """
 import os
 import json
 import numpy as np
 import torch
 
-DDI334_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+DDI334_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 V5_DIR = os.path.dirname(os.path.dirname(DDI334_DIR))
 KG_BIO_334 = os.path.join(DDI334_DIR, 'data', 'relation', 'kge', 'kg_bio_334.txt')
 DRUG_MAX = 1710

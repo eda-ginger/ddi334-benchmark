@@ -21,12 +21,12 @@ KGE 학습은 기존 `kge_hetionet/baseline.py`(PyKEEN, AstraZeneca HP) 재활�
   existing_drug/configs/{transe,rotate,distmult,complex,transh}.yaml
   run_all.sh                                        (5 학습: 5 model)
 
-Run: python3 build/build_kg.py
+Run: python3 build/relation/build_kg.py
 """
 import os
 import json
 
-DDI334_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+DDI334_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 EXP_DIR = os.path.dirname(DDI334_DIR)
 V5_DIR = os.path.dirname(EXP_DIR)
 KGE_DIR = os.path.join(V5_DIR, 'kge_hetionet')

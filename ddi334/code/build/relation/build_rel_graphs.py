@@ -15,14 +15,14 @@ DDI-334 REL 그래프 사전 제작 (Cell 10/11 KG subgraph, Cell 08 DDI whole g
 관계 체계: relation_map.json 참조 (bio 0-22, TWOSIDES = 23+type_idx).
 Cell 11은 DDI-only라 type_idx(0..N-1)로 재매핑(rel-23) + inverse.
 
-Run: micromamba run -n DDIBench python build/build_rel_graphs.py
+Run: micromamba run -n DDIBench python build/relation/build_rel_graphs.py
 """
 import os
 import json
 import numpy as np
 import torch
 
-DDI334_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+DDI334_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 REL_DIR = os.path.join(DDI334_DIR, 'data', 'relation')
 KGE = os.path.join(REL_DIR, 'kge')
 KG_BIO = os.path.join(KGE, 'kg_bio_334.txt')

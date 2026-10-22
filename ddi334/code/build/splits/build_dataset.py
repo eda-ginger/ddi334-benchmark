@@ -25,7 +25,7 @@ DDI-334 Dataset Builder — 소스에서 최종까지 한 번에 (재현 가능)
   3. neither   : 전체쌍 - TWOSIDES연결 - DrugBank연결  (negative pool)
   4. per ver   : positive 수집 -> Dk/Dn split(8:1:1/5:5/5:5) -> negative 1:1 -> 출력
 
-Run: micromamba run -n DDIBench python build/build_dataset.py
+Run: micromamba run -n DDIBench python build/splits/build_dataset.py
 """
 import os
 import csv
@@ -38,7 +38,7 @@ from rdkit import Chem
 from rdkit.Chem import AllChem, DataStructs
 
 # ── 경로 (스크립트는 ddi334/ 안에 있음) ──────────────────────────────────────
-DDI334_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+DDI334_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 EXP_DIR = os.path.dirname(DDI334_DIR)                 # .../experiment
 V5_DIR = os.path.dirname(EXP_DIR)                     # .../v5_ddi-bench
 LATEX_ROOT = os.path.dirname(os.path.dirname(V5_DIR)) # .../Latex
