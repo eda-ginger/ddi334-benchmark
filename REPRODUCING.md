@@ -6,6 +6,11 @@ across the listed seeds/models/conditions. Run from `ddi334/code`.
 **Molecule cells (01-06)** need `data/molecule/` built first, once:
 `build/molecule/smiles.py` -> `fingerprint.py` -> `mol_graph.py`.
 
+**LLM fine-tuning (13-18)** needs `data/prompt/` built first, once:
+`build/document/instruction.py render` (not shipped — rendered prompts
+are ~500MB). Zero-shot (`zeroshot.py`) and `finetuning_eval.py` render
+prompts on the fly and don't need this step.
+
 | Results folder | Cells | Command | Notes |
 |---|---|---|---|
 | `main_experiments/01-12_encoders/` | 01-12 | `train/train.py --cell NN --gpu 0 --seed S` | seeds 0/42/124. No `--split` or `--checkpoint_metric` flag — fixed per Appendix E.1 |

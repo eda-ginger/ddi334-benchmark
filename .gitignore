@@ -3,3 +3,8 @@ __pycache__/
 .DS_Store
 *.egg-info/
 .ipynb_checkpoints/
+
+# regenerable build-time caches (see README's "What is / isn't included")
+ddi334/data/prompt/
+ddi334/data/relation/subgraph_cache/
+ddi334/data/relation/subgraph_cache_novel_drug/
