@@ -33,8 +33,8 @@ ddi334/
     build/           dataset/KG/precompute build scripts, grouped by modality
                      like `data/` itself:
                        splits/    `dataset.py`
-                       molecule/  `precompute.py`, `chemberta.py`,
-                                  `schnet_coords.py`
+                       molecule/  `smiles.py`, `fingerprint.py`,
+                                  `mol_graph.py`
                        relation/  `kg.py`, `kg_triples.py`,
                                   `ddi_network.py`, `bio_profile.py`
                        document/  `bio_profile_text.py`,
@@ -188,12 +188,15 @@ files used for S0 (transductive) / S1 / S2 (inductive) evaluation.
 - Model checkpoints and LoRA adapter weights
 - Per-sample raw prediction arrays (`raw_preds/*.npz`) — only the
   aggregated metrics computed from them are kept
-- Precomputed encoder embedding caches (SchNet coordinates, ChemBERTa/
-  BioBERT embeddings, TransE/KGE embeddings, Morgan-fingerprint/
-  pooled-atom-feature node-init caches, rendered LLM prompt jsonl
-  files) — derived from the raw external data below and regenerable
-  with the scripts in `ddi334/code/` (the fingerprint/atom-feature
-  caches are rebuilt automatically on first run of `train/train.py`)
+- Precomputed encoder embedding caches (SchNet 3D coordinates, 2D
+  molecular graphs, ChemBERTa/BioBERT embeddings, Morgan fingerprints,
+  TransE/KGE embeddings, rendered LLM prompt jsonl files) — derived
+  from the raw external data below and regenerable with the scripts in
+  `ddi334/code/build/`. One exception: the separate Morgan-fingerprint
+  node-init cache used for `NODE_INIT=molfp` (Relation cells 08-11,
+  distinct from Cell 03's own Fingerprint input above) is rebuilt
+  automatically on first run of `train/train.py` rather than needing a
+  build step of its own.
 - Training/inference logs
 
 ## Data
@@ -223,6 +226,13 @@ cd ddi334/code
 # example: cell01 (SMILES 1D-CNN), seed 42
 python train/train.py --cell 01 --gpu 0 --seed 42
 ```
+
+Cells 01-06 (Molecule) each read one precomputed `data/molecule/` cache
+that must exist first — run `build/molecule/smiles.py` once (writes
+`drug_smiles.json`, used by every Molecule cell, and `chemberta.pt` for
+cell02), then `build/molecule/fingerprint.py` (cell03) and
+`build/molecule/mol_graph.py` (cell04/05's 2D graph and cell06's SchNet
+3D coordinates, in one run).
 
 `--checkpoint_metric` is not a flag here — checkpoint selection (accuracy,
 per-split, patience=10 early stopping, as described in the paper's

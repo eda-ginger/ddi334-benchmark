@@ -552,7 +552,7 @@ class SchNetEncoder(nn.Module):
     """Cell 06 (MOL): 3D SchNet on RDKit MMFF94-optimized conformers.
 
     Source: 3DGT-DDI (He et al., 2022) / MDJCL-DDI — 3D atom coords + SchNet.
-    Fair-exp adaptation: 3D 좌표를 RDKit ETKDG+MMFF94로 사전계산(`schnet_coords.py`,
+    Fair-exp adaptation: 3D 좌표를 RDKit ETKDG+MMFF94로 사전계산(`build/molecule/mol_graph.py`,
       모델 외부에서 1회) 후 frozen 입력; drug 1050(Fe-CN complex)은 MANUAL_OCTAHEDRAL
       좌표; 좌표 실패/결측 약물은 단일-H dummy로 대체; readout='add'. (DDI-334: 334 전부 커버)
     """

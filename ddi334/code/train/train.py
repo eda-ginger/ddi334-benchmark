@@ -183,6 +183,9 @@ def load_drug_smiles():
 
 
 def load_drug_fingerprints(smiles_dict):
+    """Used by load_molfp_embeddings() below (NODE_INIT=molfp) only — Cell 03's own
+    Fingerprint input is precomputed by build/molecule/fingerprint.py instead, see
+    load_fingerprint_embeddings()."""
     from rdkit import Chem
     from rdkit.Chem import AllChem
     fps = {}
@@ -215,9 +218,9 @@ def load_molfp_embeddings():
     return torch.from_numpy(emb).float()
 
 
-def load_mol_graphs_tiger(smiles_dict):
-    from encoders import mol_to_graph_tiger
-    return {did: mol_to_graph_tiger(smi) for did, smi in smiles_dict.items()}
+def load_mol_graphs_2d():
+    """Cell 04/05: TIGER-style 2D graph (build/molecule/mol_graph.py precompute)."""
+    return torch.load(os.path.join(MOL_DIR, 'mol_graph_2d.pt'), map_location='cpu', weights_only=False)
 
 
 def load_schnet_coords():
@@ -226,6 +229,12 @@ def load_schnet_coords():
 
 def load_chemberta_embeddings():
     return torch.load(os.path.join(MOL_DIR, 'chemberta.pt'), map_location='cpu', weights_only=False)['embeddings']
+
+
+def load_fingerprint_embeddings():
+    """Cell 03: Morgan fingerprint (build/molecule/fingerprint.py precompute)."""
+    emb = torch.load(os.path.join(MOL_DIR, 'fingerprint.pt'), map_location='cpu', weights_only=False)['embeddings']
+    return {k: v.numpy() for k, v in emb.items()}
 
 
 def load_biobert_embeddings(input_type='existing_drug'):
@@ -260,15 +269,15 @@ def build_model(cell, device, drug_ids):
         encoder = ChemBERTaEncoder(hidden_dim=hd, dropout=dr, bert_dim=384); encoder.set_features(load_chemberta_embeddings())
     elif cell == '03':
         # Fingerprint (MLP)
-        fps = load_drug_fingerprints(load_drug_smiles())
+        fps = load_fingerprint_embeddings()
         encoder = MorganFPEncoder(hidden_dim=hd, dropout=dr); encoder.set_features(fps)
     elif cell == '04':
         # Molecular graph (GAT). GT(Cell 05)와 동일한 TIGER 67-d 노드 피처 사용 (노드 피처 통일, 아키텍처만 변수)
-        g = load_mol_graphs_tiger(load_drug_smiles())
+        g = load_mol_graphs_2d()
         encoder = GATEncoder(hidden_dim=hd, dropout=dr, atom_feat_dim=67); encoder.set_features(g); gat_cache = encoder._data_cache
     elif cell == '05':
         # Molecular graph (Graph Transformer)
-        g = load_mol_graphs_tiger(load_drug_smiles())
+        g = load_mol_graphs_2d()
         encoder = GraphTransformerMolEncoder(hidden_dim=hd, dropout=dr); encoder.set_features(g)
     elif cell == '06':
         # Molecular graph (SchNet)

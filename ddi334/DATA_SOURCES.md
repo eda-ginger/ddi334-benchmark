@@ -110,13 +110,14 @@ them.
    - `build/document/bio_profile_text.py` (genes/indications/pharm-class
      text source), `build/document/bert_template.py` (Cell 12 frozen
      BERT embeddings)
-   - `build/molecule/precompute.py` (filters the shared drug_smiles.json
-     down to the 334-drug cohort), `build/molecule/chemberta.py` (Cell 02),
-     `build/molecule/schnet_coords.py` (Cell 06) — the latter two compute
-     their embeddings directly for these 334 drugs rather than filtering a
-     precomputed pool, so they are fully reproducible from this repository
-     alone (unlike step 2's KGE training, which depends on the external
-     `kge_hetionet/src/baseline.py`)
+   - `build/molecule/smiles.py` (filters the shared drug_smiles.json down
+     to the 334-drug cohort, then builds Cell 02's ChemBERTa embeddings),
+     `build/molecule/fingerprint.py` (Cell 03 Morgan fingerprint),
+     `build/molecule/mol_graph.py` (Cell 04/05 2D graph and Cell 06 SchNet
+     3D coordinates) — these compute their outputs directly for the 334
+     drugs rather than filtering a precomputed pool, so they are fully
+     reproducible from this repository alone (unlike step 2's KGE
+     training, which depends on the external `kge_hetionet/src/baseline.py`)
 
 4. `data/splits/typenames.json` (209 side-effect names, e.g. `{"0": "aplasia
    pure red cell", ...}`, used to render LLM prompts in human-readable form
