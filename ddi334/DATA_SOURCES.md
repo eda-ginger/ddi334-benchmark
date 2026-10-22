@@ -7,7 +7,7 @@ data came from and how to regenerate everything from scratch.
 
 ## Required directory layout
 
-The build scripts (`dataset.py`, `kg.py`, and most other
+The build scripts (`dataset.py`, `knowledge_graph.py`, and most other
 `build_*.py` files) hardcode the sibling-folder layout of the *original*
 internal server working tree they were developed in, which nested this
 repository's `ddi334/` one level deeper (inside an `experiment/` wrapper
@@ -21,7 +21,7 @@ as-is even if you had copies of that raw data:
 <original internal layout, for reference only>
   v5_ddi-bench/
     experiment/
-      ddi334/code/build/splits/dataset.py, build/relation/kg.py, ...   <- this repo's ddi334/
+      ddi334/code/build/splits/dataset.py, build/relation/knowledge_graph.py, ...   <- this repo's ddi334/
     original_repo/
       DDI_Ben/
         DDI_Ben/data/{twosides_cluster,drugbank_cluster,initial}/...
@@ -84,8 +84,10 @@ them.
       used upstream, in step 1, to define the 334-drug universe; this
       repository does not ship or use a separate 1,308-type dataset.
 
-2. **`ddi334/code/build/relation/kg.py`** (produces KGE training inputs under
-   `ddi334/data/relation/kge/`):
+2. **`ddi334/code/build/relation/knowledge_graph.py`** (Table 2's "Knowledge
+   graph" row, Cell 09/10/11 — produces both the KGE training inputs under
+   `ddi334/data/relation/kge/` and, as its last step, `kg_triples.npy`, the
+   KG triples array Cell 10/11's subgraph extractor reads from):
    - Combines HetioNet bio edges (`kge_hetionet/data/KG.txt`, non-DDI
      relations) with the non-334-drug subset of DrugBank DDI
      (`kge_hetionet/data/train.txt`) and the 334-drug TWOSIDES
@@ -104,8 +106,7 @@ them.
 3. Encoder-specific precomputation turns the above into the per-cell input
    caches consumed by `train/train.py` (not shipped in this repo — see the
    main README's "What is / isn't included" section):
-   - `build/relation/kg_triples.py` (Cell 10/11 subgraph-extraction KG),
-     `build/relation/ddi_network.py` (Cell 08 whole DDI graph),
+   - `build/relation/ddi_network.py` (Cell 08 whole DDI graph),
      `build/relation/bio_profile.py` (Cell 07 raw bio-neighbor vector)
    - `build/document/bio_profile_text.py` (genes/indications/pharm-class
      text source), `build/document/bert_template.py` (Cell 12 frozen

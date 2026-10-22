@@ -35,8 +35,8 @@ ddi334/
                        splits/    `dataset.py`
                        molecule/  `smiles.py`, `fingerprint.py`,
                                   `mol_graph.py`
-                       relation/  `kg.py`, `kg_triples.py`,
-                                  `ddi_network.py`, `bio_profile.py`
+                       relation/  `knowledge_graph.py`, `ddi_network.py`,
+                                  `bio_profile.py`
                        document/  `bio_profile_text.py`,
                                   `bert_template.py`
     train/           main trainer (`train.py`, cells 01-12 — numbered to
@@ -208,7 +208,7 @@ and are not redistributed here.
 
 See [`ddi334/DATA_SOURCES.md`](ddi334/DATA_SOURCES.md)
 for exact sources, the required sibling-folder layout, and the build
-pipeline (`build/splits/dataset.py` -> `build/relation/kg.py` -> per-encoder
+pipeline (`build/splits/dataset.py` -> `build/relation/knowledge_graph.py` -> per-encoder
 precomputation).
 
 ## Reproducing a result
@@ -388,7 +388,7 @@ files.
 
 See `ddi334/code/build/` (grouped into `splits/`, `molecule/`, `relation/`,
 `document/` subfolders by modality, same as `data/`) for dataset build
-(`splits/dataset.py`, `relation/kg.py`,
+(`splits/dataset.py`, `relation/knowledge_graph.py`,
 `relation/bio_profile.py`, `document/bio_profile_text.py`,
 ...) and `ddi334/code/llm/` for prompt rendering (`llm_prompts.py`).
 

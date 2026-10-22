@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 """
-DDI-334 KGE용 KG 빌더 (option b) — ddibn 데이터셋용
-==============================================================
+DDI-334 Knowledge graph (Cell 09 KGE whole-graph, Cell 10/11 subgraph) — Table 2's
+"Knowledge graph" row covers all three, so all three are built here.
+
 사용자 확정 설계:
   - HetioNet 전체 유지 (bio 관계 + 비-334 약물의 DrugBank DDI)
   - 우리 334 약물의 상호작용 = DDI-334 TWOSIDES **train** 엣지만 (untyped, rel 109)
   - cold 약물(Dn)에 닿는 DDI 엣지는 자동 0 (train.txt엔 Dk×Dk만) → S1/S2 inductive
 
-KGE 학습은 기존 `kge_hetionet/baseline.py`(PyKEEN, AstraZeneca HP) 재활용.
-이 스크립트는 그 학습에 들어갈 입력(ddi_train)과 모델별 config, run 스크립트를 생성한다.
+Part 1 (Cell 09 KGE embeddings, frozen): KGE 학습은 기존 `kge_hetionet/baseline.py`
+(PyKEEN, AstraZeneca HP) 재활용. 이 스크립트는 그 학습에 들어갈 입력(ddi_train)과
+모델별 config, run 스크립트를 생성한다.
 
 입력:
   - kge_hetionet/data/KG.txt              HetioNet bio (rel 86-108)  ← config의 data.kg (공유, 80/10/10 split)
@@ -21,10 +23,18 @@ KGE 학습은 기존 `kge_hetionet/baseline.py`(PyKEEN, AstraZeneca HP) 재활�
   existing_drug/configs/{transe,rotate,distmult,complex,transh}.yaml
   run_all.sh                                        (5 학습: 5 model)
 
-Run: python3 build/relation/kg.py
+Part 2 (Cell 10/11 subgraph extraction): kg_bio_334.txt(Part 1 출력) + 334
+TWOSIDES train 엣지를 합쳐 data/relation/kg_triples.npy [E,3] (h,t,r)를
+만든다. train.py의 SubgraphExtractor가 이 파일에서 각 drug pair 주변 k-hop
+subgraph를 뽑아낸다. (node init=TransE는 Part 1의 kge/existing_drug/transe/.npy)
+
+관계 체계: relation_map.json 참조 (bio 0-22, TWOSIDES = 23+type_idx).
+
+Run: python3 build/relation/knowledge_graph.py
 """
 import os
 import json
+import numpy as np
 
 DDI334_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 EXP_DIR = os.path.dirname(DDI334_DIR)
@@ -191,7 +201,21 @@ def main():
         f.write('\n'.join(run))
     os.chmod(run_path, 0o755)
     print(f"[5] run 스크립트: {run_path}")
-    print(f"\n[DONE] KGE 입력·config 생성 완료. 학습: bash {run_path} [GPU]")
+
+    # ── Cell 10/11: subgraph 추출용 KG triples (bio + TWOSIDES train) ──
+    triples = []
+    for line in open(bio_path):
+        h, t, r = line.split()
+        triples.append([int(h), int(t), int(r)])
+    for line in open(ddi_train_path):
+        h, t, r = line.split()
+        triples.append([int(h), int(t), int(r)])
+    kg = np.array(triples, dtype=np.int64)
+    kg_triples_path = os.path.join(DDI334_DIR, 'data', 'relation', 'kg_triples.npy')
+    np.save(kg_triples_path, kg)
+    print(f"[6] kg_triples.npy {kg.shape} (bio+TWOSIDES, rel 0-{kg[:,2].max()}) -> {kg_triples_path}")
+
+    print(f"\n[DONE] KGE 입력·config 생성 + kg_triples.npy 완료. KGE 학습: bash {run_path} [GPU]")
 
 
 if __name__ == '__main__':

@@ -4,7 +4,7 @@ DDI-334 DDI network whole graph (Cell 08, Decagon R-GCN)
 =============================================================================
 TWOSIDES train-split 엣지로 Cell 08(DDI network R-GCN)이 쓸 전체 DDI 그래프를
 data/relation/ddi_network.pt로 만든다. node=db_id, 외부 생물학적 관계는 포함
-하지 않음 (DDI network는 DDI 연결 자체만 사용 — kg_triples.py의 지식그래프와는
+하지 않음 (DDI network는 DDI 연결 자체만 사용 — knowledge_graph.py의 지식그래프와는
 별개). node init(Morgan FP 기본 / TransE)은 train.py의 NODE_INIT env가 선택.
 
 출력: ddi334/data/relation/ddi_network.pt

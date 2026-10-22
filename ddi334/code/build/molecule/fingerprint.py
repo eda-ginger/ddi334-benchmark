@@ -9,7 +9,7 @@ Output: data/molecule/fingerprint.pt
 Was previously computed inline in train/train.py on every run (cheap RDKit
 call, no caching) -- moved here so every Molecule input representation has
 one build script producing one cached file, the same way Relation's inputs
-do (bio_profile.py, ddi_network.py, kg.py/kg_triples.py).
+do (bio_profile.py, ddi_network.py, knowledge_graph.py).
 
 Run: micromamba run -n DDIBench python build/molecule/fingerprint.py
 """
