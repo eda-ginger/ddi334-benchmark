@@ -68,38 +68,32 @@ environment/
 
 ### Paper correspondence
 
-`train/train.py --cell` numbers are the same 01-12 as the manuscript's **Table 2**
-(not an internal numbering scheme that needs translating):
+`train/train.py --cell` numbers are the same 01-18 as the manuscript's
+**Table 2** (not an internal numbering scheme that needs translating):
 
-| # | Modality | Input | Model |
-|---|---|---|---|
-| 01 | Molecule | SMILES | 1D-CNN |
-| 02 | Molecule | SMILES | ChemBERTa (Frozen) |
-| 03 | Molecule | Fingerprint | MLP |
-| 04 | Molecule | Molecular graph (2D) | GAT |
-| 05 | Molecule | Molecular graph (2D) | Graph Transformer |
-| 06 | Molecule | Molecular graph (3D) | SchNet |
-| 07 | Relation | Bio profile | MLP |
-| 08 | Relation | DDI network (Whole graph) | R-GCN |
-| 09 | Relation | Knowledge graph (Whole graph) | KGE (Frozen) |
-| 10 | Relation | Knowledge graph (Subgraph) | R-GCN |
-| 11 | Relation | Knowledge graph (Subgraph) | Graph Transformer |
-| 12 | Document | Mention/Description | SciBERT (Frozen) |
+| # | Modality | Input Representation | Input Usage | Model |
+|---|---|---|---|---|
+| 01 | Molecule | SMILES | Direct | 1D-CNN |
+| 02 | Molecule | SMILES | Direct | ChemBERTa (Frozen) |
+| 03 | Molecule | Fingerprint | Direct | MLP |
+| 04 | Molecule | Molecular graph | 2D molecular graph | GAT |
+| 05 | Molecule | Molecular graph | 2D molecular graph | Graph Transformer |
+| 06 | Molecule | Molecular graph | 3D molecular graph | SchNet |
+| 07 | Relation | Bio profile | Direct | MLP |
+| 08 | Relation | DDI network | Whole Graph | R-GCN |
+| 09 | Relation | Knowledge graph | Whole Graph | KGE (Frozen) |
+| 10 | Relation | Knowledge graph | Subgraph | R-GCN |
+| 11 | Relation | Knowledge graph | Subgraph | Graph Transformer |
+| 12 | Document | Mention / Description | User Only | SciBERT (Frozen) |
+| 13 | Document | Instruction | System + User + Question | Gemma2-2B (Zero-shot / Fine-tuning) |
+| 14 | Document | Instruction | System + User + Question | Gemma2-27B (Zero-shot / Fine-tuning) |
+| 15 | Document | Instruction | System + User + Question | Qwen2.5-3B (Zero-shot / Fine-tuning) |
+| 16 | Document | Instruction | System + User + Question | Qwen2.5-14B (Zero-shot / Fine-tuning) |
+| 17 | Document | Instruction | System + User + Question | Phi-3.5-mini (Zero-shot / Fine-tuning) |
+| 18 | Document | Instruction | System + User + Question | Phi-4 (Zero-shot / Fine-tuning) |
 
-The paper's Instruction (LLM) configurations, Table 2 #13-18, are not
-renumbered the same way — `results/main_experiments/13-18_llm/` and
-`results/commercial_llm/` already label every file by the actual HF model
-id or a short nickname (`google/gemma-2-2b-it`, `qwen3b`, ...), which
-identifies the model more directly than a number would:
-
-| # | Model |
-|---|---|
-| 13 | Gemma2-2B |
-| 14 | Gemma2-27B |
-| 15 | Qwen2.5-3B |
-| 16 | Qwen2.5-14B |
-| 17 | Phi-3.5-mini |
-| 18 | Phi-4 |
+`results/main_experiments/13-18_llm/` and `results/commercial_llm/` label
+files by the actual HF model id or a short nickname rather than #13-18.
 
 `ddi334/results/` is organized by which part of the paper it backs:
 
