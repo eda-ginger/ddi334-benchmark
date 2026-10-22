@@ -281,8 +281,9 @@ python encoders/train.py --cell 08 --gpu 0 --seed 42
 NODE_INIT=transe python encoders/train.py --cell 08 --gpu 0 --seed 42
 ```
 
-(An earlier `NODE_INIT=molgraph` robustness check for this cell is not
-used for any number in the paper and is not in this repository.)
+(An earlier `NODE_INIT=molgraph` robustness check for this cell was not
+used for any number in the paper and has been removed from this
+repository, both the results and the code path that produced them.)
 
 **`results/appendix/h_embedding_subgraph_cross/`** (Appendix H, Table H.1:
 crossing the Existing/Novel condition of the TransE embedding independently
@@ -343,7 +344,7 @@ x 3 splits (temperature=0, seed hardcoded, so one call per split/mode/model
 is deterministic and sufficient — no repeated seeds):
 
 ```bash
-python llm/llm_infer.py --version v2 --model google/gemma-2-2b-it \
+python llm/llm_infer.py --model google/gemma-2-2b-it \
   --gpu 0 --split S0 --mode existing_drug \
   --outdir ../results/main_experiments/13-18_llm/zeroshot
 ```

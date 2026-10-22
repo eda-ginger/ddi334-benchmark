@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-"""DDI-334 LLM 셀 추론+평가 (V1 multi-label JSON / V2 binary-with-R).
+"""DDI-334 LLM 셀 추론+평가 (V2 binary-with-R).
 
 - 입력 프롬프트: llm_prompts.DDI334Prompt (02 §3.1)
 - queried side effect(vec=1)만 질의 (전 실험과 동일)
-- 평가: train.py evaluate와 동일한 per-type ROC-AUC/PR-AUC/Acc (+ V1은 macro-F1)
+- 평가: train.py evaluate와 동일한 per-type ROC-AUC/PR-AUC/Acc
 - vLLM OpenAI 서버 (vllm-llm env에서 실행)
 
 Usage (vllm-llm env):
-  python llm_infer.py --version v1 --model Qwen/Qwen2.5-3B-Instruct \
+  python llm_infer.py --model Qwen/Qwen2.5-3B-Instruct \
       --gpu 3 --split S0 --limit 16        # smoke
 """
 import argparse, json, os, subprocess, sys, time
@@ -63,48 +63,10 @@ def load_rows(split, limit):
     return rows
 
 
-def infer_v1(client, model, pb, rows, merge, workers=24):
-    """동시 요청(ThreadPoolExecutor) -> vLLM 배치 처리. (직렬은 Running:1로 너무 느림)"""
-    from concurrent.futures import ThreadPoolExecutor
-    N = len(pb.typenames)
-    pred = np.zeros((len(rows), N)); lab = np.zeros((len(rows), N + 1))
-    fails = [0]
-
-    def one(r):
-        d1, d2, vec, pol = rows[r]
-        qids = np.where(vec == 1)[0].tolist()
-        lab[r, :N] = vec; lab[r, -1] = pol
-        sys_t, usr, schema = pb.build_v1(d1, d2, qids)
-        msgs = ([{"role": "user", "content": f"{sys_t}\n\n{usr}"}] if merge
-                else [{"role": "system", "content": sys_t}, {"role": "user", "content": usr}])
-        for attempt in range(2):
-            try:
-                resp = client.chat.completions.create(model=model, messages=msgs, temperature=0.0,
-                                                      max_tokens=1024, seed=123,  # K_max=128 -> 최악 JSON ~824tok, 512는 잘림
-                                                      extra_body={"guided_json": schema})
-                obj = json.loads(resp.choices[0].message.content)
-                for t in qids:
-                    pred[r, t] = 1.0 if obj.get(str(t)) else 0.0
-                return
-            except Exception as e:
-                if attempt == 1:
-                    fails[0] += 1
-                    if fails[0] <= 5:
-                        print(f"  [v1 row{r}] FAIL {e}")
-                else:
-                    time.sleep(1)
-
-    with ThreadPoolExecutor(max_workers=workers) as ex:
-        list(ex.map(one, range(len(rows))))
-    if fails[0]:
-        print(f"  [v1] 총 {fails[0]}/{len(rows)} 행 실패")
-    return pred, lab
-
-
 def infer_v2(client, model, pb, rows, merge, mode='existing_drug', workers=24):
     """동시 요청(ThreadPoolExecutor) -> vLLM 배치. 직렬은 Running:1이라 GPU idle+극저속.
     각 (pair, t)별 Yes/No 1건. temperature=0 결정적이므로 병렬해도 결과 불변.
-    mode: existing_drug / existing_drug_genes / novel_drug (정보 가용성 ablation)."""
+    mode: existing_drug / novel_drug (정보 가용성 ablation)."""
     from concurrent.futures import ThreadPoolExecutor
     N = len(pb.typenames)
     pred = np.zeros((len(rows), N)); lab = np.zeros((len(rows), N + 1))
@@ -214,16 +176,15 @@ def save_results(ds, cell_label, split, metrics, wall, outdir=None):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--version", required=True, choices=["v1", "v2"])
     ap.add_argument("--model", required=True)
     ap.add_argument("--gpu", default="3")
     ap.add_argument("--split", default="S0")
     ap.add_argument("--limit", type=int, default=0)
-    ap.add_argument("--label", default="")    # summary.csv cell 라벨 (예: 15_v1zs_qwen)
+    ap.add_argument("--label", default="")    # summary.csv cell 라벨 (예: 15_zs_qwen)
     ap.add_argument("--gpu-mem-util", type=float, default=0.85)  # 공유 GPU면 낮춤
     ap.add_argument("--port", type=int, default=12341)  # 병렬 잡 충돌 방지: 잡마다 고유 포트
     ap.add_argument("--merge-system", action="store_true")  # gemma류
-    ap.add_argument("--mode", default="existing_drug", choices=["existing_drug", "existing_drug_genes", "novel_drug"])  # V2 정보 ablation
+    ap.add_argument("--mode", default="existing_drug", choices=["existing_drug", "novel_drug"])  # V2 정보 ablation
     ap.add_argument("--workers", type=int, default=24)  # 동시 요청 수 (작은 모델은 64+로 GPU 채움)
     ap.add_argument("--outdir", default="")  # 결과 저장 폴더 override (예: results/main_experiments/01-12_encoders)
     a = ap.parse_args()
@@ -232,7 +193,7 @@ def main():
 
     pb = DDI334Prompt()
     rows = load_rows(a.split, a.limit)
-    print(f"[{a.version}/{DATASET_TAG}/{a.split}] rows={len(rows)} model={a.model}")
+    print(f"[{DATASET_TAG}/{a.split}] rows={len(rows)} model={a.model}")
 
     proc, log = start_server(a.model, a.gpu, a.merge_system, a.gpu_mem_util)
     try:
@@ -240,17 +201,13 @@ def main():
             print("서버 기동 실패"); return
         client = OpenAI(base_url=f"http://127.0.0.1:{PORT}/v1", api_key="x")
         t0 = time.time()
-        if a.version == "v1":
-            pred, lab = infer_v1(client, a.model, pb, rows, a.merge_system, workers=a.workers)
-        else:
-            pred, lab = infer_v2(client, a.model, pb, rows, a.merge_system, mode=a.mode, workers=a.workers)
+        pred, lab = infer_v2(client, a.model, pb, rows, a.merge_system, mode=a.mode, workers=a.workers)
         metrics = evaluate(pred, lab)
         wall = time.time() - t0
         print(f"[RESULT] {metrics} | wall {wall:.0f}s")
-        label = a.label or f"{a.version}_{a.model.replace('/','_')}"
+        label = a.label or f"v2_{a.model.replace('/','_')}"
         save_results(DATASET_TAG, label, a.split, metrics, wall, outdir=a.outdir or None)
-        # raw 예측 저장 (분포 분석용; 인코더 raw_preds와 동일 위치/형식).
-        # V2: pred=p_yes[행,타입], V1: pred=0/1[행,타입], lab=multihot+polarity[행,N+1].
+        # raw 예측 저장 (분포 분석용; 인코더 raw_preds와 동일 위치/형식). pred=p_yes[행,타입], lab=multihot+polarity[행,N+1].
         rdir = a.outdir or os.path.join(HERE, 'results', DATASET_TAG)
         rpdir = os.path.join(rdir, 'raw_preds'); os.makedirs(rpdir, exist_ok=True)
         np.savez(os.path.join(rpdir, f'{label}_{a.split}.npz'), pred=pred, lab=lab)

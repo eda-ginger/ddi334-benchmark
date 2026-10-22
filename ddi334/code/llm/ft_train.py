@@ -77,7 +77,7 @@ def make_collator(tok, merge, max_len=1024):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", required=True)
-    ap.add_argument("--mode", required=True, choices=["novel_drug", "existing_drug", "existing_drug_genes"])
+    ap.add_argument("--mode", required=True, choices=["novel_drug", "existing_drug"])
     ap.add_argument("--gpu", required=True)
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--epochs", type=int, default=5)

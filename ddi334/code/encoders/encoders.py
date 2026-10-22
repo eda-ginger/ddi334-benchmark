@@ -135,18 +135,11 @@ ATOM_SYMBOLS = [
     'Cd', 'In', 'Mn', 'Zr', 'Cr', 'Pt', 'Hg', 'Pb', 'X'
 ]  # 44 symbols (X = unknown). SSI-DDI utils.py + TIGER utils.py consistent.
 ATOM_SYMBOL_MAP = {s: i for i, s in enumerate(ATOM_SYMBOLS)}
-HYBRIDIZATION_LIST = [
-    Chem.rdchem.HybridizationType.SP,
-    Chem.rdchem.HybridizationType.SP2,
-    Chem.rdchem.HybridizationType.SP3,
-    Chem.rdchem.HybridizationType.SP3D,
-    Chem.rdchem.HybridizationType.SP3D2,
-]
 NUM_HS_RANGE = list(range(11))
 VALENCE_RANGE = list(range(11))
 MAX_DEGREE = 10
 
-# Cell 04 (GAT): SSI-DDI original 55-dim
+# Legacy dim (cell04/05 both use TIGER_FEAT_DIM below; kept only as GATEncoder's default param)
 SSI_DDI_FEAT_DIM = 55   # 44 + 1 + 1 + 1 + 5 + 1 + 1 + 1(padding) = 55
 # Cell 05 (GT):  TIGER original 67-dim
 TIGER_FEAT_DIM = 67     # 44 + 11 + 11 + 1 = 67
@@ -164,25 +157,6 @@ def _onehot(value, allowable_set):
     return [int(v == value) for v in allowable_set]
 
 
-def atom_features_ssi_ddi(atom) -> list:
-    """55-dim atom features following SSI-DDI original (Nyamabo 2021).
-    44(symbol) + 1(degree) + 1(Hs) + 1(valence) + 5(hybridization) + 1(aromatic) + 1(fcharge) = 54 -> pad to 55.
-    """
-    symbol = atom.GetSymbol()
-    sym_idx = ATOM_SYMBOL_MAP.get(symbol, ATOM_SYMBOL_MAP['X'])
-    symbol_onehot = [0] * 44
-    symbol_onehot[sym_idx] = 1
-    feats = symbol_onehot + [
-        atom.GetDegree(),
-        atom.GetTotalNumHs(),
-        atom.GetImplicitValence(),
-    ]
-    feats += [int(atom.GetHybridization() == h) for h in HYBRIDIZATION_LIST]
-    feats += [int(atom.GetIsAromatic()), atom.GetFormalCharge()]
-    feats += [0] * (SSI_DDI_FEAT_DIM - len(feats))  # pad to 55
-    return feats
-
-
 def atom_features_tiger(atom) -> list:
     """67-dim atom features following TIGER original (utils.py:203-212).
     44(symbol) + 11(TotalNumHs one-hot) + 11(ImplicitValence one-hot) + 1(IsAromatic) = 67.
@@ -196,32 +170,6 @@ def atom_features_tiger(atom) -> list:
     feats += _onehot(atom.GetImplicitValence(), VALENCE_RANGE)
     feats += [int(atom.GetIsAromatic())]
     return feats  # 67 total
-
-
-# Legacy aliases
-atom_features_55d = atom_features_ssi_ddi
-
-
-def mol_to_graph_55d(smiles: str) -> dict:
-    """Convert SMILES to molecular graph with SSI-DDI 55-dim atom features (Cell 04)."""
-    mol = Chem.MolFromSmiles(smiles)
-    if mol is None:
-        return {
-            'x': np.zeros((1, SSI_DDI_FEAT_DIM), dtype=np.float32),
-            'edge_index': np.zeros((2, 0), dtype=np.int64),
-        }
-    atoms = []
-    for atom in mol.GetAtoms():
-        feat = atom_features_ssi_ddi(atom)
-        atoms.append(feat)
-    x = np.array(atoms, dtype=np.float32)
-    edges = []
-    for bond in mol.GetBonds():
-        i, j = bond.GetBeginAtomIdx(), bond.GetEndAtomIdx()
-        edges.append([i, j])
-        edges.append([j, i])
-    edge_index = np.array(edges, dtype=np.int64).T if edges else np.zeros((2, 0), dtype=np.int64)
-    return {'x': x, 'edge_index': edge_index}
 
 
 def mol_to_graph_tiger(smiles: str, max_distance: int = 8) -> dict:

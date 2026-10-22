@@ -60,7 +60,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--tag", required=True)
     ap.add_argument("--model", required=True)
-    ap.add_argument("--mode", required=True, choices=["novel_drug", "existing_drug", "existing_drug_genes"])
+    ap.add_argument("--mode", required=True, choices=["novel_drug", "existing_drug"])
     ap.add_argument("--ckpt", required=True)
     ap.add_argument("--gpu", default="0")
     ap.add_argument("--epochs", type=int, default=5)

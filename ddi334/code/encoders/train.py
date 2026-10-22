@@ -215,32 +215,6 @@ def load_molfp_embeddings():
     return torch.from_numpy(emb).float()
 
 
-def load_molgraph_pooled_embeddings(num_drugs=1710):
-    """분자그래프(mol graph)에 들어가는 원자 단위 초기 노드 표현(55d, SSI-DDI feat, cell04과 동일)을
-    분자 하나당 합산(sum-pool)해서 고정 벡터 하나로 만든 것 (NODE_INIT=molgraph, 2026-10-19 추가,
-    cell08 DDI-network-only 실험용). GAT 등 GNN을 거치지 않은 '그래프에 넣기 전' 원시 노드 피처이며,
-    fingerprint와 동일하게 frozen 벡터로 cell08의 R-GCN 초기값에 사용한다."""
-    cache = os.path.join(MOL_DIR, 'molgraph_pooled_55d.npy')
-    if os.path.exists(cache):
-        print(f"  [NODE_INIT/molgraph] {cache}")
-        return torch.from_numpy(np.load(cache)).float()
-    smiles = load_drug_smiles()
-    graphs = load_mol_graphs_55d(smiles)
-    dim = next(iter(graphs.values()))['x'].shape[1]
-    emb = np.zeros((num_drugs, dim), dtype=np.float32)
-    for did, g in graphs.items():
-        if did < num_drugs:
-            emb[did] = g['x'].sum(axis=0)
-    np.save(cache, emb)
-    print(f"  [NODE_INIT/molgraph] computed -> {cache} ({len(graphs)} drugs, dim={dim})")
-    return torch.from_numpy(emb).float()
-
-
-def load_mol_graphs_55d(smiles_dict):
-    from encoders import mol_to_graph_55d
-    return {did: mol_to_graph_55d(smi) for did, smi in smiles_dict.items()}
-
-
 def load_mol_graphs_tiger(smiles_dict):
     from encoders import mol_to_graph_tiger
     return {did: mol_to_graph_tiger(smi) for did, smi in smiles_dict.items()}
@@ -255,7 +229,7 @@ def load_chemberta_embeddings():
 
 
 def load_biobert_embeddings(input_type='existing_drug'):
-    # novel_drug/genes/existing_drug (2026-07-27, 05_실험설계(DDI334).md §8): LLM(§5) 템플릿과 통일한 cell12 3-tier.
+    # novel_drug/existing_drug (2026-07-27, 05_실험설계(DDI334).md §8): LLM(§5) 템플릿과 통일한 cell12 입력.
     #   build_biobert_template.py로 생성. DOC_MODEL env(biobert/pubmedbert/scibert, 기본 scibert = 원고
     #   Table 1/D.1 설정)로 backbone 선택 (2026-07-27 확장, §8.5; biobert/pubmedbert는 Appendix C.1 비교용).
     # 반환: (embeddings dict, hidden_dim) — 모델마다 실제 dim을 payload에서 읽어옴(하드코딩 금지).
@@ -313,7 +287,7 @@ def build_model(cell, device, drug_ids):
     elif cell == '08':
         # DDI network (R-GCN), whole graph + frozen init. subgraph 불필요.
         # node=db_id (identity, num_drugs=1710 cover). rel=type_idx+inverse (ddi_network.pt).
-        # NODE_INIT env('molfp' 기본 / 'transe' / 'molgraph')로 초기 노드값 소스 선택.
+        # NODE_INIT env('molfp' 기본 / 'transe')로 초기 노드값 소스 선택.
         # 이 그래프는 약물 노드만 존재(유전자/질병 없음) — cell10/11의 KG subgraph와 다름.
         # 2026-10-19 molfp(Morgan FP, 4.66M params)가 본문 "DDI network (R-GCN)" 공식 결과로
         # 채택됨에 따라 기본값을 transe->molfp로 전환 (cell10/11은 그대로 transe 기본 유지).
@@ -321,8 +295,6 @@ def build_model(cell, device, drug_ids):
         node_init = os.environ.get('NODE_INIT', 'molfp')
         if node_init == 'molfp':
             drug_kge = load_molfp_embeddings()[:1710]
-        elif node_init == 'molgraph':
-            drug_kge = load_molgraph_pooled_embeddings(num_drugs=1710)
         else:
             kge_type = os.environ.get('KGE_TYPE', 'transe')
             kge_emb = load_kge_embeddings(kge_type)
@@ -398,7 +370,7 @@ def build_model(cell, device, drug_ids):
     # ── DOC 셀 (12) ──
     elif cell == '12':
         # Description/Mention (SciBERT, frozen). DOC_INPUT env로 입력 텍스트 선택.
-        # novel_drug/genes/existing_drug(LLM 템플릿과 통일, §8) 중 하나, 기본 existing_drug = 원고
+        # novel_drug/existing_drug(LLM 템플릿과 통일, §8) 중 하나, 기본 existing_drug = 원고
         # Table 2/D.1 설정. DOC_MODEL env(biobert/pubmedbert/scibert, §8.5)로 backbone 선택, 기본
         # scibert = 원고 설정 (biobert/pubmedbert는 Appendix C.1 비교용) — bert_dim은 payload에서 동적으로 읽음.
         doc_inp = os.environ.get('DOC_INPUT', 'existing_drug')

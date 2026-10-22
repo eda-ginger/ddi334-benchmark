@@ -1,6 +1,6 @@
-"""cell12 DOC 템플릿 [CLS] 임베딩 3종 (novel_drug/genes/existing_drug) — backbone 선택 가능.
+"""cell12 DOC 템플릿 [CLS] 임베딩 2종 (novel_drug/existing_drug) — backbone 선택 가능.
 
-2026-07-27 미팅 피드백 반영 — LLM(§5, llm_prompts.py) novel_drug/genes/existing_drug 템플릿과
+2026-07-27 미팅 피드백 반영 — LLM(§5, llm_prompts.py) novel_drug/existing_drug 템플릿과
 동일한 텍스트를 cell12(frozen text encoder)에도 사용 (05_실험설계(DDI334).md §8).
 텍스트는 llm_prompts.py의 DDI334Prompt.drug_text()를 그대로 재사용(단일 소스).
 2026-07-27 확장(§8.5): DOC 계열 BERT 3종(biobert/pubmedbert/scibert) 비교를 위해
@@ -8,13 +8,12 @@ backbone을 --tag로 선택 가능하게 일반화. hidden_dim은 각 모델 con
 읽음(하드코딩 금지 — 모델마다 dimension이 다를 수 있음).
 
   novel_drug    : SMILES만
-  genes         : + Name + Target genes
-  existing_drug : + Indications + Pharmacologic class
+  existing_drug : + Name + Target genes + Indications + Pharmacologic class
 
 대상 약물 = bio_profile_text.json의 334드럭(DDI-334 전체, db_id 공간).
 전처리 방식은 기존 precompute/scripts/biobert.py와 동일([CLS], max_length=512).
 
-출력: ddi334/data/document/{tag}_{novel_drug,genes,existing_drug}.pt
+출력: ddi334/data/document/{tag}_{novel_drug,existing_drug}.pt
       {'embeddings': {int db_id: Tensor[dim]}, 'hidden_dim':dim(모델별 실제값), 'model_name':..., 'input_type':...}
       (train.py의 load_biobert_embeddings가 실제로 읽는 곳도 data/document/)
 
@@ -35,7 +34,7 @@ DOC_DIR = os.path.join(DDI334_DIR, 'data', 'document')                  # 실제
 OUT_DIRS = [DOC_DIR]
 BIO_PROFILE = os.path.join(DOC_DIR, 'bio_profile_text.json')
 MAX_TOKENS = 512
-TIERS = ['novel_drug', 'genes', 'existing_drug']
+TIERS = ['novel_drug', 'existing_drug']
 
 # DOC 계열 BERT 3종 (2026-07-27 미팅 논의, 우리 85편 서베이에서 DOC 모달리티 최다 등장 BERT backbone)
 MODEL_PRESETS = {
@@ -50,8 +49,6 @@ def main():
     ap.add_argument('--tag', default='biobert', choices=list(MODEL_PRESETS.keys()),
                      help='출력 파일 접두어({tag}_{tier}.pt) 겸 프리셋 모델 선택')
     ap.add_argument('--model_name', default=None, help='프리셋 대신 임의 HF 모델 지정(선택)')
-    ap.add_argument('--style', default='template', choices=['template', 'natural'],
-                     help='template=drug_text() key:value / natural=drug_text_nl() 문장체 (2026-07-28 추가 실험)')
     ap.add_argument('--device', default='cuda:0')
     ap.add_argument('--batch_size', type=int, default=16)
     args = ap.parse_args()
@@ -73,10 +70,8 @@ def main():
     hidden_dim = model.config.hidden_size   # 모델별 실제 dimension (하드코딩 금지)
     print(f'  hidden_dim={hidden_dim}')
 
-    text_fn = pb.drug_text if args.style == 'template' else pb.drug_text_nl
-    tag_out = args.tag if args.style == 'template' else f'{args.tag}_nl'
     for tier in TIERS:
-        texts = [text_fn(d, tier) for d in drug_ids]
+        texts = [pb.drug_text(d, tier) for d in drug_ids]
         embeddings = {}
         t0 = time.time()
         n = len(drug_ids)
@@ -102,7 +97,7 @@ def main():
         }
         for od in OUT_DIRS:
             os.makedirs(od, exist_ok=True)
-            out_pt = os.path.join(od, f'{tag_out}_{tier}.pt')
+            out_pt = os.path.join(od, f'{args.tag}_{tier}.pt')
             torch.save(payload, out_pt)
             print(f'Saved: {out_pt} ({len(embeddings)} drugs, dim={hidden_dim})')
 
