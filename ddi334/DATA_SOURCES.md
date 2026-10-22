@@ -86,8 +86,8 @@ point at wherever you put the raw sources.
      (now `existing_drug` / `novel_drug` here) — reference only, not
      meant to be re-run as-is
 
-3. Encoder-specific precomputation (`ddi334/code/build/build_bio_profile.py`,
-   `build_bio_raw.py`, `build_biobert_template.py`,
+3. Encoder-specific precomputation (`ddi334/code/build/build_bio_profile_rel.py`,
+   `build_bio_profile_doc.py`, `build_biobert_template.py`,
    `assemble_precompute.py`, ...) turns the above into the per-cell
    input caches consumed by `encoders/train.py` (not shipped in this repo —
    see the main README's "What is / isn't included" section).

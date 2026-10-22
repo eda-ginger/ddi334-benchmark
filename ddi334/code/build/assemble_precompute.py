@@ -15,7 +15,7 @@ build_biobert_template.py가 bio_profile_text.json에서 직접 생성한다 (�
 TransE 등 KGE 임베딩은 kge/existing_drug/{type}/*.npy에서 train.py가 직접 읽으므로
 (load_kge_embeddings의 fallback 경로) 별도 복사 단계가 필요 없다.
 
-Run: micromamba run -n DDIBench python assemble_precompute.py
+Run: micromamba run -n DDIBench python build/assemble_precompute.py
 """
 import os
 import json

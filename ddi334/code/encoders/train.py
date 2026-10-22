@@ -17,7 +17,7 @@ encoder(GAT/SchNet/GT/MLP/CNN/ChemBERTa/BioBERT)만 모델로 꽂는다.
 데이터: ddi334/data/splits/  ("h t y0,...,y(N-1) p", db_id 공간, pos/neg 1:1 교차)
           data/molecule, data/relation, data/document — 모달리티별 전처리 입력
 Usage:
-  micromamba run -n DDIBench python train.py --cell 04 --gpu 0 --seed 42
+  micromamba run -n DDIBench python encoders/train.py --cell 04 --gpu 0 --seed 42
 """
 import os
 import sys
@@ -240,7 +240,7 @@ def load_biobert_embeddings(input_type='existing_drug'):
 
 
 def load_raw_bio_profile():
-    """Cell 07: raw HetioNet bio-neighbor multi-hot vector (build_bio_raw.py). No similarity/PCA."""
+    """Cell 07: raw HetioNet bio-neighbor multi-hot vector (build_bio_profile_rel.py). No similarity/PCA."""
     pl = torch.load(os.path.join(REL_DIR, 'bio_profile.pt'), map_location='cpu', weights_only=False)
     return pl['embeddings'], pl['input_dim']
 
@@ -280,7 +280,7 @@ def build_model(cell, device, drug_ids):
     # ── REL 셀 (07-11) ──
     elif cell == '07':
         # Bio profile (MLP). raw multi-hot (no Jaccard/PCA) -> 2-layer MLP,
-        # mirrors Cell 03 (MorganFPEncoder). build_bio_raw.py precompute.
+        # mirrors Cell 03 (MorganFPEncoder). build_bio_profile_rel.py precompute.
         emb, dim = load_raw_bio_profile()
         encoder = BioProfileMLPEncoder(hidden_dim=hd, dropout=dr, fp_dim=dim)
         encoder.set_features(emb)

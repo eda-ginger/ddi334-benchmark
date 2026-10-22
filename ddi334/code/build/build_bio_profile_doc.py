@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""DDI-334 LLM 프롬프트용 bio profile precompute (Ideal 입력).
+"""DDI-334 LLM 프롬프트용 bio profile precompute (Existing drug 입력).
 
 각 약물(db_id)의 HetioNet 이웃 중 누수/노이즈 없는 3종만 이름으로 추출:
   - Target genes : Compound-binds-Gene (CbG, kg_bio_334 rel 6) = 직접 결합 표적 (LLMDDI식)
@@ -9,7 +9,7 @@
 
 입력: data/relation/kge/kg_bio_334.txt, kge_hetionet/data/entity_drug.json, data/relation/hetionet_names.json
 출력: data/document/bio_profile_text.json  { "<db_id>": {"genes":[..], "indications":[..], "pharm_class":[..]} }
-Run: micromamba run -n DDIBench python code/build_bio_profile.py
+Run: micromamba run -n DDIBench python build/build_bio_profile_doc.py
 """
 import json
 import os

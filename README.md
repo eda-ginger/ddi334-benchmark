@@ -31,9 +31,10 @@ is not the full experiment history of the underlying project.
 ddi334/
   code/
     build/           dataset/KG/precompute build scripts (`build_dataset.py`,
-                     `build_kg.py`, `build_rel_graphs.py`, `build_bio_raw.py`,
-                     `build_bio_profile.py`, `build_biobert_template.py`,
-                     `build_typenames.py`, `assemble_precompute.py`)
+                     `build_kg.py`, `build_rel_graphs.py`,
+                     `build_bio_profile_rel.py`, `build_bio_profile_doc.py`,
+                     `build_biobert_template.py`, `build_typenames.py`,
+                     `assemble_precompute.py`)
     encoders/        main trainer (`train.py`, cells 01-12 — numbered to
                      match the paper's Table 2 exactly, see "Paper
                      correspondence" below) and the shared model/dataset
@@ -372,8 +373,8 @@ transparency) — not the discarded `ft_ep1_`/`ft_ep2_`/`ft_ep3_` epoch-sweep
 files.
 
 See `ddi334/code/build/` for dataset build (`build_dataset.py`,
-`build_kg.py`, `build_bio_profile.py`, ...) and `ddi334/code/llm/` for
-prompt rendering (`llm_prompts.py`).
+`build_kg.py`, `build_bio_profile_rel.py`, `build_bio_profile_doc.py`,
+...) and `ddi334/code/llm/` for prompt rendering (`llm_prompts.py`).
 
 ## Environment
 

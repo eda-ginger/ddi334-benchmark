@@ -17,9 +17,9 @@ backbone을 --tag로 선택 가능하게 일반화. hidden_dim은 각 모델 con
       {'embeddings': {int db_id: Tensor[dim]}, 'hidden_dim':dim(모델별 실제값), 'model_name':..., 'input_type':...}
       (train.py의 load_biobert_embeddings가 실제로 읽는 곳도 data/document/)
 
-Run: micromamba run -n DDIBench python build_biobert_template.py --tag biobert [--device cuda:0]
-     micromamba run -n DDIBench python build_biobert_template.py --tag pubmedbert
-     micromamba run -n DDIBench python build_biobert_template.py --tag scibert
+Run: micromamba run -n DDIBench python build/build_biobert_template.py --tag biobert [--device cuda:0]
+     micromamba run -n DDIBench python build/build_biobert_template.py --tag pubmedbert
+     micromamba run -n DDIBench python build/build_biobert_template.py --tag scibert
 """
 import argparse
 import json

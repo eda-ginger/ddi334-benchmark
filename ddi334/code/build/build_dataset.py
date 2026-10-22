@@ -25,7 +25,7 @@ DDI-334 Dataset Builder — 소스에서 최종까지 한 번에 (재현 가능)
   3. neither   : 전체쌍 - TWOSIDES연결 - DrugBank연결  (negative pool)
   4. per ver   : positive 수집 -> Dk/Dn split(8:1:1/5:5/5:5) -> negative 1:1 -> 출력
 
-Run: micromamba run -n DDIBench python build_dataset.py
+Run: micromamba run -n DDIBench python build/build_dataset.py
 """
 import os
 import csv

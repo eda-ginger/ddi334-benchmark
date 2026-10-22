@@ -12,7 +12,7 @@
   typenames.json  {"0": "aplasia pure red cell", ..., "208": ...}
   (tdc 트랙은 이후 전부 제거됨 — 이 스크립트의 tdc 관련 부분은 역사적 기록, 재실행 불가)
 
-Run: micromamba run -n DDIBench python build_typenames.py
+Run: micromamba run -n DDIBench python build/build_typenames.py
 """
 import csv, glob, os, json
 import numpy as np

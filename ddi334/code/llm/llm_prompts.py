@@ -29,7 +29,7 @@ class DDI334Prompt:
         self.typenames = json.load(open(os.path.join(SPLITS_DIR, 'typenames.json')))
         self.name_map = {int(k): v for k, v in json.load(open(NAMES_JSON)).items()}
         self.smiles = {int(k): v for k, v in json.load(open(SMILES_JSON)).items()}
-        # bio profile (Ideal 입력): db_id -> {genes, indications, pharm_class}  (build_bio_profile.py)
+        # bio profile (Existing drug 입력): db_id -> {genes, indications, pharm_class}  (build_bio_profile_doc.py)
         bp_path = os.path.join(DOC_DIR, 'bio_profile_text.json')
         self.bio = json.load(open(bp_path)) if os.path.exists(bp_path) else {}
 
