@@ -86,12 +86,6 @@ environment/
 | 11 | Relation | Knowledge graph (Subgraph) | Graph Transformer |
 | 12 | Document | Mention/Description | SciBERT (Frozen) |
 
-(Two configurations tried during development — Jaccard+PCA-reduced Molecule
-fingerprint/Relation bio-profile variants, and a drug-name-only Document
-cell superseded by cell 12's existing_drug/novel_drug tiers — are not
-reported in the paper and are not in this repository at all, so the
-numbering above has no gaps.)
-
 The paper's Instruction (LLM) configurations, Table 2 #13-18, are not
 renumbered the same way — `results/main_experiments/13-18_llm/` and
 `results/commercial_llm/` already label every file by the actual HF model
