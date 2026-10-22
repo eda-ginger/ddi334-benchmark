@@ -8,23 +8,30 @@ actually used to produce the results in this repository.
 | Environment | Python | Used for |
 |---|---|---|
 | `ddibench_requirements.txt` | 3.8 | `ddi334/code/train/train.py` (encoder cells 01-12) and everything else in `ddi334/code/` except LLM inference/fine-tuning and KGE training |
-| `dglke_requirements.txt` | 3.8 | KGE embedding training (TransE/RotatE/ComplEx/DistMult/TransH) that produces `ddi334/data/relation/kge/*/{transe,rotate,complex,distmult,transh}/` |
+| `dglke_requirements.txt` | 3.8 | KGE embedding training (TransE/RotatE/ComplEx/DistMult/TransH) that produces `ddi334/data/relation/kge/*/{transe,rotate,complex,distmult,transh}/` — **optional**: these embeddings are already shipped in `ddi334/data/relation/kge/`, so this env is only needed to regenerate them from scratch |
 | `vllm_llm_requirements.txt` | 3.10 | `ddi334/code/llm/zeroshot.py`, `finetuning_train.py`, `finetuning_eval.py` (all LLM zero-shot / fine-tuning, cells 13-18) |
+
+Each file is an exact `pip freeze`, so every transitive dependency is
+already pinned — install with `--no-deps` to skip pip's dependency
+resolver (otherwise it can report a spurious conflict, e.g.
+`vllm_llm_requirements.txt`'s pinned `protobuf` vs. `opentelemetry-proto`'s
+looser declared range, even though the pinned combination is the one
+actually used to produce these results).
 
 ## Setup
 
 ```bash
 conda create -n DDIBench python=3.8 -y
 conda activate DDIBench
-pip install -r environment/ddibench_requirements.txt
+pip install --no-deps -r environment/ddibench_requirements.txt
 
-conda create -n dglke python=3.8 -y
+conda create -n dglke python=3.8 -y   # optional, see table above
 conda activate dglke
-pip install -r environment/dglke_requirements.txt
+pip install --no-deps -r environment/dglke_requirements.txt
 
 conda create -n vllm-llm python=3.10 -y
 conda activate vllm-llm
-pip install -r environment/vllm_llm_requirements.txt
+pip install --no-deps -r environment/vllm_llm_requirements.txt
 ```
 
 Some packages (`torch`, `dgl`, `torch-geometric` extensions) are
