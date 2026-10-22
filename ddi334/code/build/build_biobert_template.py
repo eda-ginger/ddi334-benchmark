@@ -29,7 +29,7 @@ import time
 
 import torch
 
-HERE = os.path.dirname(os.path.abspath(__file__))                       # ddi334/code
+HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))      # ddi334/code
 DDI334_DIR = os.path.dirname(HERE)                                      # ddi334
 DOC_DIR = os.path.join(DDI334_DIR, 'data', 'document')                  # 실제 train.py가 읽는 곳
 OUT_DIRS = [DOC_DIR]
@@ -58,7 +58,7 @@ def main():
     model_name = args.model_name or MODEL_PRESETS[args.tag]
 
     import sys
-    sys.path.insert(0, HERE)
+    sys.path.insert(0, os.path.join(HERE, 'llm'))
     from llm_prompts import DDI334Prompt
 
     pb = DDI334Prompt()   # typenames는 drug_text에 안 쓰임

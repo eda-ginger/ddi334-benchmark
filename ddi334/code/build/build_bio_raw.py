@@ -24,7 +24,7 @@ import json
 import numpy as np
 import torch
 
-DDI334_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DDI334_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 V5_DIR = os.path.dirname(os.path.dirname(DDI334_DIR))
 KG_BIO_334 = os.path.join(DDI334_DIR, 'data', 'relation', 'kge', 'kg_bio_334.txt')
 DRUG_MAX = 1710

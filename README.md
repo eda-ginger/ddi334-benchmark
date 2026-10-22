@@ -29,13 +29,19 @@ is not the full experiment history of the underlying project.
 
 ```
 ddi334/
-  code/              main trainer (`train.py`, cells 01-12 — numbered to
+  code/
+    build/           dataset/KG/precompute build scripts (`build_dataset.py`,
+                     `build_kg.py`, `build_rel_graphs.py`, `build_bio_raw.py`,
+                     `build_bio_profile.py`, `build_biobert_template.py`,
+                     `build_typenames.py`, `assemble_precompute.py`)
+    encoders/        main trainer (`train.py`, cells 01-12 — numbered to
                      match the paper's Table 2 exactly, see "Paper
-                     correspondence" below), the shared model/dataset
+                     correspondence" below) and the shared model/dataset
                      modules it imports (`encoders.py`, `ddi_model.py`,
-                     `dataset.py`), and all DDI-334-specific scripts
-                     (dataset build, KG build, LLM prompt
-                     rendering/inference, fine-tuning, ...). See below.
+                     `dataset.py`)
+    llm/             LLM prompt rendering (`llm_prompts.py`), zero-shot
+                     inference (`llm_infer.py`), and fine-tuning
+                     (`ft_train.py`, `run_ft_cv.py`) for cells 13-18
   data/              organized by modality:
                        splits/    train/valid/test split files (S0/S1/S2),
                                   cluster-split/id-map/type-name/drug-name
@@ -56,7 +62,7 @@ environment/
 
 ### Paper correspondence
 
-`train.py --cell` numbers are the same 01-12 as the manuscript's **Table 2**
+`encoders/train.py --cell` numbers are the same 01-12 as the manuscript's **Table 2**
 (not an internal numbering scheme that needs translating):
 
 | # | Modality | Input | Model |
@@ -182,7 +188,7 @@ files used for S0 (transductive) / S1 / S2 (inductive) evaluation.
   pooled-atom-feature node-init caches, rendered LLM prompt jsonl
   files) — derived from the raw external data below and regenerable
   with the scripts in `ddi334/code/` (the fingerprint/atom-feature
-  caches are rebuilt automatically on first run of `train.py`)
+  caches are rebuilt automatically on first run of `encoders/train.py`)
 - Training/inference logs
 
 ## Data
@@ -194,7 +200,7 @@ and are not redistributed here.
 
 See [`ddi334/DATA_SOURCES.md`](ddi334/DATA_SOURCES.md)
 for exact sources, the required sibling-folder layout, and the build
-pipeline (`build_dataset.py` -> `build_kg.py` -> per-encoder
+pipeline (`build/build_dataset.py` -> `build/build_kg.py` -> per-encoder
 precomputation).
 
 ## Reproducing a result
@@ -210,7 +216,7 @@ our specific shared server, which is why they aren't included here).
 cd ddi334/code
 
 # example: cell01 (SMILES 1D-CNN), seed 42
-python train.py --cell 01 --gpu 0 --seed 42
+python encoders/train.py --cell 01 --gpu 0 --seed 42
 ```
 
 `--checkpoint_metric` is not a flag here — checkpoint selection (accuracy,
@@ -225,7 +231,7 @@ command above, repeated over every cell (01-12) and seed:
 ```bash
 for cell in 01 02 03 04 05 06 07 08 09 10 11 12; do
   for seed in 0 42 124; do
-    python train.py --cell $cell --gpu 0 --seed $seed \
+    python encoders/train.py --cell $cell --gpu 0 --seed $seed \
       --result_dir ../results/main_experiments/01-12_encoders
   done
 done
@@ -240,10 +246,10 @@ conditions by construction, so the paper reports a single number for it):
 
 ```bash
 # Existing drug condition (default)
-python train.py --cell 10 --gpu 0 --seed 42
+python encoders/train.py --cell 10 --gpu 0 --seed 42
 
 # Novel drug condition (Unseen drugs' biological relations removed)
-NOVEL_DRUG=1 python train.py --cell 10 --gpu 0 --seed 42
+NOVEL_DRUG=1 python encoders/train.py --cell 10 --gpu 0 --seed 42
 ```
 
 Running both conditions for cells 10/11 into the same `--result_dir`
@@ -267,12 +273,12 @@ with a 1,024-bit Morgan fingerprint (4.66M parameters). This is the
 10/11 where it defaults to `transe`):
 
 ```bash
-python train.py --cell 08 --gpu 0 --seed 42
-# equivalent to: NODE_INIT=molfp python train.py --cell 08 ...
+python encoders/train.py --cell 08 --gpu 0 --seed 42
+# equivalent to: NODE_INIT=molfp python encoders/train.py --cell 08 ...
 
 # the earlier TransE-initialized version of this cell (not used in the
 # paper) is reproduced with:
-NODE_INIT=transe python train.py --cell 08 --gpu 0 --seed 42
+NODE_INIT=transe python encoders/train.py --cell 08 --gpu 0 --seed 42
 ```
 
 (An earlier `NODE_INIT=molgraph` robustness check for this cell is not
@@ -285,9 +291,9 @@ uses two more env vars that override `NOVEL_DRUG` when set, 3 seeds each:
 
 ```bash
 # novel_embedding_existing_subgraph/
-EMB_SRC=novel_drug SUBGRAPH_SRC=existing_drug python train.py --cell 10 --gpu 0 --seed 42
+EMB_SRC=novel_drug SUBGRAPH_SRC=existing_drug python encoders/train.py --cell 10 --gpu 0 --seed 42
 # existing_embedding_novel_subgraph/
-EMB_SRC=existing_drug SUBGRAPH_SRC=novel_drug python train.py --cell 10 --gpu 0 --seed 42
+EMB_SRC=existing_drug SUBGRAPH_SRC=novel_drug python encoders/train.py --cell 10 --gpu 0 --seed 42
 ```
 
 **KGE comparison (Appendix F)**: only the TransE entity embeddings are
@@ -320,11 +326,11 @@ override for `existing_drug`) and is also the main-text Figure 6 result
 (and Table D.1's parameter count) — (`main_experiments/01-12_encoders`'s
 cell 12 above is this exact run); `biobert`/`pubmedbert` are only used for
 this Appendix C.4 comparison. Each backbone's embeddings must first be
-built once with `build_biobert_template.py --tag {biobert,pubmedbert,scibert}`
+built once with `build/build_biobert_template.py --tag {biobert,pubmedbert,scibert}`
 (reads `data/document/bio_profile_text.json`, writes into `data/document/`):
 
 ```bash
-DOC_MODEL=pubmedbert DOC_INPUT=novel_drug python train.py --cell 12 --gpu 0 --seed 42 \
+DOC_MODEL=pubmedbert DOC_INPUT=novel_drug python encoders/train.py --cell 12 --gpu 0 --seed 42 \
   --result_dir ../results/appendix/c_document_backbone_comparison/pubmedbert/novel_drug
 ```
 
@@ -337,7 +343,7 @@ x 3 splits (temperature=0, seed hardcoded, so one call per split/mode/model
 is deterministic and sufficient — no repeated seeds):
 
 ```bash
-python llm_infer.py --version v2 --model google/gemma-2-2b-it \
+python llm/llm_infer.py --version v2 --model google/gemma-2-2b-it \
   --gpu 0 --split S0 --mode existing_drug \
   --outdir ../results/main_experiments/13-18_llm/zeroshot
 ```
@@ -349,8 +355,8 @@ selects the best epoch per split by validation AUROC), for each of the
 same 6 models x 2 drug conditions:
 
 ```bash
-python ft_train.py --model google/gemma-2-2b-it --mode existing_drug --gpu 0 --epochs 3
-python run_ft_cv.py --tag google_gemma-2-2b-it_existing_drug_seed42 \
+python llm/ft_train.py --model google/gemma-2-2b-it --mode existing_drug --gpu 0 --epochs 3
+python llm/run_ft_cv.py --tag google_gemma-2-2b-it_existing_drug_seed42 \
   --model google/gemma-2-2b-it --mode existing_drug \
   --ckpt ../results/ft_checkpoints/google_gemma-2-2b-it_existing_drug_seed42 --gpu 0 --epochs 3
 ```
@@ -364,8 +370,9 @@ validation curve that the best-epoch selection was made from, kept for
 transparency) — not the discarded `ft_ep1_`/`ft_ep2_`/`ft_ep3_` epoch-sweep
 files.
 
-See `ddi334/code/` for dataset build (`build_dataset.py`, `build_kg.py`,
-`build_bio_profile.py`, ...) and prompt rendering (`llm_prompts.py`).
+See `ddi334/code/build/` for dataset build (`build_dataset.py`,
+`build_kg.py`, `build_bio_profile.py`, ...) and `ddi334/code/llm/` for
+prompt rendering (`llm_prompts.py`).
 
 ## Environment
 

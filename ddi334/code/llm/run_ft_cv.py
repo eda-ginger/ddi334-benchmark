@@ -14,13 +14,13 @@ Usage (vllm-llm):
 import argparse, json, os, sys, time
 import numpy as np
 from openai import OpenAI
-HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__))); sys.path.insert(0, HERE)
+HERE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))); sys.path.insert(0, HERE)
 import llm_infer as LI
 from llm_prompts import DDI334Prompt
 
 SPLITS_DIR = os.path.join(HERE, "data", "splits")
 DATASET_TAG = "ddibn"   # 결과 파일명/summary.csv 스키마 보존용 상수 (경로 구성에는 쓰이지 않음)
-OUTDIR = os.path.join(HERE, "results", "llm", "finetuning")
+OUTDIR = os.path.join(HERE, "results", "main_experiments", "13-18_llm", "finetuning")
 SPLITS = ("S0", "S1", "S2")
 
 

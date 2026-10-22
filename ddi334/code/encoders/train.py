@@ -34,7 +34,7 @@ from torch.utils.data import Dataset, DataLoader
 from sklearn.metrics import average_precision_score, roc_auc_score, accuracy_score, f1_score
 
 # ── 경로 (스크립트는 ddi334/code/ 안; encoders.py/ddi_model.py/dataset.py도 같은 폴더) ──
-DDI334_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DDI334_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 DATASET_TAG = 'ddibn'   # 결과 파일명/summary.csv 스키마 보존용 상수. data/ 경로 구성에는 쓰이지 않음
                         # (데이터셋이 하나뿐이라 --dataset 플래그는 제거했지만, 이미 커밋된
                         # results/*/summary.csv·loss_curves 파일명과의 포맷 호환을 위해 값만 유지)

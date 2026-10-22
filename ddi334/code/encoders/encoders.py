@@ -989,7 +989,7 @@ class SubgraphExtractor:
         # adj[node] = [(neighbor, relation_id), ...]
         import pickle, hashlib
         if cache_dir is None:
-            cache_dir = os.path.join(os.path.dirname(__file__), '..', 'data', 'subgraph_cache')
+            cache_dir = os.path.join(os.path.dirname(__file__), '..', '..', 'data', 'subgraph_cache')
         cache_dir = os.path.abspath(cache_dir)
         adj_hash = hashlib.md5(f"{len(triples)}_{num_entities}_{num_relations}".encode()).hexdigest()[:8]
         adj_cache = os.path.join(cache_dir, f'adj_list_{adj_hash}.pkl')

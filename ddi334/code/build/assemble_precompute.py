@@ -21,7 +21,7 @@ import os
 import json
 import torch
 
-DDI334_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DDI334_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 EXP_DIR = os.path.dirname(DDI334_DIR)
 PC_V5 = os.path.join(EXP_DIR, 'data', 'precompute')
 SMILES = os.path.join(EXP_DIR, 'data', 'drug_smiles.json')

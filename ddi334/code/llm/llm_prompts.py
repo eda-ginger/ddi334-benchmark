@@ -11,7 +11,7 @@
 import json
 import os
 
-HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+HERE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SPLITS_DIR = os.path.join(HERE, 'data', 'splits')
 MOL_DIR = os.path.join(HERE, 'data', 'molecule')
 DOC_DIR = os.path.join(HERE, 'data', 'document')

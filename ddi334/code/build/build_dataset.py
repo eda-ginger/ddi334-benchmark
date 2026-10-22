@@ -38,7 +38,7 @@ from rdkit import Chem
 from rdkit.Chem import AllChem, DataStructs
 
 # ── 경로 (스크립트는 ddi334/ 안에 있음) ──────────────────────────────────────
-DDI334_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DDI334_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 EXP_DIR = os.path.dirname(DDI334_DIR)                 # .../experiment
 V5_DIR = os.path.dirname(EXP_DIR)                     # .../v5_ddi-bench
 LATEX_ROOT = os.path.dirname(os.path.dirname(V5_DIR)) # .../Latex

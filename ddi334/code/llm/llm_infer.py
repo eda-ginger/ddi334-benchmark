@@ -15,7 +15,7 @@ import numpy as np
 from openai import OpenAI
 from sklearn.metrics import roc_auc_score, average_precision_score, accuracy_score, f1_score
 
-HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+HERE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SPLITS_DIR = os.path.join(HERE, 'data', 'splits')
 DATASET_TAG = 'ddibn'   # 결과 파일명/summary.csv 스키마 보존용 상수 (경로 구성에는 쓰이지 않음)
 sys.path.insert(0, HERE)

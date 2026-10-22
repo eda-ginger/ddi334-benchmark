@@ -27,7 +27,7 @@ from torch.utils.data import Dataset
 
 # Default data path: DDI-Bench original repo
 _DEFAULT_DATA_DIR = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), '..', '..', 'original_repo',
+    os.path.join(os.path.dirname(__file__), '..', '..', '..', 'original_repo',
                  'DDI_Ben', 'DDI_Ben', 'data', 'drugbank_cluster')
 )
 

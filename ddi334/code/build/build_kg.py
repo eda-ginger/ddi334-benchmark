@@ -26,7 +26,7 @@ Run: python3 build_kg.py
 import os
 import json
 
-DDI334_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DDI334_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 EXP_DIR = os.path.dirname(DDI334_DIR)
 V5_DIR = os.path.dirname(EXP_DIR)
 KGE_DIR = os.path.join(V5_DIR, 'kge_hetionet')

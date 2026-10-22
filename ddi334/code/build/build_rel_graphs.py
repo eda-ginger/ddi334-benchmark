@@ -22,7 +22,7 @@ import json
 import numpy as np
 import torch
 
-DDI334_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DDI334_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 REL_DIR = os.path.join(DDI334_DIR, 'data', 'relation')
 KGE = os.path.join(REL_DIR, 'kge')
 KG_BIO = os.path.join(KGE, 'kg_bio_334.txt')

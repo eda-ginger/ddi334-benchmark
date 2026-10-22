@@ -17,7 +17,7 @@ Run: micromamba run -n DDIBench python build_typenames.py
 import csv, glob, os, json
 import numpy as np
 
-HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+HERE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 LATEX_ROOT = os.path.abspath(os.path.join(HERE, '..', '..', '..', '..'))
 MEETING_TDC = os.path.join(LATEX_ROOT, 'meeting', 'ddi334_tdc')
 SPLITS = ['train', 'valid_S0', 'valid_S1', 'valid_S2', 'test_S0', 'test_S1', 'test_S2']

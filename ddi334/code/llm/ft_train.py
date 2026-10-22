@@ -16,7 +16,7 @@ import argparse, json, os, sys, time, random
 import numpy as np
 import torch
 
-HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+HERE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, HERE)
 from llm_prompts import V2_SYSTEM
 

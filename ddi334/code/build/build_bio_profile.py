@@ -15,7 +15,7 @@ import json
 import os
 from collections import defaultdict
 
-HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))   # ddi334/
+HERE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))   # ddi334/
 EXP = os.path.dirname(HERE)
 V5 = os.path.dirname(EXP)
 DRUG_MAX = 1710
