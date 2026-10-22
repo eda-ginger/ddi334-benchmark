@@ -6,10 +6,10 @@
 - mode: novel_drug / existing_drug (Case-3 / Case-1)
 - QLoRA 설정 ft_train_v1과 동일 (4bit nf4, LoRA r16/a32 q/k/v/o, AdamW 2e-4, 5ep, seed42)
 - epoch마다 어댑터 저장 + (resume용) optimizer/scheduler/rng 저장
-- 평가: run_ft_cv.py (vLLM LoRA serving, split별 best epoch)
+- 평가: finetuning_eval.py (vLLM LoRA serving, split별 best epoch)
 
 Usage (vllm-llm 또는 peft env):
-  python ft_train.py --model microsoft/Phi-3.5-mini-instruct --mode existing_drug --gpu 0 \
+  python finetuning_train.py --model microsoft/Phi-3.5-mini-instruct --mode existing_drug --gpu 0 \
       [--epochs 5 --seed 42 --resume]
 """
 import argparse, json, os, sys, time, random
@@ -17,8 +17,8 @@ import numpy as np
 import torch
 
 HERE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-sys.path.insert(0, HERE)
-from llm_prompts import V2_SYSTEM
+sys.path.insert(0, os.path.join(HERE, 'code', 'build', 'document'))
+from instruction import V2_SYSTEM
 
 MERGE_SYSTEM_MODELS = ("gemma",)
 
@@ -160,7 +160,7 @@ def main():
                     "rng": torch.get_rng_state(), "epoch": ep}, state_path)
         print(f"  epoch {ep}/{a.epochs} loss={tot/len(loader):.4f} -> {ep_dir} | {time.time()-t0:.0f}s", flush=True)
     print(f"[DONE] {a.epochs}ep 어댑터 저장 -> {ckpt}/epoch_1..{a.epochs} | wall {time.time()-t0:.0f}s", flush=True)
-    print(f"  평가: run_ft_cv.py --tag {tag} --mode {a.mode}", flush=True)
+    print(f"  평가: finetuning_eval.py --tag {tag} --mode {a.mode}", flush=True)
 
 
 if __name__ == '__main__':

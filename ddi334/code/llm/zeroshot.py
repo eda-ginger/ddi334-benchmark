@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """DDI-334 LLM 셀 추론+평가 (V2 binary-with-R).
 
-- 입력 프롬프트: llm_prompts.DDI334Prompt (02 §3.1)
+- 입력 프롬프트: instruction.DDI334Prompt (02 §3.1)
 - queried side effect(vec=1)만 질의 (전 실험과 동일)
 - 평가: train.py evaluate와 동일한 per-type ROC-AUC/PR-AUC/Acc
 - vLLM OpenAI 서버 (vllm-llm env에서 실행)
 
 Usage (vllm-llm env):
-  python llm_infer.py --model Qwen/Qwen2.5-3B-Instruct \
+  python zeroshot.py --model Qwen/Qwen2.5-3B-Instruct \
       --gpu 3 --split S0 --limit 16        # smoke
 """
 import argparse, json, os, subprocess, sys, time
@@ -18,8 +18,8 @@ from sklearn.metrics import roc_auc_score, average_precision_score, accuracy_sco
 HERE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SPLITS_DIR = os.path.join(HERE, 'data', 'splits')
 DATASET_TAG = 'ddibn'   # 결과 파일명/summary.csv 스키마 보존용 상수 (경로 구성에는 쓰이지 않음)
-sys.path.insert(0, HERE)
-from llm_prompts import DDI334Prompt
+sys.path.insert(0, os.path.join(HERE, 'code', 'build', 'document'))
+from instruction import DDI334Prompt
 
 PORT = 12341
 CACHE = os.path.join(HERE, 'results', 'llm_cache')

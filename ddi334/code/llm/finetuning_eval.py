@@ -1,22 +1,23 @@
 #!/usr/bin/env python3
 """DDI-334 V2(binary Yes/No) FT per-split best-checkpoint eval.
 
-ft_train.py(어댑터 epoch_1..N) -> vLLM LoRA serving:
+finetuning_train.py(어댑터 epoch_1..N) -> vLLM LoRA serving:
   1) 각 epoch 어댑터를 full val_S0/S1/S2로 infer_v2(mode) -> split별 best epoch (val AUROC 기준, 인코더 일관)
   2) split별 best epoch 어댑터로 test_{split} 평가 -> 저장
 결과: results/main_experiments/13-18_llm/finetuning/llm_metrics/ft_{tag}_{split}.json  (+ _cv.json 선택기록)
 
 Usage (vllm-llm):
-  python run_ft_cv.py --tag microsoft_Phi-3.5-mini-instruct_existing_drug_seed42 \
+  python finetuning_eval.py --tag microsoft_Phi-3.5-mini-instruct_existing_drug_seed42 \
      --model microsoft/Phi-3.5-mini-instruct --mode existing_drug \
      --ckpt results/ft_checkpoints/microsoft_Phi-3.5-mini-instruct_existing_drug_seed42 --gpu 0 --epochs 3
 """
 import argparse, json, os, sys, time
 import numpy as np
 from openai import OpenAI
-HERE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))); sys.path.insert(0, HERE)
-import llm_infer as LI
-from llm_prompts import DDI334Prompt
+HERE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.join(HERE, 'code', 'build', 'document'))
+import zeroshot as LI
+from instruction import DDI334Prompt
 
 SPLITS_DIR = os.path.join(HERE, "data", "splits")
 DATASET_TAG = "ddibn"   # 결과 파일명/summary.csv 스키마 보존용 상수 (경로 구성에는 쓰이지 않음)

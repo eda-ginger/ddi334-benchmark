@@ -37,15 +37,17 @@ ddi334/
                                   `mol_graph.py`
                        relation/  `knowledge_graph.py`, `ddi_network.py`,
                                   `bio_profile.py`
-                       document/  `mention_description.py`
+                       document/  `mention_description.py`, `instruction.py`
+                                  (the latter used by `llm/`, see below)
     train/           main trainer (`train.py`, cells 01-12 — numbered to
                      match the paper's Table 2 exactly, see "Paper
                      correspondence" below) and the shared model/dataset
                      modules it imports (`encoders.py`, `ddi_model.py`,
                      `dataset.py`)
-    llm/             LLM prompt rendering (`llm_prompts.py`), zero-shot
-                     inference (`llm_infer.py`), and fine-tuning
-                     (`ft_train.py`, `run_ft_cv.py`) for cells 13-18
+    llm/             zero-shot inference (`zeroshot.py`) and fine-tuning
+                     (`finetuning_train.py`, `finetuning_eval.py`) for
+                     cells 13-18 — both built on `build/document/
+                     instruction.py`'s prompts (Table 2's "Instruction" row)
   data/              organized by modality:
                        splits/    train/valid/test split files (S0/S1/S2),
                                   cluster-split/id-map/type-name/drug-name
@@ -351,7 +353,7 @@ DOC_MODEL=pubmedbert DOC_INPUT=novel_drug python train/train.py --cell 12 --gpu 
 ```
 
 **`results/main_experiments/13-18_llm/zeroshot/`** (Figure 6, Instruction
-#13-18, "Z" markers): `llm_infer.py` for each of the 6 models
+#13-18, "Z" markers): `zeroshot.py` for each of the 6 models
 (`google/gemma-2-2b-it`, `Qwen/Qwen2.5-3B-Instruct`,
 `microsoft/Phi-3.5-mini-instruct`, `microsoft/phi-4`,
 `Qwen/Qwen2.5-14B-Instruct`, `google/gemma-2-27b-it`) x 2 drug conditions
@@ -359,25 +361,25 @@ x 3 splits (temperature=0, seed hardcoded, so one call per split/mode/model
 is deterministic and sufficient — no repeated seeds):
 
 ```bash
-python llm/llm_infer.py --model google/gemma-2-2b-it \
+python llm/zeroshot.py --model google/gemma-2-2b-it \
   --gpu 0 --split S0 --mode existing_drug \
   --outdir ../results/main_experiments/13-18_llm/zeroshot
 ```
 
 **`results/main_experiments/13-18_llm/finetuning/`** (Figure 6, Instruction
-#13-18, "F" markers): QLoRA fine-tune (`ft_train.py`, 3 epochs, seed 42)
-then evaluate (`run_ft_cv.py`, which itself evaluates all 3 splits and
+#13-18, "F" markers): QLoRA fine-tune (`finetuning_train.py`, 3 epochs, seed 42)
+then evaluate (`finetuning_eval.py`, which itself evaluates all 3 splits and
 selects the best epoch per split by validation AUROC), for each of the
 same 6 models x 2 drug conditions:
 
 ```bash
-python llm/ft_train.py --model google/gemma-2-2b-it --mode existing_drug --gpu 0 --epochs 3
-python llm/run_ft_cv.py --tag google_gemma-2-2b-it_existing_drug_seed42 \
+python llm/finetuning_train.py --model google/gemma-2-2b-it --mode existing_drug --gpu 0 --epochs 3
+python llm/finetuning_eval.py --tag google_gemma-2-2b-it_existing_drug_seed42 \
   --model google/gemma-2-2b-it --mode existing_drug \
   --ckpt ../results/ft_checkpoints/google_gemma-2-2b-it_existing_drug_seed42 --gpu 0 --epochs 3
 ```
 
-`run_ft_cv.py` saves both a validation-AUROC-selected "best" checkpoint's
+`finetuning_eval.py` saves both a validation-AUROC-selected "best" checkpoint's
 test metrics per split and a full per-epoch sweep (`--policy both`, the
 default); this repository ships only the former (`ft_{tag}_{split}.json`
 + its `summary.csv` rows, since that's the policy Appendix E.1 describes
@@ -390,7 +392,9 @@ See `ddi334/code/build/` (grouped into `splits/`, `molecule/`, `relation/`,
 `document/` subfolders by modality, same as `data/`) for dataset build
 (`splits/dataset.py`, `relation/knowledge_graph.py`,
 `relation/bio_profile.py`, `document/mention_description.py`,
-...) and `ddi334/code/llm/` for prompt rendering (`llm_prompts.py`).
+`document/instruction.py`, ...) and `ddi334/code/llm/` for the zero-shot
+(`zeroshot.py`) and fine-tuning (`finetuning_train.py`,
+`finetuning_eval.py`) runners that consume it.
 
 ## Environment
 

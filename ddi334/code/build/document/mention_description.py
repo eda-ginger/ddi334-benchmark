@@ -10,10 +10,10 @@ HetioNet neighbor types by name:
   (Side Effect는 예측 라벨과 동일 어휘라 누수 -> 제외. up/down-regulate(간접 gene)도 제외.)
   -> data/document/bio_profile_text.json
      { "<db_id>": {"genes":[..], "indications":[..], "pharm_class":[..]} }
-  (also the raw-fact source for llm/llm_prompts.py's "Existing drug" template)
+  (also the raw-fact source for llm/instruction.py's "Existing drug" template)
 
 Step 2 (embedding): build the drug-name (Mention) + Step-1 facts
-(Description) template text via llm/llm_prompts.py's DDI334Prompt.drug_text()
+(Description) template text via llm/instruction.py's DDI334Prompt.drug_text()
 (single source, shared with the LLM prompts), then take a frozen BERT
 backbone's [CLS] embedding of it. Backbone selectable via --tag
 (scibert = main-text Table 2/D.1 setting; biobert/pubmedbert = Appendix C.4
@@ -32,14 +32,12 @@ Run: micromamba run -n DDIBench python build/document/mention_description.py --t
 import argparse
 import json
 import os
-import sys
 import time
 from collections import defaultdict
 
 import torch
 
 DDI334_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-CODE_DIR = os.path.join(DDI334_DIR, 'code')
 EXP_DIR = os.path.dirname(DDI334_DIR)
 V5_DIR = os.path.dirname(EXP_DIR)
 DOC_DIR = os.path.join(DDI334_DIR, 'data', 'document')
@@ -92,8 +90,7 @@ def build_bert_template(args):
     """Step 2: drug_text() template -> frozen [CLS] embedding."""
     model_name = args.model_name or MODEL_PRESETS[args.tag]
 
-    sys.path.insert(0, os.path.join(CODE_DIR, 'llm'))
-    from llm_prompts import DDI334Prompt
+    from instruction import DDI334Prompt   # same folder (build/document/)
 
     pb = DDI334Prompt()   # typenames는 drug_text에 안 쓰임
     drug_ids = sorted(int(k) for k in json.load(open(BIO_PROFILE)).keys())

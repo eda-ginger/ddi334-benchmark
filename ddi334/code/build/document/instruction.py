@@ -1,16 +1,27 @@
 #!/usr/bin/env python3
-"""DDI-334 LLM 프롬프트 빌더 (V2 binary-with-R).
+"""DDI-334 Instruction (Cell 13-18, LLM prompt builder, V2 binary-with-R).
+
+Table 1/Table 2's "Instruction" row — the prompt-construction library used
+by llm/zeroshot.py (zero-shot), llm/finetuning_train.py and llm/finetuning_eval.py
+(fine-tuning). Lives in build/document/ alongside mention_description.py
+(the two share one text source, data/document/bio_profile_text.json) even
+though, unlike every other build/ script, this one isn't a run-once
+precompute step: build_v2() is called live by its llm/ consumers on every
+inference, and render_cache() below is only an optional jsonl pre-render
+for finetuning_train.py's convenience.
 
 02 §3.1 설계 그대로:
   - 입력: Name + SMILES (DOC LLM 셀 양식)
   - 후보: 그 행의 queried side effect(vec=1)만 (전 실험과 동일하게 queried만 사용)
   - side effect 1개 질문 -> Yes/No (guided_choice + logprob)
   - type 이름: data/splits/typenames.json
+
+Run (optional prompt-cache pre-render, not required): python build/document/instruction.py render
 """
 import json
 import os
 
-HERE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+HERE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 SPLITS_DIR = os.path.join(HERE, 'data', 'splits')
 MOL_DIR = os.path.join(HERE, 'data', 'molecule')
 DOC_DIR = os.path.join(HERE, 'data', 'document')
@@ -128,8 +139,8 @@ def demo():
 
 
 if __name__ == '__main__':
-    # demo (기본):  python llm_prompts.py
-    # render cache: python llm_prompts.py render
+    # demo (기본):  python build/document/instruction.py
+    # render cache: python build/document/instruction.py render
     import sys
     args = sys.argv[1:]
     if args and args[0] == 'render':
