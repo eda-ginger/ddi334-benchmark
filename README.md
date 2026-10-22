@@ -1,7 +1,5 @@
 # DDI-334 Benchmark
 
-**Repository**: https://github.com/eda-ginger/ddi334-benchmark
-
 Code and results for the DDI-334 experiments reported in:
 
 > [TODO: citation information (authors, journal, year, DOI) — to be finalized after submission/acceptance]
@@ -30,41 +28,22 @@ is not the full experiment history of the underlying project.
 ```
 ddi334/
   code/
-    build/           dataset/KG/precompute build scripts, grouped by modality
-                     like `data/` itself:
-                       splits/    `dataset.py`
-                       molecule/  `smiles.py`, `fingerprint.py`,
-                                  `mol_graph.py`
-                       relation/  `knowledge_graph.py`, `ddi_network.py`,
-                                  `bio_profile.py`
-                       document/  `mention_description.py`, `instruction.py`
-                                  (the latter used by `llm/`, see below)
-    train/           main trainer (`train.py`, cells 01-12 — numbered to
-                     match the paper's Table 2 exactly, see "Paper
-                     correspondence" below) and the shared model/dataset
-                     modules it imports (`encoders.py`, `ddi_model.py`,
-                     `dataset.py`)
-    llm/             zero-shot inference (`zeroshot.py`) and fine-tuning
-                     (`finetuning_train.py`, `finetuning_eval.py`) for
-                     cells 13-18 — both built on `build/document/
-                     instruction.py`'s prompts (Table 2's "Instruction" row)
-  data/              organized by modality:
-                       splits/    train/valid/test split files (S0/S1/S2),
-                                  cluster-split/id-map/type-name/drug-name
-                                  metadata
-                       molecule/  SMILES, SchNet coordinates, ChemBERTa embeddings
-                       relation/  KG triples, DDI network graph (`ddi_network.pt`),
-                                  bio profile vector (`bio_profile.pt`), KGE
-                                  embeddings (`relation/kge/`)
-                       document/  BioBERT/PubMedBERT/SciBERT embeddings,
-                                  bio profile text source (`bio_profile_text.json`)
-  results/           summary metrics (per-class scores, configs used,
-                     loss curves, LLM ZS/FT metrics, KGE comparison
-                     results, commercial-LLM comparison)
-  DATA_SOURCES.md    upstream data sources + build pipeline
+    build/             data precompute, one script per Table 2 input
+                       representation — splits/ molecule/ relation/ document/
+    train/             cells 01-12 trainer (train.py, encoders.py,
+                       ddi_model.py, dataset.py)
+    llm/               cells 13-18 zero-shot/fine-tuning runners
+                       (zeroshot.py, finetuning_train.py, finetuning_eval.py)
+  data/                precomputed inputs — splits/ molecule/ relation/ document/
+  results/             summary metrics, configs, loss curves
+  DATA_SOURCES.md      upstream data sources + build pipeline
 environment/
-  README.md, *_requirements.txt   exact pip environments used
+  README.md, *_requirements.txt
 ```
+
+`build/` and `data/` share the same `splits/molecule/relation/document/`
+subfolders; `build/document/instruction.py` is the one exception, used by
+`llm/` rather than by `train/` (Table 2's "Instruction" row, cells 13-18).
 
 ### Paper correspondence
 
