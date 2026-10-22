@@ -41,10 +41,6 @@ environment/
   README.md, *_requirements.txt
 ```
 
-`build/` and `data/` share the same `splits/molecule/relation/document/`
-subfolders; `build/document/instruction.py` is the one exception, used by
-`llm/` rather than by `train/` (Table 2's "Instruction" row, cells 13-18).
-
 ### Paper correspondence
 
 `train/train.py --cell` numbers are the same 01-18 as the manuscript's
@@ -71,9 +67,6 @@ subfolders; `build/document/instruction.py` is the one exception, used by
 | 17 | Document | Instruction | System + User + Question | Phi-3.5-mini (Zero-shot / Fine-tuning) |
 | 18 | Document | Instruction | System + User + Question | Phi-4 (Zero-shot / Fine-tuning) |
 
-`results/main_experiments/13-18_llm/` and `results/commercial_llm/` label
-files by the actual HF model id or a short nickname rather than #13-18.
-
 `ddi334/results/` is organized by which part of the paper it backs:
 
 | Folder | Paper reference |
@@ -86,10 +79,9 @@ files by the actual HF model id or a short nickname rather than #13-18.
 | `appendix/f_kge_comparison/` | Appendix F, Figure F.1 |
 | `appendix/h_embedding_subgraph_cross/` | Appendix H, Table H.1 |
 
-Filenames/columns use `existing_drug`/`novel_drug` (or `existing`/`novel`)
-for the Existing/Novel drug condition, and `S0`/`S1`/`S2` for
-Seen-Seen/Seen-Unseen/Unseen-Unseen. See [REPRODUCING.md](REPRODUCING.md)
-for exactly how each folder maps to a command.
+Filenames/columns use `existing_drug`/`novel_drug` and `S0`/`S1`/`S2`.
+See [REPRODUCING.md](REPRODUCING.md) for exactly how each folder maps
+to a command.
 
 ## What is / isn't included
 
