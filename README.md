@@ -109,96 +109,32 @@ identifies the model more directly than a number would:
 
 `ddi334/results/` is organized by which part of the paper it backs:
 
-```
-results/
-  main_experiments/                     everything backing Figure 6 (+
-                                         Table D.1 and Appendix G's
-                                         AUPRC/AP@50, which are just more
-                                         columns of the same summary.csv
-                                         files, not separate runs)
-    01-12_encoders/                       cells 01-12, one flat
-                                           summary.csv (+ configs/
-                                           loss_curves/ per_class/). A
-                                           `condition` column (and a
-                                           matching filename suffix)
-                                           marks each row/file:
-                                           `single` = the cell has no
-                                           Existing/Novel distinction
-                                           (Molecule cells, Bio profile,
-                                           DDI network, KGE, SciBERT —
-                                           DDI network's Existing/Novel
-                                           inputs are identical by
-                                           construction, so the paper
-                                           reports one number for it too);
-                                           `existing`/`novel` = cells
-                                           10/11, which do (one row per
-                                           condition, same cell number).
-                                           Cell 12's `single` run here is
-                                           the same as appendix/
-                                           c_document_backbone_comparison/
-                                           scibert/existing_drug/ below
-    13-18_llm/                            Instruction #13-18
-      zeroshot/                             zero-shot, 6 models x
-                                             Existing/Novel drug
-      finetuning/                           QLoRA fine-tune, 6 models x
-                                             Existing/Novel drug (only
-                                             the val-AUROC-selected best
-                                             checkpoint per split is
-                                             kept — see Reproducing a
-                                             result below)
-    commercial_llm/                       Figure 7 + Appendix I (Tables
-                                           I.1, I.2): local vs commercial
-                                           LLM comparison
-    random_baseline.json                  random-prediction reference
-                                           line (Figure 6 dashed line)
-  appendix/
-    c_document_backbone_comparison/       Appendix C.4 (Table C.1):
-      {biobert,pubmedbert,scibert}/         BioBERT vs PubMedBERT vs
-        {existing_drug,novel_drug}/         SciBERT, each under both
-                                             drug conditions
-    f_kge_comparison/                     Appendix F (Figure F.1): TransE/
-      existing_drug/                        RotatE/ComplEx link-
-      novel_drug/                           reconstruction (Hits@10) vs
-      novel_drug_embedding_only/            downstream DDI prediction
-                                             (AUROC); novel_drug_embedding_
-                                             only/transe/ is specifically
-                                             Figure F.1's "TransE Existing
-                                             drug" data point (see
-                                             Reproducing a result below)
-    h_embedding_subgraph_cross/           Appendix H (Table H.1): TransE
-      novel_embedding_existing_subgraph/    embedding and KG subgraph
-      existing_embedding_novel_subgraph/    crossed independently for
-                                             Knowledge graph (subgraph
-                                             R-GCN, cell 10)
-```
+| Folder | Paper reference |
+|---|---|
+| `main_experiments/01-12_encoders/` | Figure 6, Table D.1, Appendix G (AUPRC/AP@50 are extra columns, not separate runs) |
+| `main_experiments/13-18_llm/{zeroshot,finetuning}/` | Figure 6, Instruction #13-18 |
+| `main_experiments/commercial_llm/` | Figure 7, Appendix I (Tables I.1, I.2) |
+| `main_experiments/random_baseline.json` | Figure 6 dashed line |
+| `appendix/c_document_backbone_comparison/{biobert,pubmedbert,scibert}/` | Appendix C.4, Table C.1 |
+| `appendix/f_kge_comparison/` | Appendix F, Figure F.1 |
+| `appendix/h_embedding_subgraph_cross/` | Appendix H, Table H.1 |
 
-Inside each leaf folder, filenames use the codebase's internal mode
-names `novel_drug` / `existing_drug` (or the shorter `novel`/`existing`
-used for `main_experiments/01-12_encoders/`'s `condition` column and
-filename suffix) for the Existing/Novel drug condition, and `S0`/`S1`/`S2`
-= Seen-Seen/Seen-Unseen/Unseen-Unseen.
+Filenames/columns use `existing_drug`/`novel_drug` (or `existing`/`novel`)
+for the Existing/Novel drug condition, and `S0`/`S1`/`S2` for
+Seen-Seen/Seen-Unseen/Unseen-Unseen. See [REPRODUCING.md](REPRODUCING.md)
+for exactly how each folder maps to a command.
 
 ## What is / isn't included
 
 **Included**: everything needed to verify every number, table, and
-figure reported in the paper — summary metrics (csv/json), the exact
-run configs, loss curves, and the train/val/test split membership
-files used for S0 (transductive) / S1 / S2 (inductive) evaluation.
+figure in the paper — summary metrics, exact run configs, loss curves,
+and the S0/S1/S2 split membership files.
 
-**Not included** (regenerable, not shipped due to size):
-- Model checkpoints and LoRA adapter weights
-- Per-sample raw prediction arrays (`raw_preds/*.npz`) — only the
-  aggregated metrics computed from them are kept
-- Precomputed encoder embedding caches (SchNet 3D coordinates, 2D
-  molecular graphs, ChemBERTa/BioBERT embeddings, Morgan fingerprints,
-  TransE/KGE embeddings, rendered LLM prompt jsonl files) — derived
-  from the raw external data below and regenerable with the scripts in
-  `ddi334/code/build/`. One exception: the separate Morgan-fingerprint
-  node-init cache used for `NODE_INIT=molfp` (Relation cells 08-11,
-  distinct from Cell 03's own Fingerprint input above) is rebuilt
-  automatically on first run of `train/train.py` rather than needing a
-  build step of its own.
-- Training/inference logs
+**Not included** (regenerable with `ddi334/code/build/`, not shipped due
+to size): model checkpoints/LoRA adapters, per-sample raw prediction
+arrays, precomputed embedding caches (SchNet, ChemBERTa/BioBERT, Morgan
+fingerprints, TransE/KGE, 2D graphs, rendered LLM prompts), training/
+inference logs.
 
 ## Data
 
@@ -207,194 +143,19 @@ files used for the paper's results. The upstream raw sources
 (DDI-Bench/EmerGNN, TDC TWOSIDES, DrugBank, HetioNet) are third-party
 and are not redistributed here.
 
-See [`ddi334/DATA_SOURCES.md`](ddi334/DATA_SOURCES.md)
-for exact sources, the required sibling-folder layout, and the build
-pipeline (`build/splits/dataset.py` -> `build/relation/knowledge_graph.py` -> per-encoder
-precomputation).
+See [`ddi334/DATA_SOURCES.md`](ddi334/DATA_SOURCES.md) for exact sources,
+the required sibling-folder layout, and the build pipeline.
 
 ## Reproducing a result
 
-There is no batch-launcher script in this repository — every command
-below is a single, self-contained invocation. The full set of results in
-a given `results/` folder is just that command repeated across the listed
-cells/models/seeds; how you parallelize that across your own GPUs is up
-to you (we used a handful of small internal dispatcher scripts tuned to
-our specific shared server, which is why they aren't included here).
-
 ```bash
 cd ddi334/code
-
-# example: cell01 (SMILES 1D-CNN), seed 42
-python train/train.py --cell 01 --gpu 0 --seed 42
+python train/train.py --cell 01 --gpu 0 --seed 42   # example: SMILES 1D-CNN, seed 42
 ```
 
-Cells 01-06 (Molecule) each read one precomputed `data/molecule/` cache
-that must exist first — run `build/molecule/smiles.py` once (writes
-`drug_smiles.json`, used by every Molecule cell, and `chemberta.pt` for
-cell02), then `build/molecule/fingerprint.py` (cell03) and
-`build/molecule/mol_graph.py` (cell04/05's 2D graph and cell06's SchNet
-3D coordinates, in one run).
-
-`--checkpoint_metric` is not a flag here — checkpoint selection (accuracy,
-per-split, patience=10 early stopping, as described in the paper's
-Appendix E.1) is fixed in `train.py` and is not configurable. One call of
-`train.py` trains once and evaluates all three splits (S0/S1/S2) itself —
-there is no `--split` flag.
-
-**`results/main_experiments/01-12_encoders/`** (Figure 6 + Table D.1): the
-command above, repeated over every cell (01-12) and seed:
-
-```bash
-for cell in 01 02 03 04 05 06 07 08 09 10 11 12; do
-  for seed in 0 42 124; do
-    python train/train.py --cell $cell --gpu 0 --seed $seed \
-      --result_dir ../results/main_experiments/01-12_encoders
-  done
-done
-```
-
-**Existing / Novel drug conditions** (biological-relation availability for
-Unseen drugs, Section 4 of the paper) are selected with env vars, not CLI
-flags, and only matter for cells 09, 10, 11 (every other cell's input is
-identical either way — including cell 08, DDI network R-GCN: its DDI
-connections and molecular node features are the same under both
-conditions by construction, so the paper reports a single number for it):
-
-```bash
-# Existing drug condition (default)
-python train/train.py --cell 10 --gpu 0 --seed 42
-
-# Novel drug condition (Unseen drugs' biological relations removed)
-NOVEL_DRUG=1 python train/train.py --cell 10 --gpu 0 --seed 42
-```
-
-Running both conditions for cells 10/11 into the same `--result_dir`
-would overwrite/collide, since `train.py` names its own output files
-`cell{N}_ddibn_seed{S}...` regardless of `NOVEL_DRUG` — it has no concept
-of "condition" in its output naming. This repository's shipped
-`main_experiments/01-12_encoders/` has every cell 10/11 file (and
-`summary.csv` row) relabeled by hand with an `_existing`/`_novel`
-filename suffix and a `condition` column (`single` for the other, single-
-condition cells) purely so both runs can live in one folder; reproducing
-this exactly means running Existing and Novel into separate directories
-and merging/relabeling them the same way, or just keeping them in two
-`--result_dir`s if you don't need the exact same layout. Cell 09's
-Novel-drug run additionally needs `KGE_TYPE=transe` and writes to
-`results/appendix/f_kge_comparison/novel_drug/transe/` instead — see the
-KGE comparison note below.
-
-**DDI network (R-GCN), cell 08** — the paper reports this cell initialized
-with a 1,024-bit Morgan fingerprint (4.66M parameters). This is the
-*default* for cell 08 (`NODE_INIT` defaults to `molfp` there, unlike cells
-10/11 where it defaults to `transe`):
-
-```bash
-python train/train.py --cell 08 --gpu 0 --seed 42
-# equivalent to: NODE_INIT=molfp python train/train.py --cell 08 ...
-
-# the earlier TransE-initialized version of this cell (not used in the
-# paper) is reproduced with:
-NODE_INIT=transe python train/train.py --cell 08 --gpu 0 --seed 42
-```
-
-(An earlier `NODE_INIT=molgraph` robustness check for this cell was not
-used for any number in the paper and has been removed from this
-repository, both the results and the code path that produced them.)
-
-**`results/appendix/h_embedding_subgraph_cross/`** (Appendix H, Table H.1:
-crossing the Existing/Novel condition of the TransE embedding independently
-from that of the KG subgraph, Knowledge graph subgraph R-GCN, cell 10 only)
-uses two more env vars that override `NOVEL_DRUG` when set, 3 seeds each:
-
-```bash
-# novel_embedding_existing_subgraph/
-EMB_SRC=novel_drug SUBGRAPH_SRC=existing_drug python train/train.py --cell 10 --gpu 0 --seed 42
-# existing_embedding_novel_subgraph/
-EMB_SRC=existing_drug SUBGRAPH_SRC=novel_drug python train/train.py --cell 10 --gpu 0 --seed 42
-```
-
-**KGE comparison (Appendix F)**: only the TransE entity embeddings are
-included in this repository (for both drug conditions), since they are
-what cells 09-11 use by default (cell 08 defaults to `molfp` instead, see
-above) and what the Appendix H cross-evaluation's reported numbers were
-produced with. The RotatE/ComplEx
-comparison numbers in `results/appendix/f_kge_comparison/` are the exact
-values used for the paper's Figure F.1, but retraining those two KGE
-types from this repository (`KGE_TYPE=rotate ...`) is not supported since
-their trained embeddings are not included (RotatE's in particular exceeds
-GitHub's 100MB file-size limit). DistMult/TransH were trained during
-development but are not reported anywhere in the paper, so they are not
-in this repository at all.
-`results/appendix/f_kge_comparison/novel_drug/transe/` is reproduced the
-same way as `main_experiments/01-12_encoders` cell 09's Novel-drug run
-above. `novel_drug_embedding_only/transe/` is Figure F.1's actual "TransE
-Existing drug" data point — it needs `ABLNR=1` (reuses the Existing-drug
-TransE embedding as-is, with only the Novel-drug rows replaced by a
-random vector, so no KGE retraining is involved) rather than the plain
-Existing-drug run cell 09 uses elsewhere; the two give different
-Seen-Unseen AUROC (87.6% here vs. 84.3% for cell 09's own run), which is
-why this repository ships both instead of pointing Figure F.1 at cell 09's
-number.
-
-**`results/appendix/c_document_backbone_comparison/{biobert,pubmedbert,scibert}/{existing_drug,novel_drug}/`**
-(Appendix C.4, Table C.1): cell 12 with `DOC_MODEL` selecting the backbone,
-3 seeds each. `scibert` is the default (`DOC_MODEL`/`DOC_INPUT` need no
-override for `existing_drug`) and is also the main-text Figure 6 result
-(and Table D.1's parameter count) — (`main_experiments/01-12_encoders`'s
-cell 12 above is this exact run); `biobert`/`pubmedbert` are only used for
-this Appendix C.4 comparison. Each backbone's embeddings must first be
-built once with `build/document/mention_description.py --tag {scibert,biobert,pubmedbert}`
-(this also (re)generates `data/document/bio_profile_text.json` as its first
-step; writes everything into `data/document/`):
-
-```bash
-DOC_MODEL=pubmedbert DOC_INPUT=novel_drug python train/train.py --cell 12 --gpu 0 --seed 42 \
-  --result_dir ../results/appendix/c_document_backbone_comparison/pubmedbert/novel_drug
-```
-
-**`results/main_experiments/13-18_llm/zeroshot/`** (Figure 6, Instruction
-#13-18, "Z" markers): `zeroshot.py` for each of the 6 models
-(`google/gemma-2-2b-it`, `Qwen/Qwen2.5-3B-Instruct`,
-`microsoft/Phi-3.5-mini-instruct`, `microsoft/phi-4`,
-`Qwen/Qwen2.5-14B-Instruct`, `google/gemma-2-27b-it`) x 2 drug conditions
-x 3 splits (temperature=0, seed hardcoded, so one call per split/mode/model
-is deterministic and sufficient — no repeated seeds):
-
-```bash
-python llm/zeroshot.py --model google/gemma-2-2b-it \
-  --gpu 0 --split S0 --mode existing_drug \
-  --outdir ../results/main_experiments/13-18_llm/zeroshot
-```
-
-**`results/main_experiments/13-18_llm/finetuning/`** (Figure 6, Instruction
-#13-18, "F" markers): QLoRA fine-tune (`finetuning_train.py`, 3 epochs, seed 42)
-then evaluate (`finetuning_eval.py`, which itself evaluates all 3 splits and
-selects the best epoch per split by validation AUROC), for each of the
-same 6 models x 2 drug conditions:
-
-```bash
-python llm/finetuning_train.py --model google/gemma-2-2b-it --mode existing_drug --gpu 0 --epochs 3
-python llm/finetuning_eval.py --tag google_gemma-2-2b-it_existing_drug_seed42 \
-  --model google/gemma-2-2b-it --mode existing_drug \
-  --ckpt ../results/ft_checkpoints/google_gemma-2-2b-it_existing_drug_seed42 --gpu 0 --epochs 3
-```
-
-`finetuning_eval.py` saves both a validation-AUROC-selected "best" checkpoint's
-test metrics per split and a full per-epoch sweep (`--policy both`, the
-default); this repository ships only the former (`ft_{tag}_{split}.json`
-+ its `summary.csv` rows, since that's the policy Appendix E.1 describes
-as what was actually used) plus each run's `_cv.json` (the per-epoch
-validation curve that the best-epoch selection was made from, kept for
-transparency) — not the discarded `ft_ep1_`/`ft_ep2_`/`ft_ep3_` epoch-sweep
-files.
-
-See `ddi334/code/build/` (grouped into `splits/`, `molecule/`, `relation/`,
-`document/` subfolders by modality, same as `data/`) for dataset build
-(`splits/dataset.py`, `relation/knowledge_graph.py`,
-`relation/bio_profile.py`, `document/mention_description.py`,
-`document/instruction.py`, ...) and `ddi334/code/llm/` for the zero-shot
-(`zeroshot.py`) and fine-tuning (`finetuning_train.py`,
-`finetuning_eval.py`) runners that consume it.
+See [REPRODUCING.md](REPRODUCING.md) for the per-cell/per-appendix
+command table (Existing/Novel drug, KGE comparison, LLM zero-shot/
+fine-tuning, etc.).
 
 ## Environment
 
