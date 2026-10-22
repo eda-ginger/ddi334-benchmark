@@ -9,13 +9,13 @@ DDI-334 precompute 정리: MOL 전처리 파일을 data/molecule/에 모음
   MOL: drug_smiles.json(런타임 graph/CNN/FP용), schnet_coords.pt+schnet_drop.json(Cell06), chemberta.pt(Cell02)
 
 Cell12(DOC)의 existing_drug/novel_drug tier 임베딩은 이 스크립트가 아니라
-build/document/build_biobert_template.py가 bio_profile_text.json에서 직접 생성한다
+build/document/bert_template.py가 bio_profile_text.json에서 직접 생성한다
 (이 스크립트가 다루는 '334 필터링'과 무관 — 처음부터 334드럭 전용으로 만들어짐).
 
 TransE 등 KGE 임베딩은 kge/existing_drug/{type}/*.npy에서 train.py가 직접 읽으므로
 (load_kge_embeddings의 fallback 경로) 별도 복사 단계가 필요 없다.
 
-Run: micromamba run -n DDIBench python build/molecule/assemble_precompute.py
+Run: micromamba run -n DDIBench python build/molecule/precompute.py
 """
 import os
 import json

@@ -21,7 +21,7 @@ KGE 학습은 기존 `kge_hetionet/baseline.py`(PyKEEN, AstraZeneca HP) 재활�
   existing_drug/configs/{transe,rotate,distmult,complex,transh}.yaml
   run_all.sh                                        (5 학습: 5 model)
 
-Run: python3 build/relation/build_kg.py
+Run: python3 build/relation/kg.py
 """
 import os
 import json

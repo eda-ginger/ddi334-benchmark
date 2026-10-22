@@ -29,7 +29,7 @@ class DDI334Prompt:
         self.typenames = json.load(open(os.path.join(SPLITS_DIR, 'typenames.json')))
         self.name_map = {int(k): v for k, v in json.load(open(NAMES_JSON)).items()}
         self.smiles = {int(k): v for k, v in json.load(open(SMILES_JSON)).items()}
-        # bio profile (Existing drug 입력): db_id -> {genes, indications, pharm_class}  (build_bio_profile_doc.py)
+        # bio profile (Existing drug 입력): db_id -> {genes, indications, pharm_class}  (bio_profile_text.py)
         bp_path = os.path.join(DOC_DIR, 'bio_profile_text.json')
         self.bio = json.load(open(bp_path)) if os.path.exists(bp_path) else {}
 
@@ -37,7 +37,7 @@ class DDI334Prompt:
         return self.name_map.get(db) or f"drug_{db}"
 
     # ── 약물 1개 템플릿 텍스트 (tier: novel_drug/existing_drug) — 접두어("Drug N") 없음.
-    #    LLM 프롬프트 블록(_block_novel_drug/_block_existing_drug)과 cell12 BioBERT 텍스트(build_biobert_template.py)가
+    #    LLM 프롬프트 블록(_block_novel_drug/_block_existing_drug)과 cell12 BERT 텍스트(bert_template.py)가
     #    이 함수 하나를 공유한다 (05_실험설계(DDI334).md §8, 2026-07-27 통일).
     def drug_text(self, d, tier='existing_drug'):
         """tier='novel_drug': SMILES만(이름 없음, 완전 신약 가정).

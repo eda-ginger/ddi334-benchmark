@@ -7,7 +7,7 @@ data came from and how to regenerate everything from scratch.
 
 ## Required directory layout
 
-The build scripts (`build_dataset.py`, `build_kg.py`, and most other
+The build scripts (`dataset.py`, `kg.py`, and most other
 `build_*.py` files) hardcode the sibling-folder layout of the *original*
 internal server working tree they were developed in, which nested this
 repository's `ddi334/` one level deeper (inside an `experiment/` wrapper
@@ -21,7 +21,7 @@ as-is even if you had copies of that raw data:
 <original internal layout, for reference only>
   v5_ddi-bench/
     experiment/
-      ddi334/code/build/splits/build_dataset.py, build/relation/build_kg.py, ...   <- this repo's ddi334/
+      ddi334/code/build/splits/dataset.py, build/relation/kg.py, ...   <- this repo's ddi334/
     original_repo/
       DDI_Ben/
         DDI_Ben/data/{twosides_cluster,drugbank_cluster,initial}/...
@@ -54,7 +54,7 @@ point at wherever you put the raw sources.
 
 ## Build pipeline
 
-1. **`ddi334/code/build/splits/build_dataset.py`** (env: `ddibench`, seed=42, fully
+1. **`ddi334/code/build/splits/dataset.py`** (env: `ddibench`, seed=42, fully
    deterministic, no intermediate files written to disk):
    1. Resolve the 334 drugs at the DrugBank x TWOSIDES intersection
       and their canonical cid/db/local id mapping -> `id_maps.json`
@@ -69,7 +69,7 @@ point at wherever you put the raw sources.
       used upstream, in step 1, to define the 334-drug universe; this
       repository does not ship or use a separate 1,308-type dataset.
 
-2. **`ddi334/code/build/relation/build_kg.py`** (produces KGE training inputs under
+2. **`ddi334/code/build/relation/kg.py`** (produces KGE training inputs under
    `ddi334/data/relation/kge/`):
    - Combines HetioNet bio edges (`kge_hetionet/data/KG.txt`, non-DDI
      relations) with the non-334-drug subset of DrugBank DDI
@@ -86,9 +86,9 @@ point at wherever you put the raw sources.
      (now `existing_drug` / `novel_drug` here) — reference only, not
      meant to be re-run as-is
 
-3. Encoder-specific precomputation (`ddi334/code/build/relation/build_bio_profile_rel.py`,
-   `build/document/build_bio_profile_doc.py`, `build/document/build_biobert_template.py`,
-   `build/molecule/assemble_precompute.py`, ...) turns the above into the per-cell
+3. Encoder-specific precomputation (`ddi334/code/build/relation/bio_profile.py`,
+   `build/document/bio_profile_text.py`, `build/document/bert_template.py`,
+   `build/molecule/precompute.py`, ...) turns the above into the per-cell
    input caches consumed by `encoders/train.py` (not shipped in this repo —
    see the main README's "What is / isn't included" section).
 
@@ -107,7 +107,7 @@ point at wherever you put the raw sources.
 
 ## Verification
 
-`build_dataset.py`'s output was checked by SHA256 against the version
+`dataset.py`'s output was checked by SHA256 against the version
 actually used to produce the paper's results (see the project's
 internal experiment log, `09_실험전체기록(DDI334).md` section 1) — the
 same deterministic build (seed=42) should reproduce identical files.

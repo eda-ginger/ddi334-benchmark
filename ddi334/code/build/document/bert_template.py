@@ -17,9 +17,9 @@ backbone을 --tag로 선택 가능하게 일반화. hidden_dim은 각 모델 con
       {'embeddings': {int db_id: Tensor[dim]}, 'hidden_dim':dim(모델별 실제값), 'model_name':..., 'input_type':...}
       (train.py의 load_biobert_embeddings가 실제로 읽는 곳도 data/document/)
 
-Run: micromamba run -n DDIBench python build/document/build_biobert_template.py --tag biobert [--device cuda:0]
-     micromamba run -n DDIBench python build/document/build_biobert_template.py --tag pubmedbert
-     micromamba run -n DDIBench python build/document/build_biobert_template.py --tag scibert
+Run: micromamba run -n DDIBench python build/document/bert_template.py --tag scibert [--device cuda:0]
+     micromamba run -n DDIBench python build/document/bert_template.py --tag biobert
+     micromamba run -n DDIBench python build/document/bert_template.py --tag pubmedbert
 """
 import argparse
 import json
@@ -46,7 +46,7 @@ MODEL_PRESETS = {
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('--tag', default='biobert', choices=list(MODEL_PRESETS.keys()),
+    ap.add_argument('--tag', default='scibert', choices=list(MODEL_PRESETS.keys()),
                      help='출력 파일 접두어({tag}_{tier}.pt) 겸 프리셋 모델 선택')
     ap.add_argument('--model_name', default=None, help='프리셋 대신 임의 HF 모델 지정(선택)')
     ap.add_argument('--device', default='cuda:0')

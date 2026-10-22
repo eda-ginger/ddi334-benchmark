@@ -9,7 +9,7 @@
 
 입력: data/relation/kge/kg_bio_334.txt, kge_hetionet/data/entity_drug.json, data/relation/hetionet_names.json
 출력: data/document/bio_profile_text.json  { "<db_id>": {"genes":[..], "indications":[..], "pharm_class":[..]} }
-Run: micromamba run -n DDIBench python build/document/build_bio_profile_doc.py
+Run: micromamba run -n DDIBench python build/document/bio_profile_text.py
 """
 import json
 import os

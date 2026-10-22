@@ -230,7 +230,7 @@ def load_chemberta_embeddings():
 
 def load_biobert_embeddings(input_type='existing_drug'):
     # novel_drug/existing_drug (2026-07-27, 05_실험설계(DDI334).md §8): LLM(§5) 템플릿과 통일한 cell12 입력.
-    #   build_biobert_template.py로 생성. DOC_MODEL env(biobert/pubmedbert/scibert, 기본 scibert = 원고
+    #   bert_template.py로 생성. DOC_MODEL env(biobert/pubmedbert/scibert, 기본 scibert = 원고
     #   Table 1/D.1 설정)로 backbone 선택 (2026-07-27 확장, §8.5; biobert/pubmedbert는 Appendix C.1 비교용).
     # 반환: (embeddings dict, hidden_dim) — 모델마다 실제 dim을 payload에서 읽어옴(하드코딩 금지).
     doc_model = os.environ.get('DOC_MODEL', 'scibert')
@@ -240,7 +240,7 @@ def load_biobert_embeddings(input_type='existing_drug'):
 
 
 def load_raw_bio_profile():
-    """Cell 07: raw HetioNet bio-neighbor multi-hot vector (build_bio_profile_rel.py). No similarity/PCA."""
+    """Cell 07: raw HetioNet bio-neighbor multi-hot vector (bio_profile.py). No similarity/PCA."""
     pl = torch.load(os.path.join(REL_DIR, 'bio_profile.pt'), map_location='cpu', weights_only=False)
     return pl['embeddings'], pl['input_dim']
 
@@ -280,7 +280,7 @@ def build_model(cell, device, drug_ids):
     # ── REL 셀 (07-11) ──
     elif cell == '07':
         # Bio profile (MLP). raw multi-hot (no Jaccard/PCA) -> 2-layer MLP,
-        # mirrors Cell 03 (MorganFPEncoder). build_bio_profile_rel.py precompute.
+        # mirrors Cell 03 (MorganFPEncoder). bio_profile.py precompute.
         emb, dim = load_raw_bio_profile()
         encoder = BioProfileMLPEncoder(hidden_dim=hd, dropout=dr, fp_dim=dim)
         encoder.set_features(emb)

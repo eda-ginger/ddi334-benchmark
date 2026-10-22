@@ -306,7 +306,7 @@ class BioProfileMLPEncoder(nn.Module):
       in their input vector (user decision, 2026-09-08). No Jaccard similarity or
       PCA step, unlike an earlier, unreported variant that reduced the same
       raw profile through similarity+PCA first.
-    Input (build_bio_profile_rel.py): 554-dim binary vector = which of 554 non-drug HetioNet
+    Input (bio_profile.py): 554-dim binary vector = which of 554 non-drug HetioNet
       entities (486 target Gene / 68 Disease) each drug connects to. Restricted to
       Gene and Disease only (Pharmacologic Class and Compound dropped, user decision
       2026-09-08): Compound neighbors turned out to be connected via CrC (Compound-
@@ -315,7 +315,7 @@ class BioProfileMLPEncoder(nn.Module):
       similarity edges = Molecule") -- confirmed against the original HetioNet SIF
       edge file; Pharmacologic Class was dropped to keep the profile aligned with the
       target-only focus of the cited literature (DDIMDL/MDF-SA-DDI). Two further
-      exclusions match build_bio_profile_doc.py's LLM-facing text profile (not applied by
+      exclusions match bio_profile_text.py's LLM-facing text profile (not applied by
       precompute_pca.py's old, unreported InteractionJaccardEncoder variant):
       (1) Compound-causes-Side Effect edges (relation
       21) are dropped, since this HetioNet relation shares its vocabulary with the

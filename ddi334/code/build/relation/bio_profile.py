@@ -17,7 +17,7 @@ Reuses the earlier Jaccard+PCA variant's bio_profile_hetionet() logic exactly
 (same feature index / neighbor extraction), just skips the Jaccard+PCA step
 and saves the raw binary matrix instead.
 
-Run: micromamba run -n DDIBench python build/relation/build_bio_profile_rel.py
+Run: micromamba run -n DDIBench python build/relation/bio_profile.py
 """
 import os
 import json
@@ -30,13 +30,13 @@ KG_BIO_334 = os.path.join(DDI334_DIR, 'data', 'relation', 'kge', 'kg_bio_334.txt
 DRUG_MAX = 1710
 SIDE_EFFECT_REL = '21'    # Compound-causes-Side Effect: same vocabulary as the DDI-334
                            # prediction label (adverse events) -> leakage, must be excluded.
-                           # Already excluded for this reason in build_bio_profile_doc.py (LLM
+                           # Already excluded for this reason in bio_profile_text.py (LLM
                            # prompt text) and data/prompt/ANALYSIS.md; the earlier Jaccard+PCA
                            # variant's bio_profile_hetionet() did NOT exclude it -- found
                            # 2026-09-08 while building this raw-vector cell (Cell 07).
 GENE_REL_DIRECT = '6'     # Compound-binds-Gene (CbG) = direct target only. Other Gene-typed
                            # relations (7=upregulates, 18=downregulates) are indirect and are
-                           # already excluded for that reason in build_bio_profile_doc.py's
+                           # already excluded for that reason in bio_profile_text.py's
                            # GENE_REL='6' + "up/down-regulate(간접 gene)도 제외" comment;
                            # bio_profile_hetionet() did not apply this narrowing either.
 ALLOWED_TYPES = {'Gene', 'Disease'}   # target gene (direct binding) + indication only.
@@ -60,7 +60,7 @@ def bio_profile_hetionet(all_ids):
     """Same neighbor extraction as precompute_pca.py's bio_profile_hetionet(), except:
     - Side Effect neighbors (relation 21) are excluded (label leakage).
     - Gene neighbors are restricted to relation 6 (direct target binding); indirect
-      up/downregulation relations are excluded (matches build_bio_profile_doc.py's GENE_REL)."""
+      up/downregulation relations are excluded (matches bio_profile_text.py's GENE_REL)."""
     e2i = json.load(open(os.path.join(V5_DIR, 'kge_hetionet', 'data', 'entity_drug.json')))
     i2e = {v: k for k, v in e2i.items()}
     drug_set = set(all_ids)
