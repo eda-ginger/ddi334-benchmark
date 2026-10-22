@@ -37,8 +37,7 @@ ddi334/
                                   `mol_graph.py`
                        relation/  `knowledge_graph.py`, `ddi_network.py`,
                                   `bio_profile.py`
-                       document/  `bio_profile_text.py`,
-                                  `bert_template.py`
+                       document/  `mention_description.py`
     train/           main trainer (`train.py`, cells 01-12 — numbered to
                      match the paper's Table 2 exactly, see "Paper
                      correspondence" below) and the shared model/dataset
@@ -342,8 +341,9 @@ override for `existing_drug`) and is also the main-text Figure 6 result
 (and Table D.1's parameter count) — (`main_experiments/01-12_encoders`'s
 cell 12 above is this exact run); `biobert`/`pubmedbert` are only used for
 this Appendix C.4 comparison. Each backbone's embeddings must first be
-built once with `build/document/bert_template.py --tag {scibert,biobert,pubmedbert}`
-(reads `data/document/bio_profile_text.json`, writes into `data/document/`):
+built once with `build/document/mention_description.py --tag {scibert,biobert,pubmedbert}`
+(this also (re)generates `data/document/bio_profile_text.json` as its first
+step; writes everything into `data/document/`):
 
 ```bash
 DOC_MODEL=pubmedbert DOC_INPUT=novel_drug python train/train.py --cell 12 --gpu 0 --seed 42 \
@@ -389,7 +389,7 @@ files.
 See `ddi334/code/build/` (grouped into `splits/`, `molecule/`, `relation/`,
 `document/` subfolders by modality, same as `data/`) for dataset build
 (`splits/dataset.py`, `relation/knowledge_graph.py`,
-`relation/bio_profile.py`, `document/bio_profile_text.py`,
+`relation/bio_profile.py`, `document/mention_description.py`,
 ...) and `ddi334/code/llm/` for prompt rendering (`llm_prompts.py`).
 
 ## Environment

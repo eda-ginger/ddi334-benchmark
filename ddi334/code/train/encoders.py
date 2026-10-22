@@ -315,7 +315,7 @@ class BioProfileMLPEncoder(nn.Module):
       similarity edges = Molecule") -- confirmed against the original HetioNet SIF
       edge file; Pharmacologic Class was dropped to keep the profile aligned with the
       target-only focus of the cited literature (DDIMDL/MDF-SA-DDI). Two further
-      exclusions match bio_profile_text.py's LLM-facing text profile (not applied by
+      exclusions match mention_description.py's LLM-facing text profile (not applied by
       precompute_pca.py's old, unreported InteractionJaccardEncoder variant):
       (1) Compound-causes-Side Effect edges (relation
       21) are dropped, since this HetioNet relation shares its vocabulary with the

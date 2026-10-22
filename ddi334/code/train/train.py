@@ -239,7 +239,7 @@ def load_fingerprint_embeddings():
 
 def load_biobert_embeddings(input_type='existing_drug'):
     # novel_drug/existing_drug (2026-07-27, 05_실험설계(DDI334).md §8): LLM(§5) 템플릿과 통일한 cell12 입력.
-    #   bert_template.py로 생성. DOC_MODEL env(biobert/pubmedbert/scibert, 기본 scibert = 원고
+    #   mention_description.py로 생성. DOC_MODEL env(biobert/pubmedbert/scibert, 기본 scibert = 원고
     #   Table 1/D.1 설정)로 backbone 선택 (2026-07-27 확장, §8.5; biobert/pubmedbert는 Appendix C.1 비교용).
     # 반환: (embeddings dict, hidden_dim) — 모델마다 실제 dim을 payload에서 읽어옴(하드코딩 금지).
     doc_model = os.environ.get('DOC_MODEL', 'scibert')

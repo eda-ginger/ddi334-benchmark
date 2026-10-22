@@ -108,9 +108,8 @@ them.
    main README's "What is / isn't included" section):
    - `build/relation/ddi_network.py` (Cell 08 whole DDI graph),
      `build/relation/bio_profile.py` (Cell 07 raw bio-neighbor vector)
-   - `build/document/bio_profile_text.py` (genes/indications/pharm-class
-     text source), `build/document/bert_template.py` (Cell 12 frozen
-     BERT embeddings)
+   - `build/document/mention_description.py` (genes/indications/pharm-class
+     text source, then Cell 12's frozen BERT embeddings of it)
    - `build/molecule/smiles.py` (filters the shared drug_smiles.json down
      to the 334-drug cohort, then builds Cell 02's ChemBERTa embeddings),
      `build/molecule/fingerprint.py` (Cell 03 Morgan fingerprint),
