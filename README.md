@@ -44,7 +44,7 @@ environment/
 ### Paper correspondence
 
 `train/train.py --cell` numbers are the same 01-18 as the manuscript's
-**Table 2** (not an internal numbering scheme that needs translating):
+**Table 2**:
 
 | # | Modality | Input Representation | Input Usage | Model |
 |---|---|---|---|---|
