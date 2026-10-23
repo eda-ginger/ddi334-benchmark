@@ -27,7 +27,7 @@ is not the full experiment history of the underlying project.
 
 ```
 ddi334/
-  code/
+  code/              see code/README.md for the cell-numbering table
     build/             data precompute, one script per Table 2 input
                        representation — splits/ molecule/ relation/ document/
     train/             cells 01-12 trainer (train.py, encoders.py,
@@ -35,7 +35,7 @@ ddi334/
     llm/               cells 13-18 zero-shot/fine-tuning runners
                        (zeroshot.py, finetuning_train.py, finetuning_eval.py)
   data/                precomputed inputs — splits/ molecule/ relation/ document/
-  results/             summary metrics, configs, loss curves
+  results/           see results/README.md for the folder-to-figure/table map
   DATA_SOURCES.md      upstream data sources + build pipeline
 environment/
   README.md, *_requirements.txt
@@ -43,41 +43,10 @@ environment/
 
 ### Paper correspondence
 
-`train/train.py --cell` numbers are the same 01-18 as the manuscript's
-**Table 2**:
-
-| # | Modality | Input Representation | Input Usage | Model |
-|---|---|---|---|---|
-| 01 | Molecule | SMILES | Direct | 1D-CNN |
-| 02 | Molecule | SMILES | Direct | ChemBERTa (Frozen) |
-| 03 | Molecule | Fingerprint | Direct | MLP |
-| 04 | Molecule | Molecular graph | 2D molecular graph | GAT |
-| 05 | Molecule | Molecular graph | 2D molecular graph | Graph Transformer |
-| 06 | Molecule | Molecular graph | 3D molecular graph | SchNet |
-| 07 | Relation | Bio profile | Direct | MLP |
-| 08 | Relation | DDI network | Whole Graph | R-GCN |
-| 09 | Relation | Knowledge graph | Whole Graph | KGE (Frozen) |
-| 10 | Relation | Knowledge graph | Subgraph | R-GCN |
-| 11 | Relation | Knowledge graph | Subgraph | Graph Transformer |
-| 12 | Document | Mention / Description | User Only | SciBERT (Frozen) |
-| 13 | Document | Instruction | System + User + Question | Gemma2-2B (Zero-shot / Fine-tuning) |
-| 14 | Document | Instruction | System + User + Question | Gemma2-27B (Zero-shot / Fine-tuning) |
-| 15 | Document | Instruction | System + User + Question | Qwen2.5-3B (Zero-shot / Fine-tuning) |
-| 16 | Document | Instruction | System + User + Question | Qwen2.5-14B (Zero-shot / Fine-tuning) |
-| 17 | Document | Instruction | System + User + Question | Phi-3.5-mini (Zero-shot / Fine-tuning) |
-| 18 | Document | Instruction | System + User + Question | Phi-4 (Zero-shot / Fine-tuning) |
-
-`ddi334/results/` is organized by which part of the paper it backs:
-
-| Folder | Paper reference |
-|---|---|
-| `main_experiments/01-12_encoders/` | Figure 6, Table D.1, Appendix G (AUPRC/AP@50 are extra columns, not separate runs) |
-| `main_experiments/13-18_llm/{zeroshot,finetuning}/` | Figure 6, Instruction #13-18 |
-| `main_experiments/commercial_llm/` | Figure 7, Appendix I (Tables I.1, I.2) |
-| `main_experiments/random_baseline.json` | Figure 6 dashed line |
-| `appendix/c_document_backbone_comparison/{biobert,pubmedbert,scibert}/` | Appendix C.4, Table C.1 |
-| `appendix/f_kge_comparison/` | Appendix F, Figure F.1 |
-| `appendix/h_embedding_subgraph_cross/` | Appendix H, Table H.1 |
+- Cell numbers (01-18) vs. the manuscript's **Table 2**:
+  [`ddi334/code/README.md`](ddi334/code/README.md)
+- Results folder vs. paper figure/table:
+  [`ddi334/results/README.md`](ddi334/results/README.md)
 
 Filenames/columns use `existing_drug`/`novel_drug` and `S0`/`S1`/`S2`.
 See [REPRODUCING.md](REPRODUCING.md) for exactly how each folder maps
