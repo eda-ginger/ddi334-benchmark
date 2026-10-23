@@ -20,6 +20,7 @@ prompts on the fly and don't need this step.
 | `appendix/c_document_backbone_comparison/` | 12 | `DOC_MODEL=scibert\|biobert\|pubmedbert` | build each backbone once: `build/document/mention_description.py --tag <name>` |
 | `main_experiments/13-18_llm/zeroshot/` | 13-18 | `llm/zeroshot.py --model <hf_id> --split S0\|S1\|S2 --mode existing_drug\|novel_drug` | 6 models x 2 conditions x 3 splits, temperature=0 (deterministic, no seed sweep); add `--merge-system` for the 2 gemma models (vLLM's gemma-2 chat template rejects a separate system role) |
 | `main_experiments/13-18_llm/finetuning/` | 13-18 | `llm/finetuning_train.py --model <hf_id> --mode ... --epochs 3` then `llm/finetuning_eval.py --tag <tag> ... --merge-system` (gemma models only; `finetuning_train.py` auto-detects, no flag needed there) | eval picks the best epoch per split by validation AUROC; only that checkpoint's metrics + the per-epoch `_cv.json` curve are shipped |
+| `main_experiments/commercial_llm/` | Figure 7, Appendix I | no command — manual, one-off | commercial models were queried through their web chat UI (not the API), on a fixed 30-question subset of the S2 test set (`web_manual_questions_subset30.json`, ground truth included). `web_manual_questions_{gpt,claude,gemini}_subset30.txt` are the raw transcripts; `summary.csv` is the scored accuracy/F1 per model/condition. The open-source rows in `summary.csv` are the same zero-shot models from `13-18_llm/zeroshot/`, re-scored on this same 30-question subset for a matched comparison |
 
 Example:
 ```bash
