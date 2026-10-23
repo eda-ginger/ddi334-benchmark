@@ -2,17 +2,18 @@
 """
 DDI-334 DDI network whole graph (Cell 08, Decagon R-GCN)
 =============================================================================
-TWOSIDES train-split 엣지로 Cell 08(DDI network R-GCN)이 쓸 전체 DDI 그래프를
-data/relation/ddi_network.pt로 만든다. node=db_id, 외부 생물학적 관계는 포함
-하지 않음 (DDI network는 DDI 연결 자체만 사용 — knowledge_graph.py의 지식그래프와는
-별개). node init(Morgan FP 기본 / TransE)은 train.py의 NODE_INIT env가 선택.
+Builds the whole DDI graph that Cell 08 (DDI network R-GCN) uses, from the
+TWOSIDES train-split edges, into data/relation/ddi_network.pt. node=db_id; no
+external biological relations are included (the DDI network uses only the DDI
+connections themselves -- separate from knowledge_graph.py's knowledge graph).
+Node init (Morgan FP default / TransE) is selected by train.py's NODE_INIT env.
 
-출력: ddi334/data/relation/ddi_network.pt
+Output: ddi334/data/relation/ddi_network.pt
   edge_index[2,E], edge_type[E] (TWOSIDES type_idx 0..N-1 + inverse),
   num_types, num_relations(=2*num_types)
 
-관계 체계: relation_map.json 참조 (bio 0-22, TWOSIDES = 23+type_idx).
-Cell 08은 DDI-only라 type_idx(0..N-1)로 재매핑(rel-23) + inverse.
+Relation scheme: see relation_map.json (bio 0-22, TWOSIDES = 23+type_idx).
+Cell 08 is DDI-only, so relations are remapped to type_idx (0..N-1) (rel-23) + inverse.
 
 Run: micromamba run -n DDIBench python build/relation/ddi_network.py
 """
@@ -35,7 +36,7 @@ def main():
         h, t, r = line.split()
         h, t, tyi = int(h), int(t), int(r) - BIO_N   # rel 23+ -> type_idx 0..N-1
         src.append(h); dst.append(t); etype.append(tyi)
-        src.append(t); dst.append(h); etype.append(tyi + n_types)   # inverse 관계
+        src.append(t); dst.append(h); etype.append(tyi + n_types)   # inverse relation
     edge_index = torch.tensor([src, dst], dtype=torch.long)
     edge_type = torch.tensor(etype, dtype=torch.long)
 

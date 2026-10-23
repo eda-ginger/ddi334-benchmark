@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
-"""DDI-334 V2 (binary Yes/No) QLoRA fine-tune. ft_train_v1의 V2판.
+"""DDI-334 V2 (binary Yes/No) QLoRA fine-tune. The V2 version of ft_train_v1.
 
-- 학습 데이터: data/prompt/{mode}/train.jsonl (이미 렌더됨; 각 줄 {d1,d2,type,y,user})
+- Training data: data/prompt/{mode}/train.jsonl (already rendered; each line is {d1,d2,type,y,user})
   target = " Yes" if y==1 else " No"  (V2 binary-with-R)
 - mode: novel_drug / existing_drug (Case-3 / Case-1)
-- QLoRA 설정 ft_train_v1과 동일 (4bit nf4, LoRA r16/a32 q/k/v/o, AdamW 2e-4, 5ep, seed42)
-- epoch마다 어댑터 저장 + (resume용) optimizer/scheduler/rng 저장
-- 평가: finetuning_eval.py (vLLM LoRA serving, split별 best epoch)
+- QLoRA settings are the same as ft_train_v1 (4bit nf4, LoRA r16/a32 q/k/v/o, AdamW 2e-4, 5ep, seed42)
+- Saves an adapter every epoch + (for resuming) saves optimizer/scheduler/rng state
+- Evaluation: finetuning_eval.py (vLLM LoRA serving, best epoch per split)
 
-Usage (vllm-llm 또는 peft env):
+Usage (vllm-llm or peft env):
   python finetuning_train.py --model microsoft/Phi-3.5-mini-instruct --mode existing_drug --gpu 0 \
       [--epochs 5 --seed 42 --resume]
 """
@@ -28,7 +28,7 @@ def is_merge(model):
 
 
 def load_examples(mode, limit=0):
-    """렌더된 train.jsonl -> [(user, target)]. target=' Yes'/' No'."""
+    """Rendered train.jsonl -> [(user, target)]. target=' Yes'/' No'."""
     path = os.path.join(HERE, "data", "prompt", mode, "train.jsonl")
     items = []
     for line in open(path):
@@ -138,12 +138,12 @@ def main():
         st = torch.load(state_path, map_location="cpu")
         opt.load_state_dict(st["opt"]); sched.load_state_dict(st["sched"])
         torch.set_rng_state(st["rng"]); start_ep = st["epoch"] + 1
-        # 마지막 epoch 어댑터 로드
+        # Load the last epoch's adapter
         from peft import PeftModel
         last = os.path.join(ckpt, f"epoch_{st['epoch']}")
         if os.path.exists(last):
             model.load_adapter(last, adapter_name="default", is_trainable=True)
-        print(f"  [resume] epoch {st['epoch']} 이후부터 (start={start_ep})", flush=True)
+        print(f"  [resume] continuing after epoch {st['epoch']} (start={start_ep})", flush=True)
 
     t0 = time.time()
     for ep in range(start_ep, a.epochs + 1):
@@ -159,8 +159,8 @@ def main():
         torch.save({"opt": opt.state_dict(), "sched": sched.state_dict(),
                     "rng": torch.get_rng_state(), "epoch": ep}, state_path)
         print(f"  epoch {ep}/{a.epochs} loss={tot/len(loader):.4f} -> {ep_dir} | {time.time()-t0:.0f}s", flush=True)
-    print(f"[DONE] {a.epochs}ep 어댑터 저장 -> {ckpt}/epoch_1..{a.epochs} | wall {time.time()-t0:.0f}s", flush=True)
-    print(f"  평가: finetuning_eval.py --tag {tag} --mode {a.mode}", flush=True)
+    print(f"[DONE] saved {a.epochs} epoch adapters -> {ckpt}/epoch_1..{a.epochs} | wall {time.time()-t0:.0f}s", flush=True)
+    print(f"  Evaluate with: finetuning_eval.py --tag {tag} --mode {a.mode}", flush=True)
 
 
 if __name__ == '__main__':

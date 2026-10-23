@@ -1,5 +1,5 @@
 {
-  "note": "관계 재번호 (DrugBank DDI 0-85 제거 후). KGE/R-GCN 모두 이 id 사용.",
+  "note": "Relation renumbering (after removing DrugBank DDI 0-85). Both KGE and R-GCN use these ids.",
   "bio": {
     "orig_hetionet_rel": "86-108",
     "new_rel": "0-22",
@@ -11,6 +11,6 @@
     "rule": "new = 23 + dense_type_idx (0..208)",
     "n_types": 209
   },
-  "drugbank_ddi": "REMOVED (원래 0-85, 더 이상 사용 안 함)",
+  "drugbank_ddi": "REMOVED (originally 0-85, no longer used)",
   "n_relations": 232
 }

@@ -1,13 +1,13 @@
 type: baseline
-# DDI-334 (ddibn) KGE: HetioNet bio(334 약물 노드만, rel 0-22) + 334 TWOSIDES train(typed rel 23+). DrugBank DDI 없음.
-# 관계 재번호: relation_map.json 참조. n_relations=232 (bio 23 + TWOSIDES type 수)
-# HP: AstraZeneca/kgem-in-drug-discovery (kge_hetionet/config 그대로)
+# DDI-334 (ddibn) KGE: HetioNet bio edges (334 drug nodes only, rel 0-22) + 334-drug TWOSIDES train split (typed rel 23+). No DrugBank DDI edges.
+# Relation renumbering: see relation_map.json. n_relations=232 (23 bio + TWOSIDES type count)
+# HP: AstraZeneca/kgem-in-drug-discovery (kge_hetionet config as-is)
 dataset: emergnn
 n_relations: 232
 
 data:
-  kg: /home/internal-server-user/Latex/experiments/v5_ddi-bench/experiment/ddi334/novel_drug/kg_bio_334_novel_drug.txt
-  ddi_train: /home/internal-server-user/Latex/experiments/v5_ddi-bench/experiment/ddi334/kge/ddibn/ddi_train.txt
+  kg: /path/to/internal_server/v5_ddi-bench/experiment/ddi334/novel_drug/kg_bio_334_novel_drug.txt
+  ddi_train: /path/to/internal_server/v5_ddi-bench/experiment/ddi334/kge/ddibn/ddi_train.txt
 
 model:
   name: TransE
@@ -24,6 +24,6 @@ train:
   create_inverse: False
 
 save:
-  path: /home/internal-server-user/Latex/experiments/v5_ddi-bench/experiment/ddi334/kge/ddibn_novel_drug/transe
+  path: /path/to/internal_server/v5_ddi-bench/experiment/ddi334/kge/ddibn_novel_drug/transe
 
 seed: 42

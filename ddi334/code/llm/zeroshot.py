@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""DDI-334 LLM 셀 추론+평가 (V2 binary-with-R).
+"""DDI-334 LLM cell inference+evaluation (V2 binary-with-R).
 
-- 입력 프롬프트: instruction.DDI334Prompt (02 §3.1)
-- queried side effect(vec=1)만 질의 (전 실험과 동일)
-- 평가: train.py evaluate와 동일한 per-type ROC-AUC/PR-AUC/Acc
-- vLLM OpenAI 서버 (vllm-llm env에서 실행)
+- Input prompt: instruction.DDI334Prompt (02 section 3.1)
+- Only the queried side effect (vec=1) is asked about (same as earlier experiments)
+- Evaluation: same per-type ROC-AUC/PR-AUC/Acc as train.py's evaluate
+- vLLM OpenAI server (run in the vllm-llm env)
 
 Usage (vllm-llm env):
   python zeroshot.py --model Qwen/Qwen2.5-3B-Instruct \
@@ -17,7 +17,7 @@ from sklearn.metrics import roc_auc_score, average_precision_score, accuracy_sco
 
 HERE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SPLITS_DIR = os.path.join(HERE, 'data', 'splits')
-DATASET_TAG = 'ddibn'   # 결과 파일명/summary.csv 스키마 보존용 상수 (경로 구성에는 쓰이지 않음)
+DATASET_TAG = 'ddibn'   # constant kept only for result filename / summary.csv schema compatibility (not used to build paths)
 sys.path.insert(0, os.path.join(HERE, 'code', 'build', 'document'))
 from instruction import DDI334Prompt
 
@@ -64,9 +64,11 @@ def load_rows(split, limit):
 
 
 def infer_v2(client, model, pb, rows, merge, mode='existing_drug', workers=24):
-    """동시 요청(ThreadPoolExecutor) -> vLLM 배치. 직렬은 Running:1이라 GPU idle+극저속.
-    각 (pair, t)별 Yes/No 1건. temperature=0 결정적이므로 병렬해도 결과 불변.
-    mode: existing_drug / novel_drug (정보 가용성 ablation)."""
+    """Concurrent requests (ThreadPoolExecutor) -> vLLM batches. Serial requests leave
+    Running:1, so the GPU sits idle and it's extremely slow.
+    One Yes/No query per (pair, t). temperature=0 is deterministic, so parallelizing
+    doesn't change the result.
+    mode: existing_drug / novel_drug (information-availability ablation)."""
     from concurrent.futures import ThreadPoolExecutor
     N = len(pb.typenames)
     pred = np.zeros((len(rows), N)); lab = np.zeros((len(rows), N + 1))
@@ -88,7 +90,7 @@ def infer_v2(client, model, pb, rows, merge, mode='existing_drug', workers=24):
                                                       max_tokens=3, seed=123, logprobs=True, top_logprobs=20,
                                                       extra_body={"guided_choice": ["Yes", "No"]})
                 ch = resp.choices[0]
-                # Yes·No 둘 다 logprob 추출 -> softmax over {Yes,No} 정규화 = 인코더 sigmoid 대응.
+                # Extract logprobs for both Yes and No -> normalize via softmax over {Yes,No} (analogous to the encoders' sigmoid).
                 lp_yes = lp_no = None
                 if ch.logprobs and ch.logprobs.content:
                     for tl in ch.logprobs.content[0].top_logprobs:
@@ -100,15 +102,15 @@ def infer_v2(client, model, pb, rows, merge, mode='existing_drug', workers=24):
                     ey, en = np.exp(lp_yes - mx), np.exp(lp_no - mx)
                     p_yes = float(ey / (ey + en))           # P(Yes | Yes,No)
                 elif lp_yes is not None:
-                    p_yes = float(np.exp(lp_yes))           # No가 top-k 밖 -> Yes 압도
+                    p_yes = float(np.exp(lp_yes))           # No fell outside top-k -> Yes dominates
                 elif lp_no is not None:
-                    p_yes = float(1.0 - np.exp(lp_no))      # Yes가 top-k 밖 -> No 압도
+                    p_yes = float(1.0 - np.exp(lp_no))      # Yes fell outside top-k -> No dominates
                 else:
                     p_yes = 1.0 if ch.message.content.strip().lower().startswith("yes") else 0.0
                 pred[r, t] = p_yes
                 done[0] += 1
                 if done[0] % 2000 == 0:
-                    print(f"  [v2] {done[0]}/{len(tasks)} 질의 완료", flush=True)
+                    print(f"  [v2] {done[0]}/{len(tasks)} queries done", flush=True)
                 return
             except Exception as e:
                 if attempt == 1:
@@ -118,16 +120,16 @@ def infer_v2(client, model, pb, rows, merge, mode='existing_drug', workers=24):
                 else:
                     time.sleep(1)
 
-    print(f"  [v2] 총 {len(tasks)} 질의 ({len(rows)} pair) 병렬 시작 (workers={workers})", flush=True)
+    print(f"  [v2] starting {len(tasks)} queries total ({len(rows)} pairs) in parallel (workers={workers})", flush=True)
     with ThreadPoolExecutor(max_workers=workers) as ex:
         list(ex.map(one, tasks))
     if fails[0]:
-        print(f"  [v2] 총 {fails[0]}/{len(tasks)} 질의 실패", flush=True)
+        print(f"  [v2] {fails[0]}/{len(tasks)} queries failed total", flush=True)
     return pred, lab
 
 
 def evaluate(pred, lab):
-    """train.py evaluate와 동일 per-type AUROC/PR-AUC/accuracy/macro-F1 + P@50/P@(N/2)."""
+    """Same per-type AUROC/PR-AUC/accuracy/macro-F1 + P@50/P@(N/2) as train.py's evaluate."""
     N = pred.shape[1]; roc, prc, acc, f1, p50, prn = [], [], [], [], [], []
     for j in range(N):
         where = np.where(lab[:, j] == 1)[0]
@@ -139,7 +141,7 @@ def evaluate(pred, lab):
             roc.append(roc_auc_score(lc, pc)); prc.append(average_precision_score(lc, pc))
             acc.append(accuracy_score(lc, phard))
             f1.append(f1_score(lc, phard, zero_division=0))
-            lc_sorted = lc[np.argsort(-pc)]   # 점수 내림차순 -> 상위 k개 양성비율 (train.py와 동일)
+            lc_sorted = lc[np.argsort(-pc)]   # descending score -> fraction of positives among the top k (same as train.py)
             k50 = min(50, lc_sorted.shape[0]); krn = max(1, lc_sorted.shape[0] // 2)
             p50.append(float(lc_sorted[:k50].mean())); prn.append(float(lc_sorted[:krn].mean()))
     m = lambda x: float(np.mean(x)) if x else 0.0
@@ -153,7 +155,7 @@ SUMMARY_COLS = ["best_epoch", "cell", "checkpoint_metric", "dataset", "n_params"
 
 
 def save_results(ds, cell_label, split, metrics, wall, outdir=None):
-    """인코더 summary.csv와 동일 컬럼으로 append (LLM은 val/epoch 공란). F1·n_types는 별도 json."""
+    """Appends with the same columns as the encoders' summary.csv (val/epoch are left blank for LLMs). F1/n_types go in a separate json."""
     import csv
     rdir = outdir or os.path.join(HERE, 'results', ds)
     os.makedirs(os.path.join(rdir, 'llm_metrics'), exist_ok=True)
@@ -180,13 +182,13 @@ def main():
     ap.add_argument("--gpu", default="3")
     ap.add_argument("--split", default="S0")
     ap.add_argument("--limit", type=int, default=0)
-    ap.add_argument("--label", default="")    # summary.csv cell 라벨 (예: 15_zs_qwen)
-    ap.add_argument("--gpu-mem-util", type=float, default=0.85)  # 공유 GPU면 낮춤
-    ap.add_argument("--port", type=int, default=12341)  # 병렬 잡 충돌 방지: 잡마다 고유 포트
-    ap.add_argument("--merge-system", action="store_true")  # gemma류
-    ap.add_argument("--mode", default="existing_drug", choices=["existing_drug", "novel_drug"])  # V2 정보 ablation
-    ap.add_argument("--workers", type=int, default=24)  # 동시 요청 수 (작은 모델은 64+로 GPU 채움)
-    ap.add_argument("--outdir", default="")  # 결과 저장 폴더 override (예: results/main_experiments/01-12_encoders)
+    ap.add_argument("--label", default="")    # summary.csv cell label (e.g. 15_zs_qwen)
+    ap.add_argument("--gpu-mem-util", type=float, default=0.85)  # lower this on a shared GPU
+    ap.add_argument("--port", type=int, default=12341)  # avoid collisions between parallel jobs: each job gets its own port
+    ap.add_argument("--merge-system", action="store_true")  # for gemma-family models
+    ap.add_argument("--mode", default="existing_drug", choices=["existing_drug", "novel_drug"])  # V2 information ablation
+    ap.add_argument("--workers", type=int, default=24)  # number of concurrent requests (use 64+ for small models to saturate the GPU)
+    ap.add_argument("--outdir", default="")  # override the results output folder (e.g. results/main_experiments/01-12_encoders)
     a = ap.parse_args()
     global PORT
     PORT = a.port
@@ -198,7 +200,7 @@ def main():
     proc, log = start_server(a.model, a.gpu, a.merge_system, a.gpu_mem_util)
     try:
         if not wait_ready():
-            print("서버 기동 실패"); return
+            print("server failed to start"); return
         client = OpenAI(base_url=f"http://127.0.0.1:{PORT}/v1", api_key="x")
         t0 = time.time()
         pred, lab = infer_v2(client, a.model, pb, rows, a.merge_system, mode=a.mode, workers=a.workers)
@@ -207,7 +209,7 @@ def main():
         print(f"[RESULT] {metrics} | wall {wall:.0f}s")
         label = a.label or f"v2_{a.model.replace('/','_')}"
         save_results(DATASET_TAG, label, a.split, metrics, wall, outdir=a.outdir or None)
-        # raw 예측 저장 (분포 분석용; 인코더 raw_preds와 동일 위치/형식). pred=p_yes[행,타입], lab=multihot+polarity[행,N+1].
+        # Save raw predictions (for distribution analysis; same location/format as the encoders' raw_preds). pred=p_yes[row,type], lab=multihot+polarity[row,N+1].
         rdir = a.outdir or os.path.join(HERE, 'results', DATASET_TAG)
         rpdir = os.path.join(rdir, 'raw_preds'); os.makedirs(rpdir, exist_ok=True)
         np.savez(os.path.join(rpdir, f'{label}_{a.split}.npz'), pred=pred, lab=lab)

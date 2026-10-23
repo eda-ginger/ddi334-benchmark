@@ -4,10 +4,11 @@
 
 Step 1 (raw facts): for each drug (db_id), extract the 3 leakage/noise-free
 HetioNet neighbor types by name:
-  - Target genes : Compound-binds-Gene (CbG, kg_bio_334 rel 6) = 직접 결합 표적 (LLMDDI식)
+  - Target genes : Compound-binds-Gene (CbG, kg_bio_334 rel 6) = direct binding target (LLMDDI convention)
   - Indications  : Compound-treats/palliates-Disease (CtD/CpD, rel 5/10)
   - Pharmacologic class : Compound-(class)-PharmacologicClass
-  (Side Effect는 예측 라벨과 동일 어휘라 누수 -> 제외. up/down-regulate(간접 gene)도 제외.)
+  (Side Effect is excluded since it shares the same vocabulary as the prediction label -> leakage.
+   up/down-regulate (indirect gene) relations are excluded too.)
   -> data/document/bio_profile_text.json
      { "<db_id>": {"genes":[..], "indications":[..], "pharm_class":[..]} }
   (also the raw-fact source for llm/instruction.py's "Existing drug" template)
@@ -19,7 +20,7 @@ backbone's [CLS] embedding of it. Backbone selectable via --tag
 (scibert = main-text Table 2/D.1 setting; biobert/pubmedbert = Appendix C.4
 comparison only). hidden_dim read from each model's own config (no
 hardcoding -- dimension differs per model).
-  novel_drug    : SMILES만
+  novel_drug    : SMILES only
   existing_drug : + Name + Target genes + Indications + Pharmacologic class
   -> data/document/{tag}_{novel_drug,existing_drug}.pt
      {'embeddings': {int db_id: Tensor[dim]}, 'hidden_dim':dim, 'model_name':..., 'input_type':...}
@@ -45,7 +46,7 @@ BIO_PROFILE = os.path.join(DOC_DIR, 'bio_profile_text.json')
 MAX_TOKENS = 512
 TIERS = ['novel_drug', 'existing_drug']
 DRUG_MAX = 1710
-GENE_REL = '6'          # CbG (binds) = 직접 표적
+GENE_REL = '6'          # CbG (binds) = direct target
 
 MODEL_PRESETS = {
     'biobert': 'dmis-lab/biobert-base-cased-v1.2',
@@ -82,8 +83,8 @@ def build_bio_profile_text():
     os.makedirs(DOC_DIR, exist_ok=True)
     json.dump(out, open(BIO_PROFILE, 'w'), ensure_ascii=False, indent=0)
     ng = sum(1 for d in dbids if genes[d]); nd = sum(1 for d in dbids if dis[d]); nc = sum(1 for d in dbids if cls[d])
-    print(f"[1/2] bio_profile_text.json: {len(dbids)} 약물 -> {BIO_PROFILE}")
-    print(f"      genes 보유 {ng}, indications {nd}, pharm_class {nc}")
+    print(f"[1/2] bio_profile_text.json: {len(dbids)} drugs -> {BIO_PROFILE}")
+    print(f"      have genes {ng}, indications {nd}, pharm_class {nc}")
 
 
 def build_bert_template(args):
@@ -92,7 +93,7 @@ def build_bert_template(args):
 
     from instruction import DDI334Prompt   # same folder (build/document/)
 
-    pb = DDI334Prompt()   # typenames는 drug_text에 안 쓰임
+    pb = DDI334Prompt()   # typenames is not used by drug_text
     drug_ids = sorted(int(k) for k in json.load(open(BIO_PROFILE)).keys())
     print(f'[2/2] Target drugs: {len(drug_ids)}')
 
@@ -101,7 +102,7 @@ def build_bert_template(args):
     from transformers import AutoTokenizer, AutoModel
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModel.from_pretrained(model_name).to(device).eval()
-    hidden_dim = model.config.hidden_size   # 모델별 실제 dimension (하드코딩 금지)
+    hidden_dim = model.config.hidden_size   # the actual per-model dimension (never hardcoded)
     print(f'  hidden_dim={hidden_dim}')
 
     for tier in TIERS:
@@ -138,8 +139,8 @@ def build_bert_template(args):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--tag', default='scibert', choices=list(MODEL_PRESETS.keys()),
-                     help='출력 파일 접두어({tag}_{tier}.pt) 겸 프리셋 모델 선택')
-    ap.add_argument('--model_name', default=None, help='프리셋 대신 임의 HF 모델 지정(선택)')
+                     help='output filename prefix ({tag}_{tier}.pt), also selects the preset model')
+    ap.add_argument('--model_name', default=None, help='optional: specify an arbitrary HF model instead of a preset')
     ap.add_argument('--device', default='cuda:0')
     ap.add_argument('--batch_size', type=int, default=16)
     args = ap.parse_args()

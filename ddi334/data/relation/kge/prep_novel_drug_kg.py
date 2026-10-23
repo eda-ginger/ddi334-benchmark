@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""Novel drug KG 전처리: 신약(Dn) 목록 + 신약-고립 bio KG + kg_triples_novel_drug. (GPU 불필요, 재현용)
-출력: kge/{novel_drugs.json, kg_bio_334_novel_drug.txt, kg_triples_novel_drug.npy}"""
+"""Novel drug KG preprocessing: novel-drug (Dn) list + novel-drug-isolated bio KG + kg_triples_novel_drug. (No GPU needed, for reproduction.)
+Output: kge/{novel_drugs.json, kg_bio_334_novel_drug.txt, kg_triples_novel_drug.npy}"""
 import numpy as np, json, os
 HERE = os.path.dirname(os.path.abspath(__file__))              # data/relation/kge
 DATA_DIR = os.path.dirname(os.path.dirname(HERE))               # data/
@@ -14,7 +14,7 @@ def drugs(fn):
 train=drugs(os.path.join(SPLITS_DIR,"train.txt"))
 novel=sorted((drugs(os.path.join(SPLITS_DIR,"test_S1.txt"))|drugs(os.path.join(SPLITS_DIR,"test_S2.txt")))-train)
 json.dump({"novel_drug_ids":novel,"n_novel":len(novel),"n_train_drugs":len(train),
-           "note":"novel_drug 신약=cold cluster Dn. entity_id==drug_id."}, open(os.path.join(HERE,"novel_drugs.json"),"w"),indent=1)
+           "note":"novel_drug = cold-cluster Dn. entity_id==drug_id."}, open(os.path.join(HERE,"novel_drugs.json"),"w"),indent=1)
 nov=set(novel); kept=removed=0
 with open(os.path.join(HERE,"kg_bio_334.txt")) as f, open(os.path.join(HERE,"kg_bio_334_novel_drug.txt"),"w") as g:
     for line in f:
@@ -25,4 +25,4 @@ trip=[[int(x) for x in l.split()] for l in open(os.path.join(HERE,"kg_bio_334_no
 nb=len(trip)
 trip+=[[int(x) for x in l.split()] for l in open(os.path.join(HERE,"existing_drug","ddi_train.txt"))]
 np.save(os.path.join(HERE,"kg_triples_novel_drug.npy"), np.array(trip,dtype=np.int64))
-print(f"신약 {len(novel)} / known {len(train)} | bio 제거 {removed} 유지 {kept} | kg_triples {len(trip)} (bio {nb}+ddi {len(trip)-nb})")
+print(f"novel {len(novel)} / known {len(train)} | bio removed {removed} kept {kept} | kg_triples {len(trip)} (bio {nb}+ddi {len(trip)-nb})")

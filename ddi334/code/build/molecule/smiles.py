@@ -40,7 +40,7 @@ def db334():
 
 def filter_smiles():
     ids = db334()
-    print(f"334 db_id 로드: {len(ids)}")
+    print(f"Loaded 334 db_ids: {len(ids)}")
     os.makedirs(MOL_DIR, exist_ok=True)
     smi = {k: v for k, v in json.load(open(SMILES_V5)).items() if int(k) in ids}
     json.dump(smi, open(SMILES_JSON, 'w'))

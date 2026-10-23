@@ -3,32 +3,32 @@
 DDI-334 Knowledge graph (Cell 09 KGE whole-graph, Cell 10/11 subgraph) — Table 2's
 "Knowledge graph" row covers all three, so all three are built here.
 
-사용자 확정 설계:
-  - HetioNet 전체 유지 (bio 관계 + 비-334 약물의 DrugBank DDI)
-  - 우리 334 약물의 상호작용 = DDI-334 TWOSIDES **train** 엣지만 (untyped, rel 109)
-  - cold 약물(Dn)에 닿는 DDI 엣지는 자동 0 (train.txt엔 Dk×Dk만) → S1/S2 inductive
+Confirmed design decisions:
+  - Keep all of HetioNet (bio relations + the non-334-drug DrugBank DDI)
+  - Our 334 drugs' interactions = DDI-334 TWOSIDES **train** edges only (untyped, rel 109)
+  - DDI edges touching a cold drug (Dn) are automatically 0 (train.txt has only Dk x Dk) -> S1/S2 inductive
 
-Part 1 (Cell 09 KGE embeddings, frozen): KGE 학습은 기존 `kge_hetionet/baseline.py`
-(PyKEEN, AstraZeneca HP) 재활용. 이 스크립트는 그 학습에 들어갈 입력(ddi_train)과
-모델별 config, run 스크립트를 생성한다.
+Part 1 (Cell 09 KGE embeddings, frozen): KGE training reuses the existing
+`kge_hetionet/baseline.py` (PyKEEN, AstraZeneca HP). This script generates that
+training's input (ddi_train), per-model configs, and the run script.
 
-입력:
-  - kge_hetionet/data/KG.txt              HetioNet bio (rel 86-108)  ← config의 data.kg (공유, 80/10/10 split)
-  - kge_hetionet/data/train.txt           DrugBank DDI (rel 0-85)    ← 비-334만 추려 ddi_train에 포함
-  - ddi334/data/splits/train.txt           DDI-334 TWOSIDES train     ← 334 상호작용(rel 109)
-  - ddi334/data/splits/id_maps.json       334 db_id
+Inputs:
+  - kge_hetionet/data/KG.txt              HetioNet bio (rel 86-108)  <- config's data.kg (shared, 80/10/10 split)
+  - kge_hetionet/data/train.txt           DrugBank DDI (rel 0-85)    <- non-334 only, included in ddi_train
+  - ddi334/data/splits/train.txt           DDI-334 TWOSIDES train     <- 334-drug interactions (rel 109)
+  - ddi334/data/splits/id_maps.json       334 db_ids
 
-출력 (ddi334/data/relation/kge/):
-  existing_drug/ddi_train.txt                      (비334 DrugBank + 334 ts-train rel109; 전부 KGE train행)
+Outputs (ddi334/data/relation/kge/):
+  existing_drug/ddi_train.txt                      (non-334 DrugBank + 334 ts-train rel109; all are KGE train rows)
   existing_drug/configs/{transe,rotate,distmult,complex,transh}.yaml
-  run_all.sh                                        (5 학습: 5 model)
+  run_all.sh                                        (5 training runs: 5 models)
 
-Part 2 (Cell 10/11 subgraph extraction): kg_bio_334.txt(Part 1 출력) + 334
-TWOSIDES train 엣지를 합쳐 data/relation/kg_triples.npy [E,3] (h,t,r)를
-만든다. train.py의 SubgraphExtractor가 이 파일에서 각 drug pair 주변 k-hop
-subgraph를 뽑아낸다. (node init=TransE는 Part 1의 kge/existing_drug/transe/.npy)
+Part 2 (Cell 10/11 subgraph extraction): combines kg_bio_334.txt (Part 1's output)
+with the 334 TWOSIDES train edges into data/relation/kg_triples.npy [E,3] (h,t,r).
+train.py's SubgraphExtractor pulls each drug pair's surrounding k-hop subgraph from
+this file. (node init=TransE comes from Part 1's kge/existing_drug/transe/.npy)
 
-관계 체계: relation_map.json 참조 (bio 0-22, TWOSIDES = 23+type_idx).
+Relation scheme: see relation_map.json (bio 0-22, TWOSIDES = 23+type_idx).
 
 Run: python3 build/relation/knowledge_graph.py
 """
@@ -40,17 +40,17 @@ DDI334_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.
 EXP_DIR = os.path.dirname(DDI334_DIR)
 V5_DIR = os.path.dirname(EXP_DIR)
 KGE_DIR = os.path.join(V5_DIR, 'kge_hetionet')
-KG_TXT = os.path.join(KGE_DIR, 'data', 'KG.txt')              # bio (공유)
+KG_TXT = os.path.join(KGE_DIR, 'data', 'KG.txt')              # bio (shared)
 DRUGBANK_DDI = os.path.join(KGE_DIR, 'data', 'train.txt')     # DrugBank DDI (rel 0-85)
 
 OUT_KGE = os.path.join(DDI334_DIR, 'data', 'relation', 'kge')
-# 재번호(깔끔): DrugBank(0-85) 제거 -> bio를 0-22로, TWOSIDES를 23+로. 빈 슬롯 없음.
-BIO_ORIG_BASE = 86   # 원본 HetioNet bio 관계 시작 id (86-108) -> -86 시프트해 0-22
-BIO_N = 23           # bio 관계 수 (86-108)
-TS_REL_BASE = BIO_N  # TWOSIDES typed 관계 = 23 + type_idx
-COND = 'existing_drug'   # 이 스크립트는 existing_drug(전체 KG) 조건만 생성; novel_drug은 prep_novel_drug_kg.py
+# Clean renumbering: remove DrugBank (0-85) -> bio becomes 0-22, TWOSIDES becomes 23+. No empty slots.
+BIO_ORIG_BASE = 86   # original HetioNet bio relation starting id (86-108) -> shift by -86 to get 0-22
+BIO_N = 23           # number of bio relations (86-108)
+TS_REL_BASE = BIO_N  # TWOSIDES typed relations = 23 + type_idx
+COND = 'existing_drug'   # this script only generates the existing_drug (full KG) condition; novel_drug is prep_novel_drug_kg.py
 
-# 5종 KGE AstraZeneca HP (kge_hetionet/config/baseline/hetionet/*.yaml 그대로)
+# 5 KGE models' AstraZeneca HP (as-is from kge_hetionet/config/baseline/hetionet/*.yaml)
 MODELS = {
     'transe':   dict(name='TransE',   dim=304, lr=0.02,  epoch=500, neg=61),
     'rotate':   dict(name='RotatE',   dim=512, lr=0.03,  epoch=500, neg=41),
@@ -66,10 +66,11 @@ def load_334():
 
 
 def filter_bio_kg(db334):
-    """HetioNet bio(KG.txt)에서 **비-334 약물 노드에 닿는 엣지 제거**.
-    약물 노드 = id 0-1709 (node2id). 비-334 약물(1376개)을 KG에서 빼고,
-    334 약물 + 유전자/질병 등 비-약물 노드·구조는 유지. DrugBank DDI는 안 씀."""
-    non334_drugs = set(range(1710)) - db334   # 비-334 약물 id
+    """From HetioNet bio (KG.txt), **remove edges touching a non-334-drug node**.
+    Drug nodes = id 0-1709 (node2id). Removes the non-334 drugs (1,376 of them) from
+    the KG, keeping the 334 drugs plus non-drug nodes/structure (genes, diseases,
+    etc.). DrugBank DDI is not used."""
+    non334_drugs = set(range(1710)) - db334   # non-334 drug ids
     kept = []
     for line in open(KG_TXT):
         p = line.split()
@@ -78,21 +79,22 @@ def filter_bio_kg(db334):
         h, t, r = int(p[0]), int(p[1]), int(p[2])
         if h in non334_drugs or t in non334_drugs:
             continue
-        assert BIO_ORIG_BASE <= r < BIO_ORIG_BASE + BIO_N, f"bio rel 범위 벗어남: {r}"
-        kept.append(f"{h} {t} {r - BIO_ORIG_BASE}")   # 86-108 -> 0-22 재번호
+        assert BIO_ORIG_BASE <= r < BIO_ORIG_BASE + BIO_N, f"bio rel out of range: {r}"
+        kept.append(f"{h} {t} {r - BIO_ORIG_BASE}")   # renumber 86-108 -> 0-22
     return kept
 
 
 def ts_train_edges():
-    """DDI-334 data/splits/train.txt positive 쌍 -> typed edges.
-    각 활성 type마다 'h t (109+type_idx)' (multi-hot 펼침). DrugBank처럼 type별 관계."""
+    """DDI-334 data/splits/train.txt positive pairs -> typed edges.
+    For each active type, emits 'h t (109+type_idx)' (expanding the multi-hot vector).
+    Per-type relations, same convention as DrugBank."""
     path = os.path.join(DDI334_DIR, 'data', 'splits', 'train.txt')
     edges = []
     rels = set()
     n_types = 0
     for line in open(path):
         p = line.split()
-        if p[-1] != '1':       # positive만
+        if p[-1] != '1':       # positives only
             continue
         h, t = int(p[0]), int(p[1])
         vec = p[2].split(',')
@@ -112,9 +114,9 @@ def write_config(mkey, m, n_relations):
     bio_kg = os.path.join(OUT_KGE, 'kg_bio_334.txt')
     save_path = os.path.join(OUT_KGE, COND, mkey)
     txt = f"""type: baseline
-# DDI-334 ({COND}) KGE: HetioNet bio(334 약물 노드만, rel 0-22) + 334 TWOSIDES train(typed rel 23+). DrugBank DDI 없음.
-# 관계 재번호: relation_map.json 참조. n_relations={n_relations} (bio 23 + TWOSIDES type 수)
-# HP: AstraZeneca/kgem-in-drug-discovery (kge_hetionet/config 그대로)
+# DDI-334 ({COND}) KGE: HetioNet bio edges (334 drug nodes only, rel 0-22) + 334-drug TWOSIDES train split (typed rel 23+). No DrugBank DDI edges.
+# Relation renumbering: see relation_map.json. n_relations={n_relations} (23 bio + TWOSIDES type count)
+# HP: AstraZeneca/kgem-in-drug-discovery (kge_hetionet config as-is)
 dataset: emergnn
 n_relations: {n_relations}
 
@@ -148,17 +150,17 @@ seed: 42
 def main():
     db334 = load_334()
     os.makedirs(OUT_KGE, exist_ok=True)
-    print(f"[1] 334 db_id 로드: {len(db334)}")
+    print(f"[1] Loaded 334 db_ids: {len(db334)}")
 
-    # 공유 bio KG: HetioNet bio에서 334 약물 노드만 유지 (비-334 약물 엣지 제거)
+    # Shared bio KG: from HetioNet bio, keep only the 334 drug nodes (remove non-334-drug edges)
     bio = filter_bio_kg(db334)
     bio_path = os.path.join(OUT_KGE, 'kg_bio_334.txt')
     with open(bio_path, 'w') as f:
         f.write('\n'.join(bio) + '\n')
-    print(f"[2] bio KG (334 약물 노드만): {len(bio):,} 엣지 (원본 1,690,693에서 비-334 약물 엣지 제거) -> {bio_path}")
+    print(f"[2] bio KG (334 drug nodes only): {len(bio):,} edges (removed non-334-drug edges from the original 1,690,693) -> {bio_path}")
 
     os.makedirs(os.path.join(OUT_KGE, COND), exist_ok=True)
-    ts, n_ts_rel, n_types = ts_train_edges()   # typed TWOSIDES only (DrugBank 없음)
+    ts, n_ts_rel, n_types = ts_train_edges()   # typed TWOSIDES only (no DrugBank)
     ddi_train_path = os.path.join(OUT_KGE, COND, 'ddi_train.txt')
     with open(ddi_train_path, 'w') as f:
         f.write('\n'.join(ts) + '\n')
@@ -166,27 +168,27 @@ def main():
     ts_drugs, ts_rels = set(), set()
     for e in ts:
         a, b, r = e.split(); ts_drugs.add(int(a)); ts_drugs.add(int(b)); ts_rels.add(int(r))
-    print(f"[3] TWOSIDES typed 엣지 {len(ts):,} | 등장 type {n_ts_rel}/{n_types}종 "
-          f"(rel {min(ts_rels)}-{max(ts_rels)}) | 약물 {len(ts_drugs)} | n_relations={n_relations} -> {ddi_train_path}")
-    # 재번호 기록 (다음에 실수 방지)
+    print(f"[3] TWOSIDES typed edges {len(ts):,} | types seen {n_ts_rel}/{n_types} "
+          f"(rel {min(ts_rels)}-{max(ts_rels)}) | drugs {len(ts_drugs)} | n_relations={n_relations} -> {ddi_train_path}")
+    # Record the renumbering (to avoid mistakes later)
     rel_map = {
-        'note': '관계 재번호 (DrugBank DDI 0-85 제거 후). KGE/R-GCN 모두 이 id 사용.',
+        'note': 'Relation renumbering (after removing DrugBank DDI 0-85). Both KGE and R-GCN use these ids.',
         'bio': {'orig_hetionet_rel': '86-108', 'new_rel': '0-22', 'count': BIO_N,
                 'rule': 'new = orig - 86'},
         'twosides': {'new_rel': f'{TS_REL_BASE}-{TS_REL_BASE + n_types - 1}',
                      'rule': f'new = {TS_REL_BASE} + dense_type_idx (0..{n_types-1})',
                      'n_types': n_types},
-        'drugbank_ddi': 'REMOVED (원래 0-85, 더 이상 사용 안 함)',
+        'drugbank_ddi': 'REMOVED (originally 0-85, no longer used)',
         'n_relations': n_relations,
     }
     with open(os.path.join(OUT_KGE, COND, 'relation_map.json'), 'w') as f:
         json.dump(rel_map, f, indent=2, ensure_ascii=False)
     for mkey, m in MODELS.items():
         write_config(mkey, m, n_relations)
-    print(f"[4] configs 생성: {len(MODELS)}개")
+    print(f"[4] Generated {len(MODELS)} configs")
 
     # run_all.sh
-    run = ['#!/bin/bash', '# DDI-334 KGE 학습 (5 model). Usage: bash run_all.sh [GPU]',
+    run = ['#!/bin/bash', '# DDI-334 KGE training (5 models). Usage: bash run_all.sh [GPU]',
            'set -e', 'GPU=${1:-0}',
            f'BASE="{KGE_DIR}"', f'KGE="{OUT_KGE}"', '']
     for mkey in MODELS:
@@ -200,9 +202,9 @@ def main():
     with open(run_path, 'w') as f:
         f.write('\n'.join(run))
     os.chmod(run_path, 0o755)
-    print(f"[5] run 스크립트: {run_path}")
+    print(f"[5] Run script: {run_path}")
 
-    # ── Cell 10/11: subgraph 추출용 KG triples (bio + TWOSIDES train) ──
+    # -- Cell 10/11: KG triples for subgraph extraction (bio + TWOSIDES train) --
     triples = []
     for line in open(bio_path):
         h, t, r = line.split()
@@ -215,7 +217,7 @@ def main():
     np.save(kg_triples_path, kg)
     print(f"[6] kg_triples.npy {kg.shape} (bio+TWOSIDES, rel 0-{kg[:,2].max()}) -> {kg_triples_path}")
 
-    print(f"\n[DONE] KGE 입력·config 생성 + kg_triples.npy 완료. KGE 학습: bash {run_path} [GPU]")
+    print(f"\n[DONE] KGE inputs/configs + kg_triples.npy complete. KGE training: bash {run_path} [GPU]")
 
 
 if __name__ == '__main__':

@@ -1,8 +1,9 @@
-"""All DDI review-encoder modules in one place (단일 파일 통합).
+"""All DDI review-encoder modules in one place (merged into a single file).
 
-frozen-vector(02/12) / molecule structural(01,03-06) / relation(07-11)
-인코더를 한 파일에서 관리. 공유 base FrozenVectorEncoder도 여기 있어 파일간 import/중복 없음.
-동작/구조/입력은 v5 기준 그대로 (병합은 배치만 변경).
+Manages the frozen-vector (02/12) / molecule structural (01,03-06) / relation (07-11)
+encoders in one file. The shared base FrozenVectorEncoder also lives here, so there's no
+cross-file import or duplication. Behavior/structure/inputs are unchanged from v5 (the
+merge only changed the layout).
 """
 
 from collections import defaultdict
@@ -32,7 +33,7 @@ class FrozenVectorEncoder(nn.Module):
     Input: {drug_id (int): Tensor[bert_dim]} — precomputed externally (frozen).
     Pipeline: emb[drug_id] -> Linear(bert_dim->hidden) -> ReLU -> Dropout.
     Modality-specific subclasses only set docstring + default dim (no body change).
-    bert_dim = 입력 feature 차원.
+    bert_dim = the input feature dimension.
     """
 
     def __init__(self, hidden_dim: int = 128, dropout: float = 0.2,
@@ -63,18 +64,20 @@ class FrozenVectorEncoder(nn.Module):
         return self.project(emb)
 
 
-# ══════════════════════════════════════════════════════════════
-# 셀별 named 서브클래스 — 본문 동일(위 base), docstring + 기본 dim만 다름.
-# 입력 데이터(precompute)만 다르고 연산(MLP)은 같은 것들을 한 곳에 통칭.
-# ══════════════════════════════════════════════════════════════
+# ==================================================================
+# Named per-cell subclasses -- same body as the base above, only the
+# docstring + default dim differ. Groups together cells whose input
+# data (precompute) differs but whose computation (MLP) is the same.
+# ==================================================================
 
 class ChemBERTaEncoder(FrozenVectorEncoder):
     """Cell 02 (MOL): ChemBERTa frozen [CLS] -> linear projection.
 
     Source: LLME (Im & Ko, 2025) / HKG-DDIE (Asada et al., 2023) —
             DeepChem/ChemBERTa-77M-MLM (PubChem 77M SMILES), frozen [CLS] 384-d.
-    Fair-exp adaptation: [CLS]를 frozen으로 고정하고 단일 linear re-weighting만 학습
-      (multi-layer MLP 없음, LLME 따름); 임베딩은 외부 precompute.
+    Fair-exp adaptation: the [CLS] vector is kept frozen and only a single linear
+      re-weighting is trained (no multi-layer MLP, following LLME); embeddings are
+      precomputed externally.
     """
 
     def __init__(self, hidden_dim: int = 128, dropout: float = 0.2,
@@ -86,10 +89,11 @@ class BioBERTEncoder(FrozenVectorEncoder):
     """Cell 12 (DOC): BERT-family frozen [CLS] -> linear projection.
 
     Source: LLME (Im & Ko, 2025) — frozen [CLS] 768-d.
-    Fair-exp adaptation: [CLS]를 frozen으로 고정하고 단일 linear projection만 학습
-      (multi-layer MLP 없음); 텍스트 임베딩은 외부 precompute.
-      입력 tier(existing_drug/genes/novel_drug)는 DOC_INPUT env, backbone(기본 SciBERT,
-      원고 Table 1/D.1 설정; BioBERT/PubMedBERT는 Appendix C.1 비교용)은 DOC_MODEL env로 선택.
+    Fair-exp adaptation: the [CLS] vector is kept frozen and only a single linear
+      projection is trained (no multi-layer MLP); text embeddings are precomputed
+      externally. The input tier (existing_drug/genes/novel_drug) is selected via the
+      DOC_INPUT env var, and the backbone (default SciBERT, the manuscript's Table 1/D.1
+      setting; BioBERT/PubMedBERT are for the Appendix C.1 comparison) via DOC_MODEL.
     """
 
     def __init__(self, hidden_dim: int = 128, dropout: float = 0.2,
@@ -97,7 +101,7 @@ class BioBERTEncoder(FrozenVectorEncoder):
         super().__init__(hidden_dim=hidden_dim, dropout=dropout, bert_dim=bert_dim, **kwargs)
 
 
-# 하위호환 alias (구 v5 train.py가 BioBERTFrozenEncoder를 generic frozen으로 import)
+# backward-compat alias (the old v5 train.py imports BioBERTFrozenEncoder as the generic frozen encoder)
 BioBERTFrozenEncoder = BioBERTEncoder
 
 # ============================================================================
@@ -260,8 +264,9 @@ class MorganFPEncoder(nn.Module):
     Source: MRLF-DDI (Zhong et al., 2025) — Morgan 1024-bit, radius=2, MLP -> 128d.
     Also cited in the manuscript (Appendix C.2) as ComNet (Zhang et al., 2025), fingerprint view:
       ECFP radius 2, 1,024-d. Same fingerprint settings; the 2-layer MLP is our own.
-    Fair-exp adaptation: 원 모델의 multi-representation 중 FP branch만 사용
-      (다른 모달리티/분기 제거) 하여 fingerprint 단일 인코더로 통제 비교.
+    Fair-exp adaptation: only the FP branch of the original model's multi-representation
+      is used (other modalities/branches removed), as a controlled comparison with a
+      single fingerprint encoder.
     """
 
     def __init__(self, hidden_dim: int = 128, fp_dim: int = 1024, dropout: float = 0.2, **kwargs):
@@ -363,10 +368,11 @@ class GATEncoder(nn.Module):
     """Cell 04 (MOL): Multi-block GAT + SAGPool on molecular graph.
 
     Source: SSI-DDI (Nyamabo et al., 2021) — 4 blocks, 2 heads, 32d/head, SAGPool readout.
-    Fair-exp adaptation: SSI-DDI의 substructure relation embedding(DDI type-specific
-      co-attention) 제거하고 약물 임베딩만 추출; 노드 피처를 Cell 05(GT)과 동일한
-      TIGER 67-d로 통일(`atom_feat_dim=67`, ddi334 호출부) → 두 그래프 셀의 차이를
-      attention 방식으로만 통제; block 간 graph pruning 안 함, per-block readout 평균.
+    Fair-exp adaptation: SSI-DDI's substructure relation embedding (DDI type-specific
+      co-attention) is removed and only the drug embedding is extracted; node features
+      are unified with Cell 05's (GT) TIGER 67-d (`atom_feat_dim=67` in the ddi334
+      call site), so the difference between the two graph cells is controlled to just
+      the attention mechanism; no inter-block graph pruning, per-block readouts are averaged.
     """
 
     def __init__(self, hidden_dim: int = 128, num_blocks: int = 4,
@@ -455,9 +461,10 @@ class GATEncoder(nn.Module):
         return out
 
 
-# NOTE: frozen-vector 셀(05 FP-Jaccard / 06 ChemBERTa / 12 Interaction-Jaccard /
-#       13·14 BioBERT)은 연산이 동일(precompute 벡터 -> MLP)하므로
-#       models/frozen_encoder.py에 통합. mol_encoders는 구조적 인코더만 보유.
+# NOTE: the frozen-vector cells (05 FP-Jaccard / 06 ChemBERTa / 12 Interaction-Jaccard /
+#       13-14 BioBERT) all do the same computation (precomputed vector -> MLP), so
+#       they're merged into models/frozen_encoder.py. mol_encoders holds only the
+#       structural encoders.
 
 
 # ══════════════════════════════════════════════════════════════
@@ -470,8 +477,9 @@ class SMILESCNNEncoder(nn.Module):
 
     Source: SSF-DDI (2024, BMC Bioinformatics) — char embed 64d, Conv [4,6,8]x[40,80,160],
             MaxPool1d(85), char-level tokenizer (vocab=65), max_len=100.
-    Fair-exp adaptation: SSF-DDI의 substructure cross-attention(SSI) 분기 제거하고
-      SMILES CNN branch만 사용; SMILES는 길이 100 고정(짧으면 0-pad, 길면 절단) — 가변 X.
+    Fair-exp adaptation: SSF-DDI's substructure cross-attention (SSI) branch is removed
+      and only the SMILES CNN branch is used; SMILES length is fixed at 100 (zero-padded
+      if shorter, truncated if longer) -- not variable-length.
     """
 
     def __init__(self, hidden_dim: int = 128, dropout: float = 0.2,
@@ -552,9 +560,11 @@ class SchNetEncoder(nn.Module):
     """Cell 06 (MOL): 3D SchNet on RDKit MMFF94-optimized conformers.
 
     Source: 3DGT-DDI (He et al., 2022) / MDJCL-DDI — 3D atom coords + SchNet.
-    Fair-exp adaptation: 3D 좌표를 RDKit ETKDG+MMFF94로 사전계산(`build/molecule/mol_graph.py`,
-      모델 외부에서 1회) 후 frozen 입력; drug 1050(Fe-CN complex)은 MANUAL_OCTAHEDRAL
-      좌표; 좌표 실패/결측 약물은 단일-H dummy로 대체; readout='add'. (DDI-334: 334 전부 커버)
+    Fair-exp adaptation: 3D coordinates are precomputed once outside the model with
+      RDKit ETKDG+MMFF94 (`build/molecule/mol_graph.py`) and fed in frozen; drug 1050
+      (Fe-CN complex) uses MANUAL_OCTAHEDRAL coordinates; drugs where coordinate
+      computation fails/is missing fall back to a single-H dummy; readout='add'.
+      (DDI-334: all 334 drugs are covered.)
     """
 
     def __init__(self, hidden_dim: int = 128, num_filters: int = 128,
@@ -766,11 +776,12 @@ class GraphTransformerMolEncoder(nn.Module):
     """Cell 05 (MOL): TIGER-style molecular Graph Transformer (atom+degree+bond+spatial).
 
     Source: TIGER (Su et al., 2024) — mol-side Graph Transformer.
-    Fair-exp adaptation: TIGER에서 분자측 GT만 추출(KG/substructure 분기 제거)하여
-      mol 단일 인코더로 통제; TIGER GT attention은 repo의 linear/Performer 공식 사용
-      (paper eq(2) softmax 아님; _TigerMultiheadAttention 참조); 67-d TIGER atom feature,
-      degree는 nn.Embedding 별도 처리.
-    Input: set_features({drug_id: mol_to_graph_tiger(smiles)})로 cache 구축.
+    Fair-exp adaptation: only TIGER's molecule-side GT is extracted (KG/substructure
+      branches removed), as a controlled single molecule encoder; TIGER GT attention
+      uses the repo's linear/Performer formula (not the paper's eq(2) softmax; see
+      _TigerMultiheadAttention); 67-d TIGER atom features, degree is handled separately
+      via nn.Embedding.
+    Input: set_features({drug_id: mol_to_graph_tiger(smiles)}) builds the cache.
     """
 
     def __init__(self, hidden_dim: int = 128, num_layers: int = 2,
@@ -839,16 +850,17 @@ class GraphTransformerMolEncoder(nn.Module):
         return self.dropout(out)
 
 # ============================================================================
-# RELATION / KG ENCODERS  (cells 08 TransE / 09 RGCN-sub / 10 GT-KG / 11 RGCN-whole)
+# RELATION / KG ENCODERS  (cells 08 RGCN-whole / 09 TransE / 10 RGCN-sub / 11 GT-KG)
 # ============================================================================
 
 class TransEEncoder(nn.Module):
     """Cell 09 (REL): TransE frozen embedding lookup on HetioNet KG.
 
-    Source: MUFFIN (Chen et al., 2021) — KGE(pre-trained) 약물 표현.
-    Fair-exp adaptation: DDI-free HetioNet에 사전학습한 TransE 임베딩을 frozen lookup
-      (학습 중 갱신 X) 후 Linear+ReLU+Dropout 사영만 학습; drug_id == entity_id identity map
-      (별도 drug2kgid 불필요). DDI-334: bio KG + train.txt typed로 재학습한 KGE 사용.
+    Source: MUFFIN (Chen et al., 2021) -- pre-trained KGE drug representation.
+    Fair-exp adaptation: a TransE embedding pre-trained on the DDI-free HetioNet is used
+      as a frozen lookup (not updated during training), and only a Linear+ReLU+Dropout
+      projection is trained; drug_id == entity_id identity map (no separate drug2kgid
+      needed). DDI-334 uses a KGE retrained on the bio KG + typed train.txt.
     """
 
     def __init__(self, hidden_dim: int = 128, num_entities: int = 34124,
@@ -1164,10 +1176,11 @@ class SubgraphExtractor:
 class RGCNSubgraphEncoder(nn.Module):
     """Cell 10 (REL): R-GCN on pair-wise k=2 hop enclosing subgraph (KG).
 
-    Source: SumGNN (Yu et al., 2021) — KG subgraph + R-GCN.
-    Fair-exp adaptation: SumGNN의 DRNL(double-radius node labeling) 제거 — Cell 11(GT)과
-      노드 초기화를 TransE frozen init으로 통일해 같은 subgraph 위 아키텍처(R-GCN vs GT)만
-      통제 비교하기 위함; k=2 hop enclosing subgraph만 추출(pair별 캐시).
+    Source: SumGNN (Yu et al., 2021) -- KG subgraph + R-GCN.
+    Fair-exp adaptation: SumGNN's DRNL (double-radius node labeling) is removed --
+      node initialization is unified with Cell 11 (GT) as a frozen TransE init, so
+      that the controlled comparison on the same subgraph is only the architecture
+      (R-GCN vs GT); only the k=2 hop enclosing subgraph is extracted (cached per pair).
 
     HetioNet defaults:
       - num_entities = 34124
@@ -1326,12 +1339,13 @@ class RGCNSubgraphEncoder(nn.Module):
 class RGCNWholeDDIEncoder(nn.Module):
     """Cell 08 (REL): R-GCN on whole DDI train graph (drug nodes only).
 
-    Source: Decagon (Zitnik et al., 2018) — multi-relational GCN on DDI graph.
-    Fair-exp adaptation: TransE 임베딩을 frozen init으로 사용(Cell 09/10/11과 통일 —
-      모든 REL이 고정 TransE 노드 입력 위에서 인코더만 비교); KG 없이 DDI train 그래프
-      (drug 노드만) R-GCN 전파; Cell 10/11(pair subgraph)과 달리 전체 그래프를 forward당
-      1회 전파 후 index lookup (rel_is_pairwise=False).
-    Defaults: num_drugs=1710, num_relations=2*n_types(inverse 포함),
+    Source: Decagon (Zitnik et al., 2018) -- multi-relational GCN on DDI graph.
+    Fair-exp adaptation: a TransE embedding is used as a frozen init (unified with
+      Cell 09/10/11 -- every Relation cell is compared purely on the encoder, on top
+      of the same fixed TransE node input); R-GCN propagates over the DDI train graph
+      (drug nodes only), with no KG; unlike Cell 10/11 (pair subgraph), the whole graph
+      is propagated once per forward pass and then looked up by index (rel_is_pairwise=False).
+    Defaults: num_drugs=1710, num_relations=2*n_types (inverse relations included),
       num_bases=30, num_layers=2, edge_dropout=0.4.
     """
 
@@ -1351,8 +1365,8 @@ class RGCNWholeDDIEncoder(nn.Module):
         self.node_embedding = nn.Embedding(num_drugs, self.input_dim)
         if not use_transe_init:
             nn.init.xavier_uniform_(self.node_embedding.weight)
-        # TransE init이면 frozen (Cell 09/10/11과 통일 — 모든 REL이 고정 TransE 노드 입력).
-        # random init(use_transe_init=False)일 때만 학습.
+        # If TransE init, kept frozen (unified with Cell 09/10/11 -- every Relation cell
+        # uses a fixed TransE node input). Only trained when random init (use_transe_init=False).
         self.node_embedding.weight.requires_grad = not use_transe_init
 
         # First conv projects input_dim -> hidden_dim, rest are hidden -> hidden
@@ -1422,11 +1436,12 @@ class RGCNWholeDDIEncoder(nn.Module):
 class GraphTransformerKGEncoder(nn.Module):
     """Cell 11 (REL): TIGER-style GT on KG subgraph (Cell 05 GT layer reused).
 
-    Source: TIGER (Su et al., 2024) — Graph Transformer (Cell 03과 동일 layer).
-    Fair-exp adaptation: Cell 03의 TIGER GT layer(동일 attention)를 KG subgraph에 재사용
-      → Cell 10(R-GCN)와 같은 subgraph+TransE init 위에서 GT vs R-GCN만 통제 비교;
-      TIGER GT attention은 repo의 linear/Performer 공식 사용 (paper eq(2) softmax 아님);
-      TransE frozen init; subgraph는 pair별 캐시.
+    Source: TIGER (Su et al., 2024) -- Graph Transformer (same layer as Cell 05).
+    Fair-exp adaptation: Cell 05's TIGER GT layer (same attention) is reused on the KG
+      subgraph, so that the controlled comparison with Cell 10 (R-GCN), on the same
+      subgraph + TransE init, is only GT vs R-GCN; TIGER GT attention uses the repo's
+      linear/Performer formula (not the paper's eq(2) softmax); TransE frozen init;
+      subgraphs are cached per pair.
 
     HetioNet defaults:
       - num_entities = 34124
@@ -1446,7 +1461,7 @@ class GraphTransformerKGEncoder(nn.Module):
                  dropout: float = 0.2,
                  use_transe_init: bool = True, input_dim: int = None, **kwargs):
         super().__init__()
-        # _TigerStyleGT는 동일 모듈(위 MOL 섹션)에 정의됨 — 별도 import 불필요
+        # _TigerStyleGT is defined in this same module (the Molecule section above) -- no separate import needed
         self.hidden_dim = hidden_dim
         self.num_relations = num_relations
         self.max_distance = max_distance

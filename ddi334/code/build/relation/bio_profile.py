@@ -37,7 +37,8 @@ SIDE_EFFECT_REL = '21'    # Compound-causes-Side Effect: same vocabulary as the 
 GENE_REL_DIRECT = '6'     # Compound-binds-Gene (CbG) = direct target only. Other Gene-typed
                            # relations (7=upregulates, 18=downregulates) are indirect and are
                            # already excluded for that reason in mention_description.py's
-                           # GENE_REL='6' + "up/down-regulate(간접 gene)도 제외" comment;
+                           # GENE_REL='6' + "up/down-regulate (indirect gene) relations are
+                           # excluded too" comment;
                            # bio_profile_hetionet() did not apply this narrowing either.
 ALLOWED_TYPES = {'Gene', 'Disease'}   # target gene (direct binding) + indication only.
                            # Pharmacologic Class and Compound are excluded (user decision,

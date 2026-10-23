@@ -18,6 +18,14 @@ resolver (otherwise it can report a spurious conflict, e.g.
 looser declared range, even though the pinned combination is the one
 actually used to produce these results).
 
+`ddibench_requirements.txt`'s `pip freeze` was taken from a conda-managed
+env, so 22 packages were originally pinned as `name @ file:///home/conda/
+feedstock_root/build_artifacts/...` (conda's own build cache path on the
+machine that built those wheels). That path doesn't exist on any other
+machine, so installing the file as originally frozen would fail on those
+22 lines; they've been rewritten here to plain `name==version` pins
+(same exact versions, just without the non-portable local path).
+
 ## Setup
 
 ```bash

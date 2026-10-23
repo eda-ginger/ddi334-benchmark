@@ -98,10 +98,11 @@ them.
      from the AstraZeneca DRKG baseline configs)
    - `run_all.sh` and `configs/*.yaml` under `data/relation/kge/` are frozen
      snapshots of the actual training run (not regenerated for this
-     repository's folder layout), so they still show the internal
-     server's absolute paths and the pre-rename folder name `ddibn`
-     (now `existing_drug` / `novel_drug` here) — reference only, not
-     meant to be re-run as-is
+     repository's folder layout), so they still show the pre-rename
+     folder name `ddibn` (now `existing_drug` / `novel_drug` here) and
+     a generic `/path/to/internal_server/...` stand-in for the original
+     internal server's absolute paths — reference only, not meant to
+     be re-run as-is
 
 3. Encoder-specific precomputation turns the above into the per-cell input
    caches consumed by `train/train.py` (not shipped in this repo — see the

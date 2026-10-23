@@ -1,29 +1,30 @@
 #!/usr/bin/env python3
 """
-DDI-334 Dataset Builder — 소스에서 최종까지 한 번에 (재현 가능)
+DDI-334 Dataset Builder -- source to final in one pass (reproducible)
 ================================================================
-원본 데이터 -> 최종 학습 데이터셋을 단일 스크립트로 결정적으로 생성한다.
-중간 산출물을 디스크에 남기지 않으며, 모든 무작위는 seed=42로 고정한다.
+Deterministically generates the raw data -> final training dataset in a single
+script. No intermediate outputs are left on disk, and every random draw is
+seeded with seed=42.
 
-[입력 소스]
-  - meeting/ddi334_tdc/*.csv                     TDC TWOSIDES 원본 (CID, 1308 type)
-  - original_repo/.../twosides_cluster/*.txt     DDI-Bench TWOSIDES (209 type, 필터본)
-  - original_repo/.../drugbank_cluster/*.txt     DrugBank DDI (db_only 판정용)
-  - original_repo/.../initial/drugbank/id2smiles.json   cluster split SMILES
-  - kge_hetionet/data/twosides.csv               TWOSIDES 연결(type-무관) 판정용
+[Input sources]
+  - meeting/ddi334_tdc/*.csv                     TDC TWOSIDES raw (CID, 1308 types)
+  - original_repo/.../twosides_cluster/*.txt     DDI-Bench TWOSIDES (209 types, filtered)
+  - original_repo/.../drugbank_cluster/*.txt     DrugBank DDI (for determining db_only)
+  - original_repo/.../initial/drugbank/id2smiles.json   cluster-split SMILES
+  - kge_hetionet/data/twosides.csv               for determining TWOSIDES connectivity (type-agnostic)
   - data/smiles/twosides_drugbank_mapping.csv    cid<->drugbank<->int_id(db_id)
 
-[산출물]  (모두 ddi334/data/splits/ 아래)
-  - id_maps.json          334 약물의 cid<->db<->local 매핑 (단일 진실 소스)
-  - cluster_split.json    Dk(270)/Dn(64), gamma=0.25 seed=42 (재현 기준)
-  - train/valid/test_{S0,S1,S2}.txt   최종 데이터셋 (209 type, pos+neg 1:1 교차, db 공간)
-  행 포맷: "h t y0,...,y(N-1) p"   (p=1 positive / p=0 negative)
+[Outputs]  (all under ddi334/data/splits/)
+  - id_maps.json          cid<->db<->local mapping for the 334 drugs (single source of truth)
+  - cluster_split.json    Dk(270)/Dn(64), gamma=0.25 seed=42 (reproducibility reference)
+  - train/valid/test_{S0,S1,S2}.txt   final dataset (209 types, pos+neg 1:1 crossed, db space)
+  Row format: "h t y0,...,y(N-1) p"   (p=1 positive / p=0 negative)
 
-[파이프라인]  (전부 메모리상, 중간 디렉토리 없음)
-  1. id_maps   : 334 약물 cid/db/local 매핑 확정
-  2. cluster   : Tanimoto(gamma=0.25) union-find -> Dk/Dn (seed=42)
-  3. neither   : 전체쌍 - TWOSIDES연결 - DrugBank연결  (negative pool)
-  4. per ver   : positive 수집 -> Dk/Dn split(8:1:1/5:5/5:5) -> negative 1:1 -> 출력
+[Pipeline]  (entirely in memory, no intermediate directories)
+  1. id_maps   : fix the cid/db/local mapping for the 334 drugs
+  2. cluster   : Tanimoto (gamma=0.25) union-find -> Dk/Dn (seed=42)
+  3. neither   : all pairs - TWOSIDES-connected - DrugBank-connected  (negative pool)
+  4. per version : collect positives -> split into Dk/Dn (8:1:1/5:5/5:5) -> negatives 1:1 -> write output
 
 Run: micromamba run -n DDIBench python build/splits/dataset.py
 """
@@ -37,7 +38,7 @@ from collections import defaultdict
 from rdkit import Chem
 from rdkit.Chem import AllChem, DataStructs
 
-# ── 경로 (스크립트는 ddi334/ 안에 있음) ──────────────────────────────────────
+# -- Paths (this script lives inside ddi334/) --------------------------------
 DDI334_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 EXP_DIR = os.path.dirname(DDI334_DIR)                 # .../experiment
 V5_DIR = os.path.dirname(EXP_DIR)                     # .../v5_ddi-bench
@@ -52,10 +53,10 @@ ID2SMILES = os.path.join(REPO, 'data', 'initial', 'drugbank', 'id2smiles.json')
 TWOSIDES_CSV = os.path.join(V5_DIR, 'kge_hetionet', 'data', 'twosides.csv')
 MAPPING_CSV = os.path.join(LATEX_ROOT, 'data', 'smiles', 'twosides_drugbank_mapping.csv')
 
-# ── 상수 ─────────────────────────────────────────────────────────────────────
+# -- Constants ----------------------------------------------------------------
 SEED = 42
-GAMMA = 0.25          # Tanimoto cutoff (05 문서)
-TARGET_DK = 270       # 05 문서 확정
+GAMMA = 0.25          # Tanimoto cutoff (per the 05 experiment-design doc)
+TARGET_DK = 270       # confirmed in the 05 experiment-design doc
 N_DRUGS = 334
 TDC_SPLITS = ['train', 'valid_S0', 'test_S0', 'valid_S1', 'test_S1', 'valid_S2', 'test_S2']
 OUT_SPLITS = TDC_SPLITS
@@ -66,10 +67,10 @@ def canon(a, b):
 
 
 # ═════════════════════════════════════════════════════════════════════════════
-# 1. id_maps — 334 약물의 cid <-> db_id <-> local_id  (단일 진실 소스)
+# 1. id_maps -- cid <-> db_id <-> local_id for the 334 drugs  (single source of truth)
 # ═════════════════════════════════════════════════════════════════════════════
 def build_id_maps():
-    # 334 CID = meeting/ddi334_tdc 전 split에 등장하는 약물 (prep_tdc와 동일 정의)
+    # 334 CIDs = drugs appearing across all meeting/ddi334_tdc splits (same definition as prep_tdc)
     all_cids = set()
     for s in TDC_SPLITS:
         with open(os.path.join(MEETING_TDC, f'{s}.csv')) as f:
@@ -85,7 +86,7 @@ def build_id_maps():
         for row in csv.DictReader(f):
             cid2db[row['cid']] = int(row['int_id'])
     for c in sorted_cids:
-        assert c in cid2db, f"mapping에 없는 CID: {c}"
+        assert c in cid2db, f"CID missing from mapping: {c}"
 
     cid2local = {c: i for i, c in enumerate(sorted_cids)}
     local2db = {i: cid2db[c] for i, c in enumerate(sorted_cids)}
@@ -93,7 +94,7 @@ def build_id_maps():
     assert len(set(db_ids)) == N_DRUGS
 
     id_maps = {
-        'note': '334 DDI-334 drugs. cid<->db_id(int_id)<->local_id(0-333). 최종 데이터셋은 db_id 공간 사용.',
+        'note': '334 DDI-334 drugs. cid<->db_id(int_id)<->local_id(0-333). The final dataset uses the db_id space.',
         'cid_sorted': sorted_cids,
         'cid2db': cid2db if False else {c: cid2db[c] for c in sorted_cids},
         'cid2local': cid2local,
@@ -102,7 +103,7 @@ def build_id_maps():
     }
     with open(os.path.join(DDI334_DIR, 'data', 'splits', 'id_maps.json'), 'w') as f:
         json.dump(id_maps, f, indent=0)
-    print(f"[1] id_maps.json: 334 약물 (cid/db/local). db_id 범위 {db_ids[0]}~{db_ids[-1]}")
+    print(f"[1] id_maps.json: 334 drugs (cid/db/local). db_id range {db_ids[0]}~{db_ids[-1]}")
     return set(db_ids), {c: cid2db[c] for c in sorted_cids}
 
 
@@ -117,7 +118,7 @@ def build_cluster_split(db_set):
         smi = id2smiles.get(str(d))
         mol = Chem.MolFromSmiles(smi) if smi else None
         if mol is None:
-            print(f"  [WARN] SMILES 실패 db_id {d}")
+            print(f"  [WARN] SMILES failed for db_id {d}")
             continue
         fps[d] = AllChem.GetMorganFingerprintAsBitVect(mol, radius=2, nBits=2048)
 
@@ -169,10 +170,10 @@ def build_cluster_split(db_set):
 
 
 # ═════════════════════════════════════════════════════════════════════════════
-# 3. neither pool (db 공간, type-무관) = 전체 - TWOSIDES연결 - DrugBank연결
+# 3. neither pool (db space, type-agnostic) = all pairs - TWOSIDES-connected - DrugBank-connected
 # ═════════════════════════════════════════════════════════════════════════════
 def build_neither(db_set, cid2db):
-    # TWOSIDES 연결 (TDC 원본, type-무관)
+    # TWOSIDES connectivity (raw TDC, type-agnostic)
     ts_pairs = set()
     with open(TWOSIDES_CSV) as f:
         f.readline()
@@ -183,7 +184,7 @@ def build_neither(db_set, cid2db):
             d1, d2 = cid2db.get(p[0]), cid2db.get(p[1])
             if d1 is not None and d2 is not None and d1 != d2:
                 ts_pairs.add(canon(d1, d2))
-    # DrugBank 연결
+    # DrugBank connectivity
     db_pairs = set()
     for s in TDC_SPLITS:
         path = os.path.join(DRUGBANK_CLUSTER, f'{s}.txt')
@@ -199,19 +200,20 @@ def build_neither(db_set, cid2db):
     all_pairs = set(canon(a, b) for a, b in combinations(sorted(db_set), 2))
     neither = all_pairs - ts_pairs - db_pairs
     db_only = db_pairs - ts_pairs
-    print(f"[3] 전체 {len(all_pairs)} | ts-positive {len(ts_pairs)} | "
+    print(f"[3] all {len(all_pairs)} | ts-positive {len(ts_pairs)} | "
           f"db_only {len(db_only)} | neither {len(neither)}")
     return neither
 
 
 # ═════════════════════════════════════════════════════════════════════════════
-# 4. positive 수집 (db 공간, multi-hot)
+# 4. collect positives (db space, multi-hot)
 # ═════════════════════════════════════════════════════════════════════════════
 def collect_ddibn_positives(db_set):
     """meeting/ddi334_ddibn -> {(db1,db2): 209-hot}.
 
-    meeting 원본 포맷: "db1 db2 209-hot 1" (db_id 공간, 전부 positive).
-    tdc가 meeting/ddi334_tdc에서 오듯, ddibn도 meeting 원본을 단일 소스로.
+    Raw meeting format: "db1 db2 209-hot 1" (db_id space, all positive).
+    Just as tdc comes from meeting/ddi334_tdc, ddibn also treats the raw meeting
+    data as its single source.
     """
     N = 209
     pair_vec = {}
@@ -236,7 +238,7 @@ def collect_ddibn_positives(db_set):
 
 
 # ═════════════════════════════════════════════════════════════════════════════
-# 5. split 배정 + negative 1:1 + 출력
+# 5. split assignment + negatives 1:1 + output
 # ═════════════════════════════════════════════════════════════════════════════
 def split_pairs(pair_vec, dk, dn):
     dk_dk, dk_dn, dn_dn = [], [], []
@@ -287,7 +289,7 @@ def add_negatives_and_write(name, splits, neither, dk, dn, n_types, type_map):
         if n <= len(bucket):
             negs = [bucket.pop() for _ in range(n)]
         else:
-            print(f"    [WARN] {name}/{s}: neither 부족({len(bucket)}<{n}) -> 복원추출 보충")
+            print(f"    [WARN] {name}/{s}: not enough neither pairs ({len(bucket)}<{n}) -> topping up with sampling-with-replacement")
             negs = bucket[:]; bucket.clear()
             while len(negs) < n:
                 negs.append(negs[rng.randrange(len(negs))])
@@ -298,7 +300,7 @@ def add_negatives_and_write(name, splits, neither, dk, dn, n_types, type_map):
                 f.write(f"{n1} {n2} {vs} 0\n")
         print(f"    {s}.txt: {n} pos + {n} neg")
 
-    # identity drug_map (db 공간) + type_map
+    # identity drug_map (db space) + type_map
     db_ids = sorted(dk | dn)
     with open(os.path.join(out_dir, 'drug_map.json'), 'w') as f:
         json.dump({str(d): d for d in db_ids}, f)
