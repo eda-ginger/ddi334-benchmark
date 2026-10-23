@@ -49,8 +49,7 @@ class DDI334Prompt:
 
     # -- Single-drug template text (tier: novel_drug/existing_drug) -- no "Drug N" prefix.
     #    Shared by both the LLM prompt blocks (_block_novel_drug/_block_existing_drug) and the
-    #    cell12 BERT text (mention_description.py) through this one function
-    #    (05_실험설계(DDI334).md section 8, unified 2026-07-27).
+    #    cell12 BERT text (mention_description.py) through this one function.
     def drug_text(self, d, tier='existing_drug'):
         """tier='novel_drug': SMILES only (no name, assumes a fully novel drug).
         tier='existing_drug' : + Name + Target genes + Indications + Pharmacologic class.

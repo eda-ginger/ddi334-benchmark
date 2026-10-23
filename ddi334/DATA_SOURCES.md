@@ -136,6 +136,5 @@ them.
 ## Verification
 
 `dataset.py`'s output was checked by SHA256 against the version
-actually used to produce the paper's results (see the project's
-internal experiment log, `09_실험전체기록(DDI334).md` section 1) — the
-same deterministic build (seed=42) should reproduce identical files.
+actually used to produce the paper's results — the same deterministic
+build (seed=42) should reproduce identical files.
