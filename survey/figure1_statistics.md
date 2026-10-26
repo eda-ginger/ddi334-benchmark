@@ -262,6 +262,6 @@ For each dataset in Figure 1: the papers that use it, the prediction task (Binar
 
 ## Notes
 
-- `-`: the paper does not report the value.
+- `-`: the paper does not report the value. `0` is different: the knowledge graph deliberately contains no DDI edges (BERTKG-DDI removed all DDI relations so that the prediction target is not used as input).
 - A paper that uses two variants of a dataset appears once per variant.
 - A knowledge-graph paper that merges several sources (Karim et al., Celebi et al., KGE-MFL) is listed under Combine only.
