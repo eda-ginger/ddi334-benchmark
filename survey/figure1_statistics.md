@@ -4,7 +4,9 @@ For each dataset in Figure 1: the papers that use it, the prediction task (Binar
 
 ## DrugBank - ddi
 
-53 papers.
+53 papers
+
+**Range in Figure 1:** drugs 567 ~ 2,004 · DDIs 17,119 ~ 556,757 · interaction types 65 ~ 175. Values in bold in the table are the ends of these ranges.
 
 | Paper | Task | Number of drugs | Number of drug-drug interactions | Number of interaction types |
 |---|---|---:|---:|---:|
@@ -77,7 +79,9 @@ For each dataset in Figure 1: the papers that use it, the prediction task (Binar
 
 ## TWOSIDES
 
-35 papers.
+35 papers
+
+**Range in Figure 1:** drugs 182 ~ 1,345 · DDIs 346 ~ 4,651,131 · interaction types 40 ~ 1,318. Values in bold in the table are the ends of these ranges.
 
 | Paper | Task | Number of drugs | Number of drug-drug interactions | Number of interaction types |
 |---|---|---:|---:|---:|
@@ -119,7 +123,9 @@ For each dataset in Figure 1: the papers that use it, the prediction task (Binar
 
 ## DDIExtraction 2013
 
-15 papers.
+15 papers
+
+**Range in Figure 1:** drugs 17,805 ~ 18,502 · DDIs 23,539 ~ 41,852 · interaction types 4. Values in bold in the table are the ends of these ranges.
 
 | Paper | Task | Number of drugs | Number of drug-drug interactions | Number of interaction types |
 |---|---|---:|---:|---:|
@@ -141,7 +147,9 @@ For each dataset in Figure 1: the papers that use it, the prediction task (Binar
 
 ## BioSNAP
 
-6 papers. Figure 1 shows 1 interaction type (binary task).
+6 papers
+
+**Range in Figure 1:** drugs 957 ~ 1,514 · DDIs 20,624 ~ 48,514 · interaction types 1. One interaction type (binary task). Values in bold in the table are the ends of these ranges.
 
 | Paper | Task | Number of drugs | Number of drug-drug interactions | Number of interaction types |
 |---|---|---:|---:|---:|
@@ -154,7 +162,9 @@ For each dataset in Figure 1: the papers that use it, the prediction task (Binar
 
 ## DDInter
 
-4 papers.
+4 papers
+
+**Range in Figure 1:** drugs 1,493 ~ 1,689 · DDIs 117,608 ~ 152,887 · interaction types 3. Values in bold in the table are the ends of these ranges.
 
 | Paper | Task | Number of drugs | Number of drug-drug interactions | Number of interaction types |
 |---|---|---:|---:|---:|
@@ -165,7 +175,9 @@ For each dataset in Figure 1: the papers that use it, the prediction task (Binar
 
 ## TAC
 
-4 papers. Figure 1 uses 288 drugs and 12,631 DDIs (direct parsing of the TAC corpus).
+4 papers
+
+**Range in Figure 1:** drugs 288 · DDIs 12,631 · interaction types 3. Drugs and DDIs come from direct parsing of the TAC corpus.
 
 | Paper | Task | Number of drugs | Number of drug-drug interactions | Number of interaction types |
 |---|---|---:|---:|---:|
@@ -176,7 +188,9 @@ For each dataset in Figure 1: the papers that use it, the prediction task (Binar
 
 ## Combine
 
-7 papers.
+7 papers
+
+**Range in Figure 1:** drugs 2,322 ~ 12,000 · DDIs 0 ~ 2,898,937 · interaction types 5 ~ 445. Values in bold in the table are the ends of these ranges.
 
 | Paper | Task | Number of drugs | Number of drug-drug interactions | Number of interaction types |
 |---|---|---:|---:|---:|
@@ -191,7 +205,9 @@ For each dataset in Figure 1: the papers that use it, the prediction task (Binar
 
 ## DrugBank - kg
 
-7 papers.
+7 papers
+
+**Range in Figure 1:** drugs 708 ~ 3,797 · DDIs 10,036 ~ 1,236,361 · interaction types 5 ~ 74. Values in bold in the table are the ends of these ranges.
 
 | Paper | Task | Number of drugs | Number of drug-drug interactions | Number of interaction types |
 |---|---|---:|---:|---:|
@@ -205,7 +221,9 @@ For each dataset in Figure 1: the papers that use it, the prediction task (Binar
 
 ## Hetionet
 
-6 papers.
+6 papers
+
+**Range in Figure 1:** drugs 1,552 · DDIs 6,486 · interaction types 23 ~ 24. Values in bold in the table are the ends of these ranges.
 
 | Paper | Task | Number of drugs | Number of drug-drug interactions | Number of interaction types |
 |---|---|---:|---:|---:|
@@ -218,7 +236,9 @@ For each dataset in Figure 1: the papers that use it, the prediction task (Binar
 
 ## DRKG
 
-5 papers.
+5 papers
+
+**Range in Figure 1:** drugs 24,313 · DDIs 1,385,757 · interaction types 107.
 
 | Paper | Task | Number of drugs | Number of drug-drug interactions | Number of interaction types |
 |---|---|---:|---:|---:|
@@ -230,7 +250,9 @@ For each dataset in Figure 1: the papers that use it, the prediction task (Binar
 
 ## KEGG
 
-5 papers.
+5 papers
+
+**Range in Figure 1:** drugs 786 ~ 1,925 · DDIs 13,787 ~ 56,983 · interaction types 167 ~ 168. Values in bold in the table are the ends of these ranges.
 
 | Paper | Task | Number of drugs | Number of drug-drug interactions | Number of interaction types |
 |---|---|---:|---:|---:|
@@ -242,7 +264,9 @@ For each dataset in Figure 1: the papers that use it, the prediction task (Binar
 
 ## OGB-biokg
 
-5 papers.
+5 papers
+
+**Range in Figure 1:** drugs 808 ~ 10,533 · DDIs 111,520 ~ 1,195,972 · interaction types 13 ~ 51. Values in bold in the table are the ends of these ranges.
 
 | Paper | Task | Number of drugs | Number of drug-drug interactions | Number of interaction types |
 |---|---|---:|---:|---:|
@@ -254,7 +278,9 @@ For each dataset in Figure 1: the papers that use it, the prediction task (Binar
 
 ## OGB-ddi
 
-1 paper.
+1 paper
+
+**Range in Figure 1:** drugs 3,825 · DDIs 266,978 · interaction types 20.
 
 | Paper | Task | Number of drugs | Number of drug-drug interactions | Number of interaction types |
 |---|---|---:|---:|---:|
