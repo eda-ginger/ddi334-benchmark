@@ -1,6 +1,6 @@
 # Figure 1: statistics behind the figure
 
-For each dataset in Figure 1: the papers that use it, the prediction task (Binary, Multi-Class, Multi-Label), and the dataset size each paper reports. The smallest and largest value of each column (the ends of the ranges drawn in Figure 1) are in **bold**.
+For each dataset in Figure 1: the papers that use it, the prediction task (Binary, Multi-Class, Multi-Label), and the dataset size used by each paper. Sizes are taken from the paper; when a paper cites a public dataset without stating its size, the official statistics of that dataset are used. The smallest and largest value of each column (the ends of the ranges drawn in Figure 1) are in **bold**.
 
 ## DrugBank - ddi
 
