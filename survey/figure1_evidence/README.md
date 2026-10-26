@@ -1,46 +1,34 @@
-# Figure 1 evidence tables
+# Figure 1: statistics behind the figure
 
-Evidence for the dataset usage counts and the reported-scale ranges in Figure 1.
+Figure 1 of the manuscript shows, for each dataset used by the surveyed DDI-prediction papers, how many papers use it
+and the smallest and largest dataset size those papers report (drugs, DDIs, interaction types).
 
-**Start with `Figure1_evidence.xlsx`** (one file, three sheets): *Summary* (one row per dataset, with the paper(s)
-that give each minimum / maximum), *Per paper* (every reported value), *Method* (this text).
-The CSV files are the same content in plain text, plus the raw sheet export.
+## Summary (the numbers in Figure 1)
 
-| file | content |
-|---|---|
-| `Figure1_evidence.xlsx` | the evidence table to read and cite |
-| `per_paper.csv`, `ranges.csv` | plain-text versions of the *Per paper* and *Summary* sheets |
-| `snapshot/` | unchanged CSV export of the hand-curated Google Sheet everything is built from |
-| `manual_additions.csv` | rows not yet in the sheet (see below) |
-| `gen_fig1_evidence.py` | script that rebuilds all of the above from the snapshot |
+| Dataset | Papers | Drugs | DDIs | Interaction types |
+|---|---:|---:|---:|---:|
+| DrugBank - ddi | 55 | 567 ~ 2,004 | 17,119 ~ 556,757 | 65 ~ 175 |
+| TWOSIDES | 35 | 182 ~ 1,345 | 346 ~ 4,651,131 | 40 ~ 1,318 |
+| DDIExtraction 2013 | 15 | 17,805 ~ 18,502 | 23,539 ~ 41,852 | 4 |
+| BioSNAP | 8 | 957 ~ 1,514 | 20,624 ~ 48,514 | - |
+| DDInter | 4 | 1,493 ~ 1,689 | 117,608 ~ 152,887 | 3 |
+| TAC 2018 | 4 | - | - | 3 |
+| Combine | 7 | 2,322 ~ 12,000 | 0 ~ 2,898,937 | 5 ~ 445 |
+| DrugBank - kg | 7 | 708 ~ 3,797 | 10,036 ~ 1,236,361 | 5 ~ 74 |
+| Hetionet | 6 | 1,552 | 6,486 | 23 ~ 24 |
+| DRKG | 5 | 24,313 | 1,385,757 | 107 |
+| KEGG | 5 | 786 ~ 1,925 | 13,787 ~ 56,983 | 167 ~ 168 |
+| OGB-biokg | 5 | 808 ~ 10,533 | 111,520 ~ 1,195,972 | 13 ~ 51 |
+| OGB-ddi | 1 | 3,825 | 266,978 | 20 |
 
-## How the tables were built
+`-`: no paper reports the value. BioSNAP: Figure 1 shows 1 interaction type (binary task). TAC: drugs and DDIs are from direct parsing of the TAC corpus.
 
-1. **Source.** Every paper was read and its dataset statistics were entered by hand into the
-   `ddi` and `KG` tabs of the sheet (one row per distinct reported value; the papers that reported it
-   are listed on that row). The sheet is exported tab by tab (`export?format=csv&gid=...`) into
-   `sheet_snapshot_<date>/` without modification.
-2. **Expansion.** `gen_fig1_evidence.py` expands each sheet row into one row per paper and matches the
-   paper names to the 84-paper corpus (`sheet1_backbone`). A sheet name that differs from the corpus name is
-   resolved through a small alias table (`AAE-KGE`, `HKG-DDIE`, `Zhang et al. = KGC-LSTM`);
-   any name that cannot be matched stops the check with an `UNMATCHED` error.
-3. **Counting rules.**
-   - R1: papers removed from the corpus are never counted (SCAT/SCATrans, removed on 2026-09-04 because
-     no axis of Table 1 could be formed from its Doc2Vec / Graph2Vec components).
-   - R2: a KG paper that merges several sources (listed under *Combine*, memo "논문에서는 합침") is counted
-     under *Combine* only, not under single-source KG rows such as *DrugBank - kg* or *KEGG*.
-   - The sheet's own `count` column is ignored; the number of papers is the number of distinct matched names.
-4. **Ranges.** For each dataset, min and max of drugs, DDIs, and interaction types over the counted rows
-   (unreported values, written `-`, are skipped), together with the papers at the extremes.
-5. **Check.** The result is compared with the numbers hard-coded in the Figure 1 script
-   (`figure1_values.csv`); `check_vs_fig1` is `OK` when they agree.
+## Per-paper values
 
-Rows that are not yet in the sheet can be added in `manual_additions.csv`; they are merged into the per-paper
-table with `sheet_row = manual (pending sheet update)` and removed once the sheet contains them
-(currently one row: ACDGNN, DrugBank - ddi, Ryu et al. 1,704 drugs / 191,400 DDIs / 86 types).
+[`figure1_per_paper.csv`](figure1_per_paper.csv) lists, for every dataset above, each paper and the value it reports
+(drugs, DDIs, interaction types). The ranges in the summary are the minimum and maximum of this table.
 
-Figure 1 values that cannot be derived from the sheet rows are noted in `fig1_note`
-(BioSNAP: one interaction type because the task is binary; TAC: drugs and DDIs from direct parsing of the TAC corpus,
-described in `corpus_task_type_stats.csv`).
-
-Reproduce: `python gen_fig1_evidence.py [snapshot_dir_name]` (default: `snapshot`).
+How the counting was done:
+- A paper is counted once per dataset it uses; the paper count is the number of distinct papers.
+- A knowledge-graph paper that merges several sources (Karim et al., Celebi et al., KGE-MFL) is counted under *Combine* only, not under the single-source rows (`counted_in_figure1 = no`).
+- The surveyed corpus has 84 papers.

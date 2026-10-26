@@ -1,2 +1,0 @@
-group,dataset,version,drugs,ddis,types,paper,source_dataset_author,source_model,extra,reason
-DDI,DrugBank - ddi,v5.0.3,1704,191400,86,ACDGNN,Ryu et al.,DeepDDI,,"ACDGNN (Yu et al., BIB 2023) predicts DDIs on the dataset of Ryu et al. integrated with Hetionet; the sheet's Dataset_Provenance column already lists DrugBank (Ryu et al., DeepDDI). Pending: add ACDGNN to the Ryu row (ddi tab, row 6) of the sheet, then delete this row."
