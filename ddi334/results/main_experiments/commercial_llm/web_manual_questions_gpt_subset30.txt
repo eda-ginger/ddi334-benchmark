@@ -11,7 +11,7 @@ Drug 1
 Drug 2
   SMILES: [H][C@@]12CC[C@](C)(O)[C@@]1(C)CC[C@@]1([H])[C@@]2([H])CCC2=CC(=O)CC[C@]12C
 
-Question: Does co-administration of Drug 1 and Drug 2 cause pain in throat?
+Question: Is co-administration of Drug 1 and Drug 2 associated with pain in throat?
 
 ##Answer: No
 ===== [02-EXISTING] =====
@@ -26,7 +26,7 @@ Drug 1
 Drug 2
   SMILES: [H][C@@]12CC[C@@](O)(C#C)[C@@]1(CC)CC[C@]1([H])[C@@]3([H])CCC(=O)C=C3CC[C@@]21[H]
 
-Question: Does co-administration of Drug 1 and Drug 2 cause pancreatitis relapsing?
+Question: Is co-administration of Drug 1 and Drug 2 associated with pancreatitis relapsing?
 
 ##Answer: No
 ===== [05-EXISTING] =====
@@ -41,7 +41,7 @@ Drug 1
 Drug 2
   SMILES: [H][C@@]12CC[C@](O)(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1([H])[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
 
-Question: Does co-administration of Drug 1 and Drug 2 cause pharyngeal inflammation?
+Question: Is co-administration of Drug 1 and Drug 2 associated with pharyngeal inflammation?
 
 ##Answer: No
 ===== [06-EXISTING] =====
@@ -56,7 +56,7 @@ Drug 1
 Drug 2
   SMILES: [H][C@@]12CC(=C)[C@](O)(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1(F)[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
 
-Question: Does co-administration of Drug 1 and Drug 2 cause adrenal insufficiency?
+Question: Is co-administration of Drug 1 and Drug 2 associated with adrenal insufficiency?
 
 ##Answer: Yes
 ===== [07-EXISTING] =====
@@ -71,7 +71,7 @@ Drug 1
 Drug 2
   SMILES: [H][C@@]12C[C@@H](C)[C@](O)(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1([H])[C@@]2([H])[C@H](Cl)CC2=CC(=O)C=C[C@]12C
 
-Question: Does co-administration of Drug 1 and Drug 2 cause abnormal ECG?
+Question: Is co-administration of Drug 1 and Drug 2 associated with abnormal ECG?
 
 ##Answer: No
 ===== [08-EXISTING] =====
@@ -86,7 +86,7 @@ Drug 1
 Drug 2
   SMILES: N[C@@H](CC(=O)N1CCN2C(C1)=NN=C2C(F)(F)F)CC1=CC(F)=C(F)C=C1F
 
-Question: Does co-administration of Drug 1 and Drug 2 cause acute bronchitis?
+Question: Is co-administration of Drug 1 and Drug 2 associated with acute bronchitis?
 
 ##Answer: No
 ===== [09-EXISTING] =====
@@ -101,7 +101,7 @@ Drug 1
 Drug 2
   SMILES: [H][C@@]12C[C@H]3OC(CCC)O[C@@]3(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1([H])[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
 
-Question: Does co-administration of Drug 1 and Drug 2 cause psychoses?
+Question: Is co-administration of Drug 1 and Drug 2 associated with psychoses?
 
 ##Answer: No
 ===== [11-EXISTING] =====
@@ -116,7 +116,7 @@ Drug 1
 Drug 2
   SMILES: [H][C@@]12OC3=C(OCC)C=CC4=C3[C@@]11CCN(C)[C@]([H])(C4)[C@]1([H])C=C[C@@H]2O
 
-Question: Does co-administration of Drug 1 and Drug 2 cause tooth disease?
+Question: Is co-administration of Drug 1 and Drug 2 associated with tooth disease?
 
 ##Answer: No
 ===== [13-EXISTING] =====
@@ -131,7 +131,7 @@ Drug 1
 Drug 2
   SMILES: [H][C@@]12OC3=C4C(C[C@H]5N(C)CC[C@@]14[C@@]5([H])CC[C@@H]2O)=CC=C3OC
 
-Question: Does co-administration of Drug 1 and Drug 2 cause Ataxia?
+Question: Is co-administration of Drug 1 and Drug 2 associated with Ataxia?
 
 ##Answer: Yes
 ===== [19-EXISTING] =====
@@ -146,7 +146,7 @@ Drug 1
 Drug 2
   SMILES: CCC12CCC3C(CCC4=CC(=O)CCC34)C1CCC2(O)C#C
 
-Question: Does co-administration of Drug 1 and Drug 2 cause micturition urgency?
+Question: Is co-administration of Drug 1 and Drug 2 associated with micturition urgency?
 
 ##Answer: No
 ===== [22-EXISTING] =====
@@ -161,7 +161,7 @@ Drug 1
 Drug 2
   SMILES: [H][C@@]12OC3=C(O)C=CC4=C3[C@@]11CCN(C)[C@]([H])(C4)[C@]1([H])C=C[C@@H]2O
 
-Question: Does co-administration of Drug 1 and Drug 2 cause eye swelling?
+Question: Is co-administration of Drug 1 and Drug 2 associated with eye swelling?
 
 ##Answer: No
 ===== [24-EXISTING] =====
@@ -176,7 +176,7 @@ Drug 1
 Drug 2
   SMILES: [H][C@@]12C[C@H](C)[C@](OC(=O)CC)(C(=O)COC(=O)CC)[C@@]1(C)C[C@H](O)[C@@]1(Cl)[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
 
-Question: Does co-administration of Drug 1 and Drug 2 cause ADVERSE DRUG EFFECT?
+Question: Is co-administration of Drug 1 and Drug 2 associated with ADVERSE DRUG EFFECT?
 
 ##Answer: Yes
 ===== [26-EXISTING] =====
@@ -191,7 +191,7 @@ Drug 1
 Drug 2
   SMILES: N[C@H]1C(O)O[C@H](CO)[C@@H](O)[C@@H]1O
 
-Question: Does co-administration of Drug 1 and Drug 2 cause Carcinoma of Prostate?
+Question: Is co-administration of Drug 1 and Drug 2 associated with Carcinoma of Prostate?
 
 ##Answer: No
 ===== [27-EXISTING] =====
@@ -206,7 +206,7 @@ Drug 1
 Drug 2
   SMILES: [H][C@@]12OC3=C4C(C[C@H]5N(C)CC[C@@]14[C@@]5([H])CC[C@@H]2O)=CC=C3OC
 
-Question: Does co-administration of Drug 1 and Drug 2 cause ADVERSE DRUG EFFECT?
+Question: Is co-administration of Drug 1 and Drug 2 associated with ADVERSE DRUG EFFECT?
 
 ##Answer: Yes
 ===== [31-EXISTING] =====
@@ -221,7 +221,7 @@ Drug 1
 Drug 2
   SMILES: CCCCC1=NC2(CCCC2)C(=O)N1CC1=CC=C(C=C1)C1=CC=CC=C1C1=NNN=N1
 
-Question: Does co-administration of Drug 1 and Drug 2 cause multiple sclerosis?
+Question: Is co-administration of Drug 1 and Drug 2 associated with multiple sclerosis?
 
 ##Answer: No
 ===== [35-EXISTING] =====
@@ -236,7 +236,7 @@ Drug 1
 Drug 2
   SMILES: [H][C@@]12CCC(=O)[C@@]1(C)CC[C@]1([H])C3=C(CC=C21)C=C(O)C=C3
 
-Question: Does co-administration of Drug 1 and Drug 2 cause CMV infection?
+Question: Is co-administration of Drug 1 and Drug 2 associated with CMV infection?
 
 ##Answer: No
 ===== [36-EXISTING] =====
@@ -251,7 +251,7 @@ Drug 1
 Drug 2
   SMILES: [H][C@@]12C[C@@H](C)[C@](O)(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1([H])[C@@]2([H])[C@H](Cl)CC2=CC(=O)C=C[C@]12C
 
-Question: Does co-administration of Drug 1 and Drug 2 cause endocrine disorder?
+Question: Is co-administration of Drug 1 and Drug 2 associated with endocrine disorder?
 
 ##Answer: Yes
 ===== [37-EXISTING] =====
@@ -266,7 +266,7 @@ Drug 1
 Drug 2
   SMILES: N[C@H]1C(O)O[C@H](CO)[C@@H](O)[C@@H]1O
 
-Question: Does co-administration of Drug 1 and Drug 2 cause carotid artery stenosis?
+Question: Is co-administration of Drug 1 and Drug 2 associated with carotid artery stenosis?
 
 ##Answer: No
 ===== [38-EXISTING] =====
@@ -281,7 +281,7 @@ Drug 1
 Drug 2
   SMILES: [H][C@@]12CC[C@@H](C)[C@]3([H])CC[C@@]4(C)OO[C@@]13[C@]([H])(O[C@H](OC)[C@@H]2C)O4
 
-Question: Does co-administration of Drug 1 and Drug 2 cause Carcinoma of Prostate?
+Question: Is co-administration of Drug 1 and Drug 2 associated with Carcinoma of Prostate?
 
 ##Answer: No
 ===== [40-EXISTING] =====
@@ -296,7 +296,7 @@ Drug 1
 Drug 2
   SMILES: [H][C@@]12CC[C@](C)(O)[C@@]1(C)CC[C@@]1([H])[C@@]2([H])CCC2=CC(=O)CC[C@]12C
 
-Question: Does co-administration of Drug 1 and Drug 2 cause cerebral ischaemia?
+Question: Is co-administration of Drug 1 and Drug 2 associated with cerebral ischaemia?
 
 ##Answer: No
 ===== [42-EXISTING] =====
@@ -311,7 +311,7 @@ Drug 1
 Drug 2
   SMILES: [H][C@@]12CC[C@H](C(=O)NC(C)(C)C)[C@@]1(C)CC[C@@]1([H])[C@@]2([H])CC[C@@]2([H])NC(=O)C=C[C@]12C
 
-Question: Does co-administration of Drug 1 and Drug 2 cause muscle disorder?
+Question: Is co-administration of Drug 1 and Drug 2 associated with muscle disorder?
 
 ##Answer: No
 ===== [43-EXISTING] =====
@@ -326,7 +326,7 @@ Drug 1
 Drug 2
   SMILES: NCC(=O)CCC(O)=O
 
-Question: Does co-administration of Drug 1 and Drug 2 cause ADVERSE DRUG EFFECT?
+Question: Is co-administration of Drug 1 and Drug 2 associated with ADVERSE DRUG EFFECT?
 
 ##Answer: Yes
 ===== [47-EXISTING] =====
@@ -341,7 +341,7 @@ Drug 1
 Drug 2
   SMILES: [H][C@@]12CC[C@@](O)(C#C)[C@@]1(C)CC[C@]1([H])C3=C(CC[C@@]21[H])C=C(O)C=C3
 
-Question: Does co-administration of Drug 1 and Drug 2 cause atrial flutter?
+Question: Is co-administration of Drug 1 and Drug 2 associated with atrial flutter?
 
 ##Answer: No
 ===== [50-EXISTING] =====
@@ -356,7 +356,7 @@ Drug 1
 Drug 2
   SMILES: [H][C@@]12C[C@H](C)[C@](OC(=O)CC)(C(=O)CCl)[C@@]1(C)C[C@H](O)[C@@]1(F)[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
 
-Question: Does co-administration of Drug 1 and Drug 2 cause ADVERSE DRUG EFFECT?
+Question: Is co-administration of Drug 1 and Drug 2 associated with ADVERSE DRUG EFFECT?
 
 ##Answer: Yes
 ===== [53-EXISTING] =====
@@ -371,7 +371,7 @@ Drug 1
 Drug 2
   SMILES: [H][C@@]12C[C@H]3OC(CCC)O[C@@]3(C(=O)CO)[C@@]1(C)C[C@H](O)[C@@]1([H])[C@@]2([H])CCC2=CC(=O)C=C[C@]12C
 
-Question: Does co-administration of Drug 1 and Drug 2 cause adrenal insufficiency?
+Question: Is co-administration of Drug 1 and Drug 2 associated with adrenal insufficiency?
 
 ##Answer: Yes
 ===== [56-EXISTING] =====
@@ -386,7 +386,7 @@ Drug 1
 Drug 2
   SMILES: [H][C@]12C[C@@H](O)C=C[C@]11CCN(C)CC3=C1C(O2)=C(OC)C=C3
 
-Question: Does co-administration of Drug 1 and Drug 2 cause adrenal insufficiency?
+Question: Is co-administration of Drug 1 and Drug 2 associated with adrenal insufficiency?
 
 ##Answer: No
 ===== [57-EXISTING] =====
@@ -401,7 +401,7 @@ Drug 1
 Drug 2
   SMILES: [H][C@@]12OC3=C4C(C[C@H]5N(C)CC[C@@]14[C@@]5([H])CC[C@@H]2O)=CC=C3OC
 
-Question: Does co-administration of Drug 1 and Drug 2 cause Colon Spastic?
+Question: Is co-administration of Drug 1 and Drug 2 associated with Colon Spastic?
 
 ##Answer: No
 ===== [59-EXISTING] =====
@@ -416,7 +416,7 @@ Drug 1
 Drug 2
   SMILES: [H][C@@]12C[C@@]3([H])[C@]4([H])CCC5=CC(=O)C=C[C@]5(C)[C@@]4([H])[C@@H](O)C[C@]3(C)[C@@]1(O[C@@H](O2)C1CCCCC1)C(=O)COC(=O)C(C)C
 
-Question: Does co-administration of Drug 1 and Drug 2 cause Spinal Compression Fracture?
+Question: Is co-administration of Drug 1 and Drug 2 associated with Spinal Compression Fracture?
 
 ##Answer: No
 ===== [60-EXISTING] =====
@@ -431,7 +431,7 @@ Drug 1
 Drug 2
   SMILES: [H][C@@]12CC[C@@](O)(C#C)[C@@]1(C)CC[C@]1([H])[C@@]3([H])CCC(=O)C=C3CC[C@@]21[H]
 
-Question: Does co-administration of Drug 1 and Drug 2 cause muscle disorder?
+Question: Is co-administration of Drug 1 and Drug 2 associated with muscle disorder?
 
 ##Answer: No
 ===== [61-EXISTING] =====
@@ -446,7 +446,7 @@ Drug 1
 Drug 2
   SMILES: [H][C@@]12C[C@@]3([H])[C@]4([H])C[C@H](F)C5=CC(=O)C=C[C@]5(C)[C@@]4(F)[C@@H](O)C[C@]3(C)[C@@]1(OC(C)(C)O2)C(=O)CO
 
-Question: Does co-administration of Drug 1 and Drug 2 cause Light sensitivity?
+Question: Is co-administration of Drug 1 and Drug 2 associated with Light sensitivity?
 
 ##Answer: No
 ===== [01-NOVEL] =====
@@ -469,7 +469,7 @@ Drug 2
   Indications: breast cancer
   Pharmacologic class: Androgen Receptor Agonists, Androstanes
 
-Question: Does co-administration of Drug 1 and Drug 2 cause pain in throat?
+Question: Is co-administration of Drug 1 and Drug 2 associated with pain in throat?
 
 ##Answer: No
 ===== [02-NOVEL] =====
@@ -492,7 +492,7 @@ Drug 2
   Indications: polycystic ovary syndrome
   Pharmacologic class: Inhibit Ovum Fertilization, Progesterone Congeners
 
-Question: Does co-administration of Drug 1 and Drug 2 cause pancreatitis relapsing?
+Question: Is co-administration of Drug 1 and Drug 2 associated with pancreatitis relapsing?
 
 ##Answer: No
 ===== [05-NOVEL] =====
@@ -515,7 +515,7 @@ Drug 2
   Indications: allergic rhinitis, ankylosing spondylitis, asthma, atopic dermatitis, chronic obstructive pulmonary disease, gout, hematologic cancer, idiopathic pulmonary fibrosis, multiple sclerosis, psoriasis, psoriatic arthritis, rheumatoid arthritis, systemic lupus erythematosus, ulcerative colitis
   Pharmacologic class: Corticosteroid Hormone Receptor Agonists
 
-Question: Does co-administration of Drug 1 and Drug 2 cause pharyngeal inflammation?
+Question: Is co-administration of Drug 1 and Drug 2 associated with pharyngeal inflammation?
 
 ##Answer: No
 ===== [06-NOVEL] =====
@@ -538,7 +538,7 @@ Drug 2
   Indications: (none)
   Pharmacologic class: (none)
 
-Question: Does co-administration of Drug 1 and Drug 2 cause adrenal insufficiency?
+Question: Is co-administration of Drug 1 and Drug 2 associated with adrenal insufficiency?
 
 ##Answer: Yes
 ===== [07-NOVEL] =====
@@ -561,7 +561,7 @@ Drug 2
   Indications: (none)
   Pharmacologic class: Corticosteroid Hormone Receptor Agonists
 
-Question: Does co-administration of Drug 1 and Drug 2 cause abnormal ECG?
+Question: Is co-administration of Drug 1 and Drug 2 associated with abnormal ECG?
 
 ##Answer: No
 ===== [08-NOVEL] =====
@@ -584,7 +584,7 @@ Drug 2
   Indications: type 2 diabetes mellitus
   Pharmacologic class: Dipeptidyl Peptidase 4 Inhibitors
 
-Question: Does co-administration of Drug 1 and Drug 2 cause acute bronchitis?
+Question: Is co-administration of Drug 1 and Drug 2 associated with acute bronchitis?
 
 ##Answer: No
 ===== [09-NOVEL] =====
@@ -607,7 +607,7 @@ Drug 2
   Indications: asthma, ulcerative colitis
   Pharmacologic class: Corticosteroid Hormone Receptor Agonists
 
-Question: Does co-administration of Drug 1 and Drug 2 cause psychoses?
+Question: Is co-administration of Drug 1 and Drug 2 associated with psychoses?
 
 ##Answer: No
 ===== [11-NOVEL] =====
@@ -630,7 +630,7 @@ Drug 2
   Indications: (none)
   Pharmacologic class: (none)
 
-Question: Does co-administration of Drug 1 and Drug 2 cause tooth disease?
+Question: Is co-administration of Drug 1 and Drug 2 associated with tooth disease?
 
 ##Answer: No
 ===== [13-NOVEL] =====
@@ -653,7 +653,7 @@ Drug 2
   Indications: (none)
   Pharmacologic class: Full Opioid Agonists
 
-Question: Does co-administration of Drug 1 and Drug 2 cause Ataxia?
+Question: Is co-administration of Drug 1 and Drug 2 associated with Ataxia?
 
 ##Answer: No
 ===== [19-NOVEL] =====
@@ -676,7 +676,7 @@ Drug 2
   Indications: (none)
   Pharmacologic class: (none)
 
-Question: Does co-administration of Drug 1 and Drug 2 cause micturition urgency?
+Question: Is co-administration of Drug 1 and Drug 2 associated with micturition urgency?
 
 ##Answer: No
 ===== [22-NOVEL] =====
@@ -699,7 +699,7 @@ Drug 2
   Indications: coronary artery disease
   Pharmacologic class: Full Opioid Agonists
 
-Question: Does co-administration of Drug 1 and Drug 2 cause eye swelling?
+Question: Is co-administration of Drug 1 and Drug 2 associated with eye swelling?
 
 ##Answer: No
 ===== [24-NOVEL] =====
@@ -722,7 +722,7 @@ Drug 2
   Indications: asthma, psoriasis
   Pharmacologic class: (none)
 
-Question: Does co-administration of Drug 1 and Drug 2 cause ADVERSE DRUG EFFECT?
+Question: Is co-administration of Drug 1 and Drug 2 associated with ADVERSE DRUG EFFECT?
 
 ##Answer: No
 ===== [26-NOVEL] =====
@@ -745,7 +745,7 @@ Drug 2
   Indications: osteoarthritis
   Pharmacologic class: (none)
 
-Question: Does co-administration of Drug 1 and Drug 2 cause Carcinoma of Prostate?
+Question: Is co-administration of Drug 1 and Drug 2 associated with Carcinoma of Prostate?
 
 ##Answer: No
 ===== [27-NOVEL] =====
@@ -768,7 +768,7 @@ Drug 2
   Indications: (none)
   Pharmacologic class: Full Opioid Agonists
 
-Question: Does co-administration of Drug 1 and Drug 2 cause ADVERSE DRUG EFFECT?
+Question: Is co-administration of Drug 1 and Drug 2 associated with ADVERSE DRUG EFFECT?
 
 ##Answer: No
 ===== [31-NOVEL] =====
@@ -791,7 +791,7 @@ Drug 2
   Indications: hypertension, type 2 diabetes mellitus
   Pharmacologic class: Angiotensin 2 Receptor Antagonists
 
-Question: Does co-administration of Drug 1 and Drug 2 cause multiple sclerosis?
+Question: Is co-administration of Drug 1 and Drug 2 associated with multiple sclerosis?
 
 ##Answer: No
 ===== [35-NOVEL] =====
@@ -814,7 +814,7 @@ Drug 2
   Indications: (none)
   Pharmacologic class: (none)
 
-Question: Does co-administration of Drug 1 and Drug 2 cause CMV infection?
+Question: Is co-administration of Drug 1 and Drug 2 associated with CMV infection?
 
 ##Answer: No
 ===== [36-NOVEL] =====
@@ -837,7 +837,7 @@ Drug 2
   Indications: (none)
   Pharmacologic class: Corticosteroid Hormone Receptor Agonists
 
-Question: Does co-administration of Drug 1 and Drug 2 cause endocrine disorder?
+Question: Is co-administration of Drug 1 and Drug 2 associated with endocrine disorder?
 
 ##Answer: Yes
 ===== [37-NOVEL] =====
@@ -860,7 +860,7 @@ Drug 2
   Indications: osteoarthritis
   Pharmacologic class: (none)
 
-Question: Does co-administration of Drug 1 and Drug 2 cause carotid artery stenosis?
+Question: Is co-administration of Drug 1 and Drug 2 associated with carotid artery stenosis?
 
 ##Answer: No
 ===== [38-NOVEL] =====
@@ -883,7 +883,7 @@ Drug 2
   Indications: malaria
   Pharmacologic class: (none)
 
-Question: Does co-administration of Drug 1 and Drug 2 cause Carcinoma of Prostate?
+Question: Is co-administration of Drug 1 and Drug 2 associated with Carcinoma of Prostate?
 
 ##Answer: No
 ===== [40-NOVEL] =====
@@ -906,7 +906,7 @@ Drug 2
   Indications: breast cancer
   Pharmacologic class: Androgen Receptor Agonists, Androstanes
 
-Question: Does co-administration of Drug 1 and Drug 2 cause cerebral ischaemia?
+Question: Is co-administration of Drug 1 and Drug 2 associated with cerebral ischaemia?
 
 ##Answer: No
 ===== [42-NOVEL] =====
@@ -929,7 +929,7 @@ Drug 2
   Indications: (none)
   Pharmacologic class: (none)
 
-Question: Does co-administration of Drug 1 and Drug 2 cause muscle disorder?
+Question: Is co-administration of Drug 1 and Drug 2 associated with muscle disorder?
 
 ##Answer: No
 ===== [43-NOVEL] =====
@@ -952,7 +952,7 @@ Drug 2
   Indications: (none)
   Pharmacologic class: Porphyrinogens
 
-Question: Does co-administration of Drug 1 and Drug 2 cause ADVERSE DRUG EFFECT?
+Question: Is co-administration of Drug 1 and Drug 2 associated with ADVERSE DRUG EFFECT?
 
 ##Answer: Yes
 ===== [47-NOVEL] =====
@@ -975,7 +975,7 @@ Drug 2
   Indications: breast cancer, osteoporosis, polycystic ovary syndrome, prostate cancer
   Pharmacologic class: Estrogen Receptor Agonists
 
-Question: Does co-administration of Drug 1 and Drug 2 cause atrial flutter?
+Question: Is co-administration of Drug 1 and Drug 2 associated with atrial flutter?
 
 ##Answer: No
 ===== [50-NOVEL] =====
@@ -998,7 +998,7 @@ Drug 2
   Indications: psoriasis
   Pharmacologic class: (none)
 
-Question: Does co-administration of Drug 1 and Drug 2 cause ADVERSE DRUG EFFECT?
+Question: Is co-administration of Drug 1 and Drug 2 associated with ADVERSE DRUG EFFECT?
 
 ##Answer: Yes
 ===== [53-NOVEL] =====
@@ -1021,7 +1021,7 @@ Drug 2
   Indications: asthma, ulcerative colitis
   Pharmacologic class: Corticosteroid Hormone Receptor Agonists
 
-Question: Does co-administration of Drug 1 and Drug 2 cause adrenal insufficiency?
+Question: Is co-administration of Drug 1 and Drug 2 associated with adrenal insufficiency?
 
 ##Answer: Yes
 ===== [56-NOVEL] =====
@@ -1044,7 +1044,7 @@ Drug 2
   Indications: Alzheimer's disease
   Pharmacologic class: (none)
 
-Question: Does co-administration of Drug 1 and Drug 2 cause adrenal insufficiency?
+Question: Is co-administration of Drug 1 and Drug 2 associated with adrenal insufficiency?
 
 ##Answer: No
 ===== [57-NOVEL] =====
@@ -1067,7 +1067,7 @@ Drug 2
   Indications: (none)
   Pharmacologic class: Full Opioid Agonists
 
-Question: Does co-administration of Drug 1 and Drug 2 cause Colon Spastic?
+Question: Is co-administration of Drug 1 and Drug 2 associated with Colon Spastic?
 
 ##Answer: No
 ===== [59-NOVEL] =====
@@ -1090,7 +1090,7 @@ Drug 2
   Indications: asthma
   Pharmacologic class: (none)
 
-Question: Does co-administration of Drug 1 and Drug 2 cause Spinal Compression Fracture?
+Question: Is co-administration of Drug 1 and Drug 2 associated with Spinal Compression Fracture?
 
 ##Answer: No
 ===== [60-NOVEL] =====
@@ -1113,7 +1113,7 @@ Drug 2
   Indications: polycystic ovary syndrome
   Pharmacologic class: Progesterone Congeners
 
-Question: Does co-administration of Drug 1 and Drug 2 cause muscle disorder?
+Question: Is co-administration of Drug 1 and Drug 2 associated with muscle disorder?
 
 ##Answer: No
 ===== [61-NOVEL] =====
@@ -1136,6 +1136,6 @@ Drug 2
   Indications: atopic dermatitis, psoriasis
   Pharmacologic class: Corticosteroid Hormone Receptor Agonists
 
-Question: Does co-administration of Drug 1 and Drug 2 cause Light sensitivity?
+Question: Is co-administration of Drug 1 and Drug 2 associated with Light sensitivity?
 
 ##Answer: No

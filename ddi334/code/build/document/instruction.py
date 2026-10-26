@@ -83,7 +83,7 @@ class DDI334Prompt:
         # Drugs are referred to anonymously (Drug 1/Drug 2) in the question -- Novel has no
         # name, so both sides stay consistent
         user = (blk(1, d1) + "\n" + blk(2, d2) + "\n"
-                + f"Question: Does co-administration of Drug 1 and Drug 2 cause "
+                + f"Question: Is co-administration of Drug 1 and Drug 2 associated with "
                 + f"{self.typenames[str(type_id)]}?\n\n##Answer:")
         return V2_SYSTEM, user
 
