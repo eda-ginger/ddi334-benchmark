@@ -243,8 +243,8 @@ For each dataset in Figure 1: the papers that use it, the prediction task (Binar
 | Paper | Task | Number of drugs | Number of drug-drug interactions | Number of interaction types |
 |---|---|---:|---:|---:|
 | Fuzzy-DDI | Multi-Class, Multi-Label | - | - | - |
-| GEMCL | Multi-Class, Multi-Label | - | - | 107 |
-| H2D | Binary, Multi-Class, Multi-Label | - | - | 107 |
+| GEMCL | Multi-Class, Multi-Label | 24,313 | 1,385,757 | 107 |
+| H2D | Binary, Multi-Class, Multi-Label | 24,313 | 1,385,757 | 107 |
 | KG-CLDDI | Multi-Class, Multi-Label | - | - | 107 |
 | RareDDIE | Binary | - | - | - |
 
