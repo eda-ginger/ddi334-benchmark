@@ -1,0 +1,85 @@
+seq,model,year,venue,combo,doi
+185,BRLA-DDI,2026,Artif. Intell. Med.,DOC,https://doi.org/10.1016/j.artmed.2026.103353
+153,LLM-DDI,2026,IEEE J. Biomed. Health Inform.,R-D,https://doi.org/10.1109/JBHI.2025.3585290
+106,MolBridge,2026,WWW,MOL,https://doi.org/10.48550/arXiv.2510.20448
+146,DMCL-DDI,2026,Expert Syst Appl,MOL,https://doi.org/10.1016/j.eswa.2025.130815
+182,ABT-DDI,2026,ACS Synth. Biol.,MOL,https://doi.org/10.1021/acssynbio.5c00748
+183,PTET-DDI,2026,ACS Synth. Biol.,MOL,https://doi.org/10.1021/acssynbio.5c00722
+107,RISE-DDI,2026,AAAI,M-R,https://doi.org/10.1609/aaai.v40i2.37105
+152,CMCL-DDI,2026,PLOS ONE,MOL,https://doi.org/10.1371/journal.pone.0341952
+184,GEMCL,2026,Eng. Appl. Artif. Intell.,M-R,https://doi.org/10.1016/j.engappai.2026.114141
+NEW,MCL-DDI,2026,IEEE JBHI,M-R,https://doi.org/10.1109/JBHI.2025.3600045
+188,HiFAB-DDI,2025,Biomed Signal Process Control,DOC,https://doi.org/10.1016/j.bspc.2025.108199
+186,CoTEL-D3X,2025,Expert Syst. Appl.,DOC,https://doi.org/10.1016/j.eswa.2025.126953
+140,TransformDDI,2025,JBHI,DOC,https://doi.org/10.1109/JBHI.2024.3507738
+192,MF-DocDDI,2025,IEEE BIBM,DOC,https://doi.org/10.1109/BIBM66473.2025.11357008
+79,DDI-JUDGE,2025,Front. Pharmacol.,M-D,https://doi.org/10.3389/fphar.2025.1589788
+96,PKAG-DDI,2025,ACL (Findings),M-D,https://doi.org/10.18653/v1/2025.acl-long.539
+78,CBR-DDI,2025,arXiv,R-D,https://doi.org/10.48550/arXiv.2505.23034
+88,K-Paths,2025,KDD,R-D,https://arxiv.org/abs/2502.13344
+154,MMDDI-SSE,2025,JBHI,HOL,https://doi.org/10.1109/JBHI.2025.3550019
+190,Chianumba et al.,2025,IEEE BIBM,HOL,https://doi.org/10.1109/BIBM66473.2025.11357147
+191,MMDDI-GDSS,2025,BIBM,HOL,https://doi.org/10.1109/BIBM66473.2025.11356316
+200,Rot4Cap,2025,Symmetry,HOL,https://doi.org/10.3390/sym17111793
+85,HLN-DDI,2025,BMC Bioinformatics,MOL,https://doi.org/10.1186/s12859-025-06157-6
+91,MDG-DDI,2025,BMC Bioinformatics,MOL,https://doi.org/10.1186/s12859-025-06288-w
+136,MDI-DDI,2025,IEEE JBHI,MOL,https://doi.org/10.1109/JBHI.2025.3575012
+90,LSA-DDI,2025,Int.J.Mol.Sci.,MOL,https://doi.org/10.3390/ijms26146799
+84,HDN-DDI,2025,BMC Bioinformatics,MOL,https://doi.org/10.1186/s12859-025-06052-0
+145,MDJCL,2025,J. Chem. Inf. Model.,MOL,https://doi.org/10.1021/acs.jcim.5c01171
+160,ComNet,2025,J. Chem. Inf. Model.,MOL,https://doi.org/10.1021/acs.jcim.4c01737
+159,Fuzzy-DDI,2025,Artif Intell Med,REL,https://doi.org/10.1016/j.artmed.2025.103125
+134,KGCNN,2025,IEEE JBHI,REL,https://doi.org/10.1109/jbhi.2024.3419015
+157,PHGL-DDI,2025,Expert Syst Appl,M-R,https://doi.org/10.1016/j.eswa.2025.126408
+99,RareDDIE,2025,Nature Communications,M-R,https://doi.org/10.1038/s41467-025-59431-9
+93,MolecBioNet,2025,KDD,M-R,https://doi.org/10.1145/3711896.3737163
+68,SSF-DDI,2024,BMC Bioinformatics,MOL,https://doi.org/10.1186/s12859-024-05654-4
+71,TextDDI,2024,arXiv,DOC,https://doi.org/10.18653/v1/2023.emnlp-main.918
+173,Astras et al.,2024,SETN,DOC,https://doi.org/10.1145/3688671.3688756
+66,SARE,2024,BMC Bioinformatics,DOC,https://doi.org/10.1186/s12859-024-05951-y
+61,MPHGCL-DDI,2024,Molecules,M-R,https://doi.org/10.3390/molecules29112483
+168,H2D,2024,CIKM,M-R,https://doi.org/10.1145/3627673.3679936
+52,DeepGCL,2024,PLOS ONE,M-R,https://doi.org/10.1371/journal.pone.0304798
+74,ZeroDDI,2024,arXiv,M-D,https://doi.org/10.24963/ijcai.2024/671
+70,SubGE-DDI,2024,PLoS Comput Biol,R-D,https://doi.org/10.1371/journal.pcbi.1011989
+58,MASMDDI,2024,Front. Pharmacol.,MOL,https://doi.org/10.3389/fphar.2024.1369403
+165,SRR-DDI,2024,Knowl.-Based Syst.,MOL,https://doi.org/10.1016/j.knosys.2023.111337
+131,PEB-DDI,2024,IEEE J. Biomed. Health Inform.,MOL,https://doi.org/10.1109/JBHI.2023.3335402
+132,DSIL-DDI,2024,IEEE TNNLS,MOL,https://doi.org/10.1109/TNNLS.2023.3242656
+169,AutoDDI,2024,IEEE JBHI,MOL,https://doi.org/10.1109/JBHI.2024.3349570
+64,PTB-DDI,2024,Int. J. Mol. Sci.,MOL,https://doi.org/10.3390/ijms252111385
+50,CSSE-DDI,2024,NeurIPS,REL,https://doi.org/10.48550/arXiv.2411.01535
+128,KG-CLDDI,2024,TCBB,REL,https://doi.org/10.1109/tcbb.2024.3477410
+60,MKG-FENN,2024,AAAI,M-R,https://doi.org/10.1609/aaai.v38i9.28887
+73,TIGER,2024,AAAI,M-R,https://doi.org/10.1609/aaai.v38i1.27777
+51,DDIPrompt,2024,IJCAI,M-R,https://arxiv.org/abs/2402.11472
+172,DMCF-DDI,2024,IEEE JBHI,M-R,https://doi.org/10.1109/JBHI.2024.3422673
+175,KGIB-DDI,2024,IJCNN,M-R,https://doi.org/10.1109/IJCNN60899.2024.10651537
+35,DDI-MuG,2023,Front. Digit. Health,DOC,https://doi.org/10.3389/fdgth.2023.1154133
+118,BioBERT_directionalDDI,2023,BMC Bioinformatics,DOC,https://doi.org/10.1186/s12859-023-05520-9
+21,HKG-DDIE (Asada et al.),2023,Bioinformatics,HOL,https://academic.oup.com/bioinformatics/article/39/1/btac754/6842324
+124,DSN-DDI,2023,Briefings in Bioinformatics,MOL,https://academic.oup.com/bib/advance-article-abstract/doi/10.1093/bib/bbac597/6966537
+36,DeepDrug,2023,Quant Biol,MOL,https://doi.org/10.15302/J-QB-022-0320
+122,BDN-DDI,2023,Comput Biol Med,MOL,https://doi.org/10.1016/j.compbiomed.2023.107340
+41,KnowDDI,2023,Communications Biology,REL,https://arxiv.org/abs/2311.15056
+121,DMFDDI,2023,Briefings in Bioinformatics,M-R,https://doi.org/10.1093/bib/bbad397
+119,ACDGNN,2023,BIB,M-R,https://doi.org/10.1093/bib/bbad155
+116,3DGT-DDI,2022,Briefings in Bioinformatics,M-D,https://doi.org/10.1093/bib/bbac134
+26,IMSE,2022,BMC Bioinformatics,M-D,https://doi.org/10.1186/s12859-022-04876-8
+115,KGC-LSTM,2022,ICIC,R-D,https://doi.org/10.1007/978-3-031-13870-6_62
+195,KGE-MFL,2022,CIKM,R-D,https://doi.org/10.1145/3511808.3557318
+125,MDF-SA-DDI,2022,Briefings in Bioinformatics,M-R,
+31,SA-DDI,2022,Chemical Science,MOL,https://doi.org/10.1039/d2sc02023h
+111,SSI-DDI,2021,Briefings in Bioinformatics,MOL,https://doi.org/10.1093/bib/bbab133
+110,MUFFIN,2021,Bioinformatics,M-R,https://doi.org/10.1093/bioinformatics/btab169
+20,SumGNN,2021,Bioinformatics,M-R,https://doi.org/10.1093/bioinformatics/btab207
+16,AAE-KGE (Dai et al.),2021,Briefings in Bioinformatics,REL,https://doi.org/10.1093/bib/bbaa256
+18,MIRACLE,2021,WWW,M-R,https://doi.org/10.1145/3442381.3449786
+109,DDIMDL,2020,Bioinformatics,M-R,https://doi.org/10.1093/bioinformatics/btaa501
+12,BERTChem-DDI,2020,arXiv,M-D,https://arxiv.org/abs/2012.11599
+13,BERTKG-DDI,2020,arXiv,R-D,https://arxiv.org/abs/2012.11142
+15,CASTER,2020,AAAI,MOL,https://doi.org/10.1609/aaai.v34i01.5412
+17,KGNN,2020,IJCAI,REL,https://doi.org/10.24963/IJCAI.2020/380
+8,Karim et al.,2019,ACM-BCB,REL,https://doi.org/10.1145/3307339.3342161
+4,Celebi et al.,2019,BMC Bioinformatics,REL,https://doi.org/10.1186/s12859-019-3284-5
+1,Decagon,2018,Bioinformatics,REL,https://doi.org/10.1093/bioinformatics/bty294
